@@ -1,5 +1,5 @@
 let modInfo = {
-	name: "The ??? Tree",
+	name: "Epic Wizard Knowledge Tree",
 	id: "mymod",
 	author: "nobody",
 	pointsName: "points",
