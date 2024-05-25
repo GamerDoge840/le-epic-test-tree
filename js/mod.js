@@ -1,6 +1,6 @@
 let modInfo = {
 	name: "Epic Wizard Knowledge Tree",
-	id: "mymod",
+	id: "leepictestofepictesting",
 	author: "nobody",
 	pointsName: "points",
 	modFiles: ["layers.js", "tree.js"],
