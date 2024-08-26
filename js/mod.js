@@ -1,13 +1,13 @@
 let modInfo = {
-	name: "Epic Wizard Knowledge Tree",
-	id: "leepictestofepictesting",
-	author: "nobody",
+	name: "The Tree of Knowledge",
+	id: "superultraduperamogussmartspunchisus",
+	author: "The Big G",
 	pointsName: "Knowledge",
-	modFiles: ["layers.js", "tree.js"],
+	modFiles: ["Layers/Row 0/Scrolls.js","Layers/Row 0/Knowledge.js","math.js", "Layers/Side/achievements.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (1), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0.0010), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
@@ -34,7 +34,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("scroll", 11);
+	return hasUpgrade("Knowledge", 11);
 }
 
 // Calculate points/sec!
@@ -43,11 +43,17 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(0.0001)
+	gain=gain.times(buyableEffect('Knowledge', 11))
+	gain=gain.times(buyableEffect('Knowledge', 12))
+	gain=gain.times(buyableEffect('Knowledge', 21))
+	gain=gain.times(buyableEffect('Scrolls', 11))
+	if (hasUpgrade('Knowledge', 12)) gain = gain.times(3)
 	return gain
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
+    notation:'Mixed Scientific',
 }}
 
 // Display extra things at the top of the page
