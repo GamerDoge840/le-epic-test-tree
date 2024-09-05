@@ -1,9 +1,9 @@
 let modInfo = {
-	name: "The Tree of Light",
-	id: "superultraduperomegaamogusbrightpunchisus",
+	name: "The Replicanti Tree",
+	id: "superultraduperomegaamogusreplicationpunchisus",
 	author: "The Big G",
-	pointsName: "Particles",
-	modFiles: ["Layers/Row 0/Lumens.js","Layers/Row 0/Levels.js","Layers/Row 0/Particles.js","math.js", "Layers/Side/achievements.js", "tree.js"],
+	pointsName: "Replicanti",
+	modFiles: ["Layers/Row 0/Replicanti.js","Layers/Side/achievements.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -42,10 +42,13 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.0001)
-	gain=gain.times(buyableEffect('Particles', 11))
-	gain=gain.times(buyableEffect('Levels', 11))
+	let gain = new Decimal(0.00001)
+	if (hasUpgrade('Replicanti', 11)) gain = gain.times(upgradeEffect('Replicanti', 11))
 	return gain
+
+	// storage container
+	// gain=gain.times(buyableEffect('Particles', 11))
+	// gain=gain.times(buyableEffect('Levels', 11))
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
