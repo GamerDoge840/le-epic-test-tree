@@ -155,6 +155,7 @@ var systemComponents = {
                 <td><button class="opt" onclick="save()">Save</button></td>
                 <td><button class="opt" onclick="toggleOpt('autosave')">Autosave: {{ options.autosave?"ON":"OFF" }}</button></td>
                 <td><button class="opt" onclick="hardReset()">HARD RESET</button></td>
+				<td><button class="opt" onclick="changeNotation()">Notation: {{ player.notation }}</button></td>
             </tr>
             <tr>
                 <td><button class="opt" onclick="exportSave()">Export to clipboard</button></td>

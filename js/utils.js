@@ -20,6 +20,12 @@ function canAffordUpgrade(layer, id) {
 	return true
 }
 
+function quickBigColor(str,color){
+    return `<text style='color:${color}; font-size: 25px; text-shadow: 0px 0px 10px ${color}'>${str}</text>`
+}
+function quickDoubleColor(str,colora,colorb){
+    return `<text style='background-image:linear-gradient(to right, ${colora}, ${colorb}); -webkit-background-clip:text; color: transparent; font-size: 25px; text-shadow: 0px 0px 10px ${colorb}'>${str}</text>`
+}
 function canBuyBuyable(layer, id) {
 	let b = temp[layer].buyables[id]
 	return (b.unlocked && run(b.canAfford, b) && player[layer].buyables[id].lt(b.purchaseLimit) && !tmp[layer].deactivated)

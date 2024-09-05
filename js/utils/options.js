@@ -45,6 +45,11 @@ function toggleAuto(toggle) {
 	Vue.set(player[toggle[0]], [toggle[1]], !player[toggle[0]][toggle[1]]);
 	needCanvasUpdate=true
 }
+let notations = ['Scientific','Engineering','Hyper-E','Standard','Letters','Cancer','Mixed Scientific','Mixed Engineering']
+
+function changeNotation() {
+	player.notation = notations[(notations.indexOf(player.notation) + 1) % notations.length]
+}
 
 const MS_DISPLAYS = ["ALL", "LAST, AUTO, INCOMPLETE", "AUTOMATION, INCOMPLETE", "INCOMPLETE", "NONE"];
 
