@@ -1,6 +1,6 @@
 addLayer("ach", {
     name: "Achievements", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "☆", // This appears on the layer's node. Default is the id with the first letter capitalized
+    symbol: "📊", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: true,
@@ -8,14 +8,14 @@ addLayer("ach", {
     }},
     nodeStyle() {
         return {
-            'border': '3px solid #E1C16E',
+            'border': '3px solid #FFFFFF',
             "width": 65,
         "height": 65,
         'min-height': '65px',
         'min-width': '65px',  
         }
     },
-    color: "gold",
+    color: "#b9b7b3",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "Honor", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
@@ -37,22 +37,72 @@ addLayer("ach", {
     layerShown(){return true},
     achievements: {
 		11:{
-			name: "Murderer!",
-            done() {return player.points.gte('1')},
-            tooltip() {return "Kill a monster. This should be simple enough."},
+			name: "[1]<br><span style='color:#ffffff'>Operation Begin</span>",
+            done() {return hasUpgrade("Level", 11)},
+            tooltip() {return "Begin incrementing the Number.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>This should be simple enough, I hope."},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
+        },
+        12:{
+			name: "[2]<br><span style='color:#ffffff'>Must Go Up</span>",
+            done() {return hasUpgrade("Level", 21)},
+            tooltip() {return "Buy Multiplier 1.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
+        },
+        13:{
+			name: "[3]<br><span style='color:#ffffff'>First Upgrade Row</span>",
+            done() {return hasUpgrade("Level", 24)},
+            tooltip() {return "Buy Multiplier 4.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
+        },
+        14:{
+			name: "[4]<br><span style='color:#ffffff'>Second Upgrade Row</span>",
+            done() {return hasUpgrade("Level", 34)},
+            tooltip() {return "Buy Multiplier 8.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
+        },
+        15:{
+			name: "[5]<br><span style='color:#ffffff'>Third Upgrade Row</span>",
+            done() {return hasUpgrade("Level", 44)},
+            tooltip() {return "Buy Quintupler.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
         },
         
     },
     
     
     tabFormat: {
-        "Recollection": {
+        "ACHIEVEMENTS": {
             content: ["blank",
                 ["display-text",
                     function() {return "You have attained <h2 style='color:  gold; text-shadow: gold 0px 0px 10px;'> "+format(player.ach.achievements.length,0)+"/"+format(Object.keys(tmp.ach.achievements).length - 2,0)+"</h2> achievements, or "+format(new Decimal(player.ach.achievements.length).div(11).mul(100))+"% of the total achievement count."}, //change division to current numer of achievements
                 ],
                 ["display-text",
-                    function() {return "----====Crop Achievements====----"},
+                    function() {return "----====Achievements====----"},
                     {"color": "Gray", "font-size": "27px"}],
                     "blank",
                     "blank",
