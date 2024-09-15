@@ -638,7 +638,7 @@ addLayer("Level", {
     },
     61: {    
         title: "Advanced Calculation",
-        fullDisplay() {return `<font size="3"><b><span style='color:#ffffff'>Advanced Calculation</span></b><font size="2"><br>Unlocks a new tab with many new upgrades in this layer.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#ffffff'> Number</span>`},    
+        fullDisplay() {return `<font size="3"><b><span style='color:#ffffff'>Advanced Calculation</span></b><font size="2"><br>Unlocks a new tab in this layer.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#ffffff'> Number</span>`},    
         cost: new Decimal(0.5),
         currencyInternalName: "points",
         unlocked() { return hasUpgrade("Level", 54) },
