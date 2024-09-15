@@ -13,12 +13,12 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1",
+	num: "1.0",
 	name: "The Whole Game",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
+	<h3>v1.0</h3><br>
 		- Added the entire game.<br>
 		- Added nothing else other than that.`
 
@@ -53,6 +53,8 @@ function getPointGen() {
 	if (hasUpgrade('Level', 34)) gain = gain.times(1.80)
 	if (hasUpgrade('Level', 51)) gain = gain.times(1.90)
 	if (hasUpgrade('Level', 52)) gain = gain.times(2.00)
+	if (hasUpgrade('Level', 53)) gain = gain.times(2.10)
+	if (hasUpgrade('Level', 54)) gain = gain.times(2.20)
 	if (hasUpgrade('Level', 41)) gain = gain.times(2)
 	if (hasUpgrade('Level', 42)) gain = gain.times(3)
 	if (hasUpgrade('Level', 43)) gain = gain.times(4)

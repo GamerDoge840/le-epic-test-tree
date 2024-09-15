@@ -17,9 +17,9 @@ addLayer("Level", {
         }
     },
     requires: new Decimal("e19186000"), // Can be a function that takes requirement increases into account
-    resource: "Sus", // Name of prestige currency
+    resource: "Levels", // Name of prestige currency
     resetDescription: "Do somthin sussy<br>----------<br>",
-    baseResource: "Knowledge", // Name of resource prestige is based on
+    baseResource: "Data", // Name of resource prestige is based on
     resetsNothing: true,
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -534,7 +534,7 @@ addLayer("Level", {
     52: {    
         title: "Multiplier 10",
         fullDisplay() {return `<font size="3"><b><span style='color:#ffffff'>Multiplier 10</span></b><font size="2"><br><span style="color:#ffffff">Number</span> boosted by 2.00x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#ffffff'> Number</span>`},    
-        cost: new Decimal(0.0200),
+        cost: new Decimal(0.0225),
         currencyInternalName: "points",
         unlocked() { return hasUpgrade("Level", 51) },
         tooltip() {return "<span style='color:#ffffff'>Multiplier 10</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Makes the number go up faster."},
@@ -566,6 +566,111 @@ addLayer("Level", {
             }
         },
     },
+    53: {    
+        title: "Multiplier 11",
+        fullDisplay() {return `<font size="3"><b><span style='color:#ffffff'>Multiplier 11</span></b><font size="2"><br><span style="color:#ffffff">Number</span> boosted by 2.10x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#ffffff'> Number</span>`},    
+        cost: new Decimal(0.0600),
+        currencyInternalName: "points",
+        unlocked() { return hasUpgrade("Level", 52) },
+        tooltip() {return "<span style='color:#ffffff'>Multiplier 11</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Makes the number go up faster."},
+        style() {
+            if (hasUpgrade(this.layer, this.id)) return {
+                'background-color': '#92be78',
+                "width": "125px",
+        "height": "105px",
+        'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else if (!canAffordUpgrade(this.layer, this.id)) {
+                return {
+                'background-color': '#bf8f8f' ,
+                "width": "125px",
+        "height": "105px",
+        'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+            }
+            else if (canAffordUpgrade(this.layer, this.id)) {
+                return {
+                'background-color': '#b9b7b3' ,
+                "width": "160px",
+        "height": "100px",
+        'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+            }
+        },
+    },
+    54: {    
+        title: "Multiplier 12",
+        fullDisplay() {return `<font size="3"><b><span style='color:#ffffff'>Multiplier 12</span></b><font size="2"><br><span style="color:#ffffff">Number</span> boosted by 2.20x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#ffffff'> Number</span>`},    
+        cost: new Decimal(0.1),
+        currencyInternalName: "points",
+        unlocked() { return hasUpgrade("Level", 53) },
+        tooltip() {return "<span style='color:#ffffff'>Multiplier 12</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Makes the number go up faster."},
+        style() {
+            if (hasUpgrade(this.layer, this.id)) return {
+                'background-color': '#92be78',
+                "width": "125px",
+        "height": "105px",
+        'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else if (!canAffordUpgrade(this.layer, this.id)) {
+                return {
+                'background-color': '#bf8f8f' ,
+                "width": "125px",
+        "height": "105px",
+        'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+            }
+            else if (canAffordUpgrade(this.layer, this.id)) {
+                return {
+                'background-color': '#b9b7b3' ,
+                "width": "160px",
+        "height": "100px",
+        'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+            }
+        },
+    },
+    61: {    
+        title: "Advanced Calculation",
+        fullDisplay() {return `<font size="3"><b><span style='color:#ffffff'>Advanced Calculation</span></b><font size="2"><br>Unlocks a new tab with many new upgrades in this layer.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#ffffff'> Number</span>`},    
+        cost: new Decimal(0.5),
+        currencyInternalName: "points",
+        unlocked() { return hasUpgrade("Level", 54) },
+        tooltip() {return "<span style='color:#ffffff'>Advanced Calculation</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>The Machine must be improved in order to make the number go up faster."},
+        style() {
+            if (hasUpgrade(this.layer, this.id)) return {
+                'background-color': '#a4deff',
+                "width": "150px",
+        "height": "160px",
+        'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else if (!canAffordUpgrade(this.layer, this.id)) {
+                return {
+                'background-color': '#bf8f8f' ,
+                "width": "125px",
+        "height": "160px",
+        'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+            }
+            else if (canAffordUpgrade(this.layer, this.id)) {
+                return {
+                'background-color': '#b9b7b3' ,
+                "width": "160px",
+        "height": "160px",
+        'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+            }
+        },
+    },
     },
     buyables: {
         rows: 5,
@@ -583,6 +688,8 @@ addLayer("Level", {
                     function() {return "============================="},
                     {"color": "#cacdc8", "font-size": "32px"}], 
                     ["upgrades", [1]],
+                    "blank",
+                    ["upgrades", [6]],
                     "blank",
                     ["upgrades", [2, 3, 5]],
                     "blank",

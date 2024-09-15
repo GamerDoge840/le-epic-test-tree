@@ -91,6 +91,17 @@ addLayer("ach", {
                 }
             }
         },
+        16:{
+			name: "[6]<br><span style='color:#ffffff'>Fourth Upgrade Row</span>",
+            done() {return hasUpgrade("Level", 54)},
+            tooltip() {return "Buy Multiplier 12.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
+        },
         
     },
     
