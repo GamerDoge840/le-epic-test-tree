@@ -18,7 +18,7 @@ addNode("blank", {
 
 addLayer("tree-tab", {
     tabFormat: [["tree", [
-        ['Beans'],
+        ['StoneBlocks'],
         ],
     ]],
     previousTab: "",

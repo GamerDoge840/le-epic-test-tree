@@ -1,9 +1,9 @@
 let modInfo = {
-	name: "Bean Tree",
-	id: "BeanQuestToBeTheBeanBest",
+	name: "The Mine Tree",
+	id: "MineQuestToBeTheMineBest",
 	author: "The Big G",
-	pointsName: "Beans",
-	modFiles: ["Layers/Forgotten Jungle/EXP.js","Layers/Forgotten Jungle/Beans.js", "math.js", "Layers/Side/achievements.js", "tree.js"],
+	pointsName: "Mining Power",
+	modFiles: ["Layers/Row 0/Stone.js","Layers/Row 0/StoneBlocks.js", "math.js", "Layers/Side/achievements.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -43,7 +43,7 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(0.01)
-	gain=gain.times(buyableEffect('Beans', 11))
+	gain=gain.times(buyableEffect('StoneBlocks', 11))
 	//stoerege
 	//gain=gain.times(buyableEffect('Knowledge', 11))
 	//gain=gain.times(buyableEffect('Knowledge', 12))
