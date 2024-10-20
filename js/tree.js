@@ -15,10 +15,18 @@ addNode("blank", {
 }, 
 )
 
+addNode("a",{
+    row: "side",
+    color:'red',
+    onClick(){if(player.devSpeed!=1e-300) player.devSpeed = 1e-300
+    else player.devSpeed = 1},
+    canClick(){return true}
+})
 
 addLayer("tree-tab", {
     tabFormat: [["tree", [
         ['Prestige'],
+        ['Honor'],
         ],
     ]],
     previousTab: "",
