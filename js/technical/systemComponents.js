@@ -161,6 +161,7 @@ var systemComponents = {
                 <td><button class="opt" onclick="exportSave()">Export to clipboard</button></td>
                 <td><button class="opt" onclick="importSave()">Import</button></td>
                 <td><button class="opt" onclick="toggleOpt('offlineProd')">Offline Prod: {{ options.offlineProd?"ON":"OFF" }}</button></td>
+			    <td><button class="opt" onclick="toggleOpt('newsTicker')">News Ticker: {{ options.newsTicker?"ON":"OFF" }}</button></td>
             </tr>
             <tr>
                 <td><button class="opt" onclick="switchTheme()">Theme: {{ getThemeName() }}</button></td>
@@ -210,7 +211,13 @@ var systemComponents = {
 		</div>
 		`
 	},
-
+'news-ticker': {
+		props: ['data', 'index'],
+		template: `<div id="newsticker">
+			<div id="newsmessage" v-bind:style="{ transform: 'translateX(' + newsTicker.pos + 'px' }" :class="{ new: newsTicker.new }" v-html="newsTicker.current"></div>
+		</div>
+		`
+	},
 	'bg': {
 		props: ['layer'],
 		template: `<div class ="bg" v-bind:style="[tmp[layer].style ? tmp[layer].style : {}, (tmp[layer].tabFormat && !Array.isArray(tmp[layer].tabFormat)) ? tmp[layer].tabFormat[player.subtabs[layer].mainTabs].style : {}]"></div>

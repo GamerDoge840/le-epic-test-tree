@@ -26,6 +26,12 @@ function toggleOpt(name) {
 		changeTreeQuality();
 	if (name == "oldStyle")
 		updateStyle();
+	if (name == "newsTicker") {
+		newsTicker.current = newsEntries[Math.floor(Math.random() * newsEntries.length)];
+        while (!run(newsTicker.current[0])) newsTicker.current = newsEntries[Math.floor(Math.random() * newsEntries.length)];
+        newsTicker.current = run(newsTicker.current[1]);
+		newsTicker.pos = window.innerWidth;
+	}
 }
 var styleCooldown = 0;
 function updateStyle() {
