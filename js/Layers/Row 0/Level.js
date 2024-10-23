@@ -19,6 +19,7 @@ addLayer("Level", {
     requires: new Decimal("250"), // Can be a function that takes requirement increases into account
     resource: "Levels", // Name of prestige currency
     resetDescription: "Level up.<br>----------<br>",
+    autoUpgrade() {return hasUpgrade('Honor', 23)},
     baseResource: "Prestige", // Name of resource prestige is based on
     resetsNothing: true,
     autoPrestige() {return hasUpgrade("Honor", 22)},
@@ -29,6 +30,7 @@ addLayer("Level", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if (hasUpgrade('Prestige', 44)) mult = mult.dividedBy(upgradeEffect('Prestige', 44))
+        if (hasUpgrade('Honor', 31)) mult = mult.dividedBy(upgradeEffect('Honor', 31))
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -45,6 +47,7 @@ addLayer("Level", {
     },
     power() {
         let power = new Decimal(1);
+        if (hasUpgrade('Honor', 32)) power = power.times(upgradeEffect('Honor', 32))
         return power;
     },
     effect() {
@@ -72,6 +75,7 @@ addLayer("Level", {
         let keptMilestones = []
         if (hasUpgrade('Honor', 21)) keptUpgrades.push(13)
         if (hasUpgrade('Honor', 22)) keptUpgrades.push(21)
+        if (hasUpgrade('Honor', 23)) keptUpgrades.push(22)
         layerDataReset(this.layer);
         player[this.layer].upgrades.push(...keptUpgrades)
         player[this.layer].milestones.push(...keptMilestones)

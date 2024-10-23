@@ -64,6 +64,10 @@ addLayer("Prestige", {
         if (layers[resettingLayer].row <= this.row) return;
         let keptUpgrades = []
         let keptMilestones = []
+        if (hasUpgrade('Honor', 33) && hasUpgrade('Prestige', 61) ) keptUpgrades.push(61)
+        if (hasUpgrade('Honor', 33) && hasUpgrade('Prestige', 62) ) keptUpgrades.push(62)
+        if (hasUpgrade('Honor', 33) && hasUpgrade('Prestige', 63) ) keptUpgrades.push(63)
+        if (hasUpgrade('Honor', 33) && hasUpgrade('Prestige', 64) ) keptUpgrades.push(64)
         layerDataReset(this.layer);
         player[this.layer].upgrades.push(...keptUpgrades)
         player[this.layer].milestones.push(...keptMilestones)
@@ -106,6 +110,7 @@ addLayer("Prestige", {
                 effect = new Decimal(1.50)
                 if (hasUpgrade('Prestige', 22)) effect = effect.times(upgradeEffect('Prestige', 22))
                 if (hasUpgrade('Prestige', 42)) effect = effect.times(upgradeEffect('Prestige', 31).pow(0.30))
+                if (hasUpgrade('Prestige', 61)) effect = effect.times(upgradeEffect('Prestige', 61))
                 return effect
               },   
             unlocked() {return hasUpgrade("Prestige", 11)},
@@ -204,6 +209,7 @@ addLayer("Prestige", {
             cost: new Decimal(10),
             effect() {
                 let eff = player.points.plus(1).log10().pow(0.55).plus(1);
+                if (hasUpgrade('Prestige', 61)) eff = eff.times(upgradeEffect('Prestige', 61))
                 return eff;
             },
             unlocked() {return hasUpgrade("Prestige", 23)},
@@ -297,6 +303,7 @@ addLayer("Prestige", {
             cost: new Decimal(60),
             effect() {
                 let eff = player.points.plus(1).log(8).pow(0.55).plus(1);
+                if (hasUpgrade('Prestige', 61)) eff = eff.times(upgradeEffect('Prestige', 61))
                 return eff;
             },
             unlocked() {return hasUpgrade("Prestige", 33)},
@@ -508,6 +515,49 @@ addLayer("Prestige", {
                 }
             },
         },
+        61: {    
+            title: "Column Leader",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Column Leader</span></b><font size="2"><br>The first three upgrades in the first column are boosted based on total Honor.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Prestige)+`<span style='color:#000000'> Prestige</span> and `+format(tmp[this.layer].upgrades[this.id].costs.Honor)+` Honor`},        
+            costs: {
+                Prestige: 1.00e14,
+                Honor: 15,
+              },
+              canAfford() {
+                return player.Prestige.points.gte(this.costs.Prestige)
+                    && player.Honor.points.gte(this.costs.Honor)
+              },
+              pay() {
+                player.Prestige.points = player.Prestige.points.minus(this.costs.Prestige);
+                player.Honor.points = player.Honor.points.minus(this.costs.Honor);
+              },
+            effect() {
+                let eff = player.Honor.total.plus(1).log(10).pow(1.10);
+                return eff;
+            },      
+            unlocked() {return hasUpgrade("Honor", 33)},
+            tooltip() {return "<span style='color:#ffffff'>Column Leader</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#31aeb0',
+                    "width": "200px",
+            "height": "175px",
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#00fff7' ,
+                    "width": "200px",
+            "height": "175px",
+                    }
+                }
+            },
+        },
     },
     buyables: {
         rows: 5,
@@ -520,7 +570,7 @@ addLayer("Prestige", {
                     function() {return ''+format(player.points)+' Essence'},
                     {"font-size": "30px"}],
                     ["display-text",
-                        function() {return '('+formatSmall(getPointGen())+' Essence/s)'},
+                        function() {return '(+'+formatSmall(getPointGen())+' Essence/s)'},
                         {"font-size": "17px"}],
                     ["display-text",
                         function() {return "--------------------"},
@@ -536,7 +586,9 @@ addLayer("Prestige", {
                             {"color": "#31aeb0", "font-size": "32px"}],
                             ["upgrades", [1]],
                             "blank",
-                            ["upgrades", [2, 3, 4]],
+                            ["upgrades", [2, 3, 4, 6]],
+                            "blank",
+                            ["raw-html", function() {if (hasUpgrade("Honor", 33)) return "<span style='color:#faff92'>"+format(player.Honor.points)+" current Honor</span>"}],
                             "blank",
                             ["upgrades", [5]],
                     
