@@ -66,7 +66,6 @@ function getPointGen() {
 function addedPlayerData() { return {
     notation:'Mixed Scientific',
 }}
-
 // Display extra things at the top of the page
 var displayThings = [
 ]

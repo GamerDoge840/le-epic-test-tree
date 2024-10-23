@@ -15,9 +15,9 @@ addNode("blank", {
 }, 
 )
 
-addNode("a",{
+addNode("PAU",{
     row: "side",
-    color:'red',
+    color:'blue',
     onClick(){if(player.devSpeed!=1e-300) player.devSpeed = 1e-300
     else player.devSpeed = 1},
     canClick(){return true}

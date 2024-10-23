@@ -171,6 +171,7 @@ addLayer("Prestige", {
             cost: new Decimal(5),
             effect() {
                 let eff = Decimal.pow(1.10, player.Prestige.upgrades.length);
+                if (hasUpgrade("Honor", 13)) eff = eff.times(upgradeEffect("Honor", 13))
                 return eff;
             },
             unlocked() {return hasUpgrade("Prestige", 22)},
@@ -298,7 +299,7 @@ addLayer("Prestige", {
                 let eff = player.points.plus(1).log(8).pow(0.55).plus(1);
                 return eff;
             },
-            unlocked() {return hasUpgrade("Prestige", 32)},
+            unlocked() {return hasUpgrade("Prestige", 33)},
             tooltip() {return "<span style='color:#ffffff'>Reverse Prestige Boost</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
@@ -514,13 +515,21 @@ addLayer("Prestige", {
     },
      tabFormat: {
         "Prestige": {
-            content: [ 
+            content: [
+                ["display-text",
+                    function() {return ''+format(player.points)+' Essence'},
+                    {"font-size": "30px"}],
+                    ["display-text",
+                        function() {return '('+formatSmall(getPointGen())+' Essence/s)'},
+                        {"font-size": "17px"}],
+                    ["display-text",
+                        function() {return "--------------------"},
+                        {"color": "#31aeb0", "font-size": "32px"}],
                 ['display-text',function(){return '<h4>You have <span style="color:#31aeb0">'+quickBigColor(format(player.Prestige.points),'#31aeb0') +' Prestige</span>.'}],
-                ["raw-html", function() {if (hasUpgrade("Level", 22)) return "<font size='5'>(+" + (format(getResetGain("Prestige"))) + "/s)"}],
+                ["raw-html", function() {if (hasUpgrade("Level", 22)) return "<font size='4'>(+" + (format(getResetGain("Prestige"))) + " Prestige/s)"}],
                 "blank",
                 function() {if (!hasUpgrade("Level", 22)) return "prestige-button"},
                  "blank",
-                 ['display-text',function(){return ''+format(player.points)+' Essence'}],
 
                         ["display-text",
                             function() {return "--------------------"},

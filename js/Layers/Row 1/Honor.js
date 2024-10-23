@@ -54,11 +54,157 @@ addLayer("Honor", {
             title: "Honored Power",
             fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Honored Power</span></b><font size="2"><br>Increases Essence and Prestige gain.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
             cost: new Decimal(1),
+            unlocked() {return player.Honor.total.gte(1)},
             effect() {
                 effect = new Decimal(2.50)
+                if (hasUpgrade('Honor', 12)) effect = effect.times(upgradeEffect('Honor', 12))
                 return effect
               },   
             tooltip() {return "<span style='color:#ffffff'>Honored Power</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#faff92',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        12: {    
+            title: "Honored Upgrader",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Honored Upgrader</span></b><font size="2"><br>Honored Power is stronger based on total Honor.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
+            cost: new Decimal(1),
+            unlocked() {return hasUpgrade("Honor", 11)},
+            effect() {
+                let eff = player.Honor.total.plus(1).log(10).pow(0.10).plus(1.25);
+                return eff;
+            },    
+            tooltip() {return "<span style='color:#ffffff'>Honored Upgrader</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#faff92',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        13: {    
+            title: "Upgrade Essence II",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Upgrade Essence II</span></b><font size="2"><br>Upgrade Essence is stronger based on Honor upgrades bought and you can buy max Levels.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
+            cost: new Decimal(1),
+            unlocked() {return hasUpgrade("Honor", 12)},
+            effect() {
+                let eff = Decimal.pow(1.50, player.Honor.upgrades.length);
+                return eff;
+            },    
+            tooltip() {return "<span style='color:#ffffff'>Upgrade Essence II</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#faff92',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        21: {    
+            title: "Prestige Keeper",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Prestige Keeper</span></b><font size="2"><br>Keep the first Prestige Generator upgrade on Honor reset.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
+            cost: new Decimal(1),
+            unlocked() {return hasUpgrade("Honor", 13)},
+            tooltip() {return "<span style='color:#ffffff'>Prestige Keeper I</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#faff92',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        22: {    
+            title: "Level Automator",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Level Automator</span></b><font size="2"><br>Automate leveling up and Keep Improved Prestige Generator on Honor reset.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
+            cost: new Decimal(3),
+            unlocked() {return hasUpgrade("Honor", 21)},
+            tooltip() {return "<span style='color:#ffffff'>Level Automator</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#faff92',
@@ -98,10 +244,18 @@ addLayer("Honor", {
                 ['display-text',function(){return '<h4>You have <span style="color:#faff92">'+quickBigColor(format(player.Honor.points),'#faff92') +' Honor</span>.'}],
                 //["raw-html", function() {if (hasUpgrade("Level", 22)) return "<font size='5'>(+" + (format(getResetGain("Prestige"))) + "/s)"}],
                 "blank",
-                "prestige-button",
+                ["raw-html", function() {if (!hasUpgrade("Level", 31)) return 'To perform an Honor reset, you need the corresponding Level upgrade.'}],
+                function() {if (hasUpgrade("Level", 31)) return "prestige-button"},
                  "blank",
-                 ['display-text',function(){return '<span style="color:#31aeb0">'+format(player.Prestige.points)+' Prestige</span>'}],
-                 ['display-text',function(){return '<span style="color:#faff92">'+format(player.Honor.total)+' total Honor</span>'}],
+                 ["display-text",
+                    function() {return "--------------------"},
+                    {"color": "#faff92", "font-size": "32px"}],
+                    ["display-text",
+                        function() {return "<span style='color:#31aeb0'>"+format(player.Prestige.points)+" Prestige</span>"},
+                        {"color": "#faff92", "font-size": "19px"}],
+                        ["display-text",
+                            function() {return "<span style='color:#faff92'>"+format(player.Honor.total)+" total Honor</span>"},
+                            {"color": "#faff92", "font-size": "19px"}],
                  ["display-text",
                     function() {return "============================="},
                     {"color": "#faff92", "font-size": "32px"}],
@@ -117,7 +271,7 @@ addLayer("Honor", {
                             ["display-text",
                                 function() {return "============================="},
                                 {"color": "#faff92", "font-size": "32px"}],
-                            ["upgrades", [1]],
+                            ["upgrades", [1, 2, 3]],
                             ["display-text",
                                 function() {return "============================="},
                                 {"color": "#faff92", "font-size": "32px"}],

@@ -68,7 +68,7 @@
 	-webkit-text-fill-color: transparent;
 	text-fill-color: transparent;
 	background-size: 200% auto;
-	animation: rainber 1s linear infinite;
+	/*animation: rainber 1s linear infinite; */
   }
   @keyframes rainber {
 	to {

@@ -17,10 +17,12 @@ addLayer("Level", {
         }
     },
     requires: new Decimal("250"), // Can be a function that takes requirement increases into account
-    resource: "Level", // Name of prestige currency
+    resource: "Levels", // Name of prestige currency
     resetDescription: "Level up.<br>----------<br>",
     baseResource: "Prestige", // Name of resource prestige is based on
     resetsNothing: true,
+    autoPrestige() {return hasUpgrade("Honor", 22)},
+    canBuyMax() {return hasUpgrade("Honor", 13)},
     baseAmount() {return player.Prestige.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 1, // Prestige currency exponent
@@ -68,6 +70,8 @@ addLayer("Level", {
         if (layers[resettingLayer].row <= this.row) return;
         let keptUpgrades = []
         let keptMilestones = []
+        if (hasUpgrade('Honor', 21)) keptUpgrades.push(13)
+        if (hasUpgrade('Honor', 22)) keptUpgrades.push(21)
         layerDataReset(this.layer);
         player[this.layer].upgrades.push(...keptUpgrades)
         player[this.layer].milestones.push(...keptMilestones)
@@ -100,7 +104,7 @@ addLayer("Level", {
                 }
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#173aea' ,
+                    'background-color': '#667cea' ,
                     "width": "200px",
             "height": "175px",
                     }
@@ -132,7 +136,7 @@ addLayer("Level", {
                 }
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#173aea' ,
+                    'background-color': '#667cea' ,
                     "width": "200px",
             "height": "175px",
                     }
@@ -160,7 +164,7 @@ addLayer("Level", {
                 }
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#173aea' ,
+                    'background-color': '#667cea' ,
                     "width": "200px",
             "height": "175px",
                     }
@@ -188,7 +192,7 @@ addLayer("Level", {
                 }
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#173aea' ,
+                    'background-color': '#667cea' ,
                     "width": "200px",
             "height": "175px",
                     }
@@ -216,7 +220,7 @@ addLayer("Level", {
                 }
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#173aea' ,
+                    'background-color': '#667cea' ,
                     "width": "200px",
             "height": "175px",
                     }
@@ -244,7 +248,7 @@ addLayer("Level", {
                 }
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#173aea' ,
+                    'background-color': '#667cea' ,
                     "width": "200px",
             "height": "175px",
                     }
@@ -284,9 +288,7 @@ addLayer("Level", {
         rows: 5,
         cols: 4,
     },
-     tabFormat: {
-        "Level": {
-            content: [ 
+     tabFormat: [
                 ['display-text',function(){return '<h4>You are at <span style="color:#69c0f6">Level '+quickBigColor(format(player.Level.points),'#69c0f6') +'</span>,'}],
                 ["display-text",
                     function() {return "which boosts Essence by <span style='color:#69c0f6'> "+ format(tmp.Level.effect) +"x</span>."},
@@ -299,7 +301,7 @@ addLayer("Level", {
                     {"color": "#69c0f6", "font-size": "32px"}],
                     ['display-text',function(){return '<span style="color:#31aeb0">'+format(player.Prestige.points)+' Prestige</span>'}],
                     ["bar", "levelbar"],
-                    ["raw-html", function() {if (hasUpgrade("Level", 22)) return "<font size='5'>(+" + (format(getResetGain("Prestige"))) + " Prestige/s)"}],
+                    ["raw-html", function() {if (hasUpgrade("Level", 22)) return "<font size='3'>(+" + (format(getResetGain("Prestige"))) + " Prestige/s)"}],
                     ["display-text",
                         function() {return "--------------------"},
                         {"color": "#69c0f6", "font-size": "32px"}],
@@ -310,11 +312,7 @@ addLayer("Level", {
                             function() {return "--------------------"},
                             {"color": "#69c0f6", "font-size": "32px"}],
                     
-            ]
-            
-        },
-
-    },
+                        ],
     infoboxes:{
         KnowledgeLore: {
          title: "Beans",
