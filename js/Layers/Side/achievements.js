@@ -106,7 +106,7 @@ addLayer("ach", {
         21:{
 			name: "[7]<br><span style='color:#31aeb0'>Prestige IV</span>",
             done() {return hasUpgrade("Prestige", 44)},
-            tooltip() {return "Buy the second column of Prestige upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            tooltip() {return "Buy the fourth column of Prestige upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
             style() {
                 return {
                     "border-color": "#31aeb0",
@@ -154,6 +154,39 @@ addLayer("ach", {
             style() {
                 return {
                     "border-color": "#faff92",
+                    "border-width": "3px"
+                }
+            }
+        },
+        26:{
+			name: "[12]<br><span style='color:#31aeb0'>Prestige V</span>",
+            done() {return hasUpgrade("Prestige", 64)},
+            tooltip() {return "Buy the fourth row of Prestige upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#31aeb0",
+                    "border-width": "3px"
+                }
+            }
+        },
+        31:{
+			name: "[13]<br><span style='color:#31aeb0'>Get Softcapped, Bozo</span>",
+            done() {return player.Prestige.points.gte(9.99e32)},
+            tooltip() {return "Encounter your first astounding softcap (Which is, at first, more similar to a hardcap).<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#31aeb0",
+                    "border-width": "3px"
+                }
+            }
+        },
+        32:{
+			name: "[14]<br><span style='color:#ffcd7a'>Ranks I</span>",
+            done() {return player.Rank.points.gte(1)},
+            tooltip() {return "Rank up.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffcd7a",
                     "border-width": "3px"
                 }
             }

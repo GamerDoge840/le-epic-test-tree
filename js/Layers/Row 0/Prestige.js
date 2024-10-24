@@ -23,6 +23,10 @@ addLayer("Prestige", {
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.7, // Prestige currency exponent
+    slowdown() {
+        let cap = player.Prestige.points.pow(0.35);
+        return cap;
+    },
     tooltip() {
         let tooltip = "<font size='3'>Prestige<br>----------------<br> <font size='2'><span style='color:#ffffff'> " +formatWhole(player.points)+" Essence</span>"
         if(player.Prestige.total.gte(1)) tooltip = tooltip + "<br><span style='color:#31aeb0'>"+formatWhole(player.Prestige.points)+" Prestige</font>"
@@ -36,6 +40,10 @@ addLayer("Prestige", {
         if (hasUpgrade('Level', 11)) mult = mult.times(upgradeEffect('Level', 11))
         if (hasUpgrade('Prestige', 24)) mult = mult.times(upgradeEffect('Prestige', 24))
         if (hasUpgrade('Honor', 11)) mult = mult.times(upgradeEffect('Honor', 11))
+        if (hasMilestone('Rank', 2)) mult = mult.times(1000)
+        if (player.Prestige.points.gte(1e33)) mult = mult.dividedBy(tmp.Prestige.slowdown)
+        if (hasUpgrade('Prestige', 52))
+            mult = mult.times(tmp.Rank.effect);
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -68,6 +76,8 @@ addLayer("Prestige", {
         if (hasUpgrade('Honor', 33) && hasUpgrade('Prestige', 62) ) keptUpgrades.push(62)
         if (hasUpgrade('Honor', 33) && hasUpgrade('Prestige', 63) ) keptUpgrades.push(63)
         if (hasUpgrade('Honor', 33) && hasUpgrade('Prestige', 64) ) keptUpgrades.push(64)
+        if (hasUpgrade('Honor', 33) && hasUpgrade('Prestige', 52) ) keptUpgrades.push(52)
+        if (hasUpgrade('Honor', 33) && hasMilestone('Rank', 0) ) keptUpgrades.push(51)
         layerDataReset(this.layer);
         player[this.layer].upgrades.push(...keptUpgrades)
         player[this.layer].milestones.push(...keptMilestones)
@@ -111,6 +121,7 @@ addLayer("Prestige", {
                 if (hasUpgrade('Prestige', 22)) effect = effect.times(upgradeEffect('Prestige', 22))
                 if (hasUpgrade('Prestige', 42)) effect = effect.times(upgradeEffect('Prestige', 31).pow(0.30))
                 if (hasUpgrade('Prestige', 61)) effect = effect.times(upgradeEffect('Prestige', 61))
+                if (hasUpgrade('Prestige', 63)) effect = effect.times(upgradeEffect('Prestige', 63))
                 return effect
               },   
             unlocked() {return hasUpgrade("Prestige", 11)},
@@ -144,6 +155,7 @@ addLayer("Prestige", {
             effect() {
                 effect = new Decimal(1.35)
                 if (hasUpgrade('Prestige', 23)) effect = effect.times(upgradeEffect('Prestige', 23))
+                if (hasUpgrade('Prestige', 63)) effect = effect.times(upgradeEffect('Prestige', 63))
                 return effect
               },   
             unlocked() {return hasUpgrade("Prestige", 21)},
@@ -177,6 +189,7 @@ addLayer("Prestige", {
             effect() {
                 let eff = Decimal.pow(1.10, player.Prestige.upgrades.length);
                 if (hasUpgrade("Honor", 13)) eff = eff.times(upgradeEffect("Honor", 13))
+                if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
                 return eff;
             },
             unlocked() {return hasUpgrade("Prestige", 22)},
@@ -210,6 +223,8 @@ addLayer("Prestige", {
             effect() {
                 let eff = player.points.plus(1).log10().pow(0.55).plus(1);
                 if (hasUpgrade('Prestige', 61)) eff = eff.times(upgradeEffect('Prestige', 61))
+                if (hasUpgrade('Prestige', 62)) eff = eff.times(upgradeEffect('Prestige', 62))
+                if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
                 return eff;
             },
             unlocked() {return hasUpgrade("Prestige", 23)},
@@ -242,6 +257,7 @@ addLayer("Prestige", {
             cost: new Decimal(15),
             effect() {
                 let eff = player.Prestige.points.plus(2).pow(0.1);
+                if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
                 //if (player.Prestige.points.gte(1000)) eff = eff.times(0.5)
                 return eff;
             },
@@ -304,6 +320,7 @@ addLayer("Prestige", {
             effect() {
                 let eff = player.points.plus(1).log(8).pow(0.55).plus(1);
                 if (hasUpgrade('Prestige', 61)) eff = eff.times(upgradeEffect('Prestige', 61))
+                if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
                 return eff;
             },
             unlocked() {return hasUpgrade("Prestige", 33)},
@@ -366,6 +383,7 @@ addLayer("Prestige", {
             effect() {
                 effect = new Decimal(2.5)
                 if (hasUpgrade('Prestige', 34)) effect = effect.times(upgradeEffect('Prestige', 34))
+                if (hasUpgrade('Prestige', 63)) effect = effect.times(upgradeEffect('Prestige', 63))
                 return effect
               },   
             tooltip() {return "<span style='color:#ffffff'>Just a Prestige Boost</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
@@ -425,6 +443,7 @@ addLayer("Prestige", {
             cost: new Decimal(30000000),
             effect() {
                 let eff = player.Prestige.points.plus(1).log10().pow(0.75).plus(1);
+                if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
                 return eff;
             }, 
             unlocked() {return hasUpgrade("Level", 23)},
@@ -457,6 +476,7 @@ addLayer("Prestige", {
             cost: new Decimal(250000000),
             effect() {
                 let eff = player.points.plus(1).log(5).pow(0.50).plus(1);
+                if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
                 return eff;
             }, 
             unlocked() {return hasUpgrade("Prestige", 24)},
@@ -489,6 +509,7 @@ addLayer("Prestige", {
             cost: new Decimal(1.75e9),
             effect() {
                 let eff = player.points.plus(2).pow(0.25);
+                if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
                 return eff;
             },
             unlocked() {return hasUpgrade("Prestige", 34)},
@@ -558,6 +579,174 @@ addLayer("Prestige", {
                 }
             },
         },
+        62: {    
+            title: "Synergetic Recursion",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Synergetic Recursion</span></b><font size="2"><br>Self-Synergism is boosted based on it's own effect.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Prestige)+`<span style='color:#000000'> Prestige</span> and `+format(tmp[this.layer].upgrades[this.id].costs.Honor)+` Honor`},        
+            costs: {
+                Prestige: 3.25e16,
+                Honor: 30,
+              },
+              canAfford() {
+                return player.Prestige.points.gte(this.costs.Prestige)
+                    && player.Honor.points.gte(this.costs.Honor)
+              },
+              pay() {
+                player.Prestige.points = player.Prestige.points.minus(this.costs.Prestige);
+                player.Honor.points = player.Honor.points.minus(this.costs.Honor);
+              },
+              effect() {
+                let eff = upgradeEffect('Prestige', 31).pow(0.35).plus(1);
+                return eff;
+            },   
+            unlocked() {return hasUpgrade("Prestige", 61)},
+            tooltip() {return "<span style='color:#ffffff'>Synergetic Recursion</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#31aeb0',
+                    "width": "200px",
+            "height": "175px",
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#00fff7' ,
+                    "width": "200px",
+            "height": "175px",
+                    }
+                }
+            },
+        },
+        63: {    
+            title: "Prestigious Unity",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Prestigious Unity</span></b><font size="2"><br>Boost every upgrade on the first three rows based on Prestige.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Prestige)+`<span style='color:#000000'> Prestige</span> and `+format(tmp[this.layer].upgrades[this.id].costs.Honor)+` Honor`},        
+            costs: {
+                Prestige: 3.75e19,
+                Honor: 230,
+              },
+              canAfford() {
+                return player.Prestige.points.gte(this.costs.Prestige)
+                    && player.Honor.points.gte(this.costs.Honor)
+              },
+              pay() {
+                player.Prestige.points = player.Prestige.points.minus(this.costs.Prestige);
+                player.Honor.points = player.Honor.points.minus(this.costs.Honor);
+              },
+              effect() {
+                let eff = player.Prestige.points.plus(1).log(1000).pow(0.01);
+                return eff;
+            },
+            unlocked() {return hasUpgrade("Prestige", 62)},
+            tooltip() {return "<span style='color:#ffffff'>Prestigious Unity</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#31aeb0',
+                    "width": "200px",
+            "height": "175px",
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#00fff7' ,
+                    "width": "200px",
+            "height": "175px",
+                    }
+                }
+            },
+        },
+        64: {    
+            title: "Prestige-Infused Levels",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Prestige-Infused Levels</span></b><font size="2"><br>The Level effect is stronger based on Prestige and keep Self-Synergism on Honor reset.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Prestige)+`<span style='color:#000000'> Prestige</span> and `+format(tmp[this.layer].upgrades[this.id].costs.Honor)+` Honor`},        
+            costs: {
+                Prestige: 1e25,
+                Honor: 1500,
+              },
+              canAfford() {
+                return player.Prestige.points.gte(this.costs.Prestige)
+                    && player.Honor.points.gte(this.costs.Honor)
+              },
+              pay() {
+                player.Prestige.points = player.Prestige.points.minus(this.costs.Prestige);
+                player.Honor.points = player.Honor.points.minus(this.costs.Honor);
+              },
+              effect() {
+                let eff = player.Prestige.points.plus(1).pow(0.001);
+                return eff;
+            },
+            unlocked() {return hasUpgrade("Prestige", 63)},
+            tooltip() {return "<span style='color:#ffffff'>Prestige-Infused Levels</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#31aeb0',
+                    "width": "200px",
+            "height": "175px",
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#00fff7' ,
+                    "width": "200px",
+            "height": "175px",
+                    }
+                }
+            },
+        },
+        52: {    
+            title: "To the Next Rank",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>To the Next Rank</span></b><font size="2"><br>Unlocks Ranks (In the Honor tab).<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Honor)+`<span style='color:#000000'> Honor</span>`},        
+            costs: {
+                Prestige: 1,
+                Honor: 500000,
+              },
+              canAfford() {
+                return player.Prestige.points.gte(this.costs.Prestige)
+                    && player.Honor.points.gte(this.costs.Honor)
+              },
+              pay() {
+                player.Prestige.points = player.Prestige.points.minus(this.costs.Prestige);
+                player.Honor.points = player.Honor.points.minus(this.costs.Honor);
+              },
+            unlocked() {return hasUpgrade("Prestige", 64)},
+            tooltip() {return "<span style='color:#ffffff'>To the Next Rank</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+                    "width": "200px",
+            "height": "175px",
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "300px",
+            "height": "175px",
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#ffb233' ,
+                    "width": "300px",
+            "height": "175px",
+                    }
+                }
+            },
+        },
     },
     buyables: {
         rows: 5,
@@ -577,10 +766,10 @@ addLayer("Prestige", {
                         {"color": "#31aeb0", "font-size": "32px"}],
                 ['display-text',function(){return '<h4>You have <span style="color:#31aeb0">'+quickBigColor(format(player.Prestige.points),'#31aeb0') +' Prestige</span>.'}],
                 ["raw-html", function() {if (hasUpgrade("Level", 22)) return "<font size='4'>(+" + (format(getResetGain("Prestige"))) + " Prestige/s)"}],
+                ["raw-html", function() {if (player.Prestige.points.gte(1e33)) return "Prestige gain after 1e33 is affected by Slowdown, causing it to divide itself by <font size='3'><span style='color:#ff0000'> " + (format(tmp.Prestige.slowdown)) + "÷</span>."}],
                 "blank",
                 function() {if (!hasUpgrade("Level", 22)) return "prestige-button"},
                  "blank",
-
                         ["display-text",
                             function() {return "--------------------"},
                             {"color": "#31aeb0", "font-size": "32px"}],

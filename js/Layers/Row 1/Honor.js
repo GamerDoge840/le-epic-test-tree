@@ -26,6 +26,7 @@ addLayer("Honor", {
     exponent: 0.2, // Prestige currency exponent
     tooltip() {
         let tooltip = "<font size='3'>Honor<br>----------------<br> <font size='2'><span style='color:#faff92'> " +formatWhole(player.Honor.points)+" Honor</span>"
+        if(player.Rank.total.gte(1)) tooltip = tooltip + "<br><span style='color:#ffcd7a'>Rank "+formatWhole(player.Rank.points)+"</font>"
         return tooltip
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -348,7 +349,7 @@ addLayer("Honor", {
             fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Another Prestige Expansion</span></b><font size="2"><br>Unlocks another row of Prestige upgrades that cost both Prestige and Honor.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
             cost: new Decimal(25),
             unlocked() {return hasUpgrade("Honor", 32)},   
-            tooltip() {return "<span style='color:#ffffff'>Another Prestige Expansion</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>These upgrades are kept on Honor reset."},
+            tooltip() {return "<span style='color:#ffffff'>Another Prestige Expansion</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>These upgrades are kept on Honor reset, and buying this also allows you to keep Prestige Expansion on Honor reset."},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#faff92',
@@ -396,10 +397,12 @@ addLayer("Honor", {
                 "blank",
                 ["raw-html", function() {if (!hasUpgrade("Level", 31)) return 'To perform an Honor reset, you need the corresponding Level upgrade.'}],
                 function() {if (hasUpgrade("Level", 31)) return "prestige-button"},
+                
                  "blank",
                  ["display-text",
                     function() {return "--------------------"},
                     {"color": "#faff92", "font-size": "32px"}],
+                    
                     ["display-text",
                         function() {return "<span style='color:#31aeb0'>"+format(player.Prestige.points)+" Prestige</span>"},
                         {"color": "#faff92", "font-size": "19px"}],
@@ -428,6 +431,11 @@ addLayer("Honor", {
                     
             ]
             
+        },
+        "Rank": {
+            unlocked() {return hasUpgrade('Prestige', 52)},
+            buttonStyle: {"border-color": "#ffcd7a"},
+            embedLayer: 'Rank',
         },
     },
     infoboxes:{

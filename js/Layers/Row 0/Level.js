@@ -48,6 +48,7 @@ addLayer("Level", {
     power() {
         let power = new Decimal(1);
         if (hasUpgrade('Honor', 32)) power = power.times(upgradeEffect('Honor', 32))
+        if (hasUpgrade('Prestige', 64) && hasUpgrade('Prestige', 51)) power = power.times(upgradeEffect('Prestige', 64))
         return power;
     },
     effect() {
@@ -76,6 +77,7 @@ addLayer("Level", {
         if (hasUpgrade('Honor', 21)) keptUpgrades.push(13)
         if (hasUpgrade('Honor', 22)) keptUpgrades.push(21)
         if (hasUpgrade('Honor', 23)) keptUpgrades.push(22)
+        if (hasUpgrade('Honor', 33)) keptUpgrades.push(23)
         layerDataReset(this.layer);
         player[this.layer].upgrades.push(...keptUpgrades)
         player[this.layer].milestones.push(...keptMilestones)
