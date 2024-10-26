@@ -125,7 +125,7 @@ addLayer("Rank", {
         },
         2: {
             requirementDescription: "<font size='3'><b>Rank 3</b><font size='2'>",
-            effectDescription() {return '-----------------<br><font size="2">Just boost Prestige by a flat 1000x. This should help you slightly against that softcap.</span>'},
+            effectDescription() {return '-----------------<br><font size="2">Just boost Prestige by a flat 500x.</span>'},
             done() {return player.Rank.points.gte(3)},
             unlocked() {return hasMilestone("Rank", 1)},
             style() {
