@@ -40,7 +40,7 @@ addLayer("Prestige", {
         if (hasUpgrade('Level', 11)) mult = mult.times(upgradeEffect('Level', 11))
         if (hasUpgrade('Prestige', 24)) mult = mult.times(upgradeEffect('Prestige', 24))
         if (hasUpgrade('Honor', 11)) mult = mult.times(upgradeEffect('Honor', 11))
-        if (hasMilestone('Rank', 2)) mult = mult.times(1000)
+        if (hasMilestone('Rank', 2)) mult = mult.times(500)
         if (player.Prestige.points.gte(1e33)) mult = mult.dividedBy(tmp.Prestige.slowdown)
         if (hasUpgrade('Prestige', 52))
             mult = mult.times(tmp.Rank.effect);
