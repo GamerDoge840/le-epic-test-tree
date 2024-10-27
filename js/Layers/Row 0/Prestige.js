@@ -23,8 +23,13 @@ addLayer("Prestige", {
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.7, // Prestige currency exponent
+    slog() {
+        let cap = player.Prestige.points.pow(0.26);
+        return cap;
+    },
     slowdown() {
         let cap = player.Prestige.points.pow(0.35);
+        if (player.Prestige.points.gte(1e40)) cap = cap.times(tmp.Prestige.slog)
         return cap;
     },
     tooltip() {
@@ -122,10 +127,12 @@ addLayer("Prestige", {
                 if (hasUpgrade('Prestige', 42)) effect = effect.times(upgradeEffect('Prestige', 31).pow(0.30))
                 if (hasUpgrade('Prestige', 61)) effect = effect.times(upgradeEffect('Prestige', 61))
                 if (hasUpgrade('Prestige', 63)) effect = effect.times(upgradeEffect('Prestige', 63))
+                if (effect.gte(50000))
+                    effect = effect.cbrt().times(Math.pow(400, 2 / 3))
                 return effect
               },   
             unlocked() {return hasUpgrade("Prestige", 11)},
-            tooltip() {return "<span style='color:#ffffff'>The First Upgrade</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            tooltip() {return "<span style='color:#ffffff'>The First Upgrade</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Softcapped after 50,000x."},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#31aeb0',
@@ -225,10 +232,11 @@ addLayer("Prestige", {
                 if (hasUpgrade('Prestige', 61)) eff = eff.times(upgradeEffect('Prestige', 61))
                 if (hasUpgrade('Prestige', 62)) eff = eff.times(upgradeEffect('Prestige', 62))
                 if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
+                if (player.points.gte(1e75)) eff = eff.times(0.05)
                 return eff;
             },
             unlocked() {return hasUpgrade("Prestige", 23)},
-            tooltip() {return "<span style='color:#ffffff'>Self-Synergism</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>No incremental is complete without an upgrade like this."},
+            tooltip() {return "<span style='color:#ffffff'>Self-Synergism</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>No incremental is complete without an upgrade like this. Softcapped after 1.00e75 Essence."},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#31aeb0',
@@ -258,11 +266,12 @@ addLayer("Prestige", {
             effect() {
                 let eff = player.Prestige.points.plus(2).pow(0.1);
                 if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
-                //if (player.Prestige.points.gte(1000)) eff = eff.times(0.5)
+                if (eff.gte(15000))
+                    eff = eff.cbrt().times(Math.pow(400, 2 / 3))
                 return eff;
             },
             unlocked() {return hasUpgrade("Prestige", 31)},
-            tooltip() {return "<span style='color:#ffffff'>Prestige Boost</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Weaker after some Prestige."},
+            tooltip() {return "<span style='color:#ffffff'>Prestige Boost</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Effect softcapped after 15,000x."},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#31aeb0',
@@ -510,6 +519,7 @@ addLayer("Prestige", {
             effect() {
                 let eff = player.points.plus(2).pow(0.25);
                 if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
+                //if (eff.gte(1e19)) eff = eff.dividedBy(1e18)
                 return eff;
             },
             unlocked() {return hasUpgrade("Prestige", 34)},
@@ -767,6 +777,7 @@ addLayer("Prestige", {
                 ['display-text',function(){return '<h4>You have <span style="color:#31aeb0">'+quickBigColor(format(player.Prestige.points),'#31aeb0') +' Prestige</span>.'}],
                 ["raw-html", function() {if (hasUpgrade("Level", 22)) return "<font size='4'>(+" + (format(getResetGain("Prestige"))) + " Prestige/s)"}],
                 ["raw-html", function() {if (player.Prestige.points.gte(1e33)) return "Prestige gain after 1e33 is affected by Slowdown, causing it to divide itself by <font size='3'><span style='color:#ff0000'> " + (format(tmp.Prestige.slowdown)) + "÷</span>."}],
+                ["raw-html", function() {if (player.Prestige.points.gte(1e40)) return "Prestige gain after 1e40 is also affected by Slog, which boosts the softcap above this one by <font size='3'><span style='color:#ff0000'> " + (format(tmp.Prestige.slog)) + "x</span>. (Based on Prestige)"}],
                 "blank",
                 function() {if (!hasUpgrade("Level", 22)) return "prestige-button"},
                  "blank",
@@ -777,7 +788,7 @@ addLayer("Prestige", {
                             "blank",
                             ["upgrades", [2, 3, 4, 6]],
                             "blank",
-                            ["raw-html", function() {if (hasUpgrade("Honor", 33)) return "<span style='color:#faff92'>"+format(player.Honor.points)+" current Honor</span>"}],
+                            ["raw-html", function() {if (hasUpgrade("Honor", 33)) return "<span style='color:#faff92'>"+format(player.Honor.points)+" Honor</span>"}],
                             "blank",
                             ["upgrades", [5]],
                     

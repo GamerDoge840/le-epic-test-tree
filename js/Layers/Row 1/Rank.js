@@ -28,6 +28,7 @@ addLayer("Rank", {
     exponent: 1, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (hasMilestone('Rank', 5)) mult = mult.times(100)
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -141,6 +142,60 @@ addLayer("Rank", {
                     }
                 }
         },
+        3: {
+            requirementDescription: "<font size='3'><b>Rank 4</b><font size='2'>",
+            effectDescription() {return '-----------------<br><font size="2">Passively generate 5% of Honor gain on reset every second.</span>'},
+            done() {return player.Rank.points.gte(4)},
+            unlocked() {return hasMilestone("Rank", 2)},
+            style() {
+                if (hasMilestone(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else return {
+                    'background-color': '#bf8f8f',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)'
+                    }
+                }
+        },
+        4: {
+            requirementDescription: "<font size='3'><b>Rank 5</b><font size='2'>",
+            effectDescription() {return '-----------------<br><font size="2">Passive Honor generation increased to 25%.</span>'},
+            done() {return player.Rank.points.gte(5)},
+            unlocked() {return hasMilestone("Rank", 3)},
+            style() {
+                if (hasMilestone(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else return {
+                    'background-color': '#bf8f8f',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)'
+                    }
+                }
+        },
+        5: {
+            requirementDescription: "<font size='3'><b>Rank 7</b><font size='2'>",
+            effectDescription() {return '-----------------<br><font size="2">Passive Honor generation increased to 100%, remove the ability to perform the Honor reset. <br>However, Ranks suffer a price jump and become 100 times more expensive.</span>'},
+            done() {return player.Rank.points.gte(7)},
+            unlocked() {return hasMilestone("Rank", 4)},
+            style() {
+                if (hasMilestone(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else return {
+                    'background-color': '#bf8f8f',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)'
+                    }
+                }
+        },
     },
      tabFormat: [
         ["display-text",
@@ -151,6 +206,7 @@ addLayer("Rank", {
             {"font-size": "14px"}],
             "blank",
             ['display-text',function(){return '<h4><span style="color:#faff92">'+quickBigColor(format(player.Honor.points),'#faff92') +' Honor</span>'}],
+            ["raw-html", function() {if (hasMilestone("Rank", 5)) return "<font size='5'>(+" + (format(getResetGain("Honor"))) + " Honor/s)"}],
         ["display-text",
             function() {return "--------------------"},
             {"color": "#ffcd7a", "font-size": "32px"}],        

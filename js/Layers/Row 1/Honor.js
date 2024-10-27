@@ -38,8 +38,12 @@ addLayer("Honor", {
     },
     row: 1, // Row the layer is in on the tree (0 is the first row)
     layerShown(){return hasUpgrade("Level", 31) || player.Honor.total.gte(1)},
-    //passiveGeneration() {
-    //},
+    passiveGeneration() {
+        if (hasMilestone('Rank', 5)) return 1
+        if (hasMilestone('Rank', 4)) return 0.25
+        if (hasMilestone('Rank', 3)) return 0.05
+	return 0
+    },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row <= this.row) return;
         let keptUpgrades = []
@@ -313,9 +317,9 @@ addLayer("Honor", {
             unlocked() {return hasUpgrade("Honor", 31)},
             effect() {
                 let eff = player.Honor.total.plus(1).log(30).pow(1.10);
-                return eff;
+                return eff.min(7);
             },      
-            tooltip() {return "<span style='color:#ffffff'>Honored Levels</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            tooltip() {return "<span style='color:#ffffff'>Honored Levels</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Hardcapped at 7.00x"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#faff92',
@@ -393,11 +397,10 @@ addLayer("Honor", {
                     function() {return "--------------------"},
                     {"color": "#faff92", "font-size": "32px"}],
                 ['display-text',function(){return '<h4>You have <span style="color:#faff92">'+quickBigColor(format(player.Honor.points),'#faff92') +' Honor</span>.'}],
-                //["raw-html", function() {if (hasUpgrade("Level", 22)) return "<font size='5'>(+" + (format(getResetGain("Prestige"))) + "/s)"}],
+                ["raw-html", function() {if (hasMilestone("Rank", 5)) return "<font size='5'>(+" + (format(getResetGain("Honor"))) + " Honor/s)"}],
                 "blank",
-                ["raw-html", function() {if (!hasUpgrade("Level", 31)) return 'To perform an Honor reset, you need the corresponding Level upgrade.'}],
-                function() {if (hasUpgrade("Level", 31)) return "prestige-button"},
-                
+                ["raw-html", function() {if (!hasUpgrade("Level", 31) && !hasMilestone("Rank", 5)) return 'To perform an Honor reset, you need the corresponding Level upgrade.'}],
+                function() {if (hasUpgrade("Level", 31) && !hasMilestone("Rank", 5) ) return "prestige-button"},
                  "blank",
                  ["display-text",
                     function() {return "--------------------"},

@@ -191,6 +191,28 @@ addLayer("ach", {
                 }
             }
         },
+        33:{
+			name: "[15]<br><span style='color:#ffcd7a'>Ranks II</span>",
+            done() {return player.Rank.points.gte(4)},
+            tooltip() {return "Reach Rank 4.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffcd7a",
+                    "border-width": "3px"
+                }
+            }
+        },
+        34:{
+			name: "[16]<br><span style='color:#31aeb0'>Age of Softcaps</span>",
+            done() {return player.Prestige.points.gte(1e40)},
+            tooltip() {return "Encounter another incredible softcap.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#31aeb0",
+                    "border-width": "3px"
+                }
+            }
+        },
     },
     
     tabFormat: {
