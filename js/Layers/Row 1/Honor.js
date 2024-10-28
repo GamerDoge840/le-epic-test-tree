@@ -27,10 +27,13 @@ addLayer("Honor", {
     tooltip() {
         let tooltip = "<font size='3'>Honor<br>----------------<br> <font size='2'><span style='color:#faff92'> " +formatWhole(player.Honor.points)+" Honor</span>"
         if(player.Rank.total.gte(1)) tooltip = tooltip + "<br><span style='color:#ffcd7a'>Rank "+formatWhole(player.Rank.points)+"</font>"
+        if(player.Energy.total.gte(1)) tooltip = tooltip + "<br><span style='color:#c1ffee'>"+formatWhole(player.Energy.points)+" Energy</font>"
+
         return tooltip
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (hasMilestone('Rank', 8)) mult = mult.times(tmp.Rank.milestones[8].effect)	
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -382,6 +385,34 @@ addLayer("Honor", {
                 }
             },
         },
+        61: {    
+            title: "Energy Generator",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Energy Generator</span></b><font size="2"><br>Unlocks the Energy tab in this layer to help with your Prestige problem.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
+            cost: new Decimal(1.20e11),
+            unlocked() {return hasMilestone("Rank", 9)},
+            tooltip() {return "<span style='color:#ffffff'>Energy Generator</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#c1ffee',
+                    "width": "200px",
+            "height": "175px",
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "300px",
+            "height": "175px",
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#7fffdb' ,
+                    "width": "300px",
+            "height": "175px",
+                    }
+                }
+            },
+        },
     },
     buyables: {
         rows: 5,
@@ -428,6 +459,8 @@ addLayer("Honor", {
                                 function() {return "============================="},
                                 {"color": "#faff92", "font-size": "32px"}],
                             ["upgrades", [1, 2, 3]],
+                            "blank",
+                            ["upgrades", [6]],
                             ["display-text",
                                 function() {return "============================="},
                                 {"color": "#faff92", "font-size": "32px"}],
@@ -439,6 +472,11 @@ addLayer("Honor", {
             unlocked() {return hasUpgrade('Prestige', 52)},
             buttonStyle: {"border-color": "#ffcd7a"},
             embedLayer: 'Rank',
+        },
+        "Energy": {
+            unlocked() {return hasUpgrade('Honor', 61)},
+            buttonStyle: {"border-color": "#c1ffee"},
+            embedLayer: 'Energy',
         },
     },
     infoboxes:{

@@ -27,10 +27,15 @@ addLayer("Level", {
     baseAmount() {return player.Prestige.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 1, // Prestige currency exponent
+    fartherscaling() {
+        let far = player.Level.points.pow(1.10);
+        return far;
+    },
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if (hasUpgrade('Prestige', 44)) mult = mult.dividedBy(upgradeEffect('Prestige', 44))
         if (hasUpgrade('Honor', 31)) mult = mult.dividedBy(upgradeEffect('Honor', 31))
+        if (player.Level.points.gte(230)) mult = mult.times(tmp.Level.fartherscaling)
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -299,6 +304,7 @@ addLayer("Level", {
                 ["display-text",
                     function() {return "which boosts Essence by <span style='color:#69c0f6'> "+ format(tmp.Level.effect) +"x</span>."},
                     {"font-size": "16px"}],
+                    ["raw-html", function() {if (player.Level.points.gte(230)) return "After Level 230, levels are <font size='3'><span style='color:#ff0000'> " + (format(tmp.Level.fartherscaling)) + "x</span> harder to get (Based on Levels)"}],
                 "blank",
                  "prestige-button",
                  "blank",

@@ -25,6 +25,8 @@ addLayer("Prestige", {
     exponent: 0.7, // Prestige currency exponent
     slog() {
         let cap = player.Prestige.points.pow(0.26);
+        if (hasMilestone("Rank", 6)) cap = cap.dividedBy(10)
+        if (hasMilestone("Rank", 7)) cap = cap.dividedBy(250)
         return cap;
     },
     slowdown() {
@@ -49,6 +51,8 @@ addLayer("Prestige", {
         if (player.Prestige.points.gte(1e33)) mult = mult.dividedBy(tmp.Prestige.slowdown)
         if (hasUpgrade('Prestige', 52))
             mult = mult.times(tmp.Rank.effect);
+        if (hasUpgrade('Honor', 61))
+            mult = mult.times(tmp.Energy.effect);
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -439,7 +443,7 @@ addLayer("Prestige", {
                 }
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#d3ff81' ,
+                    'background-color': '#00fff7' ,
                     "width": "300px",
             "height": "175px",
                     }
@@ -520,10 +524,10 @@ addLayer("Prestige", {
                 let eff = player.points.plus(2).pow(0.25);
                 if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
                 //if (eff.gte(1e19)) eff = eff.dividedBy(1e18)
-                return eff;
+                return eff.min(1e21);
             },
             unlocked() {return hasUpgrade("Prestige", 34)},
-            tooltip() {return "<span style='color:#ffffff'>Prestige-Powered Levels</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            tooltip() {return "<span style='color:#ffffff'>Prestige-Powered Levels</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Hardcapped at 1e21"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#31aeb0',
@@ -789,6 +793,9 @@ addLayer("Prestige", {
                             ["upgrades", [2, 3, 4, 6]],
                             "blank",
                             ["raw-html", function() {if (hasUpgrade("Honor", 33)) return "<span style='color:#faff92'>"+format(player.Honor.points)+" Honor</span>"}],
+                            ["display-text",
+                                function() {return "--------------------"},
+                                {"color": "#31aeb0", "font-size": "32px"}],
                             "blank",
                             ["upgrades", [5]],
                     

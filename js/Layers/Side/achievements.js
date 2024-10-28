@@ -213,6 +213,50 @@ addLayer("ach", {
                 }
             }
         },
+        35:{
+			name: "[17]<br><span style='color:#ffcd7a'>Ranks III</span>",
+            done() {return player.Rank.points.gte(10)},
+            tooltip() {return "Reach Rank 10.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffcd7a",
+                    "border-width": "3px"
+                }
+            }
+        },
+        36:{
+			name: "[18]<br><span style='color:#69c0f6'>Not even Levels are safe</span>",
+            done() {return player.Level.points.gte(230)},
+            tooltip() {return "Encounter a Level softcap.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#69c0f6",
+                    "border-width": "3px"
+                }
+            }
+        },
+        41:{
+			name: "[19]<br><span style='color:#31aeb0'>Master of Prestige</span>",
+            done() {return player.Prestige.points.gte(10000) && !hasUpgrade("Prestige", 11)},
+            tooltip() {return "Get 10,000 Prestige without Essence generation enabled.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#31aeb0",
+                    "border-width": "3px"
+                }
+            }
+        },
+        42:{
+			name: "[20]<br><span style='color:#c1ffee'>Energy I</span>",
+            done() {return player.Energy.points.gte(1)},
+            tooltip() {return "Start generating Energy.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#c1ffee",
+                    "border-width": "3px"
+                }
+            }
+        },
     },
     
     tabFormat: {
@@ -226,7 +270,7 @@ addLayer("ach", {
                     {"color": "Gray", "font-size": "27px"}],
                     "blank",
                     "blank",
-                    ["achievements", [1, 2, 3, 4, 5, 10]],
+                    ["achievements", [1, 2, 3, 4, 5, 6, 10]],
                     "blank",
             ],
         },

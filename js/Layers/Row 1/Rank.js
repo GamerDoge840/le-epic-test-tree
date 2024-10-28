@@ -196,6 +196,82 @@ addLayer("Rank", {
                     }
                 }
         },
+        6: {
+            requirementDescription: "<font size='3'><b>Rank 8</b><font size='2'>",
+            effectDescription() {return '-----------------<br><font size="2">Slightly weaken the second Prestige softcap.</span>'},
+            done() {return player.Rank.points.gte(8)},
+            unlocked() {return hasMilestone("Rank", 5)},
+            style() {
+                if (hasMilestone(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else return {
+                    'background-color': '#bf8f8f',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)'
+                    }
+                }
+        },
+        7: {
+            requirementDescription: "<font size='3'><b>Rank 10</b><font size='2'>",
+            effectDescription() {return '-----------------<br><font size="2">Further weaken the second Prestige softcap.</span>'},
+            done() {return player.Rank.points.gte(10)},
+            unlocked() {return hasMilestone("Rank", 6)},
+            style() {
+                if (hasMilestone(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else return {
+                    'background-color': '#bf8f8f',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)'
+                    }
+                }
+        },
+        8: {
+            requirementDescription: "<font size='3'><b>Rank 12</b><font size='2'>",
+            effectDescription() {return '-----------------<br><font size="2">Each Rank boosts Honor gain.</span><br>-----------------<br>Currently: '+format(+format(tmp.Rank.milestones[this.layer, this.id].effect))+'x'},
+            done() {return player.Rank.points.gte(12)},
+            effect() {
+                let eff = player.Rank.points.dividedBy(10).plus(1);
+                return eff;
+            },  
+            unlocked() {return hasMilestone("Rank", 7)},
+            style() {
+                if (hasMilestone(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else return {
+                    'background-color': '#bf8f8f',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)'
+                    }
+                }
+        },
+        9: {
+            requirementDescription: "<font size='3'><b>Rank 13</b><font size='2'>",
+            effectDescription() {return '-----------------<br><font size="2">Unlocks something new in the Honor upgrade tab.</span>'},
+            done() {return player.Rank.points.gte(13)},
+            unlocked() {return hasMilestone("Rank", 8)},
+            style() {
+                if (hasMilestone(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else return {
+                    'background-color': '#bf8f8f',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)'
+                    }
+                }
+        },
     },
      tabFormat: [
         ["display-text",
