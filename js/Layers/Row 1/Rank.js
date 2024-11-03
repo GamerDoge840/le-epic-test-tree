@@ -19,6 +19,7 @@ addLayer("Rank", {
     requires: new Decimal("100000"), // Can be a function that takes requirement increases into account
     resource: "Ranks", // Name of prestige currency
     resetDescription: "Rank up.<br>----------<br>",
+    resetsNothing() {return hasMilestone("Rank", 11)},
     autoUpgrade() {return hasUpgrade("Honor", 101)},
     baseResource: "Honor", // Name of resource prestige is based on
     autoPrestige() {return hasUpgrade("Honor", 101)},
@@ -29,6 +30,7 @@ addLayer("Rank", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if (hasMilestone('Rank', 5)) mult = mult.times(100)
+        if (hasUpgrade('Honor', 34)) mult = mult.dividedBy(upgradeEffect('Honor', 34))
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -259,6 +261,82 @@ addLayer("Rank", {
             effectDescription() {return '-----------------<br><font size="2">Unlocks something new in the Honor upgrade tab.</span>'},
             done() {return player.Rank.points.gte(13)},
             unlocked() {return hasMilestone("Rank", 8)},
+            style() {
+                if (hasMilestone(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else return {
+                    'background-color': '#bf8f8f',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)'
+                    }
+                }
+        },
+        10: {
+            requirementDescription: "<font size='3'><b>Rank 15</b><font size='2'>",
+            effectDescription() {return '-----------------<br><font size="2">Each Rank boosts Energy gain.</span><br>-----------------<br>Currently: '+format(+format(tmp.Rank.milestones[this.layer, this.id].effect))+'x'},
+            done() {return player.Rank.points.gte(15)},
+            effect() {
+                let eff = player.Rank.points.dividedBy(7).plus(1);
+                return eff;
+            },  
+            unlocked() {return hasMilestone("Rank", 9)},
+            style() {
+                if (hasMilestone(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else return {
+                    'background-color': '#bf8f8f',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)'
+                    }
+                }
+        },
+        11: {
+            requirementDescription: "<font size='3'><b>Rank 22</b><font size='2'>",
+            effectDescription() {return '-----------------<br><font size="2">Ranking Up no longer resets anything.</span>'},
+            done() {return player.Rank.points.gte(22)},
+            unlocked() {return hasMilestone("Rank", 10)},
+            style() {
+                if (hasMilestone(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else return {
+                    'background-color': '#bf8f8f',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)'
+                    }
+                }
+        },
+        12: {
+            requirementDescription: "<font size='3'><b>Rank 31</b><font size='2'>",
+            effectDescription() {return '-----------------<br><font size="2">Completely remove the second Prestige softcap.</span>'},
+            done() {return player.Rank.points.gte(31)},
+            unlocked() {return hasMilestone("Rank", 11)},
+            style() {
+                if (hasMilestone(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else return {
+                    'background-color': '#bf8f8f',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)'
+                    }
+                }
+        },
+        13: {
+            requirementDescription: "<font size='3'><b>Rank 50</b><font size='2'>",
+            effectDescription() {return '-----------------<br><font size="2">Unlocks Glory.</span>'},
+            done() {return player.Rank.points.gte(50)},
+            unlocked() {return hasMilestone("Rank", 12)},
             style() {
                 if (hasMilestone(this.layer, this.id)) return {
                     'background-color': '#ffcd7a',

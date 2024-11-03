@@ -33,14 +33,18 @@ addLayer("Honor", {
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-        if (hasMilestone('Rank', 8)) mult = mult.times(tmp.Rank.milestones[8].effect)	
+        if (hasMilestone('Rank', 8)) mult = mult.times(tmp.Rank.milestones[8].effect)
+        if (hasUpgrade('Energy', 33)) mult = mult.times(upgradeEffect('Energy', 33))
+        if (hasUpgrade('Honor', 14)) mult = mult.times(upgradeEffect('Honor', 14))
+        if (hasUpgrade('Honor', 24)) mult = mult.times(upgradeEffect('Honor', 24))
+        if (hasUpgrade('Glory', 11)) mult = mult.times(3)
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
     row: 1, // Row the layer is in on the tree (0 is the first row)
-    layerShown(){return hasUpgrade("Level", 31) || player.Honor.total.gte(1)},
+    layerShown(){return hasUpgrade("Level", 31) || player.Honor.total.gte(1) || hasUpgrade("Glory", 11)},
     passiveGeneration() {
         if (hasMilestone('Rank', 5)) return 1
         if (hasMilestone('Rank', 4)) return 0.25
@@ -413,6 +417,120 @@ addLayer("Honor", {
                 }
             },
         },
+        14: {    
+            title: "Honored Synergism",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Honored Synergism</span></b><font size="2"><br>Honor boosts itself.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
+            cost: new Decimal(2.60e12),
+            unlocked() {return hasUpgrade("Energy", 43)},   
+            effect() {
+                let eff = player.Honor.points.plus(1).log10().pow(0.75).plus(1);
+                return eff;
+            },    
+            tooltip() {return "<span style='color:#ffffff'>Honored Synergism</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#faff92',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        24: {    
+            title: "Essence-Infused Honor",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Essence-Infused Honor</span></b><font size="2"><br>Boost Honor based on Essence.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
+            cost: new Decimal(7.00e12),
+            unlocked() {return hasUpgrade("Honor", 14)},   
+            effect() {
+                let eff = player.points.plus(1).log(8).pow(0.45).plus(1);
+                return eff;
+            },  
+            tooltip() {return "<span style='color:#ffffff'>Essence-Infused Honor</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#faff92',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        34: {    
+            title: "Honored Ranks",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Honored Ranks</span></b><font size="2"><br>Divide the Rank requirement based on Honor.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`÷<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
+            cost: new Decimal(1.00e14),
+            unlocked() {return hasUpgrade("Honor", 24)},   
+            effect() {
+                let eff = player.Honor.points.plus(1).log(30).pow(1.25);
+                return eff;
+            },      
+            tooltip() {return "<span style='color:#ffffff'>Honored Ranks</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#faff92',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
     },
     buyables: {
         rows: 5,
@@ -474,7 +592,7 @@ addLayer("Honor", {
             embedLayer: 'Rank',
         },
         "Energy": {
-            unlocked() {return hasUpgrade('Honor', 61)},
+            unlocked() {return hasUpgrade('Honor', 61) || hasUpgrade("Glory", 11)},
             buttonStyle: {"border-color": "#c1ffee"},
             embedLayer: 'Energy',
         },

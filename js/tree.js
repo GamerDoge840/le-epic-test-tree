@@ -27,6 +27,7 @@ addLayer("tree-tab", {
     tabFormat: [["tree", [
         ['Prestige'],
         ['Honor'],
+        ['Glory'],
         ],
     ]],
     previousTab: "",

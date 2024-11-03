@@ -27,11 +27,12 @@ addLayer("Prestige", {
         let cap = player.Prestige.points.pow(0.26);
         if (hasMilestone("Rank", 6)) cap = cap.dividedBy(10)
         if (hasMilestone("Rank", 7)) cap = cap.dividedBy(250)
+        if (hasUpgrade('Energy', 41)) cap = cap.dividedBy(upgradeEffect('Energy', 41))
         return cap;
     },
     slowdown() {
         let cap = player.Prestige.points.pow(0.35);
-        if (player.Prestige.points.gte(1e40)) cap = cap.times(tmp.Prestige.slog)
+        if (player.Prestige.points.gte(1e40) && !hasMilestone("Rank", 12)) cap = cap.times(tmp.Prestige.slog)
         return cap;
     },
     tooltip() {
@@ -51,7 +52,7 @@ addLayer("Prestige", {
         if (player.Prestige.points.gte(1e33)) mult = mult.dividedBy(tmp.Prestige.slowdown)
         if (hasUpgrade('Prestige', 52))
             mult = mult.times(tmp.Rank.effect);
-        if (hasUpgrade('Honor', 61))
+        if (hasUpgrade('Honor', 61) || hasUpgrade('Glory', 11))
             mult = mult.times(tmp.Energy.effect);
         return mult 
     },
@@ -781,7 +782,7 @@ addLayer("Prestige", {
                 ['display-text',function(){return '<h4>You have <span style="color:#31aeb0">'+quickBigColor(format(player.Prestige.points),'#31aeb0') +' Prestige</span>.'}],
                 ["raw-html", function() {if (hasUpgrade("Level", 22)) return "<font size='4'>(+" + (format(getResetGain("Prestige"))) + " Prestige/s)"}],
                 ["raw-html", function() {if (player.Prestige.points.gte(1e33)) return "Prestige gain after 1e33 is affected by Slowdown, causing it to divide itself by <font size='3'><span style='color:#ff0000'> " + (format(tmp.Prestige.slowdown)) + "÷</span>."}],
-                ["raw-html", function() {if (player.Prestige.points.gte(1e40)) return "Prestige gain after 1e40 is also affected by Slog, which boosts the softcap above this one by <font size='3'><span style='color:#ff0000'> " + (format(tmp.Prestige.slog)) + "x</span>. (Based on Prestige)"}],
+                ["raw-html", function() {if (player.Prestige.points.gte(1e40) && !hasMilestone("Rank", 12)) return "Prestige gain after 1e40 is also affected by Slog, which boosts the softcap above this one by <font size='3'><span style='color:#ff0000'> " + (format(tmp.Prestige.slog)) + "x</span>. (Based on Prestige)"}],
                 "blank",
                 function() {if (!hasUpgrade("Level", 22)) return "prestige-button"},
                  "blank",

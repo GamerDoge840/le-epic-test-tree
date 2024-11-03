@@ -257,6 +257,72 @@ addLayer("ach", {
                 }
             }
         },
+        43:{
+			name: "[21]<br><span style='color:#c1ffee'>Energy II</span>",
+            done() {return hasUpgrade("Energy", 23)},
+            tooltip() {return "Buy the first row of Energy upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#c1ffee",
+                    "border-width": "3px"
+                }
+            }
+        },
+        44:{
+			name: "[22]<br><span style='color:#c1ffee'>Energy III</span>",
+            done() {return hasUpgrade("Energy", 33)},
+            tooltip() {return "Buy the second row of Energy upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#c1ffee",
+                    "border-width": "3px"
+                }
+            }
+        },
+        45:{
+			name: "[23]<br><span style='color:#c1ffee'>Energy IV</span>",
+            done() {return hasUpgrade("Energy", 43)},
+            tooltip() {return "Buy the third row of Energy upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#c1ffee",
+                    "border-width": "3px"
+                }
+            }
+        },
+        46:{
+			name: "[24]<br><span style='color:#faff92'>Honor IV</span>",
+            done() {return hasUpgrade("Honor", 34)},
+            tooltip() {return "Buy the fourth column of Honor upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#faff92",
+                    "border-width": "3px"
+                }
+            }
+        },
+        51:{
+			name: "[25]<br><span style='color:#ffcd7a'>Ranks IV</span>",
+            done() {return player.Rank.points.gte(31)},
+            tooltip() {return "Reach Rank 31.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffcd7a",
+                    "border-width": "3px"
+                }
+            }
+        },
+        52:{
+			name: "[26]<br><span style='color:#ffcd7a'>Glorious Age</span>",
+            done() {return player.Glory.total.gte(1)},
+            tooltip() {return "Revel in Glory for the first time.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#faff92",
+                    "border-width": "3px"
+                }
+            }
+        },
     },
     
     tabFormat: {
