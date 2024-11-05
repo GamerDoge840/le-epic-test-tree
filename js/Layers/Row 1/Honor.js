@@ -319,14 +319,14 @@ addLayer("Honor", {
         },
         32: {    
             title: "Honored Levels",
-            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Honored Levels</span></b><font size="2"><br>The Level effect is stronger based on total Honor.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Honored Levels</span></b><font size="2"><br>The Level effect is raised based on total Honor.<br>-------------<br>Currently: ^`+format(upgradeEffect(this.layer, this.id))+`<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
             cost: new Decimal(15),
             unlocked() {return hasUpgrade("Honor", 31)},
             effect() {
                 let eff = player.Honor.total.plus(1).log(30).pow(1.10);
                 return eff.min(7);
             },      
-            tooltip() {return "<span style='color:#ffffff'>Honored Levels</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Hardcapped at 7.00x"},
+            tooltip() {return "<span style='color:#ffffff'>Honored Levels</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>This may be overpowered. Hardcapped at ^7.00"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#faff92',

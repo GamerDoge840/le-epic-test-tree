@@ -416,7 +416,7 @@ addLayer("Energy", {
             title: "Honor Expansion",
             fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Honor Expansion</span></b><font size="2"><br>Unlock a new column of Honor upgrades.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Energy</span>`},        
             cost: new Decimal(20000000),
-            unlocked() {return hasUpgrade("Energy", 41)},
+            unlocked() {return hasUpgrade("Energy", 42)},
             tooltip() {return "<span style='color:#ffffff'>Honor Expansion</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {

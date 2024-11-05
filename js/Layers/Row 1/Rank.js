@@ -88,7 +88,7 @@ addLayer("Rank", {
     milestones: {
         0: {
             requirementDescription: "<font size='3'><b>Rank 1</b><font size='2'>",
-            effectDescription() {return '-----------------<br><font size="2">Keep Levels unlocked upon Honor reset.</span>'},
+            effectDescription() {return '-----------------<br><font size="2">Keep Levels unlocked upon Tier 1 reset.</span>'},
             done() {return player.Rank.points.gte(1)},
             unlocked() {return hasUpgrade("Prestige", 52)},
             style() {

@@ -315,7 +315,7 @@ addLayer("ach", {
         52:{
 			name: "[26]<br><span style='color:#ffcd7a'>Glorious Age</span>",
             done() {return player.Glory.total.gte(1)},
-            tooltip() {return "Revel in Glory for the first time.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            tooltip() {return "Revel in Glory for the first time.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>The fields pulse with Glory."},
             style() {
                 return {
                     "border-color": "#faff92",

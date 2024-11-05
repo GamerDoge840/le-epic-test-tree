@@ -58,15 +58,15 @@ addLayer("Glory", {
         cols: 6,
         11: {    
             title: "Glorious Power",
-            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Glorious Power</span></b><font size="2"><br>Triple Honor gain and retain access to Energy.<br>Double Energy gain, and The Energy Generator upgrade instead boosts it by 10x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Glory</span>`},        
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Glorious Power</span></b><font size="2"><br>Triple Honor gain and retain access to Energy.<br><br>Double Energy gain, and the Activate Generator upgrade instead boosts it by 10x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Glory</span>`},        
             cost: new Decimal(1),
             unlocked() {return player.Glory.total.gte(1)},
             tooltip() {return "<span style='color:#ffffff'>Glorious Power</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Note that you need at least 1 Prestige to generate any Energy."},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#98a86c',
-                    "width": "200px",
-            "height": "175px",
+                    "width": "225px",
+            "height": "195px",
             "background-image": 'url("resources/glorygradient.png")',        
                     'background-position': 'center center',
                      'background-size': '160%',
