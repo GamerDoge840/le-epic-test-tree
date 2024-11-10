@@ -93,7 +93,123 @@ addLayer("Glory", {
                 }
             },
         },
+        21: {    
+            title: "Glorious Energy",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Glorious Energy</span></b><font size="2"><br>Every total Glory point doubles Energy gain (Until 10 Glory), you can reset for max Ranks, and remove the penalty of the Rank 7 milestone.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Glory</span>`},        
+            cost: new Decimal(1),
+            effect() {
+                let eff = player.Glory.total.pow_base(2);
+                return eff.min(10000);
+            }, 
+            unlocked() {return hasUpgrade("Glory", 11)},
+            tooltip() {return "<span style='color:#ffffff'>Glorious Energy</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#98a86c',
+                    "width": "200px",
+            "height": "195px",
+            "background-image": 'url("resources/glorygradient.png")',        
+                    'background-position': 'center center',
+                     'background-size': '160%',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "195px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "250px",
+            "height": "195px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        22: {    
+            title: "Prestigious Automator",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Prestigious Automator</span></b><font size="2"><br>Autobuy Prestige upgrades, and passive Prestige generation is always enabled.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Glory</span>`},        
+            cost: new Decimal(1),
+            unlocked() {return hasUpgrade("Glory", 21)},
+            tooltip() {return "<span style='color:#ffffff'>Prestigious Automator</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#98a86c',
+                    "width": "200px",
+            "height": "175px",
+            "background-image": 'url("resources/glorygradient.png")',        
+                    'background-position': 'center center',
+                     'background-size': '160%',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "250px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        23: {    
+            title: "True Potential",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>True Potential</span></b><font size="2"><br>Unlocks two new Energy upgrades (That are kept on Glory reset).<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Glory</span>`},        
+            cost: new Decimal(1),
+            unlocked() {return hasUpgrade("Glory", 22)},
+            tooltip() {return "<span style='color:#ffffff'>True Potential</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#98a86c',
+                    "width": "200px",
+            "height": "175px",
+            "background-image": 'url("resources/glorygradient.png")',        
+                    'background-position': 'center center',
+                     'background-size': '160%',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "250px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
     },
+    
     buyables: {
         rows: 5,
         cols: 4,

@@ -23,13 +23,13 @@ addLayer("Rank", {
     autoUpgrade() {return hasUpgrade("Honor", 101)},
     baseResource: "Honor", // Name of resource prestige is based on
     autoPrestige() {return hasUpgrade("Honor", 101)},
-    canBuyMax() {return hasUpgrade("Honor", 101)},
+    canBuyMax() {return hasUpgrade("Glory", 21)},
     baseAmount() {return player.Honor.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 1, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-        if (hasMilestone('Rank', 5)) mult = mult.times(100)
+        if (hasMilestone('Rank', 5) && !hasUpgrade("Glory", 21)) mult = mult.times(100)
         if (hasUpgrade('Honor', 34)) mult = mult.dividedBy(upgradeEffect('Honor', 34))
         return mult 
     },

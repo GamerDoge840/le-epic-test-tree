@@ -38,6 +38,7 @@ addLayer("Honor", {
         if (hasUpgrade('Honor', 14)) mult = mult.times(upgradeEffect('Honor', 14))
         if (hasUpgrade('Honor', 24)) mult = mult.times(upgradeEffect('Honor', 24))
         if (hasUpgrade('Glory', 11)) mult = mult.times(3)
+        if (hasUpgrade('Energy', 41) && hasUpgrade('Energy', 51)) mult = mult.times(hasUpgrade('Energy', 41))
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

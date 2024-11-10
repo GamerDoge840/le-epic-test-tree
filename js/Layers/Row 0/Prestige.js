@@ -18,6 +18,7 @@ addLayer("Prestige", {
     },
     requires: new Decimal("0.025"), // Can be a function that takes requirement increases into account
     resource: "Prestige", // Name of prestige currency
+    autoUpgrade() {return hasUpgrade('Glory', 22)},
     resetDescription: "Form Essence into Prestige.<br>----------<br>",
     baseResource: "Essence", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
@@ -62,7 +63,7 @@ addLayer("Prestige", {
     row: 0, // Row the layer is in on the tree (0 is the first row)
     layerShown(){return true},
     passiveGeneration() {
-        if (hasUpgrade('Level', 22)) return 1
+        if (hasUpgrade('Level', 22) || hasUpgrade("Glory", 22)) return 1
         if (hasUpgrade('Level', 21)) return 0.25
         if (hasUpgrade('Level', 13)) return 0.05
 	return 0
@@ -780,7 +781,7 @@ addLayer("Prestige", {
                         function() {return "--------------------"},
                         {"color": "#31aeb0", "font-size": "32px"}],
                 ['display-text',function(){return '<h4>You have <span style="color:#31aeb0">'+quickBigColor(format(player.Prestige.points),'#31aeb0') +' Prestige</span>.'}],
-                ["raw-html", function() {if (hasUpgrade("Level", 22)) return "<font size='4'>(+" + (format(getResetGain("Prestige"))) + " Prestige/s)"}],
+                ["raw-html", function() {if (hasUpgrade("Level", 22) || hasUpgrade("Glory", 22)) return "<font size='4'>(+" + (format(getResetGain("Prestige"))) + " Prestige/s)"}],
                 ["raw-html", function() {if (player.Prestige.points.gte(1e33)) return "Prestige gain after 1e33 is affected by Slowdown, causing it to divide itself by <font size='3'><span style='color:#ff0000'> " + (format(tmp.Prestige.slowdown)) + "÷</span>."}],
                 ["raw-html", function() {if (player.Prestige.points.gte(1e40) && !hasMilestone("Rank", 12)) return "Prestige gain after 1e40 is also affected by Slog, which boosts the softcap above this one by <font size='3'><span style='color:#ff0000'> " + (format(tmp.Prestige.slog)) + "x</span>. (Based on Prestige)"}],
                 "blank",
