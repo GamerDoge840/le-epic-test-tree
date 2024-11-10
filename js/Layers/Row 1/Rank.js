@@ -22,7 +22,7 @@ addLayer("Rank", {
     resetsNothing() {return hasMilestone("Rank", 11)},
     autoUpgrade() {return hasUpgrade("Honor", 101)},
     baseResource: "Honor", // Name of resource prestige is based on
-    autoPrestige() {return hasUpgrade("Honor", 101)},
+    autoPrestige() {return hasUpgrade("Glory", 32)},
     canBuyMax() {return hasUpgrade("Glory", 21)},
     baseAmount() {return player.Honor.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have

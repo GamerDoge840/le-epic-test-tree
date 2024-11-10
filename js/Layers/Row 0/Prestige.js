@@ -49,6 +49,7 @@ addLayer("Prestige", {
         if (hasUpgrade('Level', 11)) mult = mult.times(upgradeEffect('Level', 11))
         if (hasUpgrade('Prestige', 24)) mult = mult.times(upgradeEffect('Prestige', 24))
         if (hasUpgrade('Honor', 11)) mult = mult.times(upgradeEffect('Honor', 11))
+        if (hasUpgrade('Energy', 52)) mult = mult.times(upgradeEffect('Energy', 52))
         if (hasMilestone('Rank', 2)) mult = mult.times(500)
         if (player.Prestige.points.gte(1e33)) mult = mult.dividedBy(tmp.Prestige.slowdown)
         if (hasUpgrade('Prestige', 52))
@@ -698,10 +699,10 @@ addLayer("Prestige", {
               },
               effect() {
                 let eff = player.Prestige.points.plus(1).pow(0.001);
-                return eff;
+                return eff.min(1.250);
             },
             unlocked() {return hasUpgrade("Prestige", 63)},
-            tooltip() {return "<span style='color:#ffffff'>Prestige-Infused Levels</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            tooltip() {return "<span style='color:#ffffff'>Prestige-Infused Levels</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Hardcapped at 1.250x"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#31aeb0',

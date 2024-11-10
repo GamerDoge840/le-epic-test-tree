@@ -19,11 +19,11 @@ addLayer("Level", {
     requires: new Decimal("250"), // Can be a function that takes requirement increases into account
     resource: "Levels", // Name of prestige currency
     resetDescription: "Level up.<br>----------<br>",
-    autoUpgrade() {return hasUpgrade('Honor', 23)},
+    autoUpgrade() {return hasUpgrade('Honor', 23) || hasUpgrade('Glory', 31)},
     baseResource: "Prestige", // Name of resource prestige is based on
     resetsNothing: true,
-    autoPrestige() {return hasUpgrade("Honor", 22)},
-    canBuyMax() {return hasUpgrade("Honor", 13)},
+    autoPrestige() {return hasUpgrade("Honor", 22) || hasUpgrade('Glory', 31)},
+    canBuyMax() {return hasUpgrade("Honor", 13) || hasUpgrade('Glory', 31)},
     baseAmount() {return player.Prestige.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 1, // Prestige currency exponent

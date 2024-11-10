@@ -38,7 +38,7 @@ addLayer("Honor", {
         if (hasUpgrade('Honor', 14)) mult = mult.times(upgradeEffect('Honor', 14))
         if (hasUpgrade('Honor', 24)) mult = mult.times(upgradeEffect('Honor', 24))
         if (hasUpgrade('Glory', 11)) mult = mult.times(3)
-        if (hasUpgrade('Energy', 41) && hasUpgrade('Energy', 51)) mult = mult.times(hasUpgrade('Energy', 41))
+        if (hasUpgrade('Energy', 41) && hasUpgrade('Energy', 51)) mult = mult.times(upgradeEffect('Energy', 41))
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -422,7 +422,7 @@ addLayer("Honor", {
             title: "Honored Synergism",
             fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Honored Synergism</span></b><font size="2"><br>Honor boosts itself.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Honor</span>`},        
             cost: new Decimal(2.60e12),
-            unlocked() {return hasUpgrade("Energy", 43)},   
+            unlocked() {return hasUpgrade("Energy", 43) && hasUpgrade("Honor", 33)},   
             effect() {
                 let eff = player.Honor.points.plus(1).log10().pow(0.75).plus(1);
                 return eff;

@@ -95,11 +95,11 @@ addLayer("Glory", {
         },
         21: {    
             title: "Glorious Energy",
-            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Glorious Energy</span></b><font size="2"><br>Every total Glory point doubles Energy gain (Until 10 Glory), you can reset for max Ranks, and remove the penalty of the Rank 7 milestone.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Glory</span>`},        
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Glorious Energy</span></b><font size="2"><br>Every total Glory point doubles Energy gain (Until 8 Total Glory), you can reset for max Ranks, and remove the penalty of the Rank 7 milestone.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Glory</span>`},        
             cost: new Decimal(1),
             effect() {
                 let eff = player.Glory.total.pow_base(2);
-                return eff.min(10000);
+                return eff.min(256);
             }, 
             unlocked() {return hasUpgrade("Glory", 11)},
             tooltip() {return "<span style='color:#ffffff'>Glorious Energy</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
@@ -208,6 +208,80 @@ addLayer("Glory", {
                 }
             },
         },
+        31: {    
+            title: "Leveled Automator",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Leveled Automator</span></b><font size="2"><br>Level automation is always enabled.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Glory</span>`},        
+            cost: new Decimal(4),
+            unlocked() {return hasUpgrade("Glory", 23)},
+            tooltip() {return "<span style='color:#ffffff'>Leveled Automator</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#98a86c',
+                    "width": "200px",
+            "height": "175px",
+            "background-image": 'url("resources/glorygradient.png")',        
+                    'background-position': 'center center',
+                     'background-size': '160%',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "250px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        32: {    
+            title: "Ranked Automator",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Ranked Automator</span></b><font size="2"><br>Automates Ranks.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Glory</span>`},        
+            cost: new Decimal(12),
+            unlocked() {return hasUpgrade("Glory", 31)},
+            tooltip() {return "<span style='color:#ffffff'>Ranked Automator</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#98a86c',
+                    "width": "200px",
+            "height": "175px",
+            "background-image": 'url("resources/glorygradient.png")',        
+                    'background-position': 'center center',
+                     'background-size': '160%',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "250px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
     },
     
     buyables: {
@@ -259,7 +333,7 @@ addLayer("Glory", {
                             
                             ["upgrades", [1]],
                             "blank",
-                            ["upgrades", [2]],
+                            ["upgrades", [2, 3, 4]],
                             ["display-text",
                                 function() {return "<span style='color:#faff92'>==============</span><span style='color:#ffcd7a'>===============</span>"},
                                 {"color": "#FFFC91", "font-size": "32px"}], 

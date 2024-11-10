@@ -461,11 +461,49 @@ addLayer("Energy", {
             fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Advanced Energy</span></b><font size="2"><br>Boost most Energy upgrades based on Energy (Prestige Enforcer now boosts Honor gain).<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Energy</span>`},        
             cost: new Decimal(250000),
             effect() {
-                let eff = player.Energy.points.plus(1).log(8).pow(0.50).plus(1);
+                let eff = player.Energy.points.plus(1).log(10).pow(0.20).plus(1);
                 return eff;
             },
             unlocked() {return hasUpgrade("Glory", 23)},
             tooltip() {return "<span style='color:#ffffff'>Advanced Energy</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#c1ffee',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#7fffdb' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        52: {    
+            title: "Pure Energy",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Pure Energy</span></b><font size="2"><br>Energy gains another effect that boosts Prestige, but with a better formula this time.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Energy</span>`},        
+            cost: new Decimal(1e10),
+            effect() {
+                let eff = player.Energy.points.plus(1).log10().pow(2.75).plus(1);
+                return eff;
+            },
+            unlocked() {return hasUpgrade("Energy", 51)},
+            tooltip() {return "<span style='color:#ffffff'>Pure Energy</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#c1ffee',

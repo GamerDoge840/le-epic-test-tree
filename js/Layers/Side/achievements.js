@@ -334,6 +334,17 @@ addLayer("ach", {
                 }
             }
         },
+        54:{
+			name: "[28]<br><span style='color:#c1ffee'>Potential Unleashed</span>",
+            done() {return hasUpgrade("Energy", 52)},
+            tooltip() {return "Buy the Pure Energy upgrade.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#c1ffee",
+                    "border-width": "3px"
+                }
+            }
+        },
     },
     
     tabFormat: {
