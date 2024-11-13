@@ -608,7 +608,6 @@ function loadVue() {
 	Vue.component('tooltip', systemComponents['tooltip'])
 	Vue.component('particle', systemComponents['particle'])
 	Vue.component('bg', systemComponents['bg'])
-	Vue.component('news-ticker', systemComponents['news-ticker'])
 
 
 
@@ -660,7 +659,6 @@ function loadVue() {
 			ctrlDown,
 			run,
 			gridRun,
-			newsTicker,
 		},
 	})
 }

@@ -19,7 +19,7 @@ addLayer("Rank", {
     requires: new Decimal("100000"), // Can be a function that takes requirement increases into account
     resource: "Ranks", // Name of prestige currency
     resetDescription: "Rank up.<br>----------<br>",
-    resetsNothing() {return hasMilestone("Rank", 11)},
+    resetsNothing() {return hasMilestone("Rank", 11) || hasUpgrade("Glory", 41)},
     autoUpgrade() {return hasUpgrade("Honor", 101)},
     baseResource: "Honor", // Name of resource prestige is based on
     autoPrestige() {return hasUpgrade("Glory", 32)},

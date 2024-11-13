@@ -19,6 +19,7 @@ addLayer("Honor", {
     requires: new Decimal("1e10"), // Can be a function that takes requirement increases into account
     resource: "Honor", // Name of prestige currency
     branches: ["Prestige"],
+    autoUpgrade() {return hasUpgrade('Glory', 33)},
     resetDescription: "Become honored.<br>----------<br>",
     baseResource: "Prestige", // Name of resource prestige is based on
     baseAmount() {return player.Prestige.points}, // Get the current amount of baseResource
@@ -47,7 +48,7 @@ addLayer("Honor", {
     row: 1, // Row the layer is in on the tree (0 is the first row)
     layerShown(){return hasUpgrade("Level", 31) || player.Honor.total.gte(1) || hasUpgrade("Glory", 11)},
     passiveGeneration() {
-        if (hasMilestone('Rank', 5)) return 1
+        if (hasMilestone('Rank', 5) || hasUpgrade('Glory', 33)) return 1
         if (hasMilestone('Rank', 4)) return 0.25
         if (hasMilestone('Rank', 3)) return 0.05
 	return 0
@@ -547,7 +548,7 @@ addLayer("Honor", {
                     function() {return "--------------------"},
                     {"color": "#faff92", "font-size": "32px"}],
                 ['display-text',function(){return '<h4>You have <span style="color:#faff92">'+quickBigColor(format(player.Honor.points),'#faff92') +' Honor</span>.'}],
-                ["raw-html", function() {if (hasMilestone("Rank", 5)) return "<font size='5'>(+" + (format(getResetGain("Honor"))) + " Honor/s)"}],
+                ["raw-html", function() {if (hasMilestone("Rank", 5) || hasUpgrade('Glory', 33)) return "<font size='5'>(+" + (format(getResetGain("Honor"))) + " Honor/s)"}],
                 "blank",
                 ["raw-html", function() {if (!hasUpgrade("Level", 31) && !hasMilestone("Rank", 5)) return 'To perform an Honor reset, you need the corresponding Level upgrade.'}],
                 function() {if (hasUpgrade("Level", 31) && !hasMilestone("Rank", 5) ) return "prestige-button"},

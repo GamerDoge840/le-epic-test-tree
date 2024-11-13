@@ -424,7 +424,6 @@ var interval = setInterval(function() {
 	fixNaNs()
 	adjustPopupTime(trueDiff)
 	updateParticles(trueDiff)
-	updateNewsTicker(trueDiff);
 	ticking = false
 }, 50)
 

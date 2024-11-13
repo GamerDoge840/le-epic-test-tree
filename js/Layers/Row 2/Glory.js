@@ -282,6 +282,80 @@ addLayer("Glory", {
                 }
             },
         },
+        33: {    
+            title: "Honored Automator",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Honored Automator</span></b><font size="2"><br>Honor generation is always enabled and autobuy Honor upgrades.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Glory</span>`},        
+            cost: new Decimal(16),
+            unlocked() {return hasUpgrade("Glory", 32)},
+            tooltip() {return "<span style='color:#ffffff'>Honored Automator</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#98a86c',
+                    "width": "200px",
+            "height": "175px",
+            "background-image": 'url("resources/glorygradient.png")',        
+                    'background-position': 'center center',
+                     'background-size': '160%',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "250px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        41: {    
+            title: "A New Glorious Age",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>A New Glorious Age</span></b><font size="2"><br>Ranks never reset anything, and unlock a new tab in this layer featuring more upgrades.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Glory</span>`},        
+            cost: new Decimal(16),
+            unlocked() {return hasUpgrade("Glory", 33)},
+            tooltip() {return "<span style='color:#ffffff'>A New Glorious Age</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#98a86c',
+                    "width": "250px",
+            "height": "175px",
+            "background-image": 'url("resources/glorygradient.png")',        
+                    'background-position': 'center center',
+                     'background-size': '160%',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "225px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#f3ff00' ,
+                    "width": "275px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
     },
     
     buyables: {
@@ -333,10 +407,50 @@ addLayer("Glory", {
                             
                             ["upgrades", [1]],
                             "blank",
-                            ["upgrades", [2, 3, 4]],
+                            ["upgrades", [2, 3]],
+                            "blank",
+                            ["upgrades", [4]],
                             ["display-text",
                                 function() {return "<span style='color:#faff92'>==============</span><span style='color:#ffcd7a'>===============</span>"},
                                 {"color": "#FFFC91", "font-size": "32px"}], 
+                    
+            ]
+            
+        },
+        "Amplifiers": {
+            unlocked() {return hasUpgrade('Glory', 41)},
+            content: [ 
+                ["display-text",
+                    function() {return '('+format(player.points)+' Essence)'},
+                    {"font-size": "14px"}],
+                    ["display-text",
+                        function() {return '<span style="color:#31aeb0">('+format(player.Prestige.points)+' Prestige)</span>'},
+                        {"font-size": "14px"}],
+                        ["display-text",
+                            function() {return '<span style="color:#faff92">('+format(player.Honor.points)+' Honor)</span>'},
+                            {"font-size": "14px"}],
+                            ["display-text",
+                                function() {return '<span style="color:#c1ffee">('+format(player.Energy.points)+' Energy)</span>'},
+                                {"font-size": "14px"}],
+                ["display-text",
+                    function() {return "<span style='color:#faff92'>----------</span><span style='color:#ffcd7a'>----------</span>"},
+                    {"color": "#faff92", "font-size": "32px"}],
+                ['display-text',function(){return '<h4>You have <span style="color:#faff92">'+quickDoubleColor(formatWhole(player.Glory.points),'#faff92','#ffcd7a' ) +' <h3 class="glory">Glory</h3></span>.'}],
+                "blank",
+                 "blank",
+                            ["display-text",
+                                function() {return "<span style='color:#faff92'>==============</span><span style='color:#ffcd7a'>===============</span>"},
+                                {"color": "#FFFC91", "font-size": "32px"}], 
+                            ["display-text",
+                                function() {return "<span style='color:#faff92'>==============</span><span style='color:#ffcd7a'>===============</span>"},
+                                {"color": "#FFFC91", "font-size": "32px"}], 
+                            
+                                ["display-text",
+                                    function() {return "<span style='color:#faff92'>----------</span><span style='color:#ffcd7a'>----------</span>"},
+                                    {"color": "#faff92", "font-size": "32px"}],
+                                    ["display-text",
+                                        function() {return "<span style='color:#faff92'>----------</span><span style='color:#ffcd7a'>----------</span>"},
+                                        {"color": "#faff92", "font-size": "32px"}],
                     
             ]
             

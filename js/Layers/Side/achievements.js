@@ -345,6 +345,17 @@ addLayer("ach", {
                 }
             }
         },
+        55:{
+			name: "[29]<br><span style='color:#ffcd7a'>Glory II</span>",
+            done() {return hasUpgrade("Glory", 33)},
+            tooltip() {return "Buy the second row of Glory upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#faff92",
+                    "border-width": "3px"
+                }
+            }
+        },
     },
     
     tabFormat: {
