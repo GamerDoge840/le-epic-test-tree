@@ -38,7 +38,9 @@ addLayer("Honor", {
         if (hasUpgrade('Energy', 33)) mult = mult.times(upgradeEffect('Energy', 33))
         if (hasUpgrade('Honor', 14)) mult = mult.times(upgradeEffect('Honor', 14))
         if (hasUpgrade('Honor', 24)) mult = mult.times(upgradeEffect('Honor', 24))
+        if (hasUpgrade('Glory', 52)) mult = mult.times(upgradeEffect('Glory', 52))
         if (hasUpgrade('Glory', 11)) mult = mult.times(3)
+        if (hasUpgrade('Glory', 81)) mult = mult.times(upgradeEffect('Glory', 81))
         if (hasUpgrade('Energy', 41) && hasUpgrade('Energy', 51)) mult = mult.times(upgradeEffect('Energy', 41))
         return mult 
     },
@@ -148,6 +150,7 @@ addLayer("Honor", {
             unlocked() {return hasUpgrade("Honor", 12)},
             effect() {
                 let eff = Decimal.pow(1.50, player.Honor.upgrades.length);
+                if (hasUpgrade('Glory', 53)) eff = eff.times(upgradeEffect('Glory', 53))
                 return eff;
             },    
             tooltip() {return "<span style='color:#ffffff'>Upgrade Essence II</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
@@ -544,6 +547,9 @@ addLayer("Honor", {
                 ["display-text",
                     function() {return '('+format(player.points)+' Essence)'},
                     {"font-size": "14px"}],
+                    ["display-text",
+                        function() {return '<span style="color:#69c0f6">(Level '+format(player.Level.points)+')</span>'},
+                        {"font-size": "14px"}],
                 ["display-text",
                     function() {return "--------------------"},
                     {"color": "#faff92", "font-size": "32px"}],
@@ -594,7 +600,7 @@ addLayer("Honor", {
             embedLayer: 'Rank',
         },
         "Energy": {
-            unlocked() {return hasUpgrade('Honor', 61) || hasUpgrade("Glory", 11)},
+            unlocked() {return hasUpgrade('Honor', 61)},
             buttonStyle: {"border-color": "#c1ffee"},
             embedLayer: 'Energy',
         },

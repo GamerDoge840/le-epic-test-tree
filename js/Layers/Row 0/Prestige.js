@@ -33,7 +33,8 @@ addLayer("Prestige", {
     },
     slowdown() {
         let cap = player.Prestige.points.pow(0.35);
-        if (player.Prestige.points.gte(1e40) && !hasMilestone("Rank", 12)) cap = cap.times(tmp.Prestige.slog)
+        if (player.Prestige.points.gte(1e40) && !hasMilestone("Rank", 12) || inChallenge('Glory', 21)) cap = cap.times(tmp.Prestige.slog)
+        if (inChallenge('Glory', 13)) cap = cap.times(1e70)
         return cap;
     },
     tooltip() {
@@ -49,6 +50,10 @@ addLayer("Prestige", {
         if (hasUpgrade('Level', 11)) mult = mult.times(upgradeEffect('Level', 11))
         if (hasUpgrade('Prestige', 24)) mult = mult.times(upgradeEffect('Prestige', 24))
         if (hasUpgrade('Honor', 11)) mult = mult.times(upgradeEffect('Honor', 11))
+        if (hasUpgrade('Hindrance', 25)) mult = mult.times(upgradeEffect('Hindrance', 25))
+        if (hasUpgrade('Glory', 54)) mult = mult.times(upgradeEffect('Glory', 54))
+        mult = mult.times(buyableEffect('Glory', 11))
+        if (inChallenge('Glory', 12) && player.Prestige.points.gte(100)) mult = mult.dividedBy(1e75)
         if (hasUpgrade('Energy', 52)) mult = mult.times(upgradeEffect('Energy', 52))
         if (hasMilestone('Rank', 2)) mult = mult.times(500)
         if (player.Prestige.points.gte(1e33)) mult = mult.dividedBy(tmp.Prestige.slowdown)
@@ -101,6 +106,7 @@ addLayer("Prestige", {
             title: "Essence",
             fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Essence</span></b><font size="2"><br>Start generating Essence.<br>-------------<br>Currently: `+format(getPointGen()) +`/s<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Prestige</span>`},        
             cost: new Decimal(1),
+            unlocked() {return !inChallenge('Glory', 23)},
             tooltip() {return "<span style='color:#ffffff'>Essence</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
@@ -134,7 +140,7 @@ addLayer("Prestige", {
                 if (hasUpgrade('Prestige', 42)) effect = effect.times(upgradeEffect('Prestige', 31).pow(0.30))
                 if (hasUpgrade('Prestige', 61)) effect = effect.times(upgradeEffect('Prestige', 61))
                 if (hasUpgrade('Prestige', 63)) effect = effect.times(upgradeEffect('Prestige', 63))
-                if (effect.gte(50000))
+                if (effect.gte(50000) && !hasUpgrade('Hindrance', 42))
                     effect = effect.cbrt().times(Math.pow(400, 2 / 3))
                 return effect
               },   
@@ -170,6 +176,7 @@ addLayer("Prestige", {
                 effect = new Decimal(1.35)
                 if (hasUpgrade('Prestige', 23)) effect = effect.times(upgradeEffect('Prestige', 23))
                 if (hasUpgrade('Prestige', 63)) effect = effect.times(upgradeEffect('Prestige', 63))
+                if (hasUpgrade('Glory', 61)) effect = effect.times(upgradeEffect('Energy', 21))
                 return effect
               },   
             unlocked() {return hasUpgrade("Prestige", 21)},
@@ -239,7 +246,7 @@ addLayer("Prestige", {
                 if (hasUpgrade('Prestige', 61)) eff = eff.times(upgradeEffect('Prestige', 61))
                 if (hasUpgrade('Prestige', 62)) eff = eff.times(upgradeEffect('Prestige', 62))
                 if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
-                if (player.points.gte(1e75)) eff = eff.times(0.05)
+                if (player.points.gte(1e75) && !hasUpgrade('Hindrance', 42)) eff = eff.times(0.05)
                 return eff;
             },
             unlocked() {return hasUpgrade("Prestige", 23)},
@@ -273,7 +280,7 @@ addLayer("Prestige", {
             effect() {
                 let eff = player.Prestige.points.plus(2).pow(0.1);
                 if (hasUpgrade('Prestige', 63)) eff = eff.times(upgradeEffect('Prestige', 63))
-                if (eff.gte(15000))
+                if (eff.gte(15000) && !hasUpgrade('Hindrance', 42))
                     eff = eff.cbrt().times(Math.pow(400, 2 / 3))
                 return eff;
             },
@@ -429,7 +436,7 @@ addLayer("Prestige", {
             title: "To the Next Level",
             fullDisplay() {return `<font size="3"><b><span style='color:#000000'>To the Next Level</span></b><font size="2"><br>Unlock Levels.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Prestige</span>`},        
             cost: new Decimal(1000),
-            unlocked() {return hasUpgrade("Prestige", 43)},
+            unlocked() {return hasUpgrade("Prestige", 43) && !inChallenge('Glory', 22)},
             tooltip() {return "<span style='color:#ffffff'>To the Next Level</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
@@ -656,6 +663,7 @@ addLayer("Prestige", {
               },
               effect() {
                 let eff = player.Prestige.points.plus(1).log(1000).pow(0.01);
+                if (hasUpgrade('Glory', 62)) eff = eff.times(upgradeEffect('Glory', 62))
                 return eff;
             },
             unlocked() {return hasUpgrade("Prestige", 62)},
@@ -784,7 +792,7 @@ addLayer("Prestige", {
                 ['display-text',function(){return '<h4>You have <span style="color:#31aeb0">'+quickBigColor(format(player.Prestige.points),'#31aeb0') +' Prestige</span>.'}],
                 ["raw-html", function() {if (hasUpgrade("Level", 22) || hasUpgrade("Glory", 22)) return "<font size='4'>(+" + (format(getResetGain("Prestige"))) + " Prestige/s)"}],
                 ["raw-html", function() {if (player.Prestige.points.gte(1e33)) return "Prestige gain after 1e33 is affected by Slowdown, causing it to divide itself by <font size='3'><span style='color:#ff0000'> " + (format(tmp.Prestige.slowdown)) + "÷</span>."}],
-                ["raw-html", function() {if (player.Prestige.points.gte(1e40) && !hasMilestone("Rank", 12)) return "Prestige gain after 1e40 is also affected by Slog, which boosts the softcap above this one by <font size='3'><span style='color:#ff0000'> " + (format(tmp.Prestige.slog)) + "x</span>. (Based on Prestige)"}],
+                ["raw-html", function() {if (player.Prestige.points.gte(1e40) && !hasMilestone("Rank", 12) || inChallenge('Glory', 21)) return "Prestige gain after 1e40 is also affected by Slog, which boosts the softcap above this one by <font size='3'><span style='color:#ff0000'> " + (format(tmp.Prestige.slog)) + "x</span>. (Based on Prestige)"}],
                 "blank",
                 function() {if (!hasUpgrade("Level", 22)) return "prestige-button"},
                  "blank",
@@ -806,7 +814,7 @@ addLayer("Prestige", {
             
         },
        "Level": {
-            unlocked() {return hasUpgrade('Prestige', 51)},
+            unlocked() {return hasUpgrade('Prestige', 51) || inChallenge('Glory', 23)},
             buttonStyle: {"border-color": "#69c0f6"},
             embedLayer: 'Level',
         },

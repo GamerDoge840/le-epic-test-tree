@@ -30,7 +30,10 @@ addLayer("Energy", {
         if (hasMilestone('Rank', 10)) mult = mult.times(tmp.Rank.milestones[10].effect)	
         if (hasUpgrade('Energy', 31)) mult = mult.times(upgradeEffect('Energy', 31))
         if (hasUpgrade('Energy', 32)) mult = mult.times(upgradeEffect('Energy', 32))
+        if (hasUpgrade('Hindrance', 31)) mult = mult.times(upgradeEffect('Hindrance', 31))
         if (hasUpgrade('Energy', 42)) mult = mult.times(upgradeEffect('Energy', 42))
+        mult = mult.times(buyableEffect('Glory', 11))
+        if (hasUpgrade('Glory', 63)) mult = mult.times(upgradeEffect('Glory', 63))
         if (hasUpgrade('Glory', 11)) mult = mult.times(2)
         if (hasUpgrade('Glory', 11) && hasUpgrade('Energy', 11)) mult = mult.times(10)
         if (hasUpgrade('Glory', 21)) mult = mult.times(upgradeEffect('Glory', 21))
@@ -56,8 +59,21 @@ addLayer("Energy", {
         if (layers[resettingLayer].row <= this.row) return;
         let keptUpgrades = []
         let keptMilestones = []
-        if (hasUpgrade('Energy', 51) && hasUpgrade('Glory', 23)) keptUpgrades.push(51)
-        if (hasUpgrade('Energy', 52) && hasUpgrade('Glory', 23)) keptUpgrades.push(52)
+        if (hasUpgrade('Energy', 51) && hasUpgrade('Glory', 23) ) keptUpgrades.push(51)
+        if (hasUpgrade('Energy', 52) && hasUpgrade('Glory', 23) ) keptUpgrades.push(52)
+        if (hasUpgrade('Energy', 24) && hasUpgrade('Glory', 64) ) keptUpgrades.push(24)
+        if (hasUpgrade('Energy', 34) && hasUpgrade('Glory', 64) ) keptUpgrades.push(34)
+        if (hasUpgrade('Energy', 44) && hasUpgrade('Glory', 64) ) keptUpgrades.push(44)
+        if (hasUpgrade('Energy', 44)) keptUpgrades.push(11)
+        if (hasUpgrade('Energy', 44)) keptUpgrades.push(21)
+        if (hasUpgrade('Energy', 44)) keptUpgrades.push(22)
+        if (hasUpgrade('Energy', 44)) keptUpgrades.push(23)
+        if (hasUpgrade('Energy', 44)) keptUpgrades.push(31)
+        if (hasUpgrade('Energy', 44)) keptUpgrades.push(32)
+        if (hasUpgrade('Energy', 44)) keptUpgrades.push(33)
+        if (hasUpgrade('Energy', 44)) keptUpgrades.push(41)
+        if (hasUpgrade('Energy', 44)) keptUpgrades.push(42)
+        if (hasUpgrade('Energy', 44)) keptUpgrades.push(43)
         layerDataReset(this.layer);
         player[this.layer].upgrades.push(...keptUpgrades)
         player[this.layer].milestones.push(...keptMilestones)
@@ -118,6 +134,7 @@ addLayer("Energy", {
                 effect = new Decimal(2)
                 if (hasUpgrade('Energy', 22)) effect = effect.times(upgradeEffect('Energy', 22))
                 if (hasUpgrade('Energy', 51)) effect = effect.times(upgradeEffect('Energy', 51))
+                if (hasUpgrade('Energy', 24)) effect = effect.times(upgradeEffect('Energy', 24))
                 return effect
               },   
             unlocked() {return hasUpgrade("Energy", 11) || hasUpgrade("Glory", 11)},
@@ -157,6 +174,7 @@ addLayer("Energy", {
             effect() {
                 effect = new Decimal(2)
                 if (hasUpgrade('Energy', 51)) effect = effect.times(upgradeEffect('Energy', 51))
+                if (hasUpgrade('Energy', 24)) effect = effect.times(upgradeEffect('Energy', 24))
                 return effect
               },   
             unlocked() {return hasUpgrade("Energy", 21)},
@@ -196,6 +214,7 @@ addLayer("Energy", {
             effect() {
                 let eff = Decimal.pow(1.50, player.Energy.upgrades.length);
                 if (hasUpgrade('Energy', 51)) eff = eff.times(upgradeEffect('Energy', 51))
+                if (hasUpgrade('Energy', 24)) effect = effect.times(upgradeEffect('Energy', 24))
                 return eff;
             },
             unlocked() {return hasUpgrade("Energy", 22)},
@@ -235,6 +254,8 @@ addLayer("Energy", {
             effect() {
                 let eff = player.Energy.points.plus(1).log10().pow(0.55).plus(1);
                 if (hasUpgrade('Energy', 51)) eff = eff.times(upgradeEffect('Energy', 51))
+                if (hasUpgrade('Glory', 51)) eff = eff.times(upgradeEffect('Glory', 51))
+                if (hasUpgrade('Energy', 34)) eff = eff.times(upgradeEffect('Energy', 24))
                 return eff;
             },
             unlocked() {return hasUpgrade("Energy", 23)},
@@ -274,6 +295,7 @@ addLayer("Energy", {
             effect() {
                 let eff = player.Honor.points.plus(1).log(10).pow(0.50).plus(1);
                 if (hasUpgrade('Energy', 51)) eff = eff.times(upgradeEffect('Energy', 51))
+                if (hasUpgrade('Energy', 34)) eff = eff.times(upgradeEffect('Energy', 24))
                 return eff;
             }, 
             unlocked() {return hasUpgrade("Energy", 31)},
@@ -313,6 +335,7 @@ addLayer("Energy", {
             effect() {
                 let eff = player.Energy.points.plus(1).log(5).pow(0.55);
                 if (hasUpgrade('Energy', 51)) eff = eff.times(upgradeEffect('Energy', 51))
+                if (hasUpgrade('Energy', 34)) eff = eff.times(upgradeEffect('Energy', 24))
                 return eff;
             }, 
             unlocked() {return hasUpgrade("Energy", 32)},
@@ -390,6 +413,7 @@ addLayer("Energy", {
             effect() {
                 let eff = player.points.plus(1).log(8).pow(0.35).plus(1);
                 if (hasUpgrade('Energy', 51)) eff = eff.times(upgradeEffect('Energy', 51))
+                if (hasUpgrade('Energy', 44)) eff = eff.times(upgradeEffect('Energy', 24))
                 return eff;
             },
             unlocked() {return hasUpgrade("Energy", 41)},
@@ -496,7 +520,7 @@ addLayer("Energy", {
         },
         52: {    
             title: "Pure Energy",
-            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Pure Energy</span></b><font size="2"><br>Energy gains another effect that boosts Prestige, but with a better formula this time.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Energy</span>`},        
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Pure Energy</span></b><font size="2"><br>Energy gains another effect that also boosts Prestige.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Energy</span>`},        
             cost: new Decimal(1e10),
             effect() {
                 let eff = player.Energy.points.plus(1).log10().pow(2.75).plus(1);
@@ -504,6 +528,145 @@ addLayer("Energy", {
             },
             unlocked() {return hasUpgrade("Energy", 51)},
             tooltip() {return "<span style='color:#ffffff'>Pure Energy</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#c1ffee',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#7fffdb' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        24: {    
+            title: "Row Leader",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Row Leader</span></b><font size="2"><br>Boosts every upgrade in this row based on Energy.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Energy)+`<span style='color:#000000'> Energy</span> and `+format(tmp[this.layer].upgrades[this.id].costs.Glory)+` Glory`},        
+            costs: {
+                Energy: 1.65e18,
+                Glory: 75,
+              },
+              canAfford() {
+                return player.Energy.points.gte(this.costs.Energy)
+                    && player.Glory.points.gte(this.costs.Glory)
+              },
+              pay() {
+                player.Energy.points = player.Energy.points.minus(this.costs.Energy);
+                player.Glory.points = player.Glory.points.minus(this.costs.Glory);
+              },
+              effect() {
+                let eff = player.Energy.points.plus(1).log(100).pow(1.15).plus(1);
+                return eff;
+            },
+            unlocked() {return hasUpgrade("Glory", 64)},
+            tooltip() {return "<span style='color:#ffffff'>Row Leader</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#c1ffee',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#7fffdb' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        34: {    
+            title: "Row King",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Row King</span></b><font size="2"><br>The above upgrade also boosts the second row of Energy upgrades.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Energy)+`<span style='color:#000000'> Energy</span> and `+format(tmp[this.layer].upgrades[this.id].costs.Glory)+` Glory`},        
+            costs: {
+                Energy: 1.00e21,
+                Glory: 100,
+              },
+              canAfford() {
+                return player.Energy.points.gte(this.costs.Energy)
+                    && player.Glory.points.gte(this.costs.Glory)
+              },
+              pay() {
+                player.Energy.points = player.Energy.points.minus(this.costs.Energy);
+                player.Glory.points = player.Glory.points.minus(this.costs.Glory);
+              },
+            unlocked() {return hasUpgrade("Energy", 24)},
+            tooltip() {return "<span style='color:#ffffff'>Row King</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#c1ffee',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#7fffdb' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        44: {    
+            title: "And Back to Glory Again",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>And Back to Glory Again</span></b><font size="2"><br>Keep Energy upgrades on Glory reset, Row Leader affects Essence-Infused Energy, and unlock more Glory upgrades.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Energy)+`<span style='color:#000000'> Energy</span> and `+format(tmp[this.layer].upgrades[this.id].costs.Glory)+` Glory`},        
+            costs: {
+                Energy: 4.00e25,
+                Glory: 205,
+              },
+              canAfford() {
+                return player.Energy.points.gte(this.costs.Energy)
+                    && player.Glory.points.gte(this.costs.Glory)
+              },
+              pay() {
+                player.Energy.points = player.Energy.points.minus(this.costs.Energy);
+                player.Glory.points = player.Glory.points.minus(this.costs.Glory);
+              },
+            unlocked() {return hasUpgrade("Energy", 34)},
+            tooltip() {return "<span style='color:#ffffff'>And Back to Glory Again</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>We thank you for taking this momentary diversion back to Energy."},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#c1ffee',
@@ -544,6 +707,9 @@ addLayer("Energy", {
        ["display-text",
            function() {return '<span style="color:#31aeb0">('+format(player.Prestige.points)+' Prestige)</span>'},
            {"font-size": "14px"}],
+           ["display-text",
+            function() {return '<span style="color:#69c0f6">(Level '+format(player.Level.points)+')</span>'},
+            {"font-size": "14px"}],
            "blank",
            ['display-text',function(){return '<h4><span style="color:#faff92">'+quickBigColor(format(player.Honor.points),'#faff92') +' Honor</span>'}],
            ["raw-html", function() {if (hasMilestone("Rank", 5)) return "<font size='5'>(+" + (format(getResetGain("Honor"))) + " Honor/s)"}],
@@ -564,6 +730,8 @@ addLayer("Energy", {
             ["display-text",
                 function() {return "--------------------"},
                 {"color": "#c1ffee", "font-size": "32px"}],
+                ["raw-html", function() {if (hasUpgrade("Glory", 64)) return "<h3 class='glory'>"+format(player.Glory.points)+" <h3 class='glory'>Glory</h3>"}],
+
 
       
                    

@@ -68,14 +68,29 @@ addLayer("Rank", {
             fillStyle: { 'background-color': '#e0a150' },
         },
 },
-    doReset(resettingLayer) {
-        if (layers[resettingLayer].row <= this.row) return;
-        let keptUpgrades = []
-        let keptMilestones = []
-        layerDataReset(this.layer);
-        player[this.layer].upgrades.push(...keptUpgrades)
-        player[this.layer].milestones.push(...keptMilestones)
-    },
+doReset(resettingLayer) {
+    if (layers[resettingLayer].row <= this.row) return;
+    let keptUpgrades = []
+    let keptMilestones = []
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(0)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(1)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(2)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(3)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(4)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(5)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(6)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(7)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(8)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(9)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(10)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(11)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(12)
+    if (hasUpgrade('Glory', 71)) keptMilestones.push(13)
+    if (hasUpgrade('Glory', 71) && hasMilestone("Rank", 14)) keptMilestones.push(14)
+    layerDataReset(this.layer);
+    player[this.layer].upgrades.push(...keptUpgrades)
+    player[this.layer].milestones.push(...keptMilestones)
+},
     upgrades: {
         rows: 5,
         cols: 4,
@@ -110,6 +125,7 @@ addLayer("Rank", {
             done() {return player.Rank.points.gte(2)},
             effect() {
                 let eff = player.Rank.points.dividedBy(4).plus(1);
+                if (hasUpgrade('Hindrance', 34)) eff = eff.times(upgradeEffect('Hindrance', 34))
                 return eff;
             },  
             unlocked() {return hasMilestone("Rank", 0)},
@@ -240,6 +256,7 @@ addLayer("Rank", {
             done() {return player.Rank.points.gte(12)},
             effect() {
                 let eff = player.Rank.points.dividedBy(10).plus(1);
+                if (hasUpgrade('Hindrance', 34)) eff = eff.times(upgradeEffect('Hindrance', 34))
                 return eff;
             },  
             unlocked() {return hasMilestone("Rank", 7)},
@@ -280,6 +297,7 @@ addLayer("Rank", {
             done() {return player.Rank.points.gte(15)},
             effect() {
                 let eff = player.Rank.points.dividedBy(7).plus(1);
+                if (hasUpgrade('Hindrance', 34)) eff = eff.times(upgradeEffect('Hindrance', 34))
                 return eff;
             },  
             unlocked() {return hasMilestone("Rank", 9)},
@@ -350,6 +368,29 @@ addLayer("Rank", {
                     }
                 }
         },
+        14: {
+            requirementDescription: "<font size='3'><b>Rank 112</b><font size='2'>",
+            effectDescription() {return '-----------------<br><font size="2">Each Rank boosts Glory gain.</span><br>-----------------<br>Currently: '+format(+format(tmp.Rank.milestones[this.layer, this.id].effect))+'x'},
+            done() {return player.Rank.points.gte(112)},
+            effect() {
+                let eff = player.Rank.points.dividedBy(250).plus(1);
+                if (hasUpgrade('Hindrance', 34)) eff = eff.times(upgradeEffect('Hindrance', 34))
+                return eff;
+            },  
+            unlocked() {return hasUpgrade("Glory", 71)},
+            style() {
+                if (hasMilestone(this.layer, this.id)) return {
+                    'background-color': '#ffcd7a',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else return {
+                    'background-color': '#bf8f8f',
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)'
+                    }
+                }
+        },
     },
      tabFormat: [
         ["display-text",
@@ -358,6 +399,9 @@ addLayer("Rank", {
         ["display-text",
             function() {return '<span style="color:#31aeb0">('+format(player.Prestige.points)+' Prestige)</span>'},
             {"font-size": "14px"}],
+            ["display-text",
+                function() {return '<span style="color:#69c0f6">(Level '+format(player.Level.points)+')</span>'},
+                {"font-size": "14px"}],
             "blank",
             ['display-text',function(){return '<h4><span style="color:#faff92">'+quickBigColor(format(player.Honor.points),'#faff92') +' Honor</span>'}],
             ["raw-html", function() {if (hasMilestone("Rank", 5)) return "<font size='5'>(+" + (format(getResetGain("Honor"))) + " Honor/s)"}],

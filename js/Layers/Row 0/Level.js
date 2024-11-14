@@ -22,7 +22,7 @@ addLayer("Level", {
     autoUpgrade() {return hasUpgrade('Honor', 23) || hasUpgrade('Glory', 31)},
     baseResource: "Prestige", // Name of resource prestige is based on
     resetsNothing: true,
-    autoPrestige() {return hasUpgrade("Honor", 22) || hasUpgrade('Glory', 31)},
+    autoPrestige() {return hasUpgrade("Honor", 22) && !inChallenge('Glory', 22) || hasUpgrade('Glory', 31) && !inChallenge('Glory', 22)},
     canBuyMax() {return hasUpgrade("Honor", 13) || hasUpgrade('Glory', 31)},
     baseAmount() {return player.Prestige.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -35,7 +35,7 @@ addLayer("Level", {
         mult = new Decimal(1)
         if (hasUpgrade('Prestige', 44)) mult = mult.dividedBy(upgradeEffect('Prestige', 44))
         if (hasUpgrade('Honor', 31)) mult = mult.dividedBy(upgradeEffect('Honor', 31))
-        if (player.Level.points.gte(230)) mult = mult.times(tmp.Level.fartherscaling)
+        if (player.Level.points.gte(230) && !hasUpgrade('Hindrance', 34)) mult = mult.times(tmp.Level.fartherscaling)
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -304,7 +304,7 @@ addLayer("Level", {
                 ["display-text",
                     function() {return "which boosts Essence by <span style='color:#69c0f6'> "+ format(tmp.Level.effect) +"x</span>."},
                     {"font-size": "16px"}],
-                    ["raw-html", function() {if (player.Level.points.gte(230)) return "After Level 230, levels are <font size='3'><span style='color:#ff0000'> " + (format(tmp.Level.fartherscaling)) + "x</span> harder to get (Based on Levels)"}],
+                    ["raw-html", function() {if (player.Level.points.gte(230) && !hasUpgrade('Hindrance', 34)) return "After Level 230, levels are <font size='3'><span style='color:#ff0000'> " + (format(tmp.Level.fartherscaling)) + "x</span> harder to get (Based on Levels)"}],
                 "blank",
                  "prestige-button",
                  "blank",

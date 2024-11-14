@@ -3,7 +3,7 @@ let modInfo = {
 	id: "comicallylongetmtgame",
 	author: "The Big G",
 	pointsName: "Essence",
-	modFiles: ["Layers/Row 2/Glory.js","Layers/Row 1/Energy.js","Layers/Row 1/Rank.js","Layers/Row 1/Honor.js","Layers/Row 0/Level.js","Layers/Row 0/Prestige.js", "math.js", "Layers/Side/achievements.js", "tree.js"],
+	modFiles: ["Layers/Row 2/Hindrance.js","Layers/Row 2/Glory.js","Layers/Row 1/Energy.js","Layers/Row 1/Rank.js","Layers/Row 1/Honor.js","Layers/Row 0/Level.js","Layers/Row 0/Prestige.js", "math.js", "Layers/Side/achievements.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -49,7 +49,9 @@ function getPointGen() {
 	if (hasUpgrade('Prestige', 33)) gain = gain.times(upgradeEffect('Prestige', 23))
 	if (hasUpgrade('Level', 12)) gain = gain.times(upgradeEffect('Level', 12))
 	if (hasUpgrade('Honor', 11)) gain = gain.times(upgradeEffect('Honor', 11))
+	if (inChallenge('Glory', 11)) gain = gain.dividedBy(1e70)
 	if (hasMilestone('Rank', 1)) gain = gain.times(tmp.Rank.milestones[1].effect)	
+	gain=gain.times(buyableEffect('Glory', 11))
 	if (hasUpgrade('Prestige', 51))
 		gain = gain.times(tmp.Level.effect);
 
