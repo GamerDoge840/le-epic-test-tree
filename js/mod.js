@@ -49,6 +49,7 @@ function getPointGen() {
 	if (hasUpgrade('Prestige', 33)) gain = gain.times(upgradeEffect('Prestige', 23))
 	if (hasUpgrade('Level', 12)) gain = gain.times(upgradeEffect('Level', 12))
 	if (hasUpgrade('Honor', 11)) gain = gain.times(upgradeEffect('Honor', 11))
+	if (hasUpgrade('Hindrance', 54)) gain = gain.times(upgradeEffect('Hindrance', 54))
 	if (inChallenge('Glory', 11)) gain = gain.dividedBy(1e70)
 	if (hasMilestone('Rank', 1)) gain = gain.times(tmp.Rank.milestones[1].effect)	
 	gain=gain.times(buyableEffect('Glory', 11))

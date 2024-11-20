@@ -35,6 +35,7 @@ addLayer("Prestige", {
         let cap = player.Prestige.points.pow(0.35);
         if (player.Prestige.points.gte(1e40) && !hasMilestone("Rank", 12) || inChallenge('Glory', 21)) cap = cap.times(tmp.Prestige.slog)
         if (inChallenge('Glory', 13)) cap = cap.times(1e70)
+        if (hasUpgrade('Hindrance', 55)) cap = cap.dividedBy(1e10)
         return cap;
     },
     tooltip() {

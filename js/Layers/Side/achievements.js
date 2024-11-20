@@ -610,7 +610,7 @@ addLayer("ach", {
             }
         },
         95:{
-			name: "[53]<br><span style='color:#a14040'>Hindrance Spirit VI</span>",
+			name: "[53]<br><span style='color:#a14040'>Hindrance Spirit IV</span>",
             done() {return hasUpgrade("Hindrance", 55)},
             tooltip() {return "Buy the fourth row of Hindrance Spirit upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
             style() {

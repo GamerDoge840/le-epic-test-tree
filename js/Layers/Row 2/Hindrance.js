@@ -31,6 +31,7 @@ addLayer("Hindrance", {
         if (hasUpgrade('Hindrance', 24)) mult = mult.times(upgradeEffect('Hindrance', 24))
         if (hasUpgrade('Hindrance', 51)) mult = mult.times(upgradeEffect('Hindrance', 51))
         if (hasUpgrade('Hindrance', 52)) mult = mult.times(upgradeEffect('Hindrance', 52))
+        if (hasUpgrade('Hindrance', 53)) mult = mult.times(upgradeEffect('Hindrance', 53))
         if (hasUpgrade('Hindrance', 25)) mult = mult.times(10)
         return mult 
     },
@@ -696,6 +697,116 @@ addLayer("Hindrance", {
             },   
             unlocked() {return hasUpgrade("Hindrance", 51)},
             tooltip() {return "<span style='color:#ffffff'>Hindered Upgrades</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#a14040',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#c6320a' ,
+                    "width": "250px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        53: {    
+            title: "Amplified Hindrance",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Amplified Hindrance</span></b><font size="2"><br>Amplifier 1 boosts Hindrance at an extremely reduced rate.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Hindrance Spirit</span>`},        
+            cost: new Decimal(3.25e20),
+            effect() {
+                let eff = buyableEffect('Glory', 11).pow(0.15).plus(1);
+                return eff;
+            },    
+            unlocked() {return hasUpgrade("Hindrance", 52)},
+            tooltip() {return "<span style='color:#ffffff'>Amplified Hindrance</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#a14040',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#c6320a' ,
+                    "width": "250px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        54: {    
+            title: "Hindered Essence",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Hindered Essence</span></b><font size="2"><br>Boost Essence based on Hindrance Spirit.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Hindrance Spirit</span>`},        
+            cost: new Decimal(2.10e23),
+            effect() {
+                let eff = player.Hindrance.points.plus(1).log(3).plus(1).pow(2.25);
+                return eff;
+            },
+            unlocked() {return hasUpgrade("Hindrance", 53)},
+            tooltip() {return "<span style='color:#ffffff'>Hindered Essence</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#a14040',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f' ,
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#c6320a' ,
+                    "width": "250px",
+            "height": "175px",
+            'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+            },
+        },
+        55: {    
+            title: "Very Unhindered Prestige",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>Very Unhindered Prestige</span></b><font size="2"><br>Weakens Prestige Slowdown by 1e10.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+`<span style='color:#000000'> Hindrance Spirit</span>`},        
+            cost: new Decimal(1e24),
+            unlocked() {return hasUpgrade("Hindrance", 54)},
+            tooltip() {return "<span style='color:#ffffff'>Very Unhindered Prestige</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#a14040',
