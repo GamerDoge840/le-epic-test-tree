@@ -15,10 +15,17 @@ addNode("blank", {
 }, 
 )
 
+addNode("PAU",{
+    row: "side",
+    color:'blue',
+    onClick(){if(player.devSpeed!=1e-300) player.devSpeed = 1e-300
+    else player.devSpeed = 1},
+    canClick(){return true}
+})
 
 addLayer("tree-tab", {
     tabFormat: [["tree", [
-        ['Knowledge'],
+        ['Energy'],
         ],
     ]],
     previousTab: "",

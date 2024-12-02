@@ -1,28 +1,28 @@
 let modInfo = {
-	name: "The Tree of Knowledge",
-	id: "superultraduperamogussmartspunchisus",
+	name: "The Tree of Awakening",
+	id: "reallycomicallylongetmtgame",
 	author: "The Big G",
-	pointsName: "Knowledge",
-	modFiles: ["Layers/Row 0/Scrolls.js","Layers/Row 0/Knowledge.js","math.js", "Layers/Side/achievements.js", "tree.js"],
+	pointsName: "Essence",
+	modFiles: ["Layers/Row 0/Energy.js", "math.js", "Layers/Side/achievements.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (0.0010), // Used for hard resets and new players
+	initialStartPoints: new Decimal (1), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "1.0",
+	name: "The Whole Game",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+	<h3>v1.0</h3><br>
+		- Added the entire game.<br>
+		- Added nothing else other than that.`
 
-let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
+let winText = `Congratulations! You have reached the end and beaten this game. Or have you?`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
@@ -34,7 +34,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("Knowledge", 11);
+	return hasUpgrade("Energy", 11);
 }
 
 // Calculate points/sec!
@@ -42,12 +42,13 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.0001)
-	gain=gain.times(buyableEffect('Knowledge', 11))
-	gain=gain.times(buyableEffect('Knowledge', 12))
-	gain=gain.times(buyableEffect('Knowledge', 21))
-	gain=gain.times(buyableEffect('Scrolls', 11))
-	if (hasUpgrade('Knowledge', 12)) gain = gain.times(3)
+	let gain = new Decimal(0.0010)
+	//stoerege
+	//gain=gain.times(buyableEffect('Knowledge', 11))
+	//gain=gain.times(buyableEffect('Knowledge', 12))
+	//gain=gain.times(buyableEffect('Knowledge', 21))
+	//gain=gain.times(buyableEffect('Scrolls', 11))
+	//if (hasUpgrade('Knowledge', 12)) gain = gain.times(3)
 	return gain
 }
 
@@ -55,7 +56,6 @@ function getPointGen() {
 function addedPlayerData() { return {
     notation:'Mixed Scientific',
 }}
-
 // Display extra things at the top of the page
 var displayThings = [
 ]
