@@ -22,7 +22,7 @@ addLayer("ach", {
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
-    tooltip() {return format(player.ach.achievements.length,0)+" Achievements completed."},
+    tooltip() {return format(player.ach.achievements.length,0)+" Fulfilments gained."},
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         return mult
@@ -40,11 +40,24 @@ addLayer("ach", {
 			name: "[1]<br><span style='color:#ffffff'>Genesis</span>",
             done() {return hasUpgrade("Energy", 11)},
             //done() {return player.points.gte('1')},
-            tooltip() {return "Begin.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>This should be simple enough, I hope."},
+            tooltip() {return "Begin.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>There is a long journey ahead."},
             style() {
                 return {
                     "border-color": "#ffffff",
-                    "border-width": "3px"
+                    "border-width": "3px",
+                    "width": "135px",
+                    "height": "100px",
+                }
+            }
+        },
+        21:{
+			name: "[2]<br><span style='color:#ffffff'>Something from Nothing</span>",
+            done() {return hasUpgrade("Energy", 27)},
+            tooltip() {return "Buy E08.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px",
                 }
             }
         },
@@ -54,14 +67,16 @@ addLayer("ach", {
         "Recollection": {
             content: ["blank",
                 ["display-text",
-                    function() {return "You have attained <h2 style='color:  gold; text-shadow: gold 0px 0px 10px;'> "+format(player.ach.achievements.length,0)+"/"+format(Object.keys(tmp.ach.achievements).length - 2,0)+"</h2> achievements, or "+format(new Decimal(player.ach.achievements.length).div(19).mul(100))+"% of the total achievement count."}, //change division to current numer of achievements
+                    function() {return "You have attained <h2 style='color:  gold; text-shadow: gold 0px 0px 10px;'> "+format(player.ach.achievements.length,0)+"/"+format(Object.keys(tmp.ach.achievements).length - 2,0)+"</h2> Fulfilments, or "+format(new Decimal(player.ach.achievements.length).div(19).mul(100))+"% of the total Fulfilment count."}, //change division to current numer of achievements
                 ],
                 ["display-text",
                     function() {return "----====Act 1====----"},
                     {"color": "Gray", "font-size": "27px"}],
                     "blank",
                     "blank",
-                    ["achievements", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]],
+                    ["achievements", [1]],
+                    "blank",
+                    ["achievements", [2, 3, 4, 5, 6, 7, 8, 9, 10]],
                     "blank",
             ],
         },

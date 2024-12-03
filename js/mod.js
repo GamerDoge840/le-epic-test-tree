@@ -43,6 +43,13 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(0.0010)
+	if (hasUpgrade('Energy', 21)) gain = gain.times(2)
+	if (hasUpgrade('Energy', 22)) gain = gain.times(1.50)
+	if (hasUpgrade('Energy', 23)) gain = gain.times(1.32)
+	if (hasUpgrade('Energy', 24)) gain = gain.times(1.26)
+	if (hasUpgrade('Energy', 25)) gain = gain.times(1.40)
+	if (hasUpgrade('Energy', 26)) gain = gain.times(1.29)
+	if (hasUpgrade('Energy', 27)) gain = gain.times(3)
 	//stoerege
 	//gain=gain.times(buyableEffect('Knowledge', 11))
 	//gain=gain.times(buyableEffect('Knowledge', 12))
