@@ -1,13 +1,13 @@
 let modInfo = {
-	name: "The Tree of Knowledge",
-	id: "superultraduperamogussmartspunchisus",
-	author: "The Big G",
-	pointsName: "Knowledge",
-	modFiles: ["Layers/Row 0/Scrolls.js","Layers/Row 0/Knowledge.js","math.js", "Layers/Side/achievements.js", "tree.js"],
+	name: "Accretive Ascension",
+	id: "falsifiedapotheosis",
+	author: "Seer",
+	pointsName: "Shards",
+	modFiles: ["Layers/Row 0/Fragments.js","math.js", "Layers/Side/achievements.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (0.0010), // Used for hard resets and new players
+	initialStartPoints: new Decimal (1), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
@@ -34,7 +34,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("Knowledge", 11);
+	return hasUpgrade("Fragments", 11);
 }
 
 // Calculate points/sec!
@@ -43,11 +43,14 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(0.0001)
-	gain=gain.times(buyableEffect('Knowledge', 11))
-	gain=gain.times(buyableEffect('Knowledge', 12))
-	gain=gain.times(buyableEffect('Knowledge', 21))
-	gain=gain.times(buyableEffect('Scrolls', 11))
-	if (hasUpgrade('Knowledge', 12)) gain = gain.times(3)
+	if (hasUpgrade('Fragments', 21)) gain = gain.times(2)
+	if (hasUpgrade('Fragments', 22)) gain = gain.times(1.50)
+	if (hasUpgrade('Fragments', 23)) gain = gain.times(1.25)
+	if (hasUpgrade('Fragments', 24)) gain = gain.times(1.10)
+	if (hasUpgrade('Fragments', 31)) gain = gain.times(1.30)
+	gain=gain.times(buyableEffect('Fragments', 11))
+    if (hasUpgrade('Fragments', 32)) gain = gain.times(1.50)
+	if (hasUpgrade('Fragments', 33)) gain = gain.times(1.30)
 	return gain
 }
 
