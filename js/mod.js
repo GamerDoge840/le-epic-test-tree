@@ -51,6 +51,9 @@ function getPointGen() {
 	gain=gain.times(buyableEffect('Fragments', 11))
     if (hasUpgrade('Fragments', 32)) gain = gain.times(1.50)
 	if (hasUpgrade('Fragments', 33)) gain = gain.times(1.30)
+	if (hasUpgrade('Fragments', 34)) gain = gain.times(1.25)
+	if (hasUpgrade('Fragments', 42)) gain = gain.times(1.99)
+	if (hasUpgrade('Fragments', 43)) gain = gain.times(upgradeEffect('Fragments', 43))
 	return gain
 }
 

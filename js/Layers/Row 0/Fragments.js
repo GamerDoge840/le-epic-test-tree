@@ -320,10 +320,194 @@ addLayer("Fragments", {
         33: {    
             title: "Third of Two, Again",
             fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S23] Third of Two, Again</span></b><font size="2"><br>Increase Shards gain by 1.30x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(0.32),
+            cost: new Decimal(0.30),
             currencyInternalName: "points",
             unlocked() {return hasUpgrade("Fragments", 32)},
             tooltip() {return "<span style='color:#ffffff'>Third of Two, Again</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#757573',
+                    "width": "200px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border-color': '#bdbda1',
+                'background-color': '#757573',
+                'color': 'black',
+                        "width": "200px",
+            "height": "165px",
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#757573',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+                    }
+                }
+            },
+        },
+        34: {    
+            title: "Quarter-Double, Again",
+            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S24] Quarter-Double, Again</span></b><font size="2"><br>Increase Shards gain by 1.25x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
+            cost: new Decimal(0.40),
+            currencyInternalName: "points",
+            unlocked() {return hasUpgrade("Fragments", 33)},
+            tooltip() {return "<span style='color:#ffffff'>Quarter-Double, Again</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#757573',
+                    "width": "200px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border-color': '#bdbda1',
+                'background-color': '#757573',
+                'color': 'black',
+                        "width": "200px",
+            "height": "165px",
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#757573',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+                    }
+                }
+            },
+        },
+        41: {    
+            title: "More Repeatable",
+            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S31] More Repeatable</span></b><font size="2"><br>S11-B can be purchased three more times.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
+            cost: new Decimal(0.50),
+            currencyInternalName: "points",
+            unlocked() {return hasUpgrade("Fragments", 34)},
+            tooltip() {return "<span style='color:#ffffff'>More Repeatable</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#757573',
+                    "width": "200px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border-color': '#bdbda1',
+                'background-color': '#757573',
+                'color': 'black',
+                        "width": "200px",
+            "height": "165px",
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#757573',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+                    }
+                }
+            },
+        },
+        42: {    
+            title: "Almost Double",
+            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S32] Almost Double</span></b><font size="2"><br>Increase Shards gain by 1.99x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
+            cost: new Decimal(0.75),
+            currencyInternalName: "points",
+            unlocked() { return getBuyableAmount("Fragments", 11).gte(8)}, 
+            tooltip() {return "<span style='color:#ffffff'>Almost Double</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#757573',
+                    "width": "200px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border-color': '#bdbda1',
+                'background-color': '#757573',
+                'color': 'black',
+                        "width": "200px",
+            "height": "165px",
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#757573',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+                    }
+                }
+            },
+        },
+        43: {    
+            title: "Faster Gathering",
+            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S33] Faster Gathering</span></b><font size="2"><br>Shards boost their own gain, albeit weakly.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
+            cost: new Decimal(1.75),
+            currencyInternalName: "points",
+            effect() {
+                let eff = player.points.plus(1).log10().pow(0.9).plus(1);
+                return eff;
+            },
+            unlocked() {return hasUpgrade("Fragments", 42)},
+            tooltip() {return "<span style='color:#ffffff'>Faster Gathering</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#757573',
+                    "width": "200px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border-color': '#bdbda1',
+                'background-color': '#757573',
+                'color': 'black',
+                        "width": "200px",
+            "height": "165px",
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#757573',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+                    }
+                }
+            },
+        },
+        44: {    
+            title: "Even More Repeatable",
+            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S34] Even More Repeatable</span></b><font size="2"><br>S11-B can be purchased two more times.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
+            cost: new Decimal(2.50),
+            currencyInternalName: "points",
+            unlocked() {return hasUpgrade("Fragments", 43)},
+            tooltip() {return "<span style='color:#ffffff'>Even More Repeatable</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#757573',
@@ -375,6 +559,8 @@ addLayer("Fragments", {
             },
             purchaseLimit() {
                 cap = new Decimal(5)
+                if (hasUpgrade('Fragments', 41)) cap = cap.times(1.60)
+                if (hasUpgrade('Fragments', 44)) cap = cap.times(1.25)
                 return cap
             },
             tooltip() {return "Repeatable Tenth<br>----------------<br>"},
@@ -414,7 +600,7 @@ addLayer("Fragments", {
                         ["display-text",
                             function() {return "--------------------"},
                             {"color": "#9d9d9d", "font-size": "32px"}],
-                            ["upgrades", [1, 2, 3]],
+                            ["upgrades", [1, 2, 3, 4]],
                             "blank",                            ["display-text",
                                 function() {return "--------------------"},
                                 {"color": "#9d9d9d", "font-size": "32px"}],
