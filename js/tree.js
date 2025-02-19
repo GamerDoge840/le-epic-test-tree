@@ -25,7 +25,7 @@ addNode("PAU",{
 
 addLayer("tree-tab", {
     tabFormat: [["tree", [
-        ['Fragments'],
+        ['Shards'],
         ],
     ]],
     previousTab: "",

@@ -38,7 +38,7 @@ addLayer("ach", {
     achievements: {
 		11:{
 			name: "[1]<br><span style='color:#ffffff'>Genesis</span>",
-            done() {return hasUpgrade("Fragments", 11)},
+            done() {return hasUpgrade("Shards", 11)},
             //done() {return player.points.gte('1')},
             tooltip() {return "Begin.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>There is a long journey ahead."},
             style() {
@@ -52,8 +52,87 @@ addLayer("ach", {
         },
         21:{
 			name: "[2]<br><span style='color:#ffffff'>The First of Countless</span>",
-            done() {return hasUpgrade("Fragments", 21)},
+            done() {return hasUpgrade("Shards", 21)},
             tooltip() {return "Buy your first upgrade.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px",
+                }
+            }
+        },
+        31:{
+			name: "[3]<br><span style='color:#ffffff'>Shards I</span>",
+            done() {return hasUpgrade("Shards", 24)},
+            tooltip() {return "Buy the first row of Shard upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px",
+                }
+            }
+        },
+        32:{
+			name: "[4]<br><span style='color:#ffffff'>Shards II</span>",
+            done() {return hasUpgrade("Shards", 34)},
+            tooltip() {return "Buy the second row of Shard upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px",
+                }
+            }
+        },
+        33:{
+			name: "[5]<br><span style='color:#ffffff'>Shards III</span>",
+            done() {return hasUpgrade("Shards", 44)},
+            tooltip() {return "Buy the third row of Shard upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px",
+                }
+            }
+        },
+        34:{
+			name: "[6]<br><span style='color:#ffffff'>Shards IV</span>",
+            done() {return hasUpgrade("Shards", 54)},
+            tooltip() {return "Buy the fourth row of Shard upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px",
+                }
+            }
+        },
+        35:{
+			name: "[7]<br><span style='color:#ffffff'>Shards V</span>",
+            done() {return hasUpgrade("Shards", 64)},
+            tooltip() {return "Buy the fifth row of Shard upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px",
+                }
+            }
+        },
+        41:{
+			name: "[8]<br><span style='color:#fcf4e1'>Rebuilding</span>",
+            done() {return hasUpgrade("Fragments", 11)},
+            tooltip() {return "Start rebuilding the Core.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#fcf4e1",
+                    "border-width": "3px",
+                    "width": "115px",
+                    "height": "100px",
+                }
+            }
+        },
+        51:{
+			name: "[9]<br><span style='color:#ffffff'>Shards VI</span>",
+            done() {return hasUpgrade("Shards", 65)},
+            tooltip() {return "Buy the fifth column of Shard upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
             style() {
                 return {
                     "border-color": "#ffffff",
@@ -64,20 +143,25 @@ addLayer("ach", {
     },
     
     tabFormat: {
-        "Recollection": {
+        "Tree of Recollection": {
             content: ["blank",
                 ["display-text",
                     function() {return "You have attained <h2 style='color:  gold; text-shadow: gold 0px 0px 10px;'> "+format(player.ach.achievements.length,0)+"/"+format(Object.keys(tmp.ach.achievements).length - 2,0)+"</h2> Fulfilments, or "+format(new Decimal(player.ach.achievements.length).div(19).mul(100))+"% of the total Fulfilment count."}, //change division to current numer of achievements
                 ],
                 ["display-text",
-                    function() {return "----====Act 1====----"},
+                    function() {return "----====Prologue====----"},
                     {"color": "Gray", "font-size": "27px"}],
                     "blank",
                     "blank",
                     ["achievements", [1]],
                     "blank",
-                    ["achievements", [2, 3, 4, 5, 6, 7, 8, 9, 10]],
+                    ["achievements", [2]],
                     "blank",
+                    ["achievements", [3]],
+                    "blank",
+                    ["achievements", [4]],
+                    "blank",
+                    ["achievements", [5]],
             ],
         },
     },

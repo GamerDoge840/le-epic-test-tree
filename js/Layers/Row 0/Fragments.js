@@ -6,30 +6,15 @@ addLayer("Fragments", {
         unlocked: true,
 		points: new Decimal(0),
     }},
-    color: "#ffffff",
-    nodeStyle() {
-        return {
-            'border': '1px solid white',
-            'background-image': 'radial-gradient(circle at center,rgb(255, 232, 211),rgb(213, 213, 213))',
-            "width": 100,
-        "height": 100,
-        'min-height': '100px',
-        'min-width': '100px',
-            
-        }
-    },
-    requires: new Decimal("0.025"), // Can be a function that takes requirement increases into account
-    resource: "Prestige", // Name of prestige currency
+    color: "#fcf4e1",
+    requires: new Decimal("1000"), // Can be a function that takes requirement increases into account
+    resource: "Fragments", // Name of prestige currency
     //autoUpgrade() {return hasUpgrade('Glory', 22)},
-    resetDescription: "Form Essence into Prestige.<br>----------<br>",
-    baseResource: "Essence", // Name of resource prestige is based on
+    resetDescription: "Combine Shards to create Fragments of something greater.<br>----------------<br>",
+    baseResource: "Shards", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.7, // Prestige currency exponent
-    tooltip() {
-        let tooltip = "<font size='3'>Broken Star<br>----------------<br> <font size='2'><span style='color:#ffffff'> " +formatWhole(player.points)+" Shards</span>"
-        return tooltip
-    },
+    exponent: 0.3, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         return mult 
@@ -37,7 +22,7 @@ addLayer("Fragments", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
-    row: 0, // Row the layer is in on the tree (0 is the first row)
+    row: 1, // Row the layer is in on the tree (0 is the first row)
     layerShown(){return true},
     passiveGeneration() {
 	return 0
@@ -65,62 +50,73 @@ addLayer("Fragments", {
         rows: 9,
         cols: 9,
         11: {    
-            title: "Born Anew",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S01] Born Anew</span></b><font size="2"><br>Start gathering Shards.<br>-------------<br>Currently: `+format(getPointGen()) +`/s<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
+            title: "The Fractured Core",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F▢] The Fractured Core</span></b><font size="2"><br>Use Fragments to begin rebuilding the Core.<br>-------------<br>Core Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragment`},        
             cost: new Decimal(1),
-            currencyInternalName: "points",
+            effect() {
+                effect = new Decimal(3.00)
+                if (hasUpgrade('Fragments', 21)) effect = effect.times(1.6667)
+                if (hasUpgrade('Fragments', 24)) effect = effect.times(1.40)
+                return effect
+              },  
             unlocked() {return true},
-            tooltip() {return "<span style='color:#ffffff'>Born Anew</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Birth of recreation."},
+            tooltip() {return "<span style='color:#ffffff'>The Fractured Core</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Effect boosts Shards gain."},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#757573',
                     "width": "200px",
             "height": "165px",
-            'border': '5px solid',
+            "border-radius": "5px",
             'border-color': 'rgba(0, 0, 0, 0.125)',
+            'background': 'linear-gradient(#fcf4e1, #ffebb2)',
+            
 
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#B9B9AF' ,
+                    'background-color': '#ffcf5a' ,
                     "width": "300px",
-            "height": "175px",
+            "height": "125px",
+            "border-radius": "5px",
             'border-color': 'yellow',
-                'color': 'white'
+                'color': 'white',
+                //'background': 'linear-gradient(#fcf4e1, #ffcd7a)',
+
                     }
                 }
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
-                        'border-color': '#8eff00',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "300px",
-            "height": "175px",
+                        'background-color': '#ffcf5a' ,
+                    "width": "400px",
+            "height": "200px",
+            "border-radius": "5px",
+            'border-color': '#8eff00',
+                'color': 'white',
+            'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
             },
         },
         21: {    
-            title: "Double",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S11] Double</span></b><font size="2"><br>Double Shards gain.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(0.0100),
-            //branches: [11],
-            currencyInternalName: "points",
+            title: "Rebuilding I",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F11] Rebuilding I</span></b><font size="2"><br>The Fractured Core's base effect is stronger.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragment`},        
+            cost: new Decimal(1),
+            branches: [11],
             unlocked() {return hasUpgrade("Fragments", 11)},
-            tooltip() {return "<span style='color:#ffffff'>Double</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            tooltip() {return "<span style='color:#ffffff'>Rebuilding I</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts the Fractured Core's effect by exactly 1.6667x."},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#757573',
+                    'background-color': '#ffebb2',
                     "width": "200px",
             "height": "165px",
             'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'border-color': '#fcf4e1',
 
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'border-color': '#bdbda1',
-                'background-color': '#757573',
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
                 'color': 'black',
                         "width": "200px",
             "height": "165px",
@@ -129,34 +125,35 @@ addLayer("Fragments", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#757573',
+                'background-color': '#fcf4e1',
                 'color': 'black',
                         "width": "225px",
             "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
             },
         },
         22: {    
-            title: "Half-Double",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S12] Half-Double</span></b><font size="2"><br>Increase Shards gain by 1.50x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(0.0250),
-            currencyInternalName: "points",
-            unlocked() {return hasUpgrade("Fragments", 21)},
-            tooltip() {return "<span style='color:#ffffff'>Half-Double</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            title: "Bonus Column",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F12] Bonus Column</span></b><font size="2"><br>Unlocks a new column of uninteresting but helpful Shard upgrades.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragment`},        
+            cost: new Decimal(1),
+            branches: [11],
+            unlocked() {return hasUpgrade("Fragments", 11)},
+            tooltip() {return "<span style='color:#ffffff'>Bonus Column</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#757573',
+                    'background-color': '#ffebb2',
                     "width": "200px",
             "height": "165px",
             'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'border-color': '#fcf4e1',
 
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'border-color': '#bdbda1',
-                'background-color': '#757573',
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
                 'color': 'black',
                         "width": "200px",
             "height": "165px",
@@ -165,70 +162,76 @@ addLayer("Fragments", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#757573',
+                'background-color': '#fcf4e1',
                 'color': 'black',
                         "width": "225px",
             "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
             },
         },
         23: {    
-            title: "Quarter-Double",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S13] Quarter-Double</span></b><font size="2"><br>Increase Shards gain by 1.25x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(0.0400),
-            currencyInternalName: "points",
-            unlocked() {return hasUpgrade("Fragments", 22)},
-            tooltip() {return "<span style='color:#ffffff'>Quarter-Double</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            title: "Fragmented Shards",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F13] Fragmented Shards</span></b><font size="2"><br>Every total Fragment formed boosts Shards gain by 1.10x compounding, but only until 10 total Fragments.<br>-------------<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragment`},        
+            cost: new Decimal(1),
+            branches: [11],
+            effect() {
+                let eff = player.Fragments.total.pow_base(1.10);
+                return eff.min(256);
+            }, 
+            unlocked() {return hasUpgrade("Fragments", 11)},
+            tooltip() {return "<span style='color:#ffffff'>Fragmented Shards</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#757573',
+                    'background-color': '#ffebb2',
                     "width": "200px",
-            "height": "165px",
+            "height": "175px",
             'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'border-color': '#fcf4e1',
 
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'border-color': '#bdbda1',
-                'background-color': '#757573',
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
                 'color': 'black',
                         "width": "200px",
-            "height": "165px",
+            "height": "175px",
                     }
                 }
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#757573',
+                'background-color': '#fcf4e1',
                 'color': 'black',
                         "width": "225px",
             "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
             },
         },
         24: {    
-            title: "Tenth of Two",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S14] Tenth of Two</span></b><font size="2"><br>Increase Shards gain by 1.10x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(0.0600),
-            currencyInternalName: "points",
-            unlocked() {return hasUpgrade("Fragments", 23)},
-            tooltip() {return "<span style='color:#ffffff'>Tenth of Two</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            title: "Rebuilding II",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F14] Rebuilding II</span></b><font size="2"><br>The Fractured Core's base effect is stronger.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragment`},        
+            cost: new Decimal(1),
+            branches: [11],
+            unlocked() {return hasUpgrade("Fragments", 11)},
+            tooltip() {return "<span style='color:#ffffff'>Rebuilding II</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts the Fractured Core's effect by 1.40x."},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#757573',
+                    'background-color': '#ffebb2',
                     "width": "200px",
             "height": "165px",
             'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'border-color': '#fcf4e1',
 
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'border-color': '#bdbda1',
-                'background-color': '#757573',
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
                 'color': 'black',
                         "width": "200px",
             "height": "165px",
@@ -237,34 +240,34 @@ addLayer("Fragments", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#757573',
+                'background-color': '#fcf4e1',
                 'color': 'black',
                         "width": "225px",
             "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
             },
         },
         31: {    
-            title: "Third of Two",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S21] Third of Two</span></b><font size="2"><br>Increase Shards gain by 1.30x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(0.0700),
-            currencyInternalName: "points",
-            unlocked() {return hasUpgrade("Fragments", 24)},
-            tooltip() {return "<span style='color:#ffffff'>Third of Two</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            title: "Need for Speed",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F21] Need for Speed</span></b><font size="2"><br>Doubles Shards gain, but only when under a single Shard.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},        
+            cost: new Decimal(2),
+            unlocked() {return hasUpgrade("Fragments", 21) && hasUpgrade("Fragments", 22) && hasUpgrade("Fragments", 23) && hasUpgrade("Fragments", 24)},
+            tooltip() {return "<span style='color:#ffffff'>Need for Speed</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#757573',
+                    'background-color': '#ffebb2',
                     "width": "200px",
             "height": "165px",
             'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'border-color': '#fcf4e1',
 
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'border-color': '#bdbda1',
-                'background-color': '#757573',
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
                 'color': 'black',
                         "width": "200px",
             "height": "165px",
@@ -273,266 +276,11 @@ addLayer("Fragments", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#757573',
+                'background-color': '#fcf4e1',
                 'color': 'black',
                         "width": "225px",
             "height": "175px",
-                    }
-                }
-            },
-        },
-        32: {    
-            title: "Half-Double, Again",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S22] Half-Double, Again</span></b><font size="2"><br>Increase Shards gain by 1.50x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(0.12),
-            currencyInternalName: "points",
-            unlocked() { return getBuyableAmount("Fragments", 11).gte(5)},            
-            tooltip() {return "<span style='color:#ffffff'>Half-Double, Again</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
-            style() {
-                if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#757573',
-                    "width": "200px",
-            "height": "165px",
-            'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
-
-                }
-                else if (!canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                    'border-color': '#bdbda1',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "200px",
-            "height": "165px",
-                    }
-                }
-                else if (canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                        'border-color': '#8eff00',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "225px",
-            "height": "175px",
-                    }
-                }
-            },
-        },
-        33: {    
-            title: "Third of Two, Again",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S23] Third of Two, Again</span></b><font size="2"><br>Increase Shards gain by 1.30x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(0.30),
-            currencyInternalName: "points",
-            unlocked() {return hasUpgrade("Fragments", 32)},
-            tooltip() {return "<span style='color:#ffffff'>Third of Two, Again</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
-            style() {
-                if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#757573',
-                    "width": "200px",
-            "height": "165px",
-            'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
-
-                }
-                else if (!canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                    'border-color': '#bdbda1',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "200px",
-            "height": "165px",
-                    }
-                }
-                else if (canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                        'border-color': '#8eff00',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "225px",
-            "height": "175px",
-                    }
-                }
-            },
-        },
-        34: {    
-            title: "Quarter-Double, Again",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S24] Quarter-Double, Again</span></b><font size="2"><br>Increase Shards gain by 1.25x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(0.40),
-            currencyInternalName: "points",
-            unlocked() {return hasUpgrade("Fragments", 33)},
-            tooltip() {return "<span style='color:#ffffff'>Quarter-Double, Again</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
-            style() {
-                if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#757573',
-                    "width": "200px",
-            "height": "165px",
-            'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
-
-                }
-                else if (!canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                    'border-color': '#bdbda1',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "200px",
-            "height": "165px",
-                    }
-                }
-                else if (canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                        'border-color': '#8eff00',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "225px",
-            "height": "175px",
-                    }
-                }
-            },
-        },
-        41: {    
-            title: "More Repeatable",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S31] More Repeatable</span></b><font size="2"><br>S11-B can be purchased three more times.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(0.50),
-            currencyInternalName: "points",
-            unlocked() {return hasUpgrade("Fragments", 34)},
-            tooltip() {return "<span style='color:#ffffff'>More Repeatable</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
-            style() {
-                if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#757573',
-                    "width": "200px",
-            "height": "165px",
-            'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
-
-                }
-                else if (!canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                    'border-color': '#bdbda1',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "200px",
-            "height": "165px",
-                    }
-                }
-                else if (canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                        'border-color': '#8eff00',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "225px",
-            "height": "175px",
-                    }
-                }
-            },
-        },
-        42: {    
-            title: "Almost Double",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S32] Almost Double</span></b><font size="2"><br>Increase Shards gain by 1.99x.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(0.75),
-            currencyInternalName: "points",
-            unlocked() { return getBuyableAmount("Fragments", 11).gte(8)}, 
-            tooltip() {return "<span style='color:#ffffff'>Almost Double</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
-            style() {
-                if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#757573',
-                    "width": "200px",
-            "height": "165px",
-            'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
-
-                }
-                else if (!canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                    'border-color': '#bdbda1',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "200px",
-            "height": "165px",
-                    }
-                }
-                else if (canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                        'border-color': '#8eff00',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "225px",
-            "height": "175px",
-                    }
-                }
-            },
-        },
-        43: {    
-            title: "Faster Gathering",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S33] Faster Gathering</span></b><font size="2"><br>Shards boost their own gain, albeit weakly.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(1.75),
-            currencyInternalName: "points",
-            effect() {
-                let eff = player.points.plus(1).log10().pow(0.9).plus(1);
-                return eff;
-            },
-            unlocked() {return hasUpgrade("Fragments", 42)},
-            tooltip() {return "<span style='color:#ffffff'>Faster Gathering</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
-            style() {
-                if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#757573',
-                    "width": "200px",
-            "height": "165px",
-            'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
-
-                }
-                else if (!canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                    'border-color': '#bdbda1',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "200px",
-            "height": "165px",
-                    }
-                }
-                else if (canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                        'border-color': '#8eff00',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "225px",
-            "height": "175px",
-                    }
-                }
-            },
-        },
-        44: {    
-            title: "Even More Repeatable",
-            fullDisplay() {return `<font size="3"><b><span style='color:#9d9d9d'>[S34] Even More Repeatable</span></b><font size="2"><br>S11-B can be purchased two more times.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Shards`},        
-            cost: new Decimal(2.50),
-            currencyInternalName: "points",
-            unlocked() {return hasUpgrade("Fragments", 43)},
-            tooltip() {return "<span style='color:#ffffff'>Even More Repeatable</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
-            style() {
-                if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#757573',
-                    "width": "200px",
-            "height": "165px",
-            'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
-
-                }
-                else if (!canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                    'border-color': '#bdbda1',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "200px",
-            "height": "165px",
-                    }
-                }
-                else if (canAffordUpgrade(this.layer, this.id)) {
-                    return {
-                        'border-color': '#8eff00',
-                'background-color': '#757573',
-                'color': 'black',
-                        "width": "225px",
-            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
             },
@@ -541,80 +289,47 @@ addLayer("Fragments", {
     buyables: {
         rows: 5,
         cols: 4,
-        11: {
-            display() {return `<font size="3"><b><b><span style='color:#9d9d9d'>[S11-B] Repeatable Tenth</span></b></b><font size="2"><br>Increases Shards gain by 1.10x with every purchase.<br>-----------------<br><b>Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Shards</b> <br>-----------------<br><b>Amount: `+format(getBuyableAmount(this.layer, this.id), 0)+`/`+format(tmp[this.layer].buyables[this.id].purchaseLimit)+`</b> <br>-----------------<br><b>Current Effect: ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b>`},
-            cost(x) {
-                let base = new Decimal(1.750);
-                let cost = base.pow(x).times(0.0100);
-                return cost;
-              },
-              effect() {
-                let eff = getBuyableAmount('Fragments', 11).mul(0.10).plus(1)
-                return eff
-            },   
-            canAfford() { if (player.points.gte(this.cost())) {return true}},
-            buy() {
-                player.points = player.points.sub(this.cost())
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
-            },
-            purchaseLimit() {
-                cap = new Decimal(5)
-                if (hasUpgrade('Fragments', 41)) cap = cap.times(1.60)
-                if (hasUpgrade('Fragments', 44)) cap = cap.times(1.25)
-                return cap
-            },
-            tooltip() {return "Repeatable Tenth<br>----------------<br>"},
-            buyMax() {
-                let max = player.points.div(this.cost(0)).add(0.0100).log(1.750) //add is cost, log is base
-                max = max.min(this.purchaseLimit())
-                if(max.gt(getBuyableAmount('Fragments', 11))) setBuyableAmount('Fragments', 11, max.add(1).floor())
-            },
-            style() {
-                return {
-                'background-color': '#757573',
-                    "width": "325px",
-            "height": "175px",
-            //"background-image": 'url("resources/glorygradient.png")',        
-                    //'background-position': 'center center',
-                     //'background-size': '160%',
-            'border': '5px solid',
-            'border-color': 'rgba(0, 0, 0, 0.125)',
-                }
-            },
-            unlocked() { return hasUpgrade("Fragments", 31) },
-    
-        },
     },
-     tabFormat: {
-        "Shards": {
-            //style() {return  {'background-color': '#292929'}},
-            content: [
+     tabFormat: [
                 ["display-text",
-                    function() {return ''+format(player.points)+' Shards'},
+                    function() {return '<span style="color:#fcf4e1">'+format(player.Fragments.points)+' Fragments'},
                     {"font-size": "30px"}],
+            ["display-text",
+                function() {return "--------------------"},
+                {"color": "#fcf4e1", "font-size": "32px"}],
+                function() {if (hasUpgrade("Shards", 12)) return "prestige-button"}, 
+                ["raw-html", function() {if (!hasUpgrade("Shards", 12)) return 'To form fragments, you need Shard upgrade S02.'}],
+                ["display-text",
+                    function() {return '('+format(player.points)+' Shards)'},
+                    {"font-size": "14px"}],   
                     ["display-text",
-                        function() {return '(+'+formatSmall(getPointGen())+' Shards/s)'},
-                        {"font-size": "17px"}],              
+                        function() {return "(<span style='color:#fcf4e1'>"+format(player.Fragments.total)+" total Fragments</span>)"},
+                        {"color": "#fcf4e1", "font-size": "12px"}],      
                         "blank",
-                 "blank",
                         ["display-text",
                             function() {return "--------------------"},
-                            {"color": "#9d9d9d", "font-size": "32px"}],
-                            ["upgrades", [1, 2, 3, 4]],
-                            "blank",                            ["display-text",
+                            {"color": "#fcf4e1", "font-size": "32px"}],
+                            ["infobox", "FragmentLore"],
+                            
+                        ["display-text",
+                            function() {return "--------------------"},
+                            {"color": "#fcf4e1", "font-size": "32px"}],
+                                "blank",
+                            ["upgrades", [1]],
+                            "blank",    
+                            ["upgrades", [2, 3]],                        ["display-text",
                                 function() {return "--------------------"},
-                                {"color": "#9d9d9d", "font-size": "32px"}],
+                                {"color": "#fcf4e1", "font-size": "32px"}],
+                                
                             "buyables",
-                    
-            ]
+                
             
-        },
-    },
+                            ],
     infoboxes:{
-        KnowledgeLore: {
-         title: "Beans",
+        FragmentLore: {
+         title: "Forming Fragments",
          titleStyle: {'color': '#000000'},
-         body: "You find yourself in a long-forgotten, extremely overgrown jungle riddled with ruins.<br><br>Naturally you decide to start growing some delicious Beans. Maybe if you grow enough, something will happen?",
+         body: "Combines all of your Shards, resetting them and their upgrades in exchange for Fragments to be spent on new upgrades.",
          bodyStyle: {'background-color': "#000000"}
      }
  },
