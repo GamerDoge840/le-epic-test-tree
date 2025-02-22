@@ -515,6 +515,7 @@ doReset(resettingLayer) {
             effect() {
                 let eff = player.points.plus(1).log10().pow(0.9).plus(1);
                 if (hasUpgrade('Shards', 74)) eff = eff.times(upgradeEffect('Shards', 74))
+                if (hasUpgrade('Shards', 84)) eff = eff.times(upgradeEffect('Shards', 84))
                 return eff;
             },
             unlocked() {return hasUpgrade("Shards", 42)},

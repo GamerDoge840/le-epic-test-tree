@@ -18,6 +18,7 @@ addLayer("Fragments", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if (hasUpgrade('Shards', 71)) mult = mult.times(1.25)
+        if (hasUpgrade('Fragments', 73)) mult = mult.times(upgradeEffect('Fragments', 73))
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -61,6 +62,11 @@ addLayer("Fragments", {
                 if (hasUpgrade('Fragments', 34)) effect = effect.times(1.4285)
                 if (hasUpgrade('Fragments', 44)) effect = effect.times(1.30)
                 if (hasUpgrade('Fragments', 71)) effect = effect.times(upgradeEffect('Fragments', 71))
+                if (hasUpgrade('Fragments', 72)) effect = effect.times(upgradeEffect('Fragments', 72))
+                if (hasUpgrade('Fragments', 74)) effect = effect.times(upgradeEffect('Fragments', 74))
+                if (hasUpgrade('Fragments', 81)) effect = effect.times(1.15)
+                if (hasUpgrade('Fragments', 82)) effect = effect.times(upgradeEffect('Fragments', 82))
+                if (hasUpgrade('Fragments', 83)) effect = effect.times(upgradeEffect('Fragments', 83))
                 return effect
               },  
             unlocked() {return true},
@@ -758,11 +764,294 @@ addLayer("Fragments", {
             fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F51] Shard Rebuilding</span></b><font size="2"><br>Boosts the Fractured Core based on Shards.<br>-------------<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},       
             cost: new Decimal(60),
             effect() {
-                let eff = player.points.plus(1).log(8).pow(0.07);
+                let eff = player.points.plus(8).log(8).pow(0.07);
                 return eff;
             },
             unlocked() {return hasUpgrade("Fragments", 61) && hasUpgrade("Fragments", 62) && hasUpgrade("Fragments", 63) && hasUpgrade("Fragments", 64)},
             tooltip() {return "<span style='color:#ffffff'>Shard Rebuilding</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffebb2',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': '#fcf4e1',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "200px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #fffeb2'
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        72: {    
+            title: "Fragment Rebuilding",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F52] Fragment Rebuilding</span></b><font size="2"><br>Boosts the Fractured Core based on total Fragments.<br>-------------<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},       
+            cost: new Decimal(70),
+            effect() {
+                let eff = player.Fragments.total.plus(12).log(8).pow(0.12);
+                return eff;
+            },
+            unlocked() {return hasUpgrade("Fragments", 71)},
+            tooltip() {return "<span style='color:#ffffff'>Shard Rebuilding</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffebb2',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': '#fcf4e1',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "200px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #fffeb2'
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        73: {    
+            title: "Sharded Fragments",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F53] Sharded Fragments</span></b><font size="2"><br>Boosts Fragments based on Shards.<br>-------------<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},       
+            cost: new Decimal(70),
+            effect() {
+                let eff = player.points.plus(8).log(8).pow(0.13);
+                return eff;
+            },
+            unlocked() {return hasUpgrade("Fragments", 72)},
+            tooltip() {return "<span style='color:#ffffff'>Sharded Fragments</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffebb2',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': '#fcf4e1',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "200px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #fffeb2'
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        74: {    
+            title: "Recursive Rebuilding",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F54] Recursive Rebuilding</span></b><font size="2"><br>Boost the Fractured Core based on S33's effect.<br>-------------<br>Currently: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},       
+            cost: new Decimal(110),
+            effect() {
+                let eff = upgradeEffect("Shards", 43).plus(1).pow(0.04);
+                return eff;
+            },  
+            unlocked() {return hasUpgrade("Fragments", 73)},
+            tooltip() {return "<span style='color:#ffffff'>Recursive Rebuilding</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffebb2',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': '#fcf4e1',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "200px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #fffeb2'
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        81: {    
+            title: "Rebuilding V",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F61] Rebuilding V</span></b><font size="2"><br>The Fractured Core's base effect is stronger.<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},        
+            cost: new Decimal(170),
+            unlocked() {return hasUpgrade("Fragments", 74)},
+            tooltip() {return "<span style='color:#ffffff'>Rebuilding V</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts the Fractured Core's effect by 1.15x."},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffebb2',
+                    "width": "200px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': '#fcf4e1',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "200px",
+            "height": "165px",
+            'box-shadow':'0px 0px 15px #fffeb2'
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        82: {    
+            title: "Fragment Rebuilding II",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F62] Fragment Rebuilding II</span></b><font size="2"><br>Boosts the Fractured Core based on current Fragments.<br>-------------<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},       
+            cost: new Decimal(200),
+            effect() {
+                let eff = player.Fragments.points.plus(8).log(8).pow(0.25);
+                return eff;
+            },
+            unlocked() {return hasUpgrade("Fragments", 81)},
+            tooltip() {return "<span style='color:#ffffff'>Fragment Rebuilding II</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffebb2',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': '#fcf4e1',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "200px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #fffeb2'
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        83: {    
+            title: "Self-Rebuilding",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F63] Self-Rebuilding</span></b><font size="2"><br>Boosts the Fractured Core based on it's own effect.<br>-------------<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},       
+            cost: new Decimal(225),
+            effect() {
+                let eff = upgradeEffect("Fragments", 11).plus(1).pow(0.07);
+                return eff;
+            },  
+            unlocked() {return hasUpgrade("Fragments", 82)},
+            tooltip() {return "<span style='color:#ffffff'>Self-Rebuilding</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffebb2',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': '#fcf4e1',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "200px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #fffeb2'
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        84: {    
+            title: "Core-Powered Gathering",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F64] Core-Powered Gathering</span></b><font size="2"><br>The Fractured Core boosts S33's effect at a reduced rate.<br>-------------<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>-------------<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},       
+            cost: new Decimal(250),
+            effect() {
+                let eff = upgradeEffect("Fragments", 11).plus(1).pow(0.06);
+                return eff;
+            },  
+            unlocked() {return hasUpgrade("Fragments", 83)},
+            tooltip() {return "<span style='color:#ffffff'>Core-Powered Gathering</span><br>---------------<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#ffebb2',
@@ -830,7 +1119,7 @@ addLayer("Fragments", {
                             "blank",
                             ["upgrades", [5]],
                             "blank",
-                            ["upgrades", [6, 7]],                        ["display-text",
+                            ["upgrades", [6, 7, 8]],                        ["display-text",
                                 function() {return "--------------------"},
                                 {"color": "#fcf4e1", "font-size": "32px"}],
                                 
