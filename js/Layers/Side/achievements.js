@@ -40,7 +40,7 @@ addLayer("ach", {
 			name: "[1]<br><span style='color:#ffffff'>Genesis</span>",
             done() {return hasUpgrade("Shards", 11)},
             //done() {return player.points.gte('1')},
-            tooltip() {return "Begin.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>There is a long journey ahead."},
+            tooltip() {return "Begin.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>There is a long journey ahead."},
             style() {
                 return {
                     "border-color": "#ffffff",
@@ -53,7 +53,7 @@ addLayer("ach", {
         21:{
 			name: "[2]<br><span style='color:#ffffff'>The First of Countless</span>",
             done() {return hasUpgrade("Shards", 21)},
-            tooltip() {return "Buy your first upgrade.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            tooltip() {return "Buy your first upgrade.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
             style() {
                 return {
                     "border-color": "#ffffff",
@@ -64,7 +64,7 @@ addLayer("ach", {
         31:{
 			name: "[3]<br><span style='color:#ffffff'>Shards I</span>",
             done() {return hasUpgrade("Shards", 24)},
-            tooltip() {return "Buy the first row of Shard upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            tooltip() {return "Buy the first row of Shard upgrades.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
             style() {
                 return {
                     "border-color": "#ffffff",
@@ -75,7 +75,7 @@ addLayer("ach", {
         32:{
 			name: "[4]<br><span style='color:#ffffff'>Shards II</span>",
             done() {return hasUpgrade("Shards", 34)},
-            tooltip() {return "Buy the second row of Shard upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            tooltip() {return "Buy the second row of Shard upgrades.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
             style() {
                 return {
                     "border-color": "#ffffff",
@@ -86,7 +86,7 @@ addLayer("ach", {
         33:{
 			name: "[5]<br><span style='color:#ffffff'>Shards III</span>",
             done() {return hasUpgrade("Shards", 44)},
-            tooltip() {return "Buy the third row of Shard upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            tooltip() {return "Buy the third row of Shard upgrades.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
             style() {
                 return {
                     "border-color": "#ffffff",
@@ -97,7 +97,7 @@ addLayer("ach", {
         34:{
 			name: "[6]<br><span style='color:#ffffff'>Shards IV</span>",
             done() {return hasUpgrade("Shards", 54)},
-            tooltip() {return "Buy the fourth row of Shard upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            tooltip() {return "Buy the fourth row of Shard upgrades.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
             style() {
                 return {
                     "border-color": "#ffffff",
@@ -108,7 +108,7 @@ addLayer("ach", {
         35:{
 			name: "[7]<br><span style='color:#ffffff'>Shards V</span>",
             done() {return hasUpgrade("Shards", 64)},
-            tooltip() {return "Buy the fifth row of Shard upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            tooltip() {return "Buy the fifth row of Shard upgrades.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
             style() {
                 return {
                     "border-color": "#ffffff",
@@ -119,7 +119,7 @@ addLayer("ach", {
         41:{
 			name: "[8]<br><span style='color:#fcf4e1'>Rebuilding</span>",
             done() {return hasUpgrade("Fragments", 11)},
-            tooltip() {return "Start rebuilding the Core.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            tooltip() {return "Start rebuilding the Core.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
             style() {
                 return {
                     "border-color": "#fcf4e1",
@@ -132,7 +132,7 @@ addLayer("ach", {
         51:{
 			name: "[9]<br><span style='color:#ffffff'>Shards VI</span>",
             done() {return hasUpgrade("Shards", 65)},
-            tooltip() {return "Buy the fifth column of Shard upgrades.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            tooltip() {return "Buy the fifth column of Shard upgrades.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
             style() {
                 return {
                     "border-color": "#ffffff",
