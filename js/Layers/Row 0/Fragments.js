@@ -27,6 +27,7 @@ addLayer("Fragments", {
     row: 1, // Row the layer is in on the tree (0 is the first row)
     layerShown(){return true},
     passiveGeneration() {
+        if (hasUpgrade('Fragments', 91)) return 1
 	return 0
     },
     //bars: {
@@ -1083,6 +1084,47 @@ addLayer("Fragments", {
                 }
             },
         },
+        91: {    
+            title: "Fragmented Flow",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F▢-3] Fragmented Flow</span></b><font size="2"><br>Generate 100% of Fragments gain per second, but remove the ability to perform the reset.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},        
+            cost: new Decimal(500),
+            unlocked() {return hasUpgrade("Fragments", 84)},
+            branches: [81, 82, 83, 84],
+            tooltip() {return "<span style='color:#ffffff'>Fragmented Flow</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#757573',
+                    "width": "500px",
+            "height": "125px",
+            "border-radius": "5px",
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'background': 'linear-gradient(#fcf4e1, #ffebb2)',
+            
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#ffcf5a' ,
+                    "width": "300px",
+            "height": "125px",
+            "border-radius": "5px",
+            'border-color': 'yellow',
+                'box-shadow':'0px 0px 15px #fffeb2'
+
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'background-color': '#ffcf5a' ,
+                    "width": "400px",
+            "height": "200px",
+            "border-radius": "5px",
+            'border-color': '#8eff00',
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
     },
     buyables: {
         rows: 5,
@@ -1093,18 +1135,17 @@ addLayer("Fragments", {
                 ["display-text",
                     function() {return '<span style="color:#fcf4e1">'+format(player.Fragments.points)+' Fragments'},
                     {"font-size": "30px"}],
+                    ["raw-html", function() {if (hasUpgrade("Fragments", 91)) return "<font size='4'>(+" + (format(getResetGain("Fragments"))) + " Fragments/s)"}, {"color": "#fcf4e1",}],
             ["display-text",
                 function() {return "―――――――――――――――――――――――――――――"},
                 {"color": "#fcf4e1", "font-size": "32px"}],
-                function() {if (hasUpgrade("Shards", 12)) return "prestige-button"}, 
-                ["raw-html", function() {if (!hasUpgrade("Shards", 12)) return 'To form fragments, you need Shard upgrade S02.'}],
+                function() {if (hasUpgrade("Shards", 12) && !hasUpgrade("Fragments", 91)) return "prestige-button"}, 
+                ["raw-html", function() {if (!hasUpgrade("Shards", 12) && !hasUpgrade("Fragments", 91)) return 'To form fragments, you need Shard upgrade S02.'}],
+                ["raw-html", function() {if (!hasUpgrade("Shards", 12) && !hasUpgrade("Fragments", 91)) return '―――――――――――――――――――――'}],
                 ["display-text",
                     function() {return '('+format(player.points)+' Shards)'},
-                    {"font-size": "14px"}],   
-                    ["display-text",
-                        function() {return "(<span style='color:#fcf4e1'>"+format(player.Fragments.total)+" total Fragments</span>)"},
-                        {"color": "#fcf4e1", "font-size": "12px"}],      
-                        "blank", 
+                    {"font-size": "17px"}],                       
+                        ["raw-html", function() {if (!hasUpgrade("Fragments", 91)) return "(<span style='color:#fcf4e1'>"+format(player.Fragments.total)+" total Fragments</span>)"}, {"font-size": "12px"}],
                         ["display-text",
                             function() {return "―――――――――――――――――――――――――――――"},
                             {"color": "#fcf4e1", "font-size": "32px"}],

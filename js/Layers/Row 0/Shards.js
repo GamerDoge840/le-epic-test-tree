@@ -1406,6 +1406,8 @@ doReset(resettingLayer) {
         "Shards": {
             //style() {return  {'background-color': '#292929'}},
             content: [
+                ["raw-html", function() {if (player.Fragments.total.gte(1)) return "(<span style='color:#fcf4e1'>"+format(player.Fragments.points)+" Fragments</span>)"}, {"font-size": "18px"}],
+                ["raw-html", function() {if (player.Fragments.total.gte(1)) return "<span style='color:#fcf4e1'>―――――――――――――――――――――――――――――――――――</span>"}, {"font-size": "15px"}],
                 ["display-text",
                     function() {return ''+format(player.points)+' Shards'},
                     {"font-size": "30px"}],
