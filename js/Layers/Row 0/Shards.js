@@ -1415,7 +1415,7 @@ doReset(resettingLayer) {
                         "blank",
                  "blank",
                         ["display-text",
-                            function() {return "--------------------"},
+                            function() {return "―――――――――――――――――"},
                             {"color": "#9d9d9d", "font-size": "32px"}],
                             ["upgrades", [1, 2, 3, 4, 5, 6, 7]],
                             "blank",
@@ -1423,7 +1423,7 @@ doReset(resettingLayer) {
                             ["raw-html", function() {if (hasUpgrade("Fragments", 51)) return "<span style='color:#fcf4e1'>"+format(player.Fragments.points)+" Fragments</span>"}],
 
                             "blank",                            ["display-text",
-                                function() {return "--------------------"},
+                                function() {return "―――――――――――――――――"},
                                 {"color": "#9d9d9d", "font-size": "32px"}],
                             "buyables",
                     
@@ -1431,7 +1431,13 @@ doReset(resettingLayer) {
             
         },
         "Fragments": {
-            style() {return  {'background-color': '#292929'}},
+            style() {return  {'background': '#292929'}},
+            //style() {
+                //return {
+                    //"background-image": "linear-gradient(to top,rgb(33, 33, 36),rgb(63, 59, 73))",
+                    //"background-size": "cover"
+                //};
+           // },
             unlocked() {return hasUpgrade('Shards', 12) || player.Fragments.total.gte(1)},
             buttonStyle: {"border-color": "#fcf4e1"},
             embedLayer: 'Fragments',
