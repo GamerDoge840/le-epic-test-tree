@@ -19,6 +19,8 @@ addLayer("Fragments", {
         mult = new Decimal(1)
         if (hasUpgrade('Shards', 71)) mult = mult.times(1.25)
         if (hasUpgrade('Fragments', 73)) mult = mult.times(upgradeEffect('Fragments', 73))
+        if (hasUpgrade('Fragments', 103)) mult = mult.times(buyableEffect('Shards', 12))
+        if (hasUpgrade('Fragments', 111)) mult = mult.times(upgradeEffect('Fragments', 111))
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -68,6 +70,7 @@ addLayer("Fragments", {
                 if (hasUpgrade('Fragments', 81)) effect = effect.times(1.15)
                 if (hasUpgrade('Fragments', 82)) effect = effect.times(upgradeEffect('Fragments', 82))
                 if (hasUpgrade('Fragments', 83)) effect = effect.times(upgradeEffect('Fragments', 83))
+                if (hasUpgrade('Fragments', 102)) effect = effect.times(upgradeEffect('Fragments', 102))
                 return effect
               },  
             unlocked() {return true},
@@ -1125,6 +1128,207 @@ addLayer("Fragments", {
                 }
             },
         },
+        101: {    
+            title: "Raised",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F71] Raised</span></b><font size="2"><br>Raises Shards gain by ^1.02.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},        
+            cost: new Decimal(30000),
+            branches: [91],
+            unlocked() {return hasUpgrade("Fragments", 91)},
+            tooltip() {return "<span style='color:#ffffff'>Raised</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffebb2',
+                    "width": "200px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': '#fcf4e1',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "200px",
+            "height": "165px",
+            'box-shadow':'0px 0px 15px #fffeb2'
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        102: {    
+            title: "Upgrade Rebuilding",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F72] Upgrade Rebuilding</span></b><font size="2"><br>The Fractured Core is boosted based on S41.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},       
+            cost: new Decimal(35000),
+            branches: [91],
+            effect() {
+                let eff = upgradeEffect("Shards", 51).plus(1).pow(0.04);
+                return eff;
+            },  
+            unlocked() {return hasUpgrade("Fragments", 101)},
+            tooltip() {return "<span style='color:#ffffff'>Upgrade Rebuilding</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffebb2',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': '#fcf4e1',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "200px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #fffeb2'
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        103: {    
+            title: "Now with Fragments",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F73] Now with Fragments</span></b><font size="2"><br>S12-B also affects Fragments.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},        
+            cost: new Decimal(70000),
+            branches: [91],
+            unlocked() {return hasUpgrade("Fragments", 102)},
+            tooltip() {return "<span style='color:#ffffff'>Now with Fragments</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffebb2',
+                    "width": "200px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': '#fcf4e1',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "200px",
+            "height": "165px",
+            'box-shadow':'0px 0px 15px #fffeb2'
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        104: {    
+            title: "Faster Gathering II",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F74] Faster Gathering II</span></b><font size="2"><br>Shards boost themselves again, but with a weaker effect.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},       
+            cost: new Decimal(85000),
+            branches: [91],
+            effect() {
+                let eff = player.points.plus(10).log10().pow(0.13);
+                return eff;
+            },
+            unlocked() {return hasUpgrade("Fragments", 103)},
+            tooltip() {return "<span style='color:#ffffff'>Faster Gathering II</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffebb2',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': '#fcf4e1',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "200px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #fffeb2'
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        111: {    
+            title: "Fragmented Fragments",
+            fullDisplay() {return `<font size="3"><b><span style='color:#000000'>[F81] Fragmented Fragments</span></b><font size="2"><br>Fragments boost themselves.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Fragments`},       
+            cost: new Decimal(55000),
+            effect() {
+                let eff = player.Fragments.points.plus(5).log(5).pow(0.25);
+                return eff;
+            },
+            unlocked() {return hasUpgrade("Fragments", 104)},
+            tooltip() {return "<span style='color:#ffffff'>Fragmented Fragments</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#ffebb2',
+                    "width": "200px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': '#fcf4e1',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'border': '3px solid, #fffeb2',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "200px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #fffeb2'
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#fcf4e1',
+                'color': 'black',
+                        "width": "225px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
     },
     buyables: {
         rows: 5,
@@ -1163,6 +1367,8 @@ addLayer("Fragments", {
                             ["upgrades", [10, 11, 12]],                      ["display-text",
                                 function() {return "―――――――――――――――――――――――――――――"},
                                 {"color": "#fcf4e1", "font-size": "32px"}],
+                                ["raw-html", function() {if (hasUpgrade("Fragments", 51)) return "(<span style='color:#fcf4e1'>"+format(player.Fragments.points)+" Fragments</span>)"}, {"font-size": "18px"}],
+
                                 
                             "buyables",
                 

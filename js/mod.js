@@ -72,6 +72,8 @@ function getPointGen() {
 	if (hasUpgrade('Fragments', 43) && player.points.gte('1')) gain = gain.times(2.00)
 	if (hasUpgrade('Shards', 71)) gain = gain.times(1.25)
 	if (hasUpgrade('Shards', 75)) gain = gain.times(1.25)
+	if (hasUpgrade('Fragments', 101)) gain = gain.pow(1.02)
+	if (hasUpgrade('Fragments', 104)) gain = gain.times(upgradeEffect('Fragments', 104))
 	return gain
 }
 
