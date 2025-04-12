@@ -25,7 +25,8 @@ addNode("PAU",{
 
 addLayer("tree-tab", {
     tabFormat: [["tree", [
-        ['PointLayer'],
+        ['Hive', 'Progression'],
+        ['Gathering'],
         ],
     ]],
     previousTab: "",

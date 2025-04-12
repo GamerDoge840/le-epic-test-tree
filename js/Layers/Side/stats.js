@@ -47,11 +47,7 @@ addLayer("stats", {
                         {"color": "#9d9d9d", "font-size": "37px"}],
                     ["display-text",
                         function() {return ''+format(player.points)+' Points'},
-                        {"font-size": "25px"}],
-                        ["raw-html", function() {if (hasUpgrade("PointLayer", 11)) return "<font size='4'>(+"+formatSmall(getPointGen())+" Points/s)"}],
-                        "blank",
-                        ["raw-html", function() {if (player.Prestige.total.gte(1)) return "<font size='5'>"+format(player.Prestige.points)+" Prestige"}, {"color": "#31aeb0", "font-size": "25px"}],
-                        ["raw-html", function() {if (player.Prestige.total.gte(1)) return "<font size='4'>"+format(player.Prestige.total)+" Total Prestige"}, {"color": "#31aeb0", "font-size": "20px"}],
+                        {"font-size": "25px"}],                        "blank",
                         //["display-text",
                             //function() {return '('+format(player.points.total)+' total Points)'},
                             //{"font-size": "15px"}],
@@ -70,8 +66,6 @@ addLayer("stats", {
                                     function() {return "You have played this game for " + formatTime(player.timePlayed, true + ".")},
                                     {"font-size": "25px"}],  
                                     "blank",
-                                    ["raw-html", function() {if (player.Prestige.total.gte(1)) return "<font size='5'>You have spent " + formatTime(player.Prestige.resetTime, true) + " in this Prestige."}, {"color": "#31aeb0"}],
-
 
             ],
         },

@@ -1,9 +1,9 @@
 let modInfo = {
-	name: "Accretive Ascension",
-	id: "incrementalsmaxxing",
-	author: "Seer",
-	pointsName: "Points",
-	modFiles: ["Layers/Row 0/Prestige.js","Layers/Row 0/PointLayer.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
+	name: "Bee Game",
+	id: "beesmaxxing",
+	author: "The Big B",
+	pointsName: "???",
+	modFiles: ["Layers/Main Layers/Gear.js","Layers/Materials/RoyalJelly.js","Layers/Main Layers/Progression.js","Layers/Main Layers/Hive.js","Layers/PollenTypes/WhitePollen.js","Layers/Main Layers/Gathering.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -34,7 +34,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("PointLayer", 11);
+	return false;
 }
 
 // Calculate points/sec!
@@ -42,18 +42,7 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.001)
-	if (hasUpgrade('PointLayer', 12)) gain = gain.times(upgradeEffect('PointLayer', 12))
-	if (hasUpgrade('PointLayer', 13)) gain = gain.times(upgradeEffect('PointLayer', 13))
-	if (hasUpgrade('PointLayer', 14)) gain = gain.times(upgradeEffect('PointLayer', 14))
-	if (hasUpgrade('PointLayer', 21)) gain = gain.times(upgradeEffect('PointLayer', 21))
-	if (hasUpgrade('PointLayer', 22)) gain = gain.times(upgradeEffect('PointLayer', 22))
-	if (hasUpgrade('PointLayer', 23)) gain = gain.times(upgradeEffect('PointLayer', 23))
-	if (hasUpgrade('PointLayer', 24)) gain = gain.times(upgradeEffect('PointLayer', 24))
-	if (hasUpgrade('PointLayer', 31)) gain = gain.times(upgradeEffect('PointLayer', 31))
-	gain=gain.times(buyableEffect('PointLayer', 11))
-    if (hasUpgrade('PointLayer', 44)) gain = gain.times(upgradeEffect('PointLayer', 44))
-	if (hasUpgrade('Prestige', 11)) gain = gain.times(upgradeEffect('Prestige', 11))
+	let gain = new Decimal(0.01)
 	return gain
 }
 
