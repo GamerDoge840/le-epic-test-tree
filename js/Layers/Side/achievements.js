@@ -40,7 +40,7 @@ addLayer("ach", {
 			name: "[1]<br><span style='color:#ffffff'>The Beginning</span>",
             done() {return hasUpgrade("Prestige", 11)},
             //done() {return player.points.gte('1')},
-            tooltip() {return "Start generation of Essence.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>This should be simple enough, I hope."},
+            tooltip() {return "Start generation of Energy.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>This should be simple enough, I hope."},
             style() {
                 return {
                     "border-color": "#ffffff",
@@ -56,8 +56,9 @@ addLayer("ach", {
                 ["display-text",
                     function() {return "You have attained <h2 style='color:  gold; text-shadow: gold 0px 0px 10px;'> "+format(player.ach.achievements.length,0)+"/"+format(Object.keys(tmp.ach.achievements).length - 2,0)+"</h2> achievements, or "+format(new Decimal(player.ach.achievements.length).div(19).mul(100))+"% of the total achievement count."}, //change division to current numer of achievements
                 ],
+                "blank",
                 ["display-text",
-                    function() {return "----====Achievements====----"},
+                    function() {return "----====Stage 1: Quark Phase====----"},
                     {"color": "Gray", "font-size": "27px"}],
                     "blank",
                     "blank",
