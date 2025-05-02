@@ -58,7 +58,7 @@ addLayer("ach", {
                 ],
                 "blank",
                 ["display-text",
-                    function() {return "―――――――――――― Stage 1: Quark Phase ――――――――――――"},
+                    function() {return "―――――――――――― Stage 0: Pre-Quark Phase ――――――――――――"},
                     {"color": "Gray", "font-size": "27px"}],
                     "blank",
                     "blank",

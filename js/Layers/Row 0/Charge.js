@@ -16,16 +16,17 @@ addLayer("Charge", {
         'min-width': '100px',  
         }
     },
-    requires: new Decimal("1"), // Can be a function that takes requirement increases into account
+    requires: new Decimal("500"), // Can be a function that takes requirement increases into account
     resource: "Charge", // Name of prestige currency
     //autoUpgrade() {return hasUpgrade('Glory', 22)},
-    resetDescription: "Form Essence into Prestige.<br>―――――――<br>",
-    baseResource: "Essence", // Name of resource prestige is based on
+    resetDescription: "Charge your Energy.<br>――――――――――――――――<br>",
+    baseResource: "Energy", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.7, // Prestige currency exponent
+    exponent: 1, // Prestige currency exponent
     tooltip() {
         let tooltip = "<font size='3'>Energy<br>――――――――――――――<br> <font size='2'><span style='color:#fcffc5'> " +formatWhole(player.points)+" Energy</span>"
+        if(player.Charge.total.gte(1)) tooltip = tooltip + "<br><span style='color:#fff888'>"+formatWhole(player.Charge.points)+" Charge</font>"
         return tooltip
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -382,7 +383,7 @@ addLayer("Charge", {
         },
         31: {    
             title: "Energetic Charge",
-            fullDisplay() {return `<font size="3"><b>[E31] Energetic Charge</span><font size="2"><br>Boosts Energy gain 1.25x again, and unlocks Charge.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`},        
+            fullDisplay() {return `<font size="3"><b>[E31] Energetic Charge</span><font size="2"><br>Boosts Energy gain by 1.25x again, and unlocks Charge.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`},        
             cost: new Decimal(100), 
             currencyInternalName: "points",
             unlocked() {return hasUpgrade("Charge", 24)},
@@ -493,6 +494,24 @@ addLayer("Charge", {
                         ["column", [ ["row", [ ["buyable", 11],]]]],
                         "blank",
                     ]
+                },
+                "Charge": {
+                    content: [
+                        "blank",
+                        ["display-text",
+                            function() {return ''+format(player.Charge.points)+' Charge'},
+                            {"color": "#fff888", "font-size": "35px"}],
+                            ["display-text",
+                                function() {return '――――――――――――――――'},
+                                {"color": "#fff888", "font-size": "30px"}],
+                        "prestige-button",
+                        ["display-text",
+                            function() {return '――――――――――――――――'},
+                            {"color": "#fff888", "font-size": "30px"}],
+                        "blank",
+                    ],
+                    buttonStyle: {"border-color": "#fff888"},
+                    unlocked() {return hasUpgrade("Charge", 31) }
                 },
             }
         },
