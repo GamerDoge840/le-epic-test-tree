@@ -8,6 +8,9 @@ let modInfo = {
 =======
 	pointsName: "Essence",
 	modFiles: ["Layers/Row 2/Hindrance.js","Layers/Row 2/Glory.js","Layers/Row 1/Energy.js","Layers/Row 1/Rank.js","Layers/Row 1/Honor.js","Layers/Row 0/Level.js","Layers/Row 0/Prestige.js", "math.js", "Layers/Side/stats.js", "Layers/Side/achievements.js", "tree.js"],
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 	discordName: "",
