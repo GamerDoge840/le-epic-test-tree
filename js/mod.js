@@ -1,8 +1,8 @@
 let modInfo = {
-	name: "The Prestige Realm",
-	id: "TESTESTEST",
+	name: "The Particle Tree",
+	id: "manilikequarks",
 	author: "The Big G",
-	pointsName: "Essence",
+	pointsName: "Energy",
 	modFiles: ["Layers/Row 0/Prestige.js", "math.js", "Layers/Side/stats.js", "Layers/Side/achievements.js", "tree.js"],
 
 	discordName: "",

@@ -16,16 +16,16 @@ addLayer("Prestige", {
         'min-width': '100px',  
         }
     },
-    requires: new Decimal("0.025"), // Can be a function that takes requirement increases into account
+    requires: new Decimal("1"), // Can be a function that takes requirement increases into account
     resource: "Prestige", // Name of prestige currency
     //autoUpgrade() {return hasUpgrade('Glory', 22)},
-    resetDescription: "Form Essence into Prestige.<br>----------<br>",
+    resetDescription: "Form Essence into Prestige.<br>―――――――<br>",
     baseResource: "Essence", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.7, // Prestige currency exponent
     tooltip() {
-        let tooltip = "<font size='3'>Prestige<br>----------------<br> <font size='2'><span style='color:#ffffff'> " +formatWhole(player.points)+" Essence</span>"
+        let tooltip = "<font size='3'>Prestige<br>――――――――――――――<br> <font size='2'><span style='color:#ffffff'> " +formatWhole(player.points)+" Essence</span>"
         return tooltip
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
