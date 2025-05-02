@@ -1,6 +1,6 @@
 let modInfo = {
 	name: "The Prestige Realm",
-	id: "comicallylongetmtgame",
+	id: "TESTESTEST",
 	author: "The Big G",
 	pointsName: "Essence",
 	modFiles: ["Layers/Row 0/Prestige.js", "math.js", "Layers/Side/stats.js", "Layers/Side/achievements.js", "tree.js"],
