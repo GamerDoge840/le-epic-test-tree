@@ -210,7 +210,13 @@ var systemComponents = {
 		</div>
 		`
 	},
-
+'news-ticker': {
+		props: ['data', 'index'],
+		template: `<div id="newsticker">
+			<div id="newsmessage" v-bind:style="{ transform: 'translateX(' + newsTicker.pos + 'px' }" :class="{ new: newsTicker.new }" v-html="newsTicker.current"></div>
+		</div>
+		`
+	},
 	'bg': {
 		props: ['layer'],
 		template: `<div class ="bg" v-bind:style="[tmp[layer].style ? tmp[layer].style : {}, (tmp[layer].tabFormat && !Array.isArray(tmp[layer].tabFormat)) ? tmp[layer].tabFormat[player.subtabs[layer].mainTabs].style : {}]"></div>

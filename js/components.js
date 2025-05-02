@@ -610,6 +610,7 @@ function loadVue() {
 	Vue.component('bg', systemComponents['bg'])
 
 
+
 	app = new Vue({
 		el: "#app",
 		data: {
