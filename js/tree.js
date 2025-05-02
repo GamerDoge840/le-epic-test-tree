@@ -25,7 +25,7 @@ addNode("PAU",{
 
 addLayer("tree-tab", {
     tabFormat: [["tree", [
-        ['Prestige'],
+        ['Charge'],
         ],
     ]],
     previousTab: "",

@@ -3,11 +3,11 @@ let modInfo = {
 	id: "manilikequarks",
 	author: "The Big G",
 	pointsName: "Energy",
-	modFiles: ["Layers/Row 0/Prestige.js", "math.js", "Layers/Side/stats.js", "Layers/Side/achievements.js", "tree.js"],
+	modFiles: ["Layers/Row 0/Charge.js", "math.js", "Layers/Side/stats.js", "Layers/Side/achievements.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (0.025), // Used for hard resets and new players
+	initialStartPoints: new Decimal (1), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
@@ -34,7 +34,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("Prestige", 11);
+	return hasUpgrade("Charge", 11);
 }
 
 // Calculate points/sec!
@@ -42,7 +42,14 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.010)
+	let gain = new Decimal(0.0010)
+	if (hasUpgrade('Charge', 12)) gain = gain.times(upgradeEffect('Charge', 12))
+	if (hasUpgrade('Charge', 13)) gain = gain.times(upgradeEffect('Charge', 13))
+	if (hasUpgrade('Charge', 13)) gain = gain.times(2)
+	if (hasUpgrade('Charge', 14)) gain = gain.times(upgradeEffect('Charge', 14))
+	if (hasUpgrade('Charge', 22)) gain = gain.times(1.5)
+	if (hasUpgrade('Charge', 24)) gain = gain.times(1.25)
+	gain=gain.times(buyableEffect('Charge', 11))
 	return gain
 }
 

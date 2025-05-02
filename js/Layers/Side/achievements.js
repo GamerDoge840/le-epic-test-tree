@@ -38,7 +38,7 @@ addLayer("ach", {
     achievements: {
 		11:{
 			name: "[1]<br><span style='color:#ffffff'>The Beginning</span>",
-            done() {return hasUpgrade("Prestige", 11)},
+            done() {return hasUpgrade("Charge", 11)},
             //done() {return player.points.gte('1')},
             tooltip() {return "Start generation of Energy.<br>----------------<br> <span style='font-size:11px'><span style='color:#E5E4E2'>This should be simple enough, I hope."},
             style() {
@@ -58,7 +58,7 @@ addLayer("ach", {
                 ],
                 "blank",
                 ["display-text",
-                    function() {return "----====Stage 1: Quark Phase====----"},
+                    function() {return "―――――――――――― Stage 1: Quark Phase ――――――――――――"},
                     {"color": "Gray", "font-size": "27px"}],
                     "blank",
                     "blank",
