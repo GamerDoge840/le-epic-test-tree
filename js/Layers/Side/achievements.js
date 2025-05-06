@@ -59,7 +59,7 @@ addLayer("ach", {
                 "blank",
                 ["display-text",
                     function() {return "―――――――――――― Stage 0: Pre-Quark Phase ――――――――――――"},
-                    {"color": "Gray", "font-size": "27px"}],
+                    {"color": "Gray", "font-size": "23px"}],
                     "blank",
                     "blank",
                     ["achievements", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]],
