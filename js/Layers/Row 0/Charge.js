@@ -19,7 +19,7 @@ addLayer("Charge", {
     },
     requires: new Decimal("500"), // Can be a function that takes requirement increases into account
     resource: "Charge", // Name of prestige currency
-    //autoUpgrade() {return hasUpgrade('Glory', 22)},
+    autoUpgrade() {return hasUpgrade('ColorCharge', 14)},
     resetDescription: "Charge your Energy.<br>――――――――――――――――<br>",
     baseResource: "Energy", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
@@ -43,6 +43,10 @@ addLayer("Charge", {
         if (hasUpgrade('Quarks', 31)) mult = mult.times(1.45)
         mult=mult.times(buyableEffect('Quarks', 21))
         if (hasUpgrade('Quarks', 32)) mult = mult.times(upgradeEffect('Quarks', 32))
+        if (hasUpgrade('ColorCharge', 11)) mult = mult.times(upgradeEffect('ColorCharge', 11))
+        if (hasUpgrade('ColorCharge', 12)) mult = mult.times(3)
+        if (hasUpgrade('ColorCharge', 22)) mult = mult.times(upgradeEffect('ColorCharge', 22))
+        if (hasUpgrade('ColorCharge', 32)) mult = mult.times(upgradeEffect('ColorCharge', 32))
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -53,6 +57,7 @@ addLayer("Charge", {
     automate() {
         if(hasUpgrade('Quarks', 22)) buyMaxBuyable('Charge', 12)
         if(hasUpgrade('Quarks', 33)) buyMaxBuyable('Charge', 11)
+        if(hasUpgrade('ColorCharge', 12)) buyMaxBuyable('Charge', 21)
     },
     passiveGeneration() {
         if (hasUpgrade('Charge', 113)) return 1
@@ -73,6 +78,7 @@ addLayer("Charge", {
         if (layers[resettingLayer].row <= this.row) return;
         let keptUpgrades = []
         let keptMilestones = []
+        if (hasUpgrade('ColorCharge', 14) && hasUpgrade('Charge', 113) ) keptUpgrades.push(113)
         layerDataReset(this.layer);
         player[this.layer].upgrades.push(...keptUpgrades)
         player[this.layer].milestones.push(...keptMilestones)
@@ -126,6 +132,7 @@ addLayer("Charge", {
                 effect = new Decimal(2.00)
                 if (hasUpgrade('Charge', 21)) effect = effect.times(upgradeEffect('Charge', 21))
                 if (hasUpgrade('Charge', 23)) effect = effect.times(upgradeEffect('Charge', 23))
+                if (hasUpgrade('Quarks', 53)) effect = effect.times(upgradeEffect('Quarks', 53))
                 return effect
               },  
             unlocked() {return hasUpgrade("Charge", 11)},
@@ -168,6 +175,8 @@ addLayer("Charge", {
             effect() {
                 let eff = player.points.plus(1).log10().pow(0.55).plus(1);
                 if (hasUpgrade('Charge', 32)) eff = eff.times(upgradeEffect('Charge', 32))
+                if (hasUpgrade('Charge', 114)) eff = eff.times(upgradeEffect('Charge', 114))
+                if (hasUpgrade('Quarks', 54)) eff = eff.times(3)
                 return eff;
             }, 
             unlocked() {return hasUpgrade("Charge", 12)},
@@ -210,6 +219,7 @@ addLayer("Charge", {
             effect() {
                 let eff = Decimal.pow(1.15, player.Charge.upgrades.length);
                 if (hasUpgrade('Quarks', 21)) eff = eff.times(upgradeEffect('Quarks', 21))
+                if (hasUpgrade('ColorCharge', 33)) eff = eff.times(upgradeEffect('ColorCharge', 33))
                 return eff;
             },
             unlocked() {return hasUpgrade("Charge", 13)},
@@ -829,6 +839,46 @@ addLayer("Charge", {
                 }
             },
         },
+        114: {    
+            title: "Charge-Energy Synergism",
+            fullDisplay() {return `<font size="3"><b>[C24] Charge-Energy Synergism</span><font size="2"><br>Boosts E13 based on Charge.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Charge`},        
+            cost: new Decimal(3e10), 
+            effect() {
+                let eff = player.Charge.points.plus(1).log(8).pow(0.17);
+                return eff;
+            },
+            unlocked() {return hasUpgrade("Quarks", 34) && hasUpgrade("Charge", 113)},
+            tooltip() {return "<span style='color:#ffffff'>Charge-Energy Synergism</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#fff888',
+                    "width": "180px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "180px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "180px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
         1011: {    
             title: "Universal Fundamentals",
             fullDisplay() {return `<font size="3"><b>Universal Fundamentals</b><font size="2"><br>Unlocks Quarks.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Energy)+` Energy and `+format(tmp[this.layer].upgrades[this.id].costs.Charge)+` Charge`},        
@@ -880,12 +930,63 @@ addLayer("Charge", {
                 }
             },
         },
+        1012: {    
+            title: "Universal Energetics",
+            fullDisplay() {return `<font size="3"><b>Universal Energetics</b><font size="2"><br>Unlocks Color Charge.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Energy)+` Energy and `+format(tmp[this.layer].upgrades[this.id].costs.Charge)+` Charge`},        
+            costs: {
+                Charge: 1e11,
+                Energy: 4e12,
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Energy)
+                    && player.Charge.points.gte(this.costs.Charge)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Energy);
+                player.Charge.points = player.Charge.points.minus(this.costs.Charge);
+              },
+            unlocked() {return hasUpgrade("Charge", 114)},
+            tooltip() {return "<span style='color:#ffffff'>Universal Energetics</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>It's called a tree, not a twig."},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "width": "200px",
+            "height": "165px",
+            "border-radius": "5px",
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+            "background-image": 'url("resources/colorcharge.png")',        
+                    'background-position': 'center center',
+                     'background-size': '160%',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#fff888' ,
+                    "width": "300px",
+            "height": "125px",
+            "border-radius": "5px",
+            'border-color': '#f7ebff',
+                'box-shadow':'0px 0px 15px #fcffc5'
+
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'background-color': '#fcffc5' ,
+                    "width": "400px",
+            "height": "200px",
+            "border-radius": "5px",
+            'border-color': '#f7ebff',
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
     },
     buyables: {
         rows: 5,
         cols: 4,
         11: {
-            display() {return `<font size="3"><b>[E11-B] Energy Accumulator</b><font size="2"><br>――――――――――――――――――――<br><b>Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Energy</b><br><b>Amount: `+format(getBuyableAmount(this.layer, this.id), 0)+`/`+format(tmp[this.layer].buyables[this.id].purchaseLimit)+`</b> <br>――――――――――――――――――――<br><b>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Energy</b>`},
+            display() {return `<font size="3"><b>[E11-B] Energy Accumulator</b><font size="2"><br>――――――――――――――――――――<br><b>Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Energy</b><br><b>Amount: `+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`</b> <br>――――――――――――――――――――<br><b>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Energy</b>`},
             cost(x) {
                 let base = new Decimal(1.385);
                 let cost = base.pow(x).times(0.200);
@@ -924,7 +1025,7 @@ addLayer("Charge", {
     
         },
         12: {
-            display() {return `<font size="3"><b>[E12-B] Charge Accumulator</b><font size="2"><br>――――――――――――――――――――<br><b>Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Energy</b><br><b>Amount: `+format(getBuyableAmount(this.layer, this.id), 0)+`/`+format(tmp[this.layer].buyables[this.id].purchaseLimit)+`</b> <br>――――――――――――――――――――<br><b>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Charge</b>`},
+            display() {return `<font size="3"><b>[E12-B] Charge Accumulator</b><font size="2"><br>――――――――――――――――――――<br><b>Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Energy</b><br><b>Amount: `+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`</b> <br>――――――――――――――――――――<br><b>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Charge</b>`},
             cost(x) {
                 let base = new Decimal(1.485);
                 let cost = base.pow(x).times(5000);
@@ -957,7 +1058,7 @@ addLayer("Charge", {
     
         },
         21: {
-            display() {return `<font size="3"><b>[E21-B] Dynamic Booster</b><font size="2"><br>――――――――――――――――――――<br><b>Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Charge</b><br><b>Amount: `+format(getBuyableAmount(this.layer, this.id), 0)+`/`+format(tmp[this.layer].buyables[this.id].purchaseLimit)+`</b> <br>――――――――――――――――――――<br><b>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Energy and Charge</b>`},
+            display() {return `<font size="3"><b>[E21-B] Dynamic Booster</b><font size="2"><br>――――――――――――――――――――<br><b>Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Charge</b><br><b>Amount: `+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`</b> <br>――――――――――――――――――――<br><b>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Energy and Charge</b>`},
             cost(x) {
                 let base = new Decimal(2.5);
                 let cost = base.pow(x).times(1e6);
@@ -973,7 +1074,7 @@ addLayer("Charge", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(50)
+                cap = new Decimal(100)
                 return cap
             },
             buyMax() {
@@ -1050,6 +1151,8 @@ addLayer("Charge", {
                         "blank",
                         "blank",
                         ["column", [ ["row", [ ["upgrade", 1011]]]]],
+                        "blank",
+                        ["column", [ ["row", [ ["upgrade", 1012]]]]],
                         "blank",
 
                     ],

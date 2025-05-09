@@ -26,7 +26,7 @@ addNode("PAU",{
 addLayer("tree-tab", {
     tabFormat: [["tree", [
         ['Charge'],
-        ['Quarks'],
+        ['ColorCharge', 'Quarks'],
         ],
     ]],
     previousTab: "",

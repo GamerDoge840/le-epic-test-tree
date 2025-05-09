@@ -3,7 +3,7 @@ let modInfo = {
 	id: "manilikequarks",
 	author: "The Big G",
 	pointsName: "Energy",
-	modFiles: ["Layers/Row 1/Quarks.js","Layers/Row 0/Charge.js", "math.js", "Layers/Side/stats.js", "Layers/Side/achievements.js", "tree.js"],
+	modFiles: ["Layers/Row 1/ColorCharge.js","Layers/Row 1/Quarks.js","Layers/Row 0/Charge.js", "math.js", "Layers/Side/stats.js", "Layers/Side/achievements.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -62,6 +62,10 @@ function getPointGen() {
 	if (hasUpgrade('Quarks', 31)) gain = gain.times(1.45)
 	gain=gain.times(buyableEffect('Quarks', 11))
 	if (hasUpgrade('Quarks', 32)) gain = gain.times(upgradeEffect('Quarks', 32))
+	if (hasUpgrade('ColorCharge', 12)) gain = gain.times(3)
+	if (hasUpgrade('ColorCharge', 13)) gain = gain.times(upgradeEffect('ColorCharge', 13))
+	if (hasUpgrade('ColorCharge', 22)) gain = gain.times(upgradeEffect('ColorCharge', 22))
+	if (hasUpgrade('ColorCharge', 32)) gain = gain.times(upgradeEffect('ColorCharge', 32))
 	return gain
 }
 
