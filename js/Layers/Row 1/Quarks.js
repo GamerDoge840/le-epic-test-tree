@@ -27,6 +27,7 @@ addLayer("Quarks", {
     exponent: 0.15, // Prestige currency exponent
     tooltip() {
         let tooltip = "<font size='3'>Quarks<br>――――――――――――――<br> <font size='2'><span style='color:#f7ebff'> " +formatWhole(player.Quarks.points)+" Quarks</span>"
+        if(player.RedQuarks.total.gte(1)) tooltip = tooltip + "<br><span style='color:#ff856f'>"+formatWhole(player.RedQuarks.points)+" Red Quarks</font>"
         return tooltip
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -40,6 +41,9 @@ addLayer("Quarks", {
         if (hasUpgrade('Quarks', 43)) mult = mult.times(upgradeEffect('Quarks', 43))
         if (hasUpgrade('Quarks', 52)) mult = mult.times(upgradeEffect('Quarks', 52))
         if (hasUpgrade('ColorCharge', 34)) mult = mult.times(upgradeEffect('ColorCharge', 34))
+        if (hasUpgrade('RedQuarks', 11)) mult = mult.times(3)
+        if (hasUpgrade('RedQuarks', 13)) mult = mult.times(upgradeEffect('RedQuarks', 13))
+        if (hasUpgrade('RedQuarks', 14)) mult = mult.times(upgradeEffect('RedQuarks', 14))
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -798,6 +802,60 @@ addLayer("Quarks", {
                 }
             },
         },
+        1011: {    
+            title: "Red Quarks",
+            fullDisplay() {return `<font size="3"><b>Red Quarks</b><font size="2"><br>Unlocks Red Quarks.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Energy)+` Energy and `+format(tmp[this.layer].upgrades[this.id].costs.Charge)+` Charge and `+formatWhole(tmp[this.layer].upgrades[this.id].costs.ColorCharge)+` Color Charge`},        
+            costs: {
+                Charge: 1.5e22,
+                Energy: 8e23,
+                ColorCharge: 13
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Energy)
+                    && player.Charge.points.gte(this.costs.Charge)
+                    && player.ColorCharge.points.gte(this.costs.ColorCharge)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Energy);
+                player.Charge.points = player.Charge.points.minus(this.costs.Charge);
+                player.ColorCharge.points = player.ColorCharge.points.minus(this.costs.ColorCharge);
+              },
+            unlocked() {return hasUpgrade("Quarks", 54)},
+            tooltip() {return "<span style='color:#ffffff'>Red Quarks</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#757573',
+                    "width": "200px",
+            "height": "165px",
+            "border-radius": "5px",
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'background': 'linear-gradient(#ff856f, #f9d6ff)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#ff856f' ,
+                    "width": "300px",
+            "height": "125px",
+            "border-radius": "5px",
+            'border-color': '#f7ebff',
+                'box-shadow':'0px 0px 15px #f7ebff'
+                //'background': 'linear-gradient(#fcf4e1, #ffcd7a)',
+
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'background-color': '#e55035' ,
+                    "width": "400px",
+            "height": "200px",
+            "border-radius": "5px",
+            'border-color': '#8eff00',
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
     },
     buyables: {
         rows: 5,
@@ -958,6 +1016,17 @@ addLayer("Quarks", {
             ]
             
         },
+        "Red Quarks": {
+            //style() {
+                //return {
+                    //"background-image": "linear-gradient(to top, #ff856f,#f7ebff",
+                    //"background-size": "cover"
+                //};
+            //},
+            unlocked() {return hasUpgrade('Quarks', 1011)},
+            buttonStyle: {"border-color": "#ff856f"},
+            embedLayer: 'RedQuarks',
+        },
     },
         microtabs: {
             QuarkTabs: {
@@ -971,6 +1040,9 @@ addLayer("Quarks", {
                         ["column", [ ["row", [ ["upgrade", 41], ["upgrade", 42], ["upgrade", 43], ["upgrade", 44],]]]],
                         ["column", [ ["row", [ ["upgrade", 51], ["upgrade", 52], ["upgrade", 53], ["upgrade", 54],]]]],
                         "blank",
+                        ["column", [ ["row", [ ["upgrade", 1011],]]]],
+                        "blank",
+
                     ]
                     
                 },

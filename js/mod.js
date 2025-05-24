@@ -3,7 +3,7 @@ let modInfo = {
 	id: "manilikequarks",
 	author: "The Big G",
 	pointsName: "Energy",
-	modFiles: ["Layers/Row 1/ColorCharge.js","Layers/Row 1/Quarks.js","Layers/Row 0/Charge.js", "math.js", "Layers/Side/stats.js", "Layers/Side/achievements.js", "tree.js"],
+	modFiles: ["Layers/Row 1/RedQuarks.js","Layers/Row 1/ColorCharge.js","Layers/Row 1/Quarks.js","Layers/Row 0/Charge.js", "math.js", "Layers/Side/stats.js", "Layers/Side/achievements.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -66,12 +66,13 @@ function getPointGen() {
 	if (hasUpgrade('ColorCharge', 13)) gain = gain.times(upgradeEffect('ColorCharge', 13))
 	if (hasUpgrade('ColorCharge', 22)) gain = gain.times(upgradeEffect('ColorCharge', 22))
 	if (hasUpgrade('ColorCharge', 32)) gain = gain.times(upgradeEffect('ColorCharge', 32))
+	if (hasUpgrade('RedQuarks', 11)) gain = gain.times(3)
 	return gain
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
-    notation:'Mixed Scientific',
+    notation:'Scientific',
 }}
 // Display extra things at the top of the page
 var displayThings = [

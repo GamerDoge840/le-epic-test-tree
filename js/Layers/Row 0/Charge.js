@@ -47,6 +47,7 @@ addLayer("Charge", {
         if (hasUpgrade('ColorCharge', 12)) mult = mult.times(3)
         if (hasUpgrade('ColorCharge', 22)) mult = mult.times(upgradeEffect('ColorCharge', 22))
         if (hasUpgrade('ColorCharge', 32)) mult = mult.times(upgradeEffect('ColorCharge', 32))
+        if (hasUpgrade('RedQuarks', 11)) mult = mult.times(3)
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -1009,6 +1010,7 @@ addLayer("Charge", {
             },
             purchaseLimit() {
                 cap = new Decimal(50)
+                if (hasUpgrade('RedQuarks', 12)) cap = cap.times(10)
                 return cap
             },
             buyMax() {
@@ -1042,6 +1044,7 @@ addLayer("Charge", {
             },
             purchaseLimit() {
                 cap = new Decimal(50)
+                if (hasUpgrade('RedQuarks', 12)) cap = cap.times(10)
                 return cap
             },
             buyMax() {
