@@ -189,6 +189,119 @@ addLayer("RedQuarks", {
                 }
             },
         },
+        21: {    
+            title: "Red Quark Power",
+            fullDisplay() {return `<font size="3"><b>[RQ21] Red Quark Power</span><font size="2"><br>Boost Charge and Energy gain by 1.10x for every total Red Quark.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Red Quarks`},        
+            cost: new Decimal(16),
+            effect() {
+                let eff = player.RedQuarks.total.mul(0.10).plus(1);
+                return eff.min(100);
+            }, 
+            unlocked() {return hasUpgrade("RedQuarks", 14)},
+            tooltip() {return "<span style='color:#ffffff'>Red Quark Power</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#ff7474'>Effect hardcapped at 100x."},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#fcffc5',
+                    "width": "185px",
+            "height": "175px",
+            'background': 'linear-gradient(#ff856f, #f9d6ff)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#ff856f',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        22: {    
+            title: "Better Synergism",
+            fullDisplay() {return `<font size="3"><b>[RQ22] Better Synergism</b><font size="2"><br>E23 is four times as strong.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Red Quarks`},        
+            cost: new Decimal(25),
+            unlocked() {return hasUpgrade("RedQuarks", 21)},
+            tooltip() {return "<span style='color:#ffffff'>Better Synergism</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#fcffc5',
+                    "width": "185px",
+            "height": "175px",
+            'background': 'linear-gradient(#ff856f, #f9d6ff)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#ff856f',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        23: {    
+            title: "Self-Powered Recursion",
+            fullDisplay() {return `<font size="3"><b>[RQ23] Self-Powered Recursion</span><font size="2"><br>Boosts E13 based on Energy.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Red Quarks`},        
+            cost: new Decimal(45),
+            effect() {
+                let eff = player.points.plus(1).log10().pow(0.35).plus(1);
+                return eff;
+            }, 
+            unlocked() {return hasUpgrade("RedQuarks", 22)},
+            tooltip() {return "<span style='color:#ffffff'>Self-Powered Recursion</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#ff7474'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#fcffc5',
+                    "width": "185px",
+            "height": "175px",
+            'background': 'linear-gradient(#ff856f, #f9d6ff)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#ff856f',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
     },
     buyables: {
         rows: 5,

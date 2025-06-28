@@ -48,6 +48,7 @@ addLayer("Charge", {
         if (hasUpgrade('ColorCharge', 22)) mult = mult.times(upgradeEffect('ColorCharge', 22))
         if (hasUpgrade('ColorCharge', 32)) mult = mult.times(upgradeEffect('ColorCharge', 32))
         if (hasUpgrade('RedQuarks', 11)) mult = mult.times(3)
+        if (hasUpgrade('RedQuarks', 21)) mult = mult.times(upgradeEffect('RedQuarks', 21))
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -178,6 +179,7 @@ addLayer("Charge", {
                 if (hasUpgrade('Charge', 32)) eff = eff.times(upgradeEffect('Charge', 32))
                 if (hasUpgrade('Charge', 114)) eff = eff.times(upgradeEffect('Charge', 114))
                 if (hasUpgrade('Quarks', 54)) eff = eff.times(3)
+                if (hasUpgrade('RedQuarks', 23)) eff = eff.times(upgradeEffect('RedQuarks', 23))
                 return eff;
             }, 
             unlocked() {return hasUpgrade("Charge", 12)},
@@ -339,6 +341,7 @@ addLayer("Charge", {
             cost: new Decimal(4),
             effect() {
                 let eff = upgradeEffect('Charge', 13).pow(0.25);
+                if (hasUpgrade('RedQuarks', 22)) eff = eff.times(4)
                 return eff;
             },   
             currencyInternalName: "points",

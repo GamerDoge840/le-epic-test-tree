@@ -67,6 +67,7 @@ function getPointGen() {
 	if (hasUpgrade('ColorCharge', 22)) gain = gain.times(upgradeEffect('ColorCharge', 22))
 	if (hasUpgrade('ColorCharge', 32)) gain = gain.times(upgradeEffect('ColorCharge', 32))
 	if (hasUpgrade('RedQuarks', 11)) gain = gain.times(3)
+	if (hasUpgrade('RedQuarks', 21)) gain = gain.times(upgradeEffect('RedQuarks', 21))
 	return gain
 }
 
