@@ -22,7 +22,7 @@ addLayer("ach", {
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
-    tooltip() {return format(player.ach.achievements.length,0)+" Achievements completed."},
+    tooltip() {return format(player.ach.achievements.length,0)+"/1 Achievements Completed"},
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         return mult
@@ -37,26 +37,32 @@ addLayer("ach", {
     layerShown(){return true},
     achievements: {
 		11:{
-			name: "Murderer!",
-            done() {return player.points.gte('1')},
-            tooltip() {return "Kill a monster. This should be simple enough."},
+			name: "[1]<br><span style='color:#ffffff'>The Beginning</span>",
+            done() {return hasUpgrade("Research", 11)},
+            //done() {return player.points.gte('1')},
+            tooltip() {return "Start generation of Research.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>This should be simple enough, I hope."},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
         },
-        
     },
     
-    
     tabFormat: {
-        "Recollection": {
+        "Memory Banks": {
             content: ["blank",
                 ["display-text",
-                    function() {return "You have attained <h2 style='color:  gold; text-shadow: gold 0px 0px 10px;'> "+format(player.ach.achievements.length,0)+"/"+format(Object.keys(tmp.ach.achievements).length - 2,0)+"</h2> achievements, or "+format(new Decimal(player.ach.achievements.length).div(11).mul(100))+"% of the total achievement count."}, //change division to current numer of achievements
+                    function() {return "You have attained <h2 style='color:  gold; text-shadow: gold 0px 0px 10px;'> "+format(player.ach.achievements.length,0)+"/"+format(Object.keys(tmp.ach.achievements).length - 2,0)+"</h2> achievements, or "+format(new Decimal(player.ach.achievements.length).div(19).mul(100))+"% of the total achievement count."}, //change division to current numer of achievements
                 ],
+                "blank",
                 ["display-text",
-                    function() {return "----====Crop Achievements====----"},
-                    {"color": "Gray", "font-size": "27px"}],
+                    function() {return "――――――――――――――――――――――――"},
+                    {"color": "Gray", "font-size": "23px"}],
                     "blank",
                     "blank",
-                    ["achievements", [1, 2, 3, 4, 5, 10]],
+                    ["achievements", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]],
                     "blank",
             ],
         },

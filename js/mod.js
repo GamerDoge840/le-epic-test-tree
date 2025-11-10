@@ -1,13 +1,13 @@
 let modInfo = {
-	name: "The Tree of Knowledge",
+	name: "The Tree of Industry",
 	id: "superultraduperamogussmartspunchisus",
 	author: "The Big G",
-	pointsName: "Knowledge",
-	modFiles: ["Layers/Row 0/Scrolls.js","Layers/Row 0/Knowledge.js","math.js", "Layers/Side/achievements.js", "tree.js"],
+	pointsName: "Research",
+	modFiles: ["Layers/Basic Materials/Biomass.js","Layers/Side/stats.js","Layers/Core Resources/Research.js","math.js", "Layers/Side/achievements.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (0.0010), // Used for hard resets and new players
+	initialStartPoints: new Decimal (1), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
@@ -34,7 +34,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("Knowledge", 11);
+	return hasUpgrade("Research", 11);
 }
 
 // Calculate points/sec!
@@ -42,12 +42,13 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.0001)
-	gain=gain.times(buyableEffect('Knowledge', 11))
-	gain=gain.times(buyableEffect('Knowledge', 12))
-	gain=gain.times(buyableEffect('Knowledge', 21))
-	gain=gain.times(buyableEffect('Scrolls', 11))
-	if (hasUpgrade('Knowledge', 12)) gain = gain.times(3)
+	let gain = new Decimal(0.001)
+	if (hasUpgrade('Research', 12)) gain = gain.times(2)
+	if (hasUpgrade('Research', 13)) gain = gain.times(1.5)
+	if (hasUpgrade('Research', 14)) gain = gain.times(1.5)
+	if (hasUpgrade('Research', 15)) gain = gain.times(1.25)
+	if (hasUpgrade('Research', 16)) gain = gain.times(1.25)
+	if (hasUpgrade('Research', 17)) gain = gain.times(2)
 	return gain
 }
 
