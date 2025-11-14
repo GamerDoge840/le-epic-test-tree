@@ -1,9 +1,9 @@
 let modInfo = {
-	name: "Bee Game",
-	id: "beesmaxxing",
-	author: "The Big B",
-	pointsName: "???",
-	modFiles: ["Layers/Main Layers/Gear.js","Layers/Materials/RoyalJelly.js","Layers/Main Layers/Progression.js","Layers/Main Layers/Hive.js","Layers/PollenTypes/WhitePollen.js","Layers/Main Layers/Gathering.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
+	name: "Accretive Ascension",
+	id: "accretiveasscension",
+	author: "The Big G",
+	pointsName: "Essence",
+	modFiles: ["Layers/Layer 0/EssenceShards.js","Layers/Layer 0/Essence.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -13,8 +13,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "1.0",
+	name: "Accretive Ascension",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -34,15 +34,22 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return false;
+	return hasUpgrade("Essence", 111);
 }
+
 
 // Calculate points/sec!
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.01)
+	let gain = new Decimal(0.0001)
+	if (hasUpgrade('Essence', 11)) gain = gain.times(upgradeEffect('Essence', 11))
+	if (hasUpgrade('Essence', 21)) gain = gain.times(upgradeEffect('Essence', 21))
+	if (hasUpgrade('Essence', 22)) gain = gain.times(upgradeEffect('Essence', 22))
+	if (hasUpgrade('Essence', 31)) gain = gain.times(2)
+	if (hasUpgrade('EssenceShards', 11)) gain = gain.times(upgradeEffect('EssenceShards', 11))
+	if (hasUpgrade('EssenceShards', 13)) gain = gain.times(upgradeEffect('EssenceShards', 13))
 	return gain
 }
 

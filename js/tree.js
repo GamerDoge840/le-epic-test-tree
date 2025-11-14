@@ -18,6 +18,7 @@ addNode("blank", {
 addNode("PAU",{
     row: "side",
     color:'blue',
+    tooltip: 'Pause Game',
     onClick(){if(player.devSpeed!=1e-300) player.devSpeed = 1e-300
     else player.devSpeed = 1},
     canClick(){return true}
@@ -25,8 +26,7 @@ addNode("PAU",{
 
 addLayer("tree-tab", {
     tabFormat: [["tree", [
-        ['Hive', 'Progression'],
-        ['Gathering'],
+        ['Essence'],
         ],
     ]],
     previousTab: "",
