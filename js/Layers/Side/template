@@ -19,6 +19,8 @@ addLayer("Essence", {
     requires: new Decimal("e19186000"), // Can be a function that takes requirement increases into account
     resource: "Honor", // Name of prestige currency
     baseResource: "Knowledge", // Name of resource prestige is based on
+    resetDescription: "Break Essence to gain Shards.<br>―――――――――――<br>",
+    branches: ["Charge"],
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.0000000000000000001, // Prestige currency exponent

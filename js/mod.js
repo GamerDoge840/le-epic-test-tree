@@ -3,7 +3,7 @@ let modInfo = {
 	id: "accretiveasscension",
 	author: "The Big G",
 	pointsName: "Essence",
-	modFiles: ["Layers/Layer 0/EssenceShards.js","Layers/Layer 0/Essence.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
+	modFiles: ["Layers/Layer 1/Purity.js","Layers/Layer 0/EssenceShards.js","Layers/Layer 0/Essence.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -47,9 +47,13 @@ function getPointGen() {
 	if (hasUpgrade('Essence', 11)) gain = gain.times(upgradeEffect('Essence', 11))
 	if (hasUpgrade('Essence', 21)) gain = gain.times(upgradeEffect('Essence', 21))
 	if (hasUpgrade('Essence', 22)) gain = gain.times(upgradeEffect('Essence', 22))
-	if (hasUpgrade('Essence', 31)) gain = gain.times(2)
-	if (hasUpgrade('EssenceShards', 11)) gain = gain.times(upgradeEffect('EssenceShards', 11))
-	if (hasUpgrade('EssenceShards', 13)) gain = gain.times(upgradeEffect('EssenceShards', 13))
+	if (hasUpgrade('Essence', 33)) gain = gain.times(1.25)
+    if (hasUpgrade('EssenceShards', 11)) gain = gain.times(upgradeEffect('EssenceShards', 11))
+	gain=gain.times(buyableEffect('Essence', 11))
+    gain=gain.times(buyableEffect('Essence', 21))
+    if (hasUpgrade('EssenceShards', 22)) gain = gain.times(upgradeEffect('EssenceShards', 22))
+	if (hasUpgrade('EssenceShards', 24)) gain = gain.times(upgradeEffect('EssenceShards', 24))
+	if (hasUpgrade('Purity', 11)) gain = gain.times(upgradeEffect('Purity', 11))
 	return gain
 }
 

@@ -49,6 +49,7 @@ addLayer("stats", {
                         function() {return '('+format(player.points)+' Essence)'},
                         {"font-size": "25px"}],
                         ["raw-html", function() {if (player.EssenceShards.total.gte(1)) return '('+formatWhole(player.EssenceShards.points)+' Essence Shards)'}, {"color": "#666363", "font-size": "25px"}],
+                        ["raw-html", function() {if (player.Purity.total.gte(1)) return '('+formatWhole(player.Purity.points)+' Pure Essence)'}, {"color": "#E6FCFC", "font-size": "25px"}],
                         "blank",
                         //["display-text",
                             //function() {return '('+format(player.points.total)+' total Points)'},
