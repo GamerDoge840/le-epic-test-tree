@@ -40,7 +40,7 @@ addLayer("ach", {
 			name: "[1]<br><span style='color:#ffffff'>The Beginning</span>",
             done() {return hasUpgrade("Essence", 111)},
             //done() {return player.points.gte('1')},
-            tooltip() {return "Start generation of Essence.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>This should be simple enough, I hope."},
+            tooltip() {return "Start generation of Essence.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>“Should be simple...”"},
             style() {
                 return {
                     "border-color": "#ffffff",

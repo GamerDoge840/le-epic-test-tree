@@ -9,7 +9,7 @@ addLayer("Purity", {
     color: "#E6FCFC",
     nodeStyle() {
         return {
-            'border': '2px solid #FFFFFF',
+            'border': '5px solid #FFFFFF',
             'background-image': 'radial-gradient(circle at center, #FFFFFF, #E6FCFC',
             "width": 100,
         "height": 100,
@@ -31,6 +31,8 @@ addLayer("Purity", {
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (hasUpgrade('Purity', 13)) mult = mult.times(upgradeEffect('Purity', 13))
+        if (hasUpgrade('Essence', 43)) mult = mult.times(upgradeEffect('Essence', 43))
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -49,7 +51,7 @@ addLayer("Purity", {
         cols: 4,
         11: {    
             title: "Purity Booster",
-            fullDisplay() {return `<font size="3"><b>[P11] Purity Booster</b><font size="2"><br>Increases Essence gain.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Essence Shards`},        
+            fullDisplay() {return `<font size="3"><b>[P11] Purity Booster</b><font size="2"><br>Increases Essence gain.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Pure Essence`},        
             cost: new Decimal(1),
             effect() {
                 effect = new Decimal(2.25)
@@ -57,6 +59,316 @@ addLayer("Purity", {
               },  
             unlocked() {return player.Purity.total.gte(1)},
             tooltip() {return "<span style='color:#ffffff'>Purity Booster</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#666363',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'background': 'linear-gradient(#FFFFFF, #E6FCFC)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        12: {    
+            title: "Purity Enhancer",
+            fullDisplay() {return `<font size="3"><b>[P12] Purity Enhancer</b><font size="2"><br>E11 is 1.250x stronger. Increase Essence Shards gain by 1.50x.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Pure Essence`},        
+            cost: new Decimal(1),
+            unlocked() {return hasUpgrade('Purity', 11)},
+            tooltip() {return "<span style='color:#ffffff'>Purity Enhancer</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#666363',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'background': 'linear-gradient(#FFFFFF, #E6FCFC)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        13: {    
+            title: "Purity Power",
+            fullDisplay() {return `<font size="3"><b>[P13] Purity Power</b><font size="2"><br>Increases Essence and Purity gain based on Purity upgrades bought.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Pure Essence`},        
+            cost: new Decimal(1),
+            effect() {
+                let eff = Decimal.pow(1.25, player.Purity.upgrades.length);
+                return eff;
+            }, 
+            unlocked() {return hasUpgrade('Purity', 12)},
+            tooltip() {return "<span style='color:#ffffff'>Purity Power</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#666363',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'background': 'linear-gradient(#FFFFFF, #E6FCFC)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        21: {    
+            title: "Pure Reconstruction",
+            fullDisplay() {return `<font size="3"><b>[P21] Pure Reconstruction</b><font size="2"><br>ES11 is stronger based on total Pure Essence.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Pure Essence`},        
+            cost: new Decimal(3),
+            effect() {
+                let eff = player.Purity.total.plus(2).pow(0.25);
+                return eff.min(3);
+            }, 
+            unlocked() {return hasUpgrade('Purity', 13)},
+            tooltip() {return "<span style='color:#ffffff'>Pure Reconstruction</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FF8873'>Effect hardcapped at 3.00x"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#666363',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'background': 'linear-gradient(#FFFFFF, #E6FCFC)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        22: {    
+            title: "Automatic Fracturation",
+            fullDisplay() {return `<font size="3"><b>[P22] Automatic Fracturation</b><font size="2"><br>Automatically generate 5% of Essence Shard gain per second, and remove it's reset button.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Pure Essence`},        
+            cost: new Decimal(4),
+            unlocked() {return hasUpgrade('Purity', 21)},
+            tooltip() {return "<span style='color:#ffffff'>Automatic Fracturation</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FF8873'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#666363',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'background': 'linear-gradient(#FFFFFF, #E6FCFC)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        23: {    
+            title: "Purify Gatherer",
+            fullDisplay() {return `<font size="3"><b>[P23] Purify Gatherer</b><font size="2"><br>E11-B's effect is 1.20x stronger.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Pure Essence`},        
+            cost: new Decimal(6),
+            unlocked() {return hasUpgrade('Purity', 22)},
+            tooltip() {return "<span style='color:#ffffff'>Purify Gatherer</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FF8873'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#666363',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'background': 'linear-gradient(#FFFFFF, #E6FCFC)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        31: {    
+            title: "Pure Shards",
+            fullDisplay() {return `<font size="3"><b>[P31] Pure Shards</b><font size="2"><br>Increase Essence Shard gain based on total Pure Essence.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Pure Essence`},        
+            cost: new Decimal(8),
+            effect() {
+                let eff = player.Purity.total.plus(2).pow(0.35);
+                scpow = 0.05
+                eff = softcap(eff, new Decimal("4"), scpow)
+                return eff;
+            }, 
+            unlocked() {return hasUpgrade('Purity', 23)},
+            tooltip() {return "<span style='color:#ffffff'>Pure Shards</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FFF28A'>Effect weaker after 4.00x"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#666363',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'background': 'linear-gradient(#FFFFFF, #E6FCFC)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        32: {    
+            title: "Purify Gatherer II",
+            fullDisplay() {return `<font size="3"><b>[P32] Purify Gatherer II</b><font size="2"><br>Automatically buy E11-B without spending any Essence.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Pure Essence`},        
+            cost: new Decimal(11),
+            unlocked() {return hasUpgrade('Purity', 31)},
+            tooltip() {return "<span style='color:#ffffff'>Purify Gatherer II</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FFF28A'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#666363',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+            'background': 'linear-gradient(#FFFFFF, #E6FCFC)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        33: {    
+            title: "Purify Machine",
+            fullDisplay() {return `<font size="3"><b>[P33] Purify Machine</b><font size="2"><br>Autobuy E21-B without spending any Essence Shards. Unlock a new row of Essence upgrades that are kept on Purity reset.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Pure Essence`},        
+            cost: new Decimal(17),
+            unlocked() {return hasUpgrade('Purity', 32)},
+            tooltip() {return "<span style='color:#ffffff'>Purify Machine</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FFF28A'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#666363',
@@ -125,7 +437,9 @@ addLayer("Purity", {
                 "Upgrades": {
                     content: [
                         "blank",
-                        ["column", [ ["row", [ ["upgrade", 11],]]]],
+                        ["column", [ ["row", [ ["upgrade", 11], ["upgrade", 12], ["upgrade", 13],]]]],
+                        ["column", [ ["row", [ ["upgrade", 21], ["upgrade", 22], ["upgrade", 23],]]]],
+                        ["column", [ ["row", [ ["upgrade", 31], ["upgrade", 32], ["upgrade", 33],]]]],
                         "blank",
 
 

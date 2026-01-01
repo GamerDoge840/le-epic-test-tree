@@ -27,18 +27,33 @@ addLayer("EssenceShards", {
         mult = new Decimal(1)
         if (hasUpgrade('EssenceShards', 23)) mult = mult.times(upgradeEffect('EssenceShards', 23))
         if (hasUpgrade('EssenceShards', 14)) mult = mult.times(upgradeEffect('EssenceShards', 14))
+        if (hasUpgrade('Purity', 12)) mult = mult.times(1.50)
+        if (hasUpgrade('Purity', 31)) mult = mult.times(upgradeEffect('Purity', 31))
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
     row: '0', // Row the layer is in on the tree (0 is the first row)
-    layerShown(){return hasUpgrade("Essence", 112)},
+    layerShown(){return true},
     passiveGeneration() {
-        if (hasUpgrade('EssenceShards', 32)) return 0.10
+        if (hasUpgrade('Essence', 41) && hasUpgrade("Essence", 112)) return 0.15
+        if (hasUpgrade('Purity', 22) && hasUpgrade("Essence", 112)) return 0.05
 	return 0
     },
     milestones: {
+    },
+    doReset(resettingLayer) {
+        if (layers[resettingLayer].row <= this.row) return;
+        let keptUpgrades = []
+        let keptMilestones = []
+        if (hasUpgrade('Essence', 44) && hasUpgrade('EssenceShards', 31) ) keptUpgrades.push(31)
+        if (hasUpgrade('Essence', 44) && hasUpgrade('EssenceShards', 32) ) keptUpgrades.push(32)
+        if (hasUpgrade('Essence', 44) && hasUpgrade('EssenceShards', 33) ) keptUpgrades.push(33)
+        if (hasUpgrade('Essence', 44) && hasUpgrade('EssenceShards', 34) ) keptUpgrades.push(34)
+        layerDataReset(this.layer);
+        player[this.layer].upgrades.push(...keptUpgrades)
+        player[this.layer].milestones.push(...keptMilestones)
     },
     upgrades: {        
         rows: 4,
@@ -107,6 +122,7 @@ addLayer("EssenceShards", {
                 if (hasUpgrade('EssenceShards', 12) && player.EssenceShards.total.gte(10)) effect = effect.times(1.150)
                 if (hasUpgrade('Essence', 24)) effect = effect.times(upgradeEffect('Essence', 24))
                 if (hasUpgrade('Essence', 34)) effect = effect.times(upgradeEffect('Essence', 34))
+                if (hasUpgrade('Purity', 21)) effect = effect.times(upgradeEffect('Purity', 21))
                 return effect
               },  
             unlocked() {return player.EssenceShards.total.gte(1)},
@@ -335,14 +351,14 @@ addLayer("EssenceShards", {
         },
         23: {    
             title: "Better Breaking",
-            fullDisplay() {return `<font size="3"><b>[ES23] Better Breaking</b><font size="2"><br>Essence Shards are boosted based on Essence.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Essence Shards`},        
+            fullDisplay() {return `<font size="3"><b>[ES23] Better Breaking</b><font size="2"><br>Essence Shard gain is boosted based on Essence.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Essence Shards`},        
             cost: new Decimal(20),
             effect() {
                 let eff = player.points.plus(1).log10().pow(0.8).plus(1);
                 return eff;
             },
-            unlocked() {return hasUpgrade("EssenceShards", 21)},
-            tooltip() {return "<span style='color:#ffffff'>Better Breaking</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Also unlocks a new column of Essence upgrades!"},
+            unlocked() {return hasUpgrade("EssenceShards", 22)},
+            tooltip() {return "<span style='color:#ffffff'>Better Breaking</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#ABFF8A'>Also unlocks a new column of Essence upgrades!"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#666363',
@@ -413,26 +429,131 @@ addLayer("EssenceShards", {
                 }
             },
         },
+        31: {    
+            title: "Synergistic Recursion",
+            fullDisplay() {return `<font size="3"><b>[ES31] Synergistic Recursion</b><font size="2"><br>E21 boosts itself.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.EssenceShards)+` ES and `+format(tmp[this.layer].upgrades[this.id].costs.Purity)+` Pure Essence`},        
+            costs: {
+                EssenceShards: 40000,
+                Purity: 30,
+              },
+              canAfford() {
+                return player.EssenceShards.points.gte(this.costs.EssenceShards)
+                    && player.Purity.points.gte(this.costs.Purity)
+              },
+              pay() {
+                player.EssenceShards.points = player.EssenceShards.points.minus(this.costs.EssenceShards);
+                player.Purity.points = player.Purity.points.minus(this.costs.Purity);
+              },
+              effect() {
+                let eff = upgradeEffect('Essence', 21).pow(0.15);
+                return eff;
+            }, 
+            currencyInternalName: "points",
+            unlocked() {return hasUpgrade("Essence", 44)},
+            tooltip() {return "<span style='color:#ffffff'>Synergistic Recursion</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#666363',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        32: {    
+            title: "Booster Restoration",
+            fullDisplay() {return `<font size="3"><b>[ES32] Booster Restoration</b><font size="2"><br>E34 is boosted based on current Essence Shards.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.EssenceShards)+` ES and `+format(tmp[this.layer].upgrades[this.id].costs.Purity)+` Pure Essence`},        
+            costs: {
+                EssenceShards: 1e1000,
+                Purity: 30,
+              },
+              canAfford() {
+                return player.EssenceShards.points.gte(this.costs.EssenceShards)
+                    && player.Purity.points.gte(this.costs.Purity)
+              },
+              pay() {
+                player.EssenceShards.points = player.EssenceShards.points.minus(this.costs.EssenceShards);
+                player.Purity.points = player.Purity.points.minus(this.costs.Purity);
+              },
+              effect() {
+                let eff = player.EssenceShards.points.plus(2).pow(0.01);
+                return eff;
+            }, 
+            unlocked() {return hasUpgrade("EssenceShards", 31)},
+            tooltip() {return "<span style='color:#ffffff'>Booster Restoration</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#666363',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
     },
     buyables: {
         rows: 5,
         cols: 4,
     },
      tabFormat: [
-        ["raw-html", function() {if (hasUpgrade("EssenceShards", 1112)) return '('+format(player.points)+' Essence)'}, {"font-size": "19px"}],
-        ["display-text",
+        ["raw-html", function() {if (hasUpgrade("Essence", 44)) return '('+formatWhole(player.Purity.points)+'  Pure Essence)'}, {"color": "#E6FCFC", "font-size": "19px"}],
+["display-text",
+            function() {return '('+format(player.points)+' Essence)'},
+            {"font-size": "19px"}],        ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#666363", "font-size": "32px"}],
 ["display-text",
             function() {return ''+format(player.EssenceShards.points)+' Essence Shards'},
             {"color": "#666363", "font-size": "30px"}],
-                ["raw-html", function() {if (hasUpgrade("EssenceShards", 1112)) return "<font size='4'>(+" + (format(getResetGain("EssenceShards").div(10))) + "/s)"}, {"color": "#666363",}],
-
-                    ["raw-html", function() {if (!hasUpgrade("EssenceShards", 1112)) return "―――――――――――――――――――――――――――――"}, {"color": "#666363", "font-size": "30px"}],                  
-                        function() {if (!hasUpgrade("EssenceShards", 1112) && hasUpgrade("EssenceShards", 112)) return "prestige-button"},
+                ["raw-html", function() {if (hasUpgrade("Essence", 41)) return "<font size='4'>(+" + (format(getResetGain("EssenceShards").dividedBy(6.666))) + "/s)"}, {"color": "#666363",}],
+                ["raw-html", function() {if (hasUpgrade("Purity", 22) && !hasUpgrade("Essence", 41)) return "<font size='4'>(+" + (format(getResetGain("EssenceShards").dividedBy(20))) + "/s)"}, {"color": "#666363",}],
+                    ["raw-html", function() {if (!hasUpgrade("Purity", 22)) return "―――――――――――――――――――――――――――――"}, {"color": "#666363", "font-size": "30px"}],                  
+                        function() {if (!hasUpgrade("Purity", 22) && hasUpgrade("Essence", 112)) return "prestige-button"},
+                    ["raw-html", function() {if (!hasUpgrade("Essence", 112) && !hasUpgrade("Purity", 22)) return 'You need E02 to Break Essence.'}, {"font-size": "22px"}],
                         "blank",
-                        ["raw-html", function() {if (!hasUpgrade("EssenceShards", 1112)) return '('+format(player.points)+' Essence)'}, {"font-size": "17px"}],
-                        ["raw-html", function() {if (player.EssenceShards.total.gte(1) && !hasUpgrade("EssenceShards", 1112)) return '('+formatWhole(player.EssenceShards.total)+' total Essence Shards)'}, {"color": "#666363", "font-size": "17px"}],
+                        ["raw-html", function() {if (!hasUpgrade("Purity", 22)) return '('+formatWhole(player.EssenceShards.total)+' total Essence Shards)'}, {"color": "#666363", "font-size": "17px"}],
 
             ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},

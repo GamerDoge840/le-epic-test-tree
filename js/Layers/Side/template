@@ -21,6 +21,7 @@ addLayer("Essence", {
     baseResource: "Knowledge", // Name of resource prestige is based on
     resetDescription: "Break Essence to gain Shards.<br>―――――――――――<br>",
     branches: ["Charge"],
+    autoUpgrade() {return hasUpgrade('Essence', 1111)},
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.0000000000000000001, // Prestige currency exponent
@@ -40,6 +41,18 @@ addLayer("Essence", {
     passiveGeneration() {
         if (hasUpgrade('Essence', 1111)) return 1
 	return 0
+    },
+    automate() {
+        if(hasUpgrade('Essence', 1111)) buyMaxBuyable('Essence', 11)
+    },
+    doReset(resettingLayer) {
+        if (layers[resettingLayer].row <= this.row) return;
+        let keptUpgrades = []
+        let keptMilestones = []
+        if (hasUpgrade('Essence', 1111)) keptUpgrades.push(61)
+        layerDataReset(this.layer);
+        player[this.layer].upgrades.push(...keptUpgrades)
+        player[this.layer].milestones.push(...keptMilestones)
     },
     milestones: {
     },

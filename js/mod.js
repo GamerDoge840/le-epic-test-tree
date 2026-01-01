@@ -54,6 +54,7 @@ function getPointGen() {
     if (hasUpgrade('EssenceShards', 22)) gain = gain.times(upgradeEffect('EssenceShards', 22))
 	if (hasUpgrade('EssenceShards', 24)) gain = gain.times(upgradeEffect('EssenceShards', 24))
 	if (hasUpgrade('Purity', 11)) gain = gain.times(upgradeEffect('Purity', 11))
+	if (hasUpgrade('Purity', 13)) gain = gain.times(upgradeEffect('Purity', 13))
 	return gain
 }
 

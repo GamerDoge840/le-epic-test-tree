@@ -18,6 +18,7 @@ addLayer("Essence", {
     },
     requires: new Decimal("e19186000"), // Can be a function that takes requirement increases into account
     baseResource: "???", // Name of resource prestige is based on
+    autoUpgrade() {return hasUpgrade('Essence', 44)},
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.0000000000000000001, // Prestige currency exponent
@@ -35,6 +36,22 @@ addLayer("Essence", {
     },
     row: '0', // Row the layer is in on the tree (0 is the first row)
     layerShown(){return true},
+    automate() {
+        if(hasUpgrade('Purity', 32)) buyMaxBuyable('Essence', 11)
+        if(hasUpgrade('Purity', 33)) buyMaxBuyable('Essence', 21)
+    },
+doReset(resettingLayer) {
+        if (layers[resettingLayer].row <= this.row) return;
+        let keptUpgrades = []
+        let keptMilestones = []
+        if (hasUpgrade('Purity', 33) && hasUpgrade('Essence', 41) ) keptUpgrades.push(41)
+        if (hasUpgrade('Purity', 33) && hasUpgrade('Essence', 42) ) keptUpgrades.push(42)
+        if (hasUpgrade('Purity', 33) && hasUpgrade('Essence', 43) ) keptUpgrades.push(43)
+        if (hasUpgrade('Purity', 33) && hasUpgrade('Essence', 44) ) keptUpgrades.push(44)
+        layerDataReset(this.layer);
+        player[this.layer].upgrades.push(...keptUpgrades)
+        player[this.layer].milestones.push(...keptMilestones)
+    },
     milestones: {
     },
     upgrades: {        
@@ -46,7 +63,7 @@ addLayer("Essence", {
             cost: new Decimal(1),
             currencyInternalName: "points",
             unlocked() {return true},
-            tooltip() {return "<span style='color:#ffffff'>Essence Generation</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>“The beginning of a long, long journey...”"},
+            tooltip() {return "<span style='color:#ffffff'>Essence Generation</span><br>――――――――――――<br><span style='font-size:11px'>“The beginning of a long, long journey...”"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#FFFFFF',
@@ -86,7 +103,7 @@ addLayer("Essence", {
             tooltip() {return "<span style='color:#ffffff'>Broken Essence</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    'background-color': '#FFFFFF',
+                    'background-color': '#666363',
                     "width": "350px",
             "height": "175px",
             'border': '5px solid',
@@ -124,6 +141,8 @@ addLayer("Essence", {
                 if (hasUpgrade('Essence', 23)) effect = effect.times(upgradeEffect('Essence', 23))
                 if (hasUpgrade('Essence', 31)) effect = effect.times(upgradeEffect('Essence', 31))
                 if (hasUpgrade('Essence', 14)) effect = effect.times(1.15)
+                if (hasUpgrade('Purity', 12)) effect = effect.times(1.25)
+                if (hasUpgrade('Essence', 42)) effect = effect.times(upgradeEffect('Essence', 42))
                 return effect
               },   
             currencyInternalName: "points",
@@ -210,11 +229,13 @@ addLayer("Essence", {
                 let eff = Decimal.pow(1.10, player.Essence.upgrades.length);
                 if (hasUpgrade('EssenceShards', 21)) eff = eff.times(upgradeEffect('EssenceShards', 21))
                 if (hasUpgrade('Essence', 14)) effect = effect.times(1.15)
+                scpow = 0.05
+                eff = softcap(eff, new Decimal("6.041"), scpow)
                 return eff;
             }, 
             currencyInternalName: "points",
             unlocked() {return hasUpgrade('Essence', 12)},
-            tooltip() {return "<span style='color:#ffffff'>Upgrade Power</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            tooltip() {return "<span style='color:#ffffff'>Upgrade Power</span><br>――――――――――――<br><span style='font-size:11px'><span style=color:#FFF28A>Effect weaker after 6.00x"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#FFFFFF',
@@ -300,11 +321,14 @@ addLayer("Essence", {
             effect() {
                 let eff = player.points.plus(1).log10().pow(0.55).plus(1);
                 if (hasUpgrade('Essence', 32)) eff = eff.times(upgradeEffect('Essence', 32))
+                if (hasUpgrade('EssenceShards', 31)) eff = eff.times(upgradeEffect('EssenceShards', 31))
+                scpow = 0.05
+                eff = softcap(eff, new Decimal("10"), scpow)
                 return eff;
             },
             currencyInternalName: "points",
             unlocked() {return hasUpgrade('Essence', 13)},
-            tooltip() {return "<span style='color:#ffffff'>Self-Synergism</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            tooltip() {return "<span style='color:#ffffff'>Self-Synergism</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FFF28A'>Effect weaker after 10.00x"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#FFFFFF',
@@ -388,7 +412,7 @@ addLayer("Essence", {
             },
             currencyInternalName: "points",
             unlocked() {return hasUpgrade('Essence', 22)},
-            tooltip() {return "<span style='color:#ffffff'>Upgrade Synergism</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Effect weaker after 2.00x"},
+            tooltip() {return "<span style='color:#ffffff'>Upgrade Synergism</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FFF28A'>Effect weaker after 2.00x"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#FFFFFF',
@@ -607,11 +631,211 @@ addLayer("Essence", {
               },
               effect() {
                 let eff = player.EssenceShards.total.plus(2).pow(0.03);
+                if (hasUpgrade('EssenceShards', 32)) eff = eff.times(upgradeEffect('EssenceShards', 32))
                 return eff;
             },  
             currencyInternalName: "points",
             unlocked() {return hasUpgrade("Essence", 24)},
-            tooltip() {return "<span style='color:#ffffff'>Booster Reconstruction</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Also unlocks a new column of Essence Shard upgrades!"},
+            tooltip() {return "<span style='color:#ffffff'>Booster Reconstruction</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#ABFF8A'>Also unlocks a new column of Essence Shard upgrades!"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#FFFFFF',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        41: {    
+            title: "Better Fracturation",
+            fullDisplay() {return `<font size="3"><b>[E41] Better Fracturation</b><font size="2"><br>Increase Essence Shard generation rate from 5% ---> 15%.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Essence)+` Essence and `+format(tmp[this.layer].upgrades[this.id].costs.Purity)+` Pure Essence`},        
+            costs: {
+                Essence: 125000,
+                Purity: 20,
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Essence) && !hasUpgrade("Essence", 44)
+                    && player.Purity.points.gte(this.costs.Purity)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Essence);
+                player.Purity.points = player.Purity.points.minus(this.costs.Purity);
+              },
+            unlocked() {return hasUpgrade("Purity", 33)},
+            tooltip() {return "<span style='color:#ffffff'>Better Fracturation</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#FFFFFF',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        42: {    
+            title: "Upgrade Recursion",
+            fullDisplay() {return `<font size="3"><b>[E42] Upgrade Recursion</b><font size="2"><br>E11 boosts itself.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Essence)+` Essence and `+format(tmp[this.layer].upgrades[this.id].costs.Purity)+` Pure Essence`},        
+            costs: {
+                Essence: 200000,
+                Purity: 25,
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Essence) && !hasUpgrade("Essence", 44)
+                    && player.Purity.points.gte(this.costs.Purity)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Essence);
+                player.Purity.points = player.Purity.points.minus(this.costs.Purity);
+              },
+              effect() {
+                let eff = upgradeEffect('Essence', 11).pow(0.05);
+                return eff;
+            }, 
+            currencyInternalName: "points",
+            unlocked() {return hasUpgrade("Essence", 41)},
+            tooltip() {return "<span style='color:#ffffff'>Upgrade Recursion</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#FFFFFF',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        43: {    
+            title: "Pure Synergism",
+            fullDisplay() {return `<font size="3"><b>[E43] Pure Synergism</b><font size="2"><br>E21 boosts Pure Essence gain at a reduced rate.<br>――――――――――――――――――<br>Effect: `+format(upgradeEffect(this.layer, this.id))+`x<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Essence)+` Essence and `+format(tmp[this.layer].upgrades[this.id].costs.Purity)+` Pure Essence`},        
+            costs: {
+                Essence: 250000,
+                Purity: 30,
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Essence) && !hasUpgrade("Essence", 44)
+                    && player.Purity.points.gte(this.costs.Purity)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Essence);
+                player.Purity.points = player.Purity.points.minus(this.costs.Purity);
+              },
+              effect() {
+                let eff = upgradeEffect('Essence', 21).pow(0.15);
+                return eff;
+            }, 
+            currencyInternalName: "points",
+            unlocked() {return hasUpgrade("Essence", 42)},
+            tooltip() {return "<span style='color:#ffffff'>Pure Synergism</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#FFFFFF',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "185px",
+            "height": "175px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#d8ffc4',
+                'color': 'black',
+                        "width": "185px",
+            "height": "175px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        44: {    
+            title: "Essence Automation",
+            fullDisplay() {return `<font size="3"><b>[E44] Essence Automation</b><font size="2"><br>Autobuy Essence upgrades. Unlock a new row of Essence Shard upgrades.<br>――――――――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].costs.Essence)+` Essence and `+format(tmp[this.layer].upgrades[this.id].costs.Purity)+` Pure Essence`},        
+            costs: {
+                Essence: 350000,
+                Purity: 40,
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Essence) && !hasUpgrade("Essence", 44)
+                    && player.Purity.points.gte(this.costs.Purity)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Essence);
+                player.Purity.points = player.Purity.points.minus(this.costs.Purity);
+              },
+            currencyInternalName: "points",
+            unlocked() {return hasUpgrade("Essence", 43)},
+            tooltip() {return "<span style='color:#ffffff'>Essence Automation</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#FFFFFF',
@@ -655,6 +879,7 @@ addLayer("Essence", {
               },
               effect() {
                 let eff = getBuyableAmount('Essence', 11).mul(0.10).plus(1)
+                if (hasUpgrade('Purity', 23)) eff = eff.times(1.20)
                 return eff
             },   
             canAfford() { if (player.points.gte(this.cost())) {return true}},
@@ -716,8 +941,9 @@ addLayer("Essence", {
      tabFormat: {
         "Essence": {
         content: [
+            ["raw-html", function() {if (hasUpgrade("Purity", 33)) return '('+formatWhole(player.Purity.points)+'  Pure Essence)'}, {"color": "#E6FCFC", "font-size": "19px"}],
             ["raw-html", function() {if (player.EssenceShards.total.gte(1)) return '('+formatWhole(player.EssenceShards.points)+'  Essence Shards)'}, {"color": "#666363", "font-size": "19px"}],
-            ["raw-html", function() {if (player.EssenceShards.total.gte(1)) return '―――――――――――――――――――――――――――――'}, {"color": "#FFFFFF", "font-size": "23px"}],
+            ["raw-html", function() {if (player.EssenceShards.total.gte(1) || hasUpgrade("Purity", 33)) return '―――――――――――――――――――――――――――――'}, {"color": "#FFFFFF", "font-size": "23px"}],
         ["display-text",
             function() {return ''+format(player.points)+' Essence'},
             {"color": "#FFFFFF", "font-size": "30px"}],
@@ -754,6 +980,7 @@ addLayer("Essence", {
                         ["column", [ ["row", [ ["upgrade", 11], ["upgrade", 12], ["upgrade", 13], ["upgrade", 14],]]]],
                         ["column", [ ["row", [ ["upgrade", 21], ["upgrade", 22], ["upgrade", 23], ["upgrade", 24],]]]],
                         ["column", [ ["row", [ ["upgrade", 31], ["upgrade", 32], ["upgrade", 33], ["upgrade", 34],]]]],
+                        ["column", [ ["row", [ ["upgrade", 41], ["upgrade", 42], ["upgrade", 43], ["upgrade", 44],]]]],
                          "blank",
                         ["column", [ ["row", [ ["upgrade", 112],]]]],
                         "blank",
