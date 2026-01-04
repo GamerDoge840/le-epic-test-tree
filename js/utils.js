@@ -416,3 +416,12 @@ function gridRun(layer, func, data, id) {
 	else
 		return layers[layer].grid[func];
 }
+
+function buyMaxExBuyable(layer, id) {
+	if (!player[layer].unlocked || tmp[layer].deactivated) return
+	if (!tmp[layer].buyables[id].unlocked) return
+	if (!tmp[layer].buyables[id].canBuy) return
+
+	run(layers[layer].buyables[id].buy(true), layers[layer].buyables[id])
+	updateBuyableTemp(layer)
+}
