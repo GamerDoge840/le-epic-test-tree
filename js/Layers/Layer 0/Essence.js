@@ -5,6 +5,7 @@ addLayer("Essence", {
     startData() { return {
         unlocked(){return true},
 		points: new Decimal(0),
+        amppoints: new Decimal(0)
     }},
     color: "#FFFFFF",
     nodeStyle() {
@@ -26,7 +27,7 @@ addLayer("Essence", {
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.0000000000000000001, // Prestige currency exponent
     tooltip() {
-        let tooltip = "<font size='3'>Essence<br>――――――――――――――<br> <font size='2'><span style='color:#fcffc5'> " +formatWhole(player.points)+" Energy</span>"
+        let tooltip = "<font size='3'>Essence<br>――――――――――――――<br> <font size='2'><span style='color:#FFFFFF'> " +formatWhole(player.points)+" Essence</span>"
         return tooltip
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -43,16 +44,7 @@ addLayer("Essence", {
 	return 0
     },
     automate() {
-        if(hasUpgrade('Essence', 1111)) buyMaxBuyable('Essence', 11)
-    },
-    doReset(resettingLayer) {
-        if (layers[resettingLayer].row <= this.row) return;
-        let keptUpgrades = []
-        let keptMilestones = []
-        if (hasUpgrade('Essence', 1111)) keptUpgrades.push(61)
-        layerDataReset(this.layer);
-        player[this.layer].upgrades.push(...keptUpgrades)
-        player[this.layer].milestones.push(...keptMilestones)
+        //if(hasUpgrade('Essence', 1111)) buyMaxBuyable('Essence', 11)
     },
     milestones: {
     },
@@ -60,29 +52,31 @@ addLayer("Essence", {
         rows: 4,
         cols: 4,
     },
+    prestigeReset()
+    {
+        player.points = new Decimal(0)
+    },
     buyables: {
         rows: 5,
         cols: 4,
         11: {
-            costBase() { return new Decimal(1) },
+            costBase() { return new Decimal(0.0001) },
             costGrowth() { return new Decimal(1.2) },
-            purchaseLimit() { return new Decimal(40) },
+            purchaseLimit() { return new Decimal(10) },
             currency() { return player.points},
             pay(amt) { player.points = this.currency().sub(amt) },
             effect(x) {
-                if (hasUpgrade("Essence", 111)) return new Decimal(1)
-                return getBuyableAmount(this.layer, this.id).mul(0.05).add(1)
+                return getBuyableAmount(this.layer, this.id).mul(1).add(1)
             },
             unlocked() { return true },
             cost(x) { return this.costGrowth().pow(x || getBuyableAmount(this.layer, this.id)).mul(this.costBase()) },
             canAfford() { return this.currency().gte(this.cost()) },
             title() {
-                return "Essence Booster I"
+                return "Essence Accumulator"
             },
-            display() {
-                return "which are boosting reverse engineering rate by x" + format(tmp[this.layer].buyables[this.id].effect) + ".\n\
-                    Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " Essence"
-            },
+            display() {return `<font size="2"><b>`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`<font size="2"><br>――――――――――――――――――――<b>
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Essence Shards</b>
+                ――――――――――――――――――――<br><b>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Essence</b>`},
             buy(mult) {
                 if (mult != true && !hasMilestone("Essence", 1)) {
                     let buyonecost = new Decimal(this.costGrowth()).pow(getBuyableAmount(this.layer, this.id)).mul(this.costBase())
@@ -98,10 +92,25 @@ addLayer("Essence", {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(max))
                 }
             },
-            style: { width: '275px', height: '150px', background: "linear-gradient(15deg, #5f5f5fff 0%, #c5c5c5ff 50%, #5f5f5fff 100%)",
- }
+            style() {
+                if(!this.canAfford()){return {'background-color':'#FFFFFF', 'color':'black','border': '5px solid','border-color':'#FFFFFF', width: '250px', height: '250px',}}
+                else return {'background-color':'#FFFFFF', 'color':'black','border': '3px solid','border-color':'green','box-shadow':'0px 0px 5px #8eff00', width: '250px', height: '250px', }
+            },
         },
+          
     },
+    clickables: {
+            11: {
+            title() { return "amplify that shi cuh" },
+            canClick() { return getBuyableAmount("Essence", 11).gte(10)},
+            unlocked() { return getBuyableAmount("Essence", 11).gte(10) },
+            onClick() {
+                layers.Essence.amplifyMiniReset()
+                player.Essence.amppoints = player.Essence.amppoints.add(1)
+            },
+            style: { width: '400px', "min-height": '100px', borderRadius: '15px'},
+        },
+          },
      tabFormat: {
         "Essence": {
         content: [
@@ -122,10 +131,11 @@ addLayer("Essence", {
     },
         microtabs: {
             EssenceTabs: {
-                "Generation": {
+                "Accumulation": {
                     content: [
                         "blank",
                         ["column", [ ["row", [ ["ex-buyable", 11],]]]],
+                        ["row", [["clickable", 11]]],
 
 
                     ]

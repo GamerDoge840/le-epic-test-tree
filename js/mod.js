@@ -7,7 +7,7 @@ let modInfo = {
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (1), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
@@ -34,7 +34,6 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	//return hasUpgrade("Essence", 111);
 	return true
 }
 
@@ -44,7 +43,7 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(1)
+	let gain = new Decimal(0.00001)
     gain=gain.times(buyableEffect('Essence', 11))
 	return gain
 }
