@@ -1,20 +1,20 @@
 let modInfo = {
-	name: "The Tree of Knowledge",
-	id: "superultraduperamogussmartspunchisus",
+	name: "Beans Incremental",
+	id: "beansmaxxing",
 	author: "The Big G",
-	pointsName: "Knowledge",
-	modFiles: ["Layers/Row 0/Scrolls.js","Layers/Row 0/Knowledge.js","math.js", "Layers/Side/achievements.js", "tree.js"],
+	pointsName: "Beans",
+	modFiles: ["Layers/Layer 0/Beans.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (0.0010), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "1.0",
+	name: "Beans Incremental",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -34,28 +34,19 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("Knowledge", 11);
+	return true
 }
+
 
 // Calculate points/sec!
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-<<<<<<< Updated upstream
-	let gain = new Decimal(0.0001)
-	gain=gain.times(buyableEffect('Knowledge', 11))
-	gain=gain.times(buyableEffect('Knowledge', 12))
-	gain=gain.times(buyableEffect('Knowledge', 21))
-	gain=gain.times(buyableEffect('Scrolls', 11))
-	if (hasUpgrade('Knowledge', 12)) gain = gain.times(3)
-=======
-	let gain = new Decimal(0.00001)
-    gain=gain.times(buyableEffect('Essence', 1))
-    gain=gain.times(buyableEffect('Essence', 2))
-    gain=gain.times(buyableEffect('Essence', 3))
-    gain=gain.times(buyableEffect('Essence', 4))
->>>>>>> Stashed changes
+	let gain = new Decimal(0.001)
+    gain=gain.times(buyableEffect('Beans', 1))
+	gain=gain.times(buyableEffect('Beans', 2))
+	gain=gain.times(buyableEffect('Beans', 3))
 	return gain
 }
 
