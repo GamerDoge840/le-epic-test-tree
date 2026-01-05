@@ -26,7 +26,7 @@ let winText = `Congratulations! You have reached the end and beaten this game, b
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything"]
+var doNotCallTheseFunctionsEveryTick = ["blowUpEverything", "accumulatorFixMiniReset"]
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
@@ -42,12 +42,20 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
+<<<<<<< Updated upstream
 	let gain = new Decimal(0.0001)
 	gain=gain.times(buyableEffect('Knowledge', 11))
 	gain=gain.times(buyableEffect('Knowledge', 12))
 	gain=gain.times(buyableEffect('Knowledge', 21))
 	gain=gain.times(buyableEffect('Scrolls', 11))
 	if (hasUpgrade('Knowledge', 12)) gain = gain.times(3)
+=======
+	let gain = new Decimal(0.00001)
+    gain=gain.times(buyableEffect('Essence', 1))
+    gain=gain.times(buyableEffect('Essence', 2))
+    gain=gain.times(buyableEffect('Essence', 3))
+    gain=gain.times(buyableEffect('Essence', 4))
+>>>>>>> Stashed changes
 	return gain
 }
 
@@ -83,3 +91,4 @@ function maxTickLength() {
 // you can cap their current resources with this.
 function fixOldSave(oldVersion){
 }
+
