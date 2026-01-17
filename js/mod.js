@@ -3,7 +3,7 @@ let modInfo = {
 	id: "beansmaxxing",
 	author: "The Big G",
 	pointsName: "Beans",
-	modFiles: ["Layers/Bean World/BeanLevel.js","Layers/Bean World/Beans.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
+	modFiles: ["Layers/Bean World/Gold.js","Layers/Bean World/Money.js","Layers/Bean World/BeanLevel.js","Layers/Bean World/Beans.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -26,7 +26,7 @@ let winText = `Congratulations! You have reached the end and beaten this game, b
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything"]
+var doNotCallTheseFunctionsEveryTick = ["blowUpEverything", "moneyReset", "goldReset"]
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
@@ -46,6 +46,9 @@ function getPointGen() {
 	let gain = new Decimal(0.001)
     gain=gain.times(buyableEffect('Beans', 1))
 	gain=gain.times(buyableEffect('Beans', 3))
+	gain=gain.times(buyableEffect('Money', 1))
+	gain=gain.times(buyableEffect('Gold', 1))
+	gain=gain.times(buyableEffect('Money', 4))
 	if (player.BeanLevel.total.gte(1))
 		gain = gain.times(tmp.BeanLevel.effect);
 	return gain

@@ -18,6 +18,7 @@ addLayer("BeanLevel", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         mult = mult.dividedBy(buyableEffect('Beans', 2))
+        mult = mult.dividedBy(buyableEffect('Money', 2))
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -30,6 +31,8 @@ addLayer("BeanLevel", {
     },
     effect() {
          let eff = player.BeanLevel.points.mul(0.2).add(1).pow(1.15)
+         eff=eff.times(buyableEffect('Beans', 4))
+         eff=eff.times(buyableEffect('Gold', 3))
          return eff
     },
 milestones: {

@@ -45,7 +45,11 @@ addLayer("Beans", {
 	return 0
     },
     automate() {
-        //if(hasUpgrade('Essence', 1111)) buyMaxBuyable('Essence', 11)
+        if(hasUpgrade('Money', 11)) buyMaxBuyable('Beans', 1)
+        if(hasUpgrade('Money', 12)) buyMaxBuyable('Beans', 3)
+        if(hasUpgrade('Money', 13)) buyMaxBuyable('Beans', 4)
+        if(hasUpgrade('Money', 13)) buyMaxBuyable('Beans', 2)
+        if(hasUpgrade('Gold', 11)) buyMaxBuyable('Beans', 5)
     },
     bars: {
         beanlevelbar: {
@@ -68,7 +72,7 @@ addLayer("Beans", {
         0: {
         requirementDescription: "<font size='3'><b>1.75 Beans</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlocks Bean Levels.</span>'},
-        done() {return player.points.gte(1.75)},
+        done() {return player.points.gte(1.75) && getBuyableAmount("Beans", 1).gte(17)},
         unlocked() {return getBuyableAmount("Beans", 1).gte(17)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
@@ -119,6 +123,24 @@ addLayer("Beans", {
                 }
             }
     },
+    3: {
+        requirementDescription: "<font size='3'><b>Bean Level 22</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlocks Money, the first reset layer.</span>'},
+        done() {return player.BeanLevel.points.gte(22)},
+        unlocked() {return hasMilestone("Beans", 2)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+                'background-color': '#ffcd7a',
+        'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
     },
     upgrades: {  
     },
@@ -127,7 +149,7 @@ addLayer("Beans", {
     },
     buyables: {
         1: {
-            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+format(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Bean Booster</b>
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Bean Booster</b>
                 <font size="2">Which boost Bean gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Beans</b><br><b>`},
             cost(x) {
@@ -151,7 +173,7 @@ addLayer("Beans", {
                 return cap
             },
             buyMax() {
-                let max = player.points.div(this.cost(0)).add(0.0250).log(1.75) //add is cost, log is base
+                let max = player.points.div(this.cost(0)).add(0.0100).log(1.35) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Beans', 1))) setBuyableAmount('Beans', 1, max.add(1).floor())
             },
@@ -183,7 +205,7 @@ addLayer("Beans", {
     
         },
         2: {
-            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+format(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Bean Level Booster</b>
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Bean Level Booster</b>
                 <font size="2">Which divide Bean Level requirement by ` +format(tmp[this.layer].buyables[this.id].effect) + `÷</b><br>―――――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Beans</b><br><b>`},
             cost(x) {
@@ -203,13 +225,13 @@ addLayer("Beans", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(50)
+                cap = new Decimal(100)
                 return cap
             },
             buyMax() {
-                let max = player.points.div(this.cost(0)).add(0.0250).log(1.75) //add is cost, log is base
+                let max = player.points.div(this.cost(0)).add(0.260).log(1.25) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
-                if(max.gt(getBuyableAmount('Beans', 1))) setBuyableAmount('Beans', 1, max.add(1).floor())
+                if(max.gt(getBuyableAmount('Beans', 2))) setBuyableAmount('Beans', 2, max.add(1).floor())
             },
             tooltip() {return "<span style='color:#ffffff'>Bean Level Booster</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Reduces Bean Level requirement by 5%. Every ten purchases, this effect is boosted by 1.5x."},
             style() {
@@ -239,7 +261,7 @@ addLayer("Beans", {
     
         },
         3: {
-            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+format(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Bean Booster II</b>
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Bean Booster II</b>
                 <font size="2">Which boost Bean gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Beans</b><br><b>`},
             cost(x) {
@@ -259,13 +281,13 @@ addLayer("Beans", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(100)
+                cap = new Decimal(250)
                 return cap
             },
             buyMax() {
-                let max = player.points.div(this.cost(0)).add(0.0250).log(1.75) //add is cost, log is base
+                let max = player.points.div(this.cost(0)).add(0.1).log(1.70) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
-                if(max.gt(getBuyableAmount('Beans', 1))) setBuyableAmount('Beans', 1, max.add(1).floor())
+                if(max.gt(getBuyableAmount('Beans', 3))) setBuyableAmount('Beans', 3, max.add(1).floor())
             },
             tooltip() {return "<span style='color:#ffffff'>Bean Booster II</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Bean gain by 10%. Every ten purchases, this effect is boosted by 1.25x."},
             style() {
@@ -292,6 +314,116 @@ addLayer("Beans", {
                 }
             },
             unlocked() {return hasMilestone("Beans", 2)},
+    
+        },
+        4: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Bean Level Enhancer</b>
+                <font size="2">Which boost Bean Level effect by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Beans</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(5);
+                let cost = base.pow(x).times(100);
+                return cost;
+              },
+              effect() {
+                let eff = getBuyableAmount('Beans', 4).mul(0.25).plus(1)
+                return eff
+            },   
+            canAfford() { if (player.points.gte(this.cost())) {return true}},
+            buy() {
+                player.points = player.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(10)
+                return cap
+            },
+            buyMax() {
+                let max = player.points.div(this.cost(0)).add(100).log(5) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Beans', 4))) setBuyableAmount('Beans', 4, max.add(1).floor())
+            },
+            tooltip() {return "<span style='color:#ffffff'>Bean Level Enhancer</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Bean Level effect by 25%."},
+            style() {
+                if(!this.canAfford()){return {
+                "width": "250px",
+                "height": "125px",
+                'background-color':'#C19A6B', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "250px",
+                "height": "125px",
+                'background-color':'#C19A6B', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return hasMilestone("Money", 0) && player.BeanLevel.points.gte('1')},
+    
+        },
+        5: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Valuable Beans</b>
+                <font size="2">Which boost Money gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Beans</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(1.50);
+                let cost = base.pow(x).times(500);
+                return cost;
+              },
+              effect() {
+               let amt = getBuyableAmount("Beans", 5)  
+               let base = new Decimal(1).add(amt.mul(0.05))
+               let bonus = Decimal.pow(1.25, Math.floor(amt / 10))
+               return base.times(bonus) 
+               },
+            canAfford() { if (player.points.gte(this.cost())) {return true}},
+            buy() {
+                player.points = player.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(60)
+                return cap
+            },
+            buyMax() {
+                let max = player.points.div(this.cost(0)).add(500).log(1.50) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Beans', 5))) setBuyableAmount('Beans', 5, max.add(1).floor())
+            },
+            tooltip() {return "<span style='color:#ffffff'>Valuable Beans</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Money gain by 5%. Every ten purchases, this effect is boosted by 1.25x."},
+            style() {
+                if(!this.canAfford()){return {
+                "width": "250px",
+                "height": "125px",
+                'background-color':'#C19A6B', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "250px",
+                "height": "125px",
+                'background-color':'#C19A6B', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return hasMilestone("Money", 1)},
     
         },
     },
@@ -332,7 +464,9 @@ addLayer("Beans", {
                         "blank",
                         ["column", [ ["row", [ ["buyable", 1], "blank", ["buyable", 3], ]]]],
                         "blank",
-                        ["column", [ ["row", [ ["buyable", 2],]]]],
+                        ["column", [ ["row", [ ["buyable", 2], "blank", ["buyable", 4],]]]],
+                        "blank",
+                        ["column", [ ["row", [ ["buyable", 5],]]]],
                         "blank",
                   ["display-text",
                     function() {return "―――――――――――――――――"},

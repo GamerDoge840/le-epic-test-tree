@@ -27,6 +27,7 @@ addNode("PAU",{
 addLayer("tree-tab", {
     tabFormat: [["tree", [
         ['Beans'],
+        ['Money', 'Gold'],
         ],
     ]],
     previousTab: "",
