@@ -37,7 +37,7 @@ addLayer("ach", {
     layerShown(){return true},
     achievements: {
 		11:{
-			name: "<font size='3'>[1]<br><span style='color:#F59527'>The Bean-ginning</span>",
+			name: "<font size='3'>[1]<br><span style='color:#C19A6B'>The Bean-ginning</span>",
             done() {return getBuyableAmount("Beans", 1).gte(1)},
             //done() {return player.points.gte('1')},
             tooltip() {return "Buy your first Bean Booster.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>“Every journey has to start somewhere...”"},
@@ -45,7 +45,7 @@ addLayer("ach", {
                 return {
                     "width": "110px",
                     "height": "110px",
-                    "border-color": "#F59527",
+                    "border-color": "#C19A6B",
                     "border-width": "3px"
                 }
             }

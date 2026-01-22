@@ -5,6 +5,7 @@ addLayer("BeanLevel", {
     startData() { return {
         unlocked() { return hasMilestone("Beans", 0) },
 		points: new Decimal(0),
+        bestBeanLevel: new Decimal(1)
     }},
     color: "#ffb441",
     requires: new Decimal("2"), // Can be a function that takes requirement increases into account
@@ -23,6 +24,9 @@ addLayer("BeanLevel", {
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
+    },
+    update(delta){
+        if (player.BeanLevel.bestBeanLevel.lt(player.BeanLevel.points)) player.BeanLevel.bestBeanLevel = player.BeanLevel.points
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
     layerShown(){return true},

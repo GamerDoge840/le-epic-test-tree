@@ -28,6 +28,7 @@ addLayer("tree-tab", {
     tabFormat: [["tree", [
         ['Beans'],
         ['Money', 'Gold'],
+        ['Factory'],
         ],
     ]],
     previousTab: "",

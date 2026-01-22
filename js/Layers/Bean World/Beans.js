@@ -5,6 +5,7 @@ addLayer("Beans", {
     startData() { return {
         unlocked(){return true},
 		points: new Decimal(0),
+        bestBeans: new Decimal(0.0000001),
     }},
     color: "#F59527",
     nodeStyle() {
@@ -21,14 +22,14 @@ addLayer("Beans", {
     resource: "Beans", // Name of prestige currency
     baseResource: "Knowledge", // Name of resource prestige is based on
     resetDescription: "Break Essence to gain Shards.<br>―――――――――――<br>",
-    branches: ["Charge"],
     autoUpgrade() {return hasUpgrade('Beans', 1111)},
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.0000000000000000001, // Prestige currency exponent
     tooltip() {
-        let tooltip = "<font size='3'>Beans<br>――――――――――――――<br> <font size='2'><span style='color:#C19A6B'> " +formatWhole(player.points)+" Beans</span>"
+        let tooltip = "<font size='3'>Beans<br>――――――――――――――<br> <font size='2'><span style='color:#C19A6B'> " +format(player.points)+" Beans</span>"
         if(player.BeanLevel.total.gte(1)) tooltip = tooltip + "<br><span style='color:#F59527'>Bean Level "+formatWhole(player.BeanLevel.points)+"</font>"
+        if(player.Factory.total.gte(1)) tooltip = tooltip + "<br><font size='2'><span style='color:#D4B739'>Bean Tier "+formatWhole(player.BeanTier.points)+"</span> | <span style='color:#94811B'> "+format(player.BeanTier.tierPoints)+" TP</font>"
         return tooltip
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -37,6 +38,9 @@ addLayer("Beans", {
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
+    },
+    update(delta){
+        if (player.Beans.bestBeans.lt(player.points)) player.Beans.bestBeans = player.points
     },
     row: '0', // Row the layer is in on the tree (0 is the first row)
     layerShown(){return true},
@@ -66,6 +70,21 @@ addLayer("Beans", {
             },
             baseStyle: { 'background-color': 'black' },
             fillStyle: { 'background-color': '#F59527' },
+       },
+       beantierbar: {
+            unlocked() { return hasMilestone("Factory", 0)},
+            direction: RIGHT,
+            width: 600,
+            height: 50,
+            instant: true,
+            progress() {
+                return player.BeanTier.tierPoints.div(tmp.BeanTier.nextAt)
+            },
+            display() {
+                return "<h5>" + format(player.BeanTier.tierPoints) + "/" + format(tmp.BeanTier.nextAt) + "<h5> TP to next Bean Tier</h5>";
+            },
+            baseStyle: { 'background-color': 'black' },
+            fillStyle: { 'background-color': '#94811B' },
        },
 },
     milestones: {
@@ -170,6 +189,7 @@ addLayer("Beans", {
             },
             purchaseLimit() {
                 cap = new Decimal(100)
+                if (hasMilestone("Factory", 1)) cap = cap.times(1.5)
                 return cap
             },
             buyMax() {
@@ -206,7 +226,7 @@ addLayer("Beans", {
         },
         2: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Bean Level Booster</b>
-                <font size="2">Which divide Bean Level requirement by ` +format(tmp[this.layer].buyables[this.id].effect) + `÷</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Which divide Bean Level requirement by /` +format(tmp[this.layer].buyables[this.id].effect) + `</b><br>―――――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Beans</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.25);
@@ -226,6 +246,7 @@ addLayer("Beans", {
             },
             purchaseLimit() {
                 cap = new Decimal(100)
+                if (hasMilestone("Factory", 3)) cap = cap.times(1.5)
                 return cap
             },
             buyMax() {
@@ -336,6 +357,7 @@ addLayer("Beans", {
             },
             purchaseLimit() {
                 cap = new Decimal(10)
+                if (hasMilestone("Factory", 5)) cap = cap.times(3)
                 return cap
             },
             buyMax() {
@@ -443,7 +465,7 @@ addLayer("Beans", {
             {"color": "#F59527", "font-size": "30px"}],
             ["display-text",
             function() {return "<font size='4'>(+"+formatSmall(getPointGen())+" Beans/s)"},
-            {"color": "#FFFFFF", "font-size": "30px"}],
+            {"color": "#C19A6B", "font-size": "30px"}],
                             ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#F59527", "font-size": "32px"}],
@@ -452,6 +474,34 @@ addLayer("Beans", {
 
                 ]
             
+        },
+        "Bean Tiers": {
+            unlocked() {return hasMilestone("Factory", 0)},
+            style() {return  {'background-color': '#1A1600'}},
+            buttonStyle: {"border-color": "#D4B739"},
+            content: [
+                ["display-text",
+            function() {return 'Bean Tier '+formatWhole(player.BeanTier.points)+''},
+            {"color": "#D4B739", "font-size": "30px"}],
+            "blank",
+            ["display-text",
+            function() {return "Boosting Beans by <span style='color:#ffc75d'> "+ format(tmp.BeanTier.beanEffect) +"x</span>"},
+            {"font-size": "19px"}],
+             ["display-text",
+            function() {return "Boosting Money by <span style='color:#81F72D'> "+ format(tmp.BeanTier.moneyEffect) +"x</span>"},
+            {"font-size": "19px"}],
+                ["display-text",
+                    function() {return "―――――――――――――――――――――――――――――"},
+                    {"color": "#D4B739", "font-size": "32px"}],
+                    ["display-text",
+            function() {return ''+format(player.BeanTier.tpGain)+' TP/s'},
+            {"color": "#94811B", "font-size": "25px"}],
+            "blank",
+                    ["bar", "beantierbar"],
+                    ["display-text",
+                    function() {return "―――――――――――――――――――――――――――――"},
+                    {"color": "#D4B739", "font-size": "32px"}],
+            ]
         },
     },
         microtabs: {
