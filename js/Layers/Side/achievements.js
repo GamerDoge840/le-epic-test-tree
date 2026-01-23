@@ -38,12 +38,14 @@ addLayer("ach", {
     achievements: {
 		11:{
 			name: "[1]<br><span style='color:#ffffff'>The Beginning</span>",
-            done() {return hasUpgrade("Essence", 111)},
+            done() {return hasUpgrade("Essence", 11)},
             //done() {return player.points.gte('1')},
-            tooltip() {return "Start generation of Essence.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>“Should be simple...”"},
+            tooltip() {return "Start generation of Essence.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>“Every number comes from somewhere.”"},
             style() {
                 return {
-                    "border-color": "#ffffff",
+                    "width": "110px",
+                    "height": "110px",
+                    "border-color": "#FFFFFF",
                     "border-width": "3px"
                 }
             }

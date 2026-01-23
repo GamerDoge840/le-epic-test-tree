@@ -45,24 +45,15 @@ addLayer("Essence", {
     automate() {
         if(hasUpgrade('Essence', 1111)) buyMaxBuyable('Essence', 11)
     },
-    doReset(resettingLayer) {
-        if (layers[resettingLayer].row <= this.row) return;
-        let keptUpgrades = []
-        let keptMilestones = []
-        if (hasUpgrade('Essence', 1111)) keptUpgrades.push(61)
-        layerDataReset(this.layer);
-        player[this.layer].upgrades.push(...keptUpgrades)
-        player[this.layer].milestones.push(...keptMilestones)
-    },
     milestones: {
     },
     upgrades: {        
-        rows: 4,
-        cols: 4,
     },
     buyables: {
-        rows: 5,
-        cols: 4,
+    },
+    challenges: {
+    },
+    clickables: {
     },
      tabFormat: {
         "Essence": {

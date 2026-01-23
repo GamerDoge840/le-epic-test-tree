@@ -3,11 +3,11 @@ let modInfo = {
 	id: "accretiveasscension",
 	author: "The Big G",
 	pointsName: "Essence",
-	modFiles: ["Layers/Layer 0/Essence.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
+	modFiles: ["Layers/Realm of Origin/Fruits.js","Layers/Realm of Origin/Levels/Level.js","Layers/Realm of Origin/Essence.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (0), // Used for hard resets and new players
+	initialStartPoints: new Decimal (1), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
@@ -19,14 +19,14 @@ let VERSION = {
 
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.0</h3><br>
-		- Added things.<br>
+		- Added things.<br>s
 		- Added stuff.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything"]
+var doNotCallTheseFunctionsEveryTick = ["blowUpEverything", "accumulatorMiniReset", "levelReset"]
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
@@ -34,7 +34,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return true
+	return hasUpgrade("Essence", 11)
 }
 
 
@@ -43,8 +43,36 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.00001)
-    gain=gain.times(buyableEffect('Essence', 11))
+	let gain = new Decimal(0.0001)
+
+    //Direct Boosts
+    if (hasUpgrade('Essence', 22)) gain = gain.times(3)
+	if (hasMilestone('Level', 8)) gain = gain.times(2)
+
+	//Upgrades
+	if (hasUpgrade('Essence', 14)) gain = gain.times(upgradeEffect('Essence', 14))
+    if (hasUpgrade('Essence', 21)) gain = gain.times(upgradeEffect('Essence', 21))
+	if (hasUpgrade('Essence', 23)) gain = gain.times(upgradeEffect('Essence', 23))
+	
+	//Buyables
+	gain=gain.times(buyableEffect('Essence', 1))
+	gain=gain.times(buyableEffect('Essence', 2))
+	gain=gain.times(buyableEffect('Essence', 3))
+	gain=gain.times(buyableEffect('Essence', 4))
+	gain=gain.times(buyableEffect('Essence', 5))
+	gain=gain.times(buyableEffect('Essence', 6))
+	gain=gain.times(buyableEffect('Essence', 7))
+	gain=gain.times(buyableEffect('Essence', 8))
+	gain=gain.times(buyableEffect('Fruits', 2))
+	gain=gain.times(tmp.Essence.buyables[9].effect1)
+
+    //Milestones
+	if (hasMilestone('Level', 1)) gain = gain.times(tmp.Level.milestones[1].effect)
+	if (hasMilestone('Level', 5)) gain = gain.times(tmp.Level.milestones[5].effect)
+
+	//Layer Effects
+	if (player.Level.total.gte(1))
+		gain = gain.times(tmp.Level.essenceEffect);
 	return gain
 }
 
@@ -80,3 +108,4 @@ function maxTickLength() {
 // you can cap their current resources with this.
 function fixOldSave(oldVersion){
 }
+
