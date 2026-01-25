@@ -3,7 +3,7 @@ let modInfo = {
 	id: "accretiveasscension",
 	author: "The Big G",
 	pointsName: "Essence",
-	modFiles: ["Layers/Realm of Origin/Fruits.js","Layers/Realm of Origin/Levels/Level.js","Layers/Realm of Origin/Essence.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
+	modFiles: ["Layers/Realm of Origin/Purity.js","Layers/Realm of Origin/Fruits.js","Layers/Realm of Origin/Levels/Level.js","Layers/Realm of Origin/Essence.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",

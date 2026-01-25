@@ -28,6 +28,7 @@ addLayer("tree-tab", {
     tabFormat: [["tree", [
         ['Essence'],
         ['Level', 'Fruits'],
+        ['Purity'],
         ],
     ]],
     previousTab: "",
