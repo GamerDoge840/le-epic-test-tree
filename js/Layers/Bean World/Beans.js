@@ -40,6 +40,7 @@ addLayer("Beans", {
         return new Decimal(1)
     },
     update(delta){
+        //Get Best Beans
         if (player.Beans.bestBeans.lt(player.points)) player.Beans.bestBeans = player.points
     },
     row: '0', // Row the layer is in on the tree (0 is the first row)
@@ -190,6 +191,7 @@ addLayer("Beans", {
             purchaseLimit() {
                 cap = new Decimal(100)
                 if (hasMilestone("Factory", 1)) cap = cap.times(1.5)
+                cap=cap.times(buyableEffect('Factory', 2))
                 return cap
             },
             buyMax() {
@@ -247,6 +249,7 @@ addLayer("Beans", {
             purchaseLimit() {
                 cap = new Decimal(100)
                 if (hasMilestone("Factory", 3)) cap = cap.times(1.5)
+                cap=cap.times(buyableEffect('Factory', 2))
                 return cap
             },
             buyMax() {
@@ -358,6 +361,7 @@ addLayer("Beans", {
             purchaseLimit() {
                 cap = new Decimal(10)
                 if (hasMilestone("Factory", 5)) cap = cap.times(3)
+                if (hasMilestone("Factory", 11)) cap = cap.times(2)
                 return cap
             },
             buyMax() {
@@ -452,7 +456,7 @@ addLayer("Beans", {
     clickables: {
           },
      tabFormat: {
-        "Beans": {
+        "Farm": {
         style() {return  {'background-color': '#161103'}},
         content: [
         ["raw-html", function() {if (hasMilestone("Beans", 0)) return 'Bean Level '+formatWhole(player.BeanLevel.points)+''}, {"color": "#F59527", "font-size": "29px"}],
@@ -490,6 +494,7 @@ addLayer("Beans", {
              ["display-text",
             function() {return "Boosting Money by <span style='color:#81F72D'> "+ format(tmp.BeanTier.moneyEffect) +"x</span>"},
             {"font-size": "19px"}],
+            ["raw-html", function() {if (hasMilestone("Factory", 10)) return "Boosting Gold by <span style='color:#FFE77D'> "+ format(tmp.BeanTier.goldEffect) +"x</span>"}, {"font-size": "19px"}],
                 ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#D4B739", "font-size": "32px"}],

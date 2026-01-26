@@ -26,7 +26,7 @@ let winText = `Congratulations! You have reached the end and beaten this game, b
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything", "moneyReset", "goldReset"]
+var doNotCallTheseFunctionsEveryTick = ["blowUpEverything", "moneyReset", "goldReset", "ironReset"]
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
@@ -44,17 +44,23 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(0.001)
+
+	//Buyables
     gain=gain.times(buyableEffect('Beans', 1))
 	gain=gain.times(buyableEffect('Beans', 3))
 	gain=gain.times(buyableEffect('Money', 1))
 	gain=gain.times(buyableEffect('Gold', 1))
 	gain=gain.times(buyableEffect('Money', 4))
+	gain=gain.times(buyableEffect('Factory', 1))
+	gain=gain.times(buyableEffect('Factory', 9))
 
+	//Level Effects
 	if (player.BeanLevel.total.gte(1))
 		gain = gain.times(tmp.BeanLevel.effect);
 	if (player.Factory.total.gte(1))
 		gain = gain.times(tmp.BeanTier.beanEffect);
-
+	
+    //Milestones
 	if (hasMilestone('Factory', 2)) gain = gain.times(tmp.Factory.milestones[2].effect)
 	return gain
 }

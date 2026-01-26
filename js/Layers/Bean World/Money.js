@@ -42,22 +42,25 @@ addLayer("Money", {
         if (hasUpgrade('Gold', 13) || (hasMilestone("Factory", 5))) buyMaxBuyable('Money', 3)
         if (hasUpgrade('Gold', 14) || (hasMilestone("Factory", 5))) buyMaxBuyable('Money', 4)
         if (hasMilestone("Factory", 5)) buyMaxBuyable('Money', 5)
+        if (hasMilestone("Factory", 7)) buyMaxBuyable('Money', 6)
     },
    update(delta) {
         let onepersec = new Decimal(1)
-
-        if (player.Money.bestMoney.lt(player.Money.dollars)) player.Money.bestMoney = player.Money.dollars
         
+        //Get Best Money
+        if (player.Money.bestMoney.lt(player.Money.dollars)) player.Money.bestMoney = player.Money.dollars
+        //Base Money Gain
         player.Money.moneyToGet = player.points.div(250).pow(0.5)
-
+        //Buyables
         player.Money.moneyToGet = player.Money.moneyToGet.mul(buyableEffect("Money", 3))
         player.Money.moneyToGet = player.Money.moneyToGet.mul(buyableEffect("Beans", 5))
         player.Money.moneyToGet = player.Money.moneyToGet.mul(buyableEffect("Gold", 2))
+        player.Money.moneyToGet = player.Money.moneyToGet.mul(buyableEffect("Factory", 6))
+        //Layer Effects
         if (player.Factory.total.gte(1)) player.Money.moneyToGet = player.Money.moneyToGet.mul(tmp.BeanTier.moneyEffect)
         if (hasMilestone('Factory', 3)) player.Money.moneyToGet = player.Money.moneyToGet.times(tmp.Factory.milestones[3].effect)
+        //Money Generation
         player.Money.dollars = player.Money.dollars.add(player.Money.moneyToGet.mul(buyableEffect("Gold", 5).mul(delta)))
-        //if (hasUpgrade('Beans', 1111)) player.Money.dollars = player.Money.dollars.add(player.Money.moneyToGet.mul(1).mul(delta))
-
     },
     moneyReset()
     {
@@ -65,7 +68,7 @@ addLayer("Money", {
      
      player.BeanLevel.points = new Decimal(0)
      
-     if (!hasMilestone("Gold", 1)) player.Beans.milestones.splice(0, player.Beans.milestones.length)
+     if (!hasMilestone("Gold", 1) && !hasMilestone("Factory", 7)) player.Beans.milestones.splice(0, player.Beans.milestones.length)
 
     for (let i in player.Beans.buyables) {
          player.Beans.buyables[i] = new Decimal(0)
@@ -267,6 +270,7 @@ addLayer("Money", {
             },
             purchaseLimit() {
                 cap = new Decimal(100)
+                cap=cap.times(buyableEffect('Factory', 5))
                 return cap
             },
             buyMax() {
@@ -323,6 +327,7 @@ addLayer("Money", {
             },
             purchaseLimit() {
                 cap = new Decimal(20)
+                cap=cap.times(buyableEffect('Factory', 5))
                 return cap
             },
             buyMax() {
@@ -380,6 +385,7 @@ addLayer("Money", {
             purchaseLimit() {
                 cap = new Decimal(30)
                 if (hasMilestone('Gold', 3)) cap = cap.times(1.33)
+                cap=cap.times(buyableEffect('Factory', 5))
                 return cap
             },
             buyMax() {
@@ -547,7 +553,7 @@ addLayer("Money", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(100)
+                cap = new Decimal(1000)
                 return cap
             },
             buyMax() {
@@ -599,14 +605,14 @@ addLayer("Money", {
         },
     },
      tabFormat: {
-        "Money": {
+        "Bank": {
         style() {return  {'background-color': '#051407'}},
         content: [
         ["display-text",
             function() {return ''+format(player.Money.dollars)+'$'},
             {"color": "#1BC42F", "font-size": "30px"}],
                         ["raw-html", function() {if (player.points.gte(250) && !getBuyableAmount("Gold", 5).gte(1)) return "(+" + format(player.Money.moneyToGet) + "$)"}, {"color": "#1B9E2A", "font-size": "20px"}],
-                        ["raw-html", function() {if (getBuyableAmount("Gold", 5).gte(1)) return "(+" + format(player.Money.moneyToGet.mul(buyableEffect("Gold", 5))) + "$/s)"}, {"color": "#1B9E2A", "font-size": "20px"}],
+                        ["raw-html", function() {if (getBuyableAmount("Gold", 5).gte(1) && player.points.gte(250)) return "(+" + format(player.Money.moneyToGet.mul(buyableEffect("Gold", 5))) + "$/s)"}, {"color": "#1B9E2A", "font-size": "20px"}],
                         ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#1BC42F", "font-size": "32px"}],

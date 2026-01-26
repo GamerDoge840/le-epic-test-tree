@@ -25,19 +25,29 @@ addLayer("BeanTier", {
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
-        return new Decimal(1)
+        exp = new Decimal(1)
+        //Exponent Boosts
+        if (hasMilestone("Factory", 9)) exp = exp.times(1.20)
+        exp=exp.times(buyableEffect('Factory', 7))
+        return exp
     },
     update(delta){
+        //Base TP Gain
         player.BeanTier.tpGain = new Decimal(0.10)
+        //Buyables
         player.BeanTier.tpGain = player.BeanTier.tpGain.mul(buyableEffect("Gold", 6))
         player.BeanTier.tpGain = player.BeanTier.tpGain.mul(buyableEffect("Money", 6))
+        player.BeanTier.tpGain = player.BeanTier.tpGain.mul(buyableEffect("Factory", 8))
+        //Factory Milestones
         if (hasMilestone("Factory", 1)) player.BeanTier.tpGain = player.BeanTier.tpGain.mul(20)
         if (hasMilestone("Factory", 2)) player.BeanTier.tpGain = player.BeanTier.tpGain.mul(20)
         if (hasMilestone("Factory", 3)) player.BeanTier.tpGain = player.BeanTier.tpGain.mul(20)
         if (hasMilestone("Factory", 4)) player.BeanTier.tpGain = player.BeanTier.tpGain.mul(20)
         if (hasMilestone("Factory", 5)) player.BeanTier.tpGain = player.BeanTier.tpGain.mul(20)
         if (hasMilestone("Factory", 6)) player.BeanTier.tpGain = player.BeanTier.tpGain.mul(20)
+        //Can Generate TP?
         if (hasMilestone("Factory", 0)) player.BeanTier.tierPoints = player.BeanTier.tierPoints.add(player.BeanTier.tpGain.mul(1).mul(delta))
+        //Get Best TP and Tier
         if (player.BeanTier.bestBeanTier.lt(player.BeanTier.points)) player.BeanTier.bestBeanTier = player.BeanTier.points
         if (player.BeanTier.bestTP.lt(player.BeanTier.tierPoints)) player.BeanTier.bestTP = player.BeanTier.tierPoints
     },
@@ -55,7 +65,12 @@ addLayer("BeanTier", {
     },
     moneyEffect() {
         let eff = player.BeanTier.points.pow_base(1.10);
-         return eff
+        if (hasMilestone('Factory', 10)) eff = eff.times(2)
+        return eff
+    },
+    goldEffect() {
+        let eff = player.BeanTier.points.pow_base(1.05);
+        return eff
     },
 milestones: {
 },

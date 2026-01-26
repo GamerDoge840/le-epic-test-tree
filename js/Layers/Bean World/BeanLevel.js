@@ -18,14 +18,18 @@ addLayer("BeanLevel", {
     exponent: 0.77, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+
+        //Buyables
         mult = mult.dividedBy(buyableEffect('Beans', 2))
         mult = mult.dividedBy(buyableEffect('Money', 2))
+
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
     update(delta){
+        //Get best Bean Level
         if (player.BeanLevel.bestBeanLevel.lt(player.BeanLevel.points)) player.BeanLevel.bestBeanLevel = player.BeanLevel.points
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
@@ -34,9 +38,13 @@ addLayer("BeanLevel", {
 	return 0
     },
     effect() {
+        //Effect Base
          let eff = player.BeanLevel.points.mul(0.2).add(1).pow(1.15)
+         
+        //Buyables
          eff=eff.times(buyableEffect('Beans', 4))
          eff=eff.times(buyableEffect('Gold', 3))
+         
          return eff
     },
 milestones: {

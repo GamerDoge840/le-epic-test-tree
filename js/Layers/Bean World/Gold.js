@@ -40,15 +40,32 @@ addLayer("Gold", {
     },
     row: '0', // Row the layer is in on the tree (0 is the first row)
     layerShown(){return hasMilestone("Money", 2) || player.Gold.goldResetAmount.gte('1')},
+    automate() {
+        if (getBuyableAmount("Factory", 3).gte(1)) buyMaxBuyable('Gold', 1)
+        if (getBuyableAmount("Factory", 3).gte(2)) buyMaxBuyable('Gold', 2)
+        if (getBuyableAmount("Factory", 3).gte(3)) buyMaxBuyable('Gold', 3)
+        if (getBuyableAmount("Factory", 3).gte(4)) buyMaxBuyable('Gold', 4)
+        if (getBuyableAmount("Factory", 3).gte(5)) buyMaxBuyable('Gold', 5)
+        if (getBuyableAmount("Factory", 3).gte(6)) buyMaxBuyable('Gold', 6)
+
+    },
     update(delta) {
         let onepersec = new Decimal(1)
-
+        //Get Best Gold
         if (player.Gold.bestGold.lt(player.Gold.goldBars)) player.Gold.bestGold = player.Gold.goldBars
-        
+        //Gold Gain
         player.Gold.goldToGet = player.Money.dollars.div(5000).pow(0.4)
+        //Bonuses
+        if (getBuyableAmount("Factory", 3).gte(1)) player.Gold.goldToGet = player.Gold.goldToGet.times(4)
+        //Buyables
         player.Gold.goldToGet = player.Gold.goldToGet.mul(buyableEffect("Gold", 4))
         player.Gold.goldToGet = player.Gold.goldToGet.mul(buyableEffect("Money", 5))
+        //Layer Effects
+        if (hasMilestone('Factory', 10)) player.Gold.goldToGet = player.Gold.goldToGet.mul(tmp.BeanTier.goldEffect)
         if (hasMilestone('Factory', 4)) player.Gold.goldToGet = player.Gold.goldToGet.times(tmp.Factory.milestones[4].effect)
+        //Gold Generation
+        player.Gold.goldBars = player.Gold.goldBars.add(player.Gold.goldToGet.mul(buyableEffect("Factory", 4).mul(delta)))
+
     },
     goldReset()
     {
@@ -341,7 +358,7 @@ addLayer("Gold", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(100)
+                cap = new Decimal(250)
                 return cap
             },
             buyMax() {
@@ -401,7 +418,7 @@ addLayer("Gold", {
                 return cap
             },
             buyMax() {
-                let max = player.Gold.goldBars.div(this.cost(0)).add(0.250).log(1.65) //add is cost, log is base
+                let max = player.Gold.goldBars.div(this.cost(0)).add(0.250).log(1.55) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Gold', 2))) setBuyableAmount('Gold', 2, max.add(1).floor())
             },
@@ -452,10 +469,11 @@ addLayer("Gold", {
             },
             purchaseLimit() {
                 cap = new Decimal(3)
+                if (hasMilestone("Factory", 9)) cap = cap.times(10)
                 return cap
             },
             buyMax() {
-                let max = player.Gold.goldBars.div(this.cost(0)).add(2.50).log(10) //add is cost, log is base
+                let max = player.Gold.goldBars.div(this.cost(0)).add(2.50).log(100) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Gold', 3))) setBuyableAmount('Gold', 3, max.add(1).floor())
             },
@@ -511,7 +529,7 @@ addLayer("Gold", {
                 return cap
             },
             buyMax() {
-                let max = player.Gold.goldBars.div(this.cost(0)).add(3).log(1.40) //add is cost, log is base
+                let max = player.Gold.goldBars.div(this.cost(0)).add(2).log(1.20) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Gold', 4))) setBuyableAmount('Gold', 4, max.add(1).floor())
             },
@@ -609,7 +627,7 @@ addLayer("Gold", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(15)
+                cap = new Decimal(100)
                 return cap
             },
             buyMax() {
@@ -617,7 +635,7 @@ addLayer("Gold", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Gold', 6))) setBuyableAmount('Gold', 6, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Money Printer</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Doubles TP gain with every purchase."},
+            tooltip() {return "<span style='color:#ffffff'>Golden TP</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Doubles TP gain with every purchase."},
             style() {
                 if(!this.canAfford()){return {
                 "width": "250px",
@@ -651,7 +669,7 @@ addLayer("Gold", {
         1: {
             title() { return "<font size='5'>Purchase precious Gold using your money.<br><font size='4'>(Requires 10,000$)" },
             canClick() { return player.Money.dollars.gte(10000)},
-            unlocked() { return true },
+            unlocked() { return !getBuyableAmount("Factory", 4).gte(1) },
             onClick() {
                 layers.Gold.goldReset()
                 player.Gold.goldBars = player.Gold.goldBars.add(player.Gold.goldToGet)
@@ -661,13 +679,14 @@ addLayer("Gold", {
         },
     },
      tabFormat: {
-        "Gold": {
+        "Gold Vault": {
         style() {return  {'background-color': '#403605'}},
         content: [
         ["display-text",
             function() {return ''+format(player.Gold.goldBars)+' Gold Bars'},
             {"color": "#EBCB3F", "font-size": "30px"}],
-                        ["raw-html", function() {if (player.Money.dollars.gte(10000)) return "(+" + format(player.Gold.goldToGet) + ")"}, {"color": "#FFE77D", "font-size": "20px"}],
+                        ["raw-html", function() {if (player.Money.dollars.gte(10000) && !getBuyableAmount("Factory", 4).gte(1)) return "(+" + format(player.Gold.goldToGet) + ")"}, {"color": "#FFE77D", "font-size": "20px"}],
+                        ["raw-html", function() {if (getBuyableAmount("Factory", 4).gte(1) && player.Money.dollars.gte(10000)) return "(+" + format(player.Gold.goldToGet.mul(buyableEffect("Factory", 4))) + "/s)"}, {"color": "#FFE77D", "font-size": "20px"}],
                             ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#EBCB3F", "font-size": "32px"}],
