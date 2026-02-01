@@ -49,7 +49,7 @@ addLayer("Factory", {
         if (player.Factory.points.gte(8) && player.Factory.points.lte(9)) mult = mult.dividedBy(7500)
         if (player.Factory.points.gte(9) && player.Factory.points.lte(10)) mult = mult.dividedBy(25000000)
         if (player.Factory.points.gte(10) && player.Factory.points.lte(11)) mult = mult.dividedBy(500000)
-        if (player.Factory.points.gte(11) && player.Factory.points.lte(12)) mult = mult.dividedBy(1e11)
+        if (player.Factory.points.gte(11) && player.Factory.points.lte(12)) mult = mult.dividedBy(3e11)
         if (player.Factory.points.gte(12) && player.Factory.points.lte(13)) mult = mult.dividedBy(4e4)
         return mult 
     },
@@ -287,7 +287,7 @@ addLayer("Factory", {
     },
     11: {
         requirementDescription: "<font size='3'><b>(FL12) Bean Enhancement V</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Bean Level Enhancer can be bought twice as many times. Unlock one powerful new Iron Plate upgrade.</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Bean Level Enhancer can be bought twice as many times. Unlock a new Iron Plate upgrade.</span>'},
         done() {return player.Factory.points.gte(12)},
         unlocked() {return hasMilestone("Factory", 10)},
         style() {
@@ -738,7 +738,7 @@ addLayer("Factory", {
                 <font size="2">Which boost Bean gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
-                let base = new Decimal(1.25);
+                let base = new Decimal(1.65);
                 let cost = base.pow(x).times(10000);
                 return cost;
               },
@@ -753,7 +753,7 @@ addLayer("Factory", {
                 return cap
             },
             buyMax() {
-                let max = player.Factory.ironPlates.div(this.cost(0)).add(10000).log(1.25) //add is cost, log is base
+                let max = player.Factory.ironPlates.div(this.cost(0)).add(10000).log(1.65) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 9))) setBuyableAmount('Factory', 9, max.add(1).floor())
             },
