@@ -1,0 +1,125 @@
+addLayer("stats", {
+    name: "stats", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "📊", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    nodeStyle() {
+        return {
+            'border': '2px solid #FFFFFF',
+            "width": 65,
+        "height": 65,
+        'min-height': '65px',
+        'min-width': '65px',  
+        }
+    },
+    color: "#e1e1e1",
+    requires: new Decimal(10), // Can be a function that takes requirement increases into account
+    resource: "Honor", // Name of prestige currency
+    baseResource: "points", // Name of resource prestige is based on
+    baseAmount() {return player.points}, // Get the current amount of baseResource
+    tooltip() {return "Statistics"},
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 'side', // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+    layerShown(){return true},
+    tabFormat: {
+        "Currencies": {
+            content: ["blank",
+                ["microtabs", "CurrencyTabs"],
+
+            ],
+        },
+        "Upgrades": {
+            content: ["blank",
+                            ["display-text",
+                                function() {return "―――+――― Upgrades ―――+―――"},
+                                {"color": "#9d9d9d", "font-size": "37px"}],
+                                ["display-text",
+                                    function() {return "―――――――――――"},
+                                    {"color": "#9d9d9d", "font-size": "37px"}],
+                                    "blank",
+                                ["display-text",
+                                    function() {return "―――――――――――"},
+                                    {"color": "#9d9d9d", "font-size": "37px"}],
+
+            ],
+        },
+        "Main": {
+            content: ["blank",
+                ["display-text",
+                            function() {return "――+―― Current Run ――+――"},
+                            {"color": "#9d9d9d", "font-size": "37px"}],
+                            ["raw-html", function() {if (hasUpgrade("Start", 1)) return '(You are currently playing as Humans)'}, {"font-size": "25px"}], 
+                            ["raw-html", function() {if (hasUpgrade("Start", 1000)) return '(Your homeworld is a Continental Planet)'}, {"font-size": "25px"}], 
+                            ["display-text",
+                            function() {return "――+―― Misc. ――+――"},
+                            {"color": "#9d9d9d", "font-size": "37px"}], 
+                            ["display-text",
+                                function() {return format(player.ach.achievements.length,0)+"/"+format(Object.keys(tmp.ach.achievements).length - 2,0)+" Achievements"},
+                                {"color": "#e7ef43","font-size": "25px"}],    
+                                "blank",      
+                                ["display-text",
+                                    function() {return "You have played this game for " + formatTime(player.timePlayed, true + ".")},
+                                    {"font-size": "25px"}],  
+                                    "blank",
+
+            ],
+        },
+    },
+    microtabs: {
+            CurrencyTabs: {
+                "Current": {
+                    content: [
+                        ["display-text",
+                    function() {return "―――+――― Current Amounts ―――+―――"},
+                    {"color": "#9d9d9d", "font-size": "37px"}],
+                    ["display-text",
+                        function() {return "―――――――――――"},
+                        {"color": "#9d9d9d", "font-size": "37px"}],
+                    ["display-text",
+                        function() {return '('+format(player.points)+' Research)'},
+                        {"color": "#BDF9FF","font-size": "25px"}],
+                        ["display-text",
+                        function() {return '('+formatSmall(getPointGen())+'/s)'},
+                        {"color": "#BDF9FF","font-size": "17px"}],
+                        "blank",
+                        ["display-text",
+                            function() {return "―――――――――――"},
+                            {"color": "#9d9d9d", "font-size": "37px"}],
+                        
+                    ]
+                },
+                "Best": {
+                    content: [
+                        ["display-text",
+                    function() {return "―――+――― Best Amounts ―――+―――"},
+                    {"color": "#9d9d9d", "font-size": "37px"}],
+                    ["display-text",
+                        function() {return "―――――――――――"},
+                        {"color": "#9d9d9d", "font-size": "37px"}],
+                        //["display-text",
+                        //function() {return '(Best Beans: '+format(player.Beans.bestBeans)+')'},
+                        //{"color": "#C19A6B","font-size": "25px"}],
+                        "blank",
+                        ["display-text",
+                            function() {return "―――――――――――"},
+                            {"color": "#9d9d9d", "font-size": "37px"}],
+                        
+                    ]
+                },
+            }
+        },
+})

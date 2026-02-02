@@ -1,20 +1,20 @@
 let modInfo = {
-	name: "The Tree of Knowledge",
-	id: "superultraduperamogussmartspunchisus",
+	name: "Tree of Civilization",
+	id: "evolvemaxxing",
 	author: "The Big G",
-	pointsName: "Knowledge",
-	modFiles: ["Layers/Row 0/Scrolls.js","Layers/Row 0/Knowledge.js","math.js", "Layers/Side/achievements.js", "tree.js"],
+	pointsName: "Research",
+	modFiles: ["Layers/Main/Core Resources/Population.js","Layers/Main/Basic Materials/Food.js","Layers/Meta-Progression/Start.js","Layers/Main/Core Resources/Research.js","Layers/Main/Homeworld.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (0.0010), // Used for hard resets and new players
+	initialStartPoints: new Decimal (1), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "1.0",
+	name: "Tree of Civilization",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -34,20 +34,16 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("Knowledge", 11);
+	return (hasUpgrade('Research', 1))
 }
+
 
 // Calculate points/sec!
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.0001)
-	gain=gain.times(buyableEffect('Knowledge', 11))
-	gain=gain.times(buyableEffect('Knowledge', 12))
-	gain=gain.times(buyableEffect('Knowledge', 21))
-	gain=gain.times(buyableEffect('Scrolls', 11))
-	if (hasUpgrade('Knowledge', 12)) gain = gain.times(3)
+	let gain = new Decimal(0.001)
 	return gain
 }
 
@@ -83,3 +79,4 @@ function maxTickLength() {
 // you can cap their current resources with this.
 function fixOldSave(oldVersion){
 }
+
