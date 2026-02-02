@@ -3,7 +3,7 @@ let modInfo = {
 	id: "evolvemaxxing",
 	author: "The Big G",
 	pointsName: "Research",
-	modFiles: ["Layers/Main/Core Resources/Population.js","Layers/Main/Basic Materials/Food.js","Layers/Meta-Progression/Start.js","Layers/Main/Core Resources/Research.js","Layers/Main/Homeworld.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
+	modFiles: ["Layers/Main/Basic Materials/Wood.js","Layers/Main/Core Resources/Population.js","Layers/Main/Basic Materials/Food.js","Layers/Meta-Progression/Start.js","Layers/Main/Core Resources/Research.js","Layers/Main/Homeworld.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -44,6 +44,7 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(0.001)
+	if (hasUpgrade('Research', 8)) gain = gain.times(2)
 	return gain
 }
 

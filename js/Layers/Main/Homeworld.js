@@ -50,21 +50,149 @@ addLayer("Homeworld", {
     upgrades: {        
     },
     buyables: {
+      1: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Hunter-Gatherers</b>
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Population</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(1.75);
+                let cost = base.pow(x).times(1);
+                return cost;
+              },
+              effect() {
+                let eff = getBuyableAmount('Homeworld', 1).mul(1).plus(1)
+                return eff
+            },
+            effect2() {
+                let eff = getBuyableAmount('Homeworld', 1).mul(0.25).plus(1)
+                return eff
+            },     
+            canAfford() { if (player.Population.populationPoints.gte(this.cost())) {return true}},
+            buy() {
+                player.Population.populationPoints = player.Population.populationPoints.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1e100)
+                return cap
+            },
+            buyMax() {
+                let max = player.Population.populationPoints.div(this.cost(0)).add(1).log(1.75) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Homeworld', 1))) setBuyableAmount('Homeworld', 1, max.add(1).floor())
+            },
+            tooltip(){
+                if (!hasUpgrade('Research', 6)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food gain by 100%.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“”`
+                if (hasUpgrade('Research', 6)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food gain by 100%, and Wood gain by 25%.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Food, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x to Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“”`
+            },          
+            style() {
+                if(!this.canAfford()){return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#C19A6B', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#C19A6B', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return (hasUpgrade('Research', 4))},
+    
+        },
+        100: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Huts</b>
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Wood</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(1.75);
+                let cost = base.pow(x).times(1);
+                return cost;
+              },
+              effect() {
+                let eff = getBuyableAmount('Homeworld', 100).mul(0.25).plus(1)
+                if (hasUpgrade("Research", 9)) eff = eff.times(1.40)
+                return eff
+            },
+            consumption() {
+                let eff = getBuyableAmount('Homeworld', 100).mul(0.05).plus(1)
+                if (hasUpgrade("Research", 9)) eff = eff.times(1.167)
+                return eff
+            },
+            canAfford() { if (player.Wood.woodPoints.gte(this.cost())) {return true}},
+            buy() {
+                player.Wood.woodPoints = player.Wood.woodPoints.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1e100)
+                return cap
+            },
+            buyMax() {
+                let max = player.Wood.woodPoints.div(this.cost(0)).add(1).log(1.75) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Homeworld', 100))) setBuyableAmount('Homeworld', 100, max.add(1).floor())
+            },
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Huts</span><br>――――――――――――<br><span style='font-size:11px'>Each Hut boosts Population gain, but slightly reduces Food gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Population, /` +format(tmp[this.layer].buyables[this.id].consumption) + ` to Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“”`
+            },          
+            style() {
+                if(!this.canAfford()){return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#A35F00', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#A35F00', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return (hasUpgrade('Research', 7))},
+        },
     },
     challenges: {
     },
     clickables: {
     },
      tabFormat: {
-        "Buildings": {
+        "Civilization": {
         content: [
         ["raw-html", function() {if (hasUpgrade('Research', 3)) return '('+format(player.Population.populationPoints)+' Population)'}, {"color": "#FFF5C7", "font-size": "25px"}],
         ["raw-html", function() {if (hasUpgrade('Research', 3)) return '(+' + format(player.Population.populationGain.mul(1)) + '/s)'}, {"color": "#FFF5C7", "font-size": "20px"}],
-        "blank",
         ["display-text",
-            function() {return ''+format(player.Food.foodPoints)+' Food'},
+                    function() {return "―――――――――――――――――――――――――――――"},
+                    {"color": "#FFFFFF", "font-size": "32px"}],
+        ["display-text",
+            function() {return '('+format(player.Food.foodPoints)+' Food)'},
             {"color": "#8ED47F", "font-size": "18px"}],
             ["raw-html", function() {if (hasUpgrade('Research', 2)) return "(+" + format(player.Food.foodGain.mul(1)) + "/s)"}, {"color": "#8ED47F", "font-size": "15px"}],
+            "blank",
+            ["raw-html", function() {if (hasUpgrade('Research', 5)) return '('+format(player.Wood.woodPoints)+' Wood)'}, {"color": "#A35F00", "font-size": "19px"}],
+        ["raw-html", function() {if (hasUpgrade('Research', 5)) return '(+' + format(player.Wood.woodGain.mul(1)) + '/s)'}, {"color": "#A35F00", "font-size": "15px"}],
                 ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],
@@ -77,11 +205,29 @@ addLayer("Homeworld", {
     },
         microtabs: {
             EssenceTabs: {
-                "Bonfire": {
-                    unlocked() { return hasUpgrade('Research', 5) },
+                "Buildings": {
+                    unlocked() { return hasUpgrade('Research', 7) },
                     content: [
-                        "blank",
+                        ["display-text",
+                    function() {return "―――――――――――――――――――――――――――――"},
+                    {"color": "#FFFFFF", "font-size": "32px"}],
+                        ["column", [ ["row", [ ["buyable", 100],]]]],
+                      ["display-text",
+                    function() {return "―――――――――――――――――――――――――――――"},
+                    {"color": "#FFFFFF", "font-size": "32px"}],
 
+                    ]
+                },
+                "Jobs": {
+                    unlocked() { return hasUpgrade('Research', 4) },
+                    content: [
+                        ["display-text",
+                    function() {return "―――――――――――――――――――――――――――――"},
+                    {"color": "#FFFFFF", "font-size": "32px"}],
+                        ["column", [ ["row", [ ["buyable", 1],]]]],
+                      ["display-text",
+                    function() {return "―――――――――――――――――――――――――――――"},
+                    {"color": "#FFFFFF", "font-size": "32px"}],
                     ]
                 },
             }
