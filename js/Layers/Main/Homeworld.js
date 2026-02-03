@@ -58,14 +58,22 @@ addLayer("Homeworld", {
                 let cost = base.pow(x).times(1);
                 return cost;
               },
-              effect() {
+            effect() {
                 let eff = getBuyableAmount('Homeworld', 1).mul(1).plus(1)
+                if (hasUpgrade("Workshop", 1)) eff = eff.times(1.05)
+                if (hasUpgrade("Workshop", 5)) eff = eff.times(1.20)
                 return eff
             },
             effect2() {
                 let eff = getBuyableAmount('Homeworld', 1).mul(0.25).plus(1)
+                if (hasUpgrade("Workshop", 2)) eff = eff.times(1.25)
+                if (hasUpgrade("Workshop", 3)) eff = eff.times(1.25)
                 return eff
-            },     
+            },
+            effect3() {
+                let eff = getBuyableAmount('Homeworld', 1).mul(0.05).plus(1)
+                return eff
+            },       
             canAfford() { if (player.Population.populationPoints.gte(this.cost())) {return true}},
             buy() {
                 player.Population.populationPoints = player.Population.populationPoints.sub(this.cost())
@@ -81,10 +89,12 @@ addLayer("Homeworld", {
                 if(max.gt(getBuyableAmount('Homeworld', 1))) setBuyableAmount('Homeworld', 1, max.add(1).floor())
             },
             tooltip(){
-                if (!hasUpgrade('Research', 6)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food gain by 100%.</span><br>――――――――――――――――――<br>
+                if (!hasUpgrade('Research', 6)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food gain.</span><br>――――――――――――――――――<br>
                     <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“”`
-                if (hasUpgrade('Research', 6)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food gain by 100%, and Wood gain by 25%.</span><br>――――――――――――――――――<br>
+                if (hasUpgrade('Research', 6) && !hasUpgrade('Research', 12)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food and Wood gain.</span><br>――――――――――――――――――<br>
                     <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Food, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x to Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“”`
+                if (hasUpgrade('Research', 12)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food, Wood, and Mineral gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Food, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x to Wood, ` +format(tmp[this.layer].buyables[this.id].effect3) + `x to Minerals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“”`
             },          
             style() {
                 if(!this.canAfford()){return {
@@ -123,11 +133,13 @@ addLayer("Homeworld", {
               effect() {
                 let eff = getBuyableAmount('Homeworld', 100).mul(0.25).plus(1)
                 if (hasUpgrade("Research", 9)) eff = eff.times(1.40)
+                if (hasUpgrade("Workshop", 4)) eff = eff.times(1.25)
                 return eff
             },
             consumption() {
                 let eff = getBuyableAmount('Homeworld', 100).mul(0.05).plus(1)
                 if (hasUpgrade("Research", 9)) eff = eff.times(1.167)
+                if (hasUpgrade("Workshop", 4)) eff = eff.times(1.35)
                 return eff
             },
             canAfford() { if (player.Wood.woodPoints.gte(this.cost())) {return true}},
@@ -186,13 +198,14 @@ addLayer("Homeworld", {
         ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],
-        ["display-text",
-            function() {return '('+format(player.Food.foodPoints)+' Food)'},
-            {"color": "#8ED47F", "font-size": "18px"}],
+            ["raw-html", function() {if (hasUpgrade('Research', 2)) return '('+format(player.Food.foodPoints)+' Food)'}, {"color": "#8ED47F", "font-size": "18px"}],
             ["raw-html", function() {if (hasUpgrade('Research', 2)) return "(+" + format(player.Food.foodGain.mul(1)) + "/s)"}, {"color": "#8ED47F", "font-size": "15px"}],
             "blank",
-            ["raw-html", function() {if (hasUpgrade('Research', 5)) return '('+format(player.Wood.woodPoints)+' Wood)'}, {"color": "#A35F00", "font-size": "19px"}],
+            ["raw-html", function() {if (hasUpgrade('Research', 5)) return '('+format(player.Wood.woodPoints)+' Wood)'}, {"color": "#A35F00", "font-size": "18px"}],
         ["raw-html", function() {if (hasUpgrade('Research', 5)) return '(+' + format(player.Wood.woodGain.mul(1)) + '/s)'}, {"color": "#A35F00", "font-size": "15px"}],
+        "blank",
+        ["raw-html", function() {if (hasUpgrade('Research', 11)) return '('+format(player.Minerals.mineralPoints)+' Minerals)'}, {"color": "#8C8888", "font-size": "18px"}],
+        ["raw-html", function() {if (hasUpgrade('Research', 11)) return '(+' + format(player.Minerals.mineralGain.mul(1)) + '/s)'}, {"color": "#8C8888", "font-size": "15px"}],
                 ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],

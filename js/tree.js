@@ -26,7 +26,7 @@ addNode("PAU",{
 
 addLayer("tree-tab", {
     tabFormat: [["tree", [
-        ['Research'],
+        ['Research', 'Workshop'],
         ['Homeworld'],
         ['Start'],
         ],

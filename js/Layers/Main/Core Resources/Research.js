@@ -134,7 +134,7 @@ addLayer("Research", {
             fullDisplay() {return `<font size="3"><b>[R03] Fire</b><font size="2"><br>――――――――――――<br>
                 Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research and `+format(tmp[this.layer].upgrades[this.id].costs.Food)+` Food`},        
             costs: {
-                Research: 0.0250,
+                Research: 0.0220,
                 Food: 1,
               },
               canAfford() {
@@ -187,8 +187,8 @@ addLayer("Research", {
             fullDisplay() {return `<font size="3"><b>[R04] Foraging</b><font size="2"><br>――――――――――――<br>
                 Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research and `+format(tmp[this.layer].upgrades[this.id].costs.Food)+` Food`},        
             costs: {
-                Research: 0.0350,
-                Food: 2,
+                Research: 0.0300,
+                Food: 1.5,
               },
               canAfford() {
                 return player.points.gte(this.costs.Research)
@@ -238,8 +238,8 @@ addLayer("Research", {
             fullDisplay() {return `<font size="3"><b>[R05] Twig Gathering</b><font size="2"><br>――――――――――――<br>
                 Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research and `+format(tmp[this.layer].upgrades[this.id].costs.Food)+` Food`},        
             costs: {
-                Research: 0.0500,
-                Food: 4,
+                Research: 0.0400,
+                Food: 3,
               },
               canAfford() {
                 return player.points.gte(this.costs.Research)
@@ -507,9 +507,9 @@ addLayer("Research", {
             fullDisplay() {return `<font size="3"><b>[R10] Wooden Tools</b><font size="2"><br>――――――――――――<br>
                 Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, `+format(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, and `+format(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
             costs: {
-                Research: 0.15,
-                Food: 12,
-                Wood: 4,
+                Research: 0.11,
+                Food: 8,
+                Wood: 3,
               },
               canAfford() {
                 return player.points.gte(this.costs.Research)
@@ -556,7 +556,279 @@ addLayer("Research", {
                     }
                 }
             },
-        },                 
+        },
+        11: {    
+            fullDisplay() {return `<font size="3"><b>[R11] Knapping</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, `+format(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, and `+format(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
+            costs: {
+                Research: 0.12,
+                Food: 11,
+                Wood: 4,
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Food.foodPoints.gte(this.costs.Food)
+                    && player.Wood.woodPoints.gte(this.costs.Wood)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+              },
+            branches: ["Research", 10],
+            unlocked() {return (hasUpgrade('Research', 10))},
+            tooltip(){
+                if (!hasUpgrade('Research', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Knapping</span><br>――――――――――――<br><span style='font-size:11px'>Figure out how to shape rocks and begin the Stone Age for real. Enables Mineral generation by gathering rocks off the ground, and unlocks a new tool in the workshop.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: 0 Minerals/s</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“”`
+                if (hasUpgrade('Research', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Knapping</span><br>――――――――――――<br><span style='font-size:11px'>Figure out how to shape rocks and begin the Stone Age for real. Enables Mineral generation by gathering rocks off the ground.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` + format(player.Minerals.mineralGain.mul(1)) + ` Minerals/s</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        }, 
+        12: {    
+            fullDisplay() {return `<font size="3"><b>[R12] Stone Foraging</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, `+format(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, and `+format(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals`},        
+            costs: {
+                Research: 0.17,
+                Food: 8,
+                Minerals: 1,
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Food.foodPoints.gte(this.costs.Food)
+                    && player.Minerals.mineralPoints.gte(this.costs.Minerals)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+              },
+            branches: ["Research", 11],
+            unlocked() {return (hasUpgrade('Research', 11))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Stone Foraging</span><br>――――――――――――<br><span style='font-size:11px'>Hunter-Gatherers gain another effect that boosts Mineral gain.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“Hey, that's a cool looking rock...”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        }, 
+        13: {    
+            fullDisplay() {return `<font size="3"><b>[R13] Cooking</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, `+format(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, and `+format(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
+            costs: {
+                Research: 0.10,
+                Food: 10,
+                Wood: 8,
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Food.foodPoints.gte(this.costs.Food)
+                    && player.Wood.woodPoints.gte(this.costs.Wood)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+              },
+            branches: ["Research", 12],
+            unlocked() {return (hasUpgrade('Research', 12))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Cooking</span><br>――――――――――――<br><span style='font-size:11px'>Roast raw food using fire, boosting Food gain by 50%.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        14: {    
+            fullDisplay() {return `<font size="3"><b>[R14] Woodcutting</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, `+format(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood, and `+format(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals`},        
+            costs: {
+                Research: 0.10,
+                Wood: 8,
+                Minerals: 3,
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Wood.woodPoints.gte(this.costs.Wood)
+                    && player.Minerals.mineralPoints.gte(this.costs.Minerals)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+              },
+            branches: ["Research", 12],
+            unlocked() {return (hasUpgrade('Research', 12))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Woodcutting</span><br>――――――――――――<br><span style='font-size:11px'>Splitting logs in half boosts Wood gain by 50%.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        15: {    
+            fullDisplay() {return `<font size="3"><b>[R15] Lumberjacks</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, `+format(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, and `+format(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
+            costs: {
+                Research: 0.11,
+                Food: 30,
+                Wood: 15,
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Food.foodPoints.gte(this.costs.Food)
+                    && player.Wood.woodPoints.gte(this.costs.Wood)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+              },
+            branches: ["Research", 13, "Research", 14],
+            unlocked() {return (hasUpgrade('Research', 13) && hasUpgrade('Research', 14))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Lumberjacks</span><br>――――――――――――<br><span style='font-size:11px'>Unlocks the Lumberjack job.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },                               
     },
     buyables: {
     },
@@ -605,13 +877,19 @@ addLayer("Research", {
                     "blank",
                     ["column", [ ["row", [ ["upgrade", 7], "blank", ["upgrade", 9], "blank",]]]],
                     "blank",
-                    ["column", [ ["row", [ ["upgrade", 10], "blank",]]]],
+                    ["column", [ ["row", [ ["upgrade", 10], "blank", ["upgrade", 11],]]]],
                     "blank",
+                    ["column", [ ["row", [ ["upgrade", 12]]]]],
+                    "blank",
+                    ["column", [ ["row", [ ["upgrade", 13], "blank", ["upgrade", 14]]]]],
+                    "blank",
+                    ["column", [ ["row", [ ["upgrade", 15]]]]],
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#BDF9FF", "font-size": "32px"}],
                     ["raw-html", function() {if (hasUpgrade('Research', 2)) return "(" + format(player.Food.foodPoints) + " Food)"}, {"color": "#8ED47F", "font-size": "20px"}],
                     ["raw-html", function() {if (hasUpgrade('Research', 5)) return '('+format(player.Wood.woodPoints)+' Wood)'}, {"color": "#A35F00", "font-size": "20px"}],
+                    ["raw-html", function() {if (hasUpgrade('Research', 11)) return '('+format(player.Minerals.mineralPoints)+' Minerals)'}, {"color": "#8C8888", "font-size": "20px"}],
 
                     ]
                 },
