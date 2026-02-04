@@ -1,6 +1,6 @@
 let modInfo = {
 	name: "Accretive Ascension",
-	id: "accretiveasscension",
+	id: "ascendingthataccretion",
 	author: "The Big G",
 	pointsName: "Essence",
 	modFiles: ["Layers/Realm of Origin/Purity.js","Layers/Realm of Origin/Fruits.js","Layers/Realm of Origin/Levels/Level.js","Layers/Realm of Origin/Essence.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
@@ -43,32 +43,21 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.0001)
+	let gain = new Decimal(0.1)
 
     //Direct Boosts
-    if (hasUpgrade('Essence', 22)) gain = gain.times(3)
-	if (hasMilestone('Level', 8)) gain = gain.times(2)
 
 	//Upgrades
-	if (hasUpgrade('Essence', 14)) gain = gain.times(upgradeEffect('Essence', 14))
-    if (hasUpgrade('Essence', 21)) gain = gain.times(upgradeEffect('Essence', 21))
-	if (hasUpgrade('Essence', 23)) gain = gain.times(upgradeEffect('Essence', 23))
+	if (hasUpgrade('Essence', 12)) gain = gain.times(upgradeEffect('Essence', 12))
+	if (hasUpgrade('Essence', 13)) gain = gain.times(upgradeEffect('Essence', 13))
+    if (hasUpgrade('Essence', 23)) gain = gain.times(upgradeEffect('Essence', 23))
 	
 	//Buyables
-	gain=gain.times(buyableEffect('Essence', 1))
-	gain=gain.times(buyableEffect('Essence', 2))
-	gain=gain.times(buyableEffect('Essence', 3))
-	gain=gain.times(buyableEffect('Essence', 4))
-	gain=gain.times(buyableEffect('Essence', 5))
-	gain=gain.times(buyableEffect('Essence', 6))
-	gain=gain.times(buyableEffect('Essence', 7))
-	gain=gain.times(buyableEffect('Essence', 8))
 	gain=gain.times(buyableEffect('Fruits', 2))
-	gain=gain.times(tmp.Essence.buyables[9].effect1)
 
     //Milestones
 	if (hasMilestone('Level', 1)) gain = gain.times(tmp.Level.milestones[1].effect)
-	if (hasMilestone('Level', 5)) gain = gain.times(tmp.Level.milestones[5].effect)
+	if (hasMilestone('Level', 3)) gain = gain.times(tmp.Level.milestones[3].effect)
 
 	//Layer Effects
 	if (player.Level.total.gte(1))

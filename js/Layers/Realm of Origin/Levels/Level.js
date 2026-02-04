@@ -18,7 +18,7 @@ addLayer("Level", {
         'min-width': '65px',  
         }
     },
-    requires: new Decimal("1.5"), // Can be a function that takes requirement increases into account
+    requires: new Decimal("5"), // Can be a function that takes requirement increases into account
     resource: "Level", // Name of prestige currency
     baseResource: "Essence", // Name of resource prestige is based on
     resetDescription: "Reset Essence amount, but Level up.<br>―――――――――――<br>",
@@ -35,13 +35,11 @@ addLayer("Level", {
         mult = new Decimal(1)
 
         //Fix Static only doubling on first amount
-        if (player.Level.points.gte(1) && !player.Level.points.gte(2)) mult = mult.dividedBy(1.25)
+        if (player.Level.points.gte(1) && !player.Level.points.gte(2)) mult = mult.dividedBy(1.05)
 
         //Upgrades
-	    if (hasUpgrade('Essence', 24)) mult = mult.dividedBy(upgradeEffect('Essence', 24))
-
-        //Buyables
-	    mult = mult.dividedBy(tmp.Essence.buyables[9].effect2)
+	    if (hasUpgrade('Essence', 22)) mult = mult.dividedBy(upgradeEffect('Essence', 22))
+        mult=mult.dividedBy(buyableEffect('Fruits', 5))
 
         //Milestones
         if (hasMilestone('Level', 7)) mult = mult.dividedBy(tmp.Level.milestones[7].effect)
@@ -51,14 +49,13 @@ addLayer("Level", {
         return new Decimal(1)
     },
     row: '0', // Row the layer is in on the tree (0 is the first row)
-    layerShown(){return hasUpgrade("Essence", 22)},
+    layerShown(){return hasUpgrade("Essence", 14)},
     update() {
         //Get best Level
         if (player.Level.bestLevel.lt(player.Level.points)) player.Level.bestLevel = player.Level.points
     },
     essenceEffect() {
-         let eff = player.Level.points.mul(0.2).add(1).pow(1.15)
-        eff=eff.times(buyableEffect('Fruits', 5))
+         let eff = player.Level.points.mul(0.2).add(1).pow(1.10)
          return eff
     },
     onPrestige() {
@@ -84,7 +81,7 @@ addLayer("Level", {
     milestones: {
         1: {
         requirementDescription: "<font size='3'><b>(Level 3) Milestone Booster</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Boost Essence gain based on how many Level milestones you have.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Level.milestones[this.layer, this.id].effect))+'x</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Boost Essence gain by 1.50x compounding for each Level milestone you have.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Level.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Level.points.gte(3)},
         unlocked() {return true},
         effect() {
@@ -105,9 +102,9 @@ addLayer("Level", {
             }
     },
     2: {
-        requirementDescription: "<font size='3'><b>(Level 7) Essence Expansion</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Unlocks a powerful new Essence upgrade.'},
-        done() {return player.Level.points.gte(7)},
+        requirementDescription: "<font size='3'><b>(Level 5) Essence Expansion</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlock two new Essence upgrades.'},
+        done() {return player.Level.points.gte(5)},
         unlocked() {return hasMilestone('Level', 1)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
@@ -123,9 +120,13 @@ addLayer("Level", {
             }
     },
     3: {
-        requirementDescription: "<font size='3'><b>(Level 13) Essence Expansion II</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Unlocks another new Essence upgrade.'},
-        done() {return player.Level.points.gte(13)},
+        requirementDescription: "<font size='3'><b>(Level 9) Leveled Essence</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Boost Essence gain by amount of Levels divided by 15.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Level.milestones[this.layer, this.id].effect))+'x</span>'},
+        done() {return player.Level.points.gte(9)},
+        effect() {
+                let eff = player.Level.points.dividedBy(15).plus(1);
+                return eff;
+            }, 
         unlocked() {return hasMilestone('Level', 2)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
@@ -141,9 +142,9 @@ addLayer("Level", {
             }
     },
     4: {
-        requirementDescription: "<font size='3'><b>(Level 18) Fruits of Your Labor</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>(Level 12) Fruits of Your Labor</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlock Fruits.'},
-        done() {return player.Level.points.gte(18)},
+        done() {return player.Level.points.gte(12)},
         unlocked() {return hasMilestone('Level', 3)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
@@ -159,14 +160,10 @@ addLayer("Level", {
             }
     },
     5: {
-        requirementDescription: "<font size='3'><b>(Level 24) Apple-Powered Essence</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Boost Essence gain based on Apples.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Level.milestones[this.layer, this.id].effect))+'x</span>'},
-        done() {return player.Level.points.gte(24)},
+        requirementDescription: "<font size='3'><b>(Level 15) Essence Expansion II</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlock two more Essence upgrades.'},
+        done() {return player.Level.points.gte(15)},
         unlocked() {return hasMilestone('Level', 4)},
-        effect() {
-                let eff = player.Fruits.apples.plus(1).pow(0.12);
-                return eff;
-            }, 
         style() {
             if (hasMilestone(this.layer, this.id)) return {
             "background-color": "#D5E5F4",
@@ -181,9 +178,9 @@ addLayer("Level", {
             }
     },
     6: {
-        requirementDescription: "<font size='3'><b>(Level 33) Fruits of Your Labor II</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>(Level 20) Fruits of Your Labor II</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlock more Fruit upgrades.'},
-        done() {return player.Level.points.gte(33)},
+        done() {return player.Level.points.gte(20)},
         unlocked() {return hasMilestone('Level', 5)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
@@ -199,13 +196,13 @@ addLayer("Level", {
             }
     },
     7: {
-        requirementDescription: "<font size='3'><b>(Level 39) Pear-Powered Levels</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Divide Level requirement based on Pears.<br>――――――――――――――<br> Currently: /'+format(+format(tmp.Level.milestones[this.layer, this.id].effect))+'</span>'},
-        done() {return player.Level.points.gte(39)},
+        requirementDescription: "<font size='3'><b>(Level 25) Pear-Powered Levels</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Divide Level requirement based on amount of Pears.<br>――――――――――――――<br> Currently: /'+format(+format(tmp.Level.milestones[this.layer, this.id].effect))+'</span>'},
+        done() {return player.Level.points.gte(25)},
         tooltip() {return "<span style='font-size:11px'><span style='color:#FFEB00'>Milestone effect softcapped after /1000."},
         unlocked() {return hasMilestone('Level', 6)},
         effect() {
-                let eff = player.Fruits.pears.plus(1).pow(0.50);
+                let eff = player.Fruits.pears.plus(1).pow(0.25);
                 scpow = 0.25
                 eff = softcap(eff, new Decimal("1000"), scpow)
                 return eff;
@@ -224,10 +221,10 @@ addLayer("Level", {
             }
     },
     8: {
-        requirementDescription: "<font size='3'><b>(Level 48) Purity</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Unlock Purity, the first reset layer. Double Essence gain.'},
-        done() {return player.Level.points.gte(48)},
-        unlocked() {return hasMilestone('Level', 6)},
+        requirementDescription: "<font size='3'><b>(Level 33) Purity</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlocks Purity, the first reset layer.'},
+        done() {return player.Level.points.gte(33)},
+        unlocked() {return hasMilestone('Level', 7)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
             "background-color": "#D5E5F4",

@@ -69,7 +69,7 @@ update(delta) {
             fullDisplay() {return `<font size="2"><b>[FR11] Apples</b><font size="1"><br>Unlocks Apples and two Apple upgrades.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Essence`},        
             unlocked() { return hasMilestone('Level', 4) },
-            cost: new Decimal(15000),
+            cost: new Decimal(1000),
             tooltip() {return "<span style='color:#ffffff'>[FR11] Apples</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             currencyInternalName: "points",
             style() {
@@ -143,7 +143,7 @@ update(delta) {
             fullDisplay() {return `<font size="2"><b>[FR13] Pears</b><font size="1"><br>Unlocks Pears and two Pear upgrades.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Essence`},        
             unlocked() { return hasMilestone('Level', 6) },
-            cost: new Decimal(1e7),
+            cost: new Decimal(500000),
             tooltip() {return "<span style='color:#ffffff'>[FR13] Pears</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             currencyInternalName: "points",
             style() {
@@ -180,7 +180,7 @@ update(delta) {
             fullDisplay() {return `<font size="2"><b>[FR14] Pears II</b><font size="1"><br>Unlocks one more Pear upgrade.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Essence`},        
             unlocked() { return hasUpgrade('Fruits', 13) },
-            cost: new Decimal(5e7),
+            cost: new Decimal(2.5e6),
             tooltip() {return "<span style='color:#ffffff'>[FR14] Pears II</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             currencyInternalName: "points",
             style() {
@@ -286,7 +286,7 @@ update(delta) {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(1000)
+                cap = new Decimal(100)
                 return cap
             },
             buyMax() {
@@ -332,13 +332,13 @@ update(delta) {
               },
             canAfford() { if (player.Fruits.apples.gte(this.cost())) {return true}},
             effect() { 
-                        return getBuyableAmount('Fruits', 3).pow_base(1.15) },         
+                        return getBuyableAmount('Fruits', 3).pow_base(1.20) },         
             buy() {
                 player.Fruits.apples = player.Fruits.apples.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(100)
+                cap = new Decimal(25)
                 return cap
             },
             buyMax() {
@@ -346,7 +346,7 @@ update(delta) {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Fruits', 3))) setBuyableAmount('Fruits', 3, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Apple Pickers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Apple gain by 15% compounding."},
+            tooltip() {return "<span style='color:#ffffff'>Apple Pickers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Apple gain by 20% compounding."},
             style() {
                 if(!this.canAfford()){return {
                 "width": "200px",
@@ -429,32 +429,30 @@ update(delta) {
         },
         5: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Level Pears</b>
-                <font size="2">Which boost Level effect by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――
+                <font size="2">Which divide Level requirement by /` +format(tmp[this.layer].buyables[this.id].effect) + `</b><br>―――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Pears</b><br><b>`},
             cost(x) {
-                let base = new Decimal(2);
+                let base = new Decimal(1.45);
                 let cost = base.pow(x).times(1);
                 return cost;
               },
             canAfford() { if (player.Fruits.pears.gte(this.cost())) {return true}},
-            effect() {
-                let eff = getBuyableAmount('Fruits', 5).mul(0.10).plus(1)
-                return eff
-            },        
+            effect() { 
+                        return getBuyableAmount('Fruits', 5).pow_base(1.10) },       
             buy() {
                 player.Fruits.pears = player.Fruits.pears.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(25)
+                cap = new Decimal(100)
                 return cap
             },
             buyMax() {
-                let max = player.Fruits.pears.div(this.cost(0)).add(1).log(2) //add is cost, log is base
+                let max = player.Fruits.pears.div(this.cost(0)).add(1).log(1.45) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Fruits', 5))) setBuyableAmount('Fruits', 5, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Level Pears</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Level effect by 10%."},
+            tooltip() {return "<span style='color:#ffffff'>Level Pears</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase divides Level requirement by 10% compounding."},
             style() {
                 if(!this.canAfford()){return {
                 "width": "200px",
@@ -498,7 +496,7 @@ update(delta) {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(100)
+                cap = new Decimal(25)
                 return cap
             },
             buyMax() {
