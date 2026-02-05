@@ -10,6 +10,9 @@ addLayer("Fruits", {
         pears: new Decimal(0),
         pearGain: new Decimal(0),
         bestPears: new Decimal(0),
+        bananas: new Decimal(0),
+        bananasGain: new Decimal(0),
+        bestBananas: new Decimal(0),
     }},
     color: "#FFFFFF",
     nodeStyle() {
@@ -25,7 +28,8 @@ addLayer("Fruits", {
     tooltip() {
         let tooltip = "<font size='3'>Fruits<br>――――――――――――――<br>"
         if(hasUpgrade('Fruits', 11)) tooltip = tooltip + "<font size='2'><span style='color:#DA8F81'>"+format(player.Fruits.apples)+" Apples<br></font>"
-        if(hasUpgrade('Fruits', 13)) tooltip = tooltip + "<font size='2'><span style='color:#C3FA89'>"+format(player.Fruits.pears)+" Pears</font>"
+        if(hasUpgrade('Fruits', 13)) tooltip = tooltip + "<font size='2'><span style='color:#C3FA89'>"+format(player.Fruits.pears)+" Pears<br></font>"
+        if(hasUpgrade('Fruits', 21)) tooltip = tooltip + "<font size='2'><span style='color:#F5EB82'>"+format(player.Fruits.bananas)+" Bananas</font>"
         return tooltip
     },
     row: '0', // Row the layer is in on the tree (0 is the first row)
@@ -36,7 +40,13 @@ addLayer("Fruits", {
 	return 0
     },
     automate() {
-        if(hasUpgrade('Essence', 1111)) buyMaxBuyable('Essence', 11)
+        if(hasUpgrade('Purity', 12)) buyMaxBuyable('Fruits', 1)
+        if(hasUpgrade('Purity', 12)) buyMaxBuyable('Fruits', 4)
+        if(hasUpgrade('Purity', 22)) buyMaxBuyable('Fruits', 2)
+        if(hasUpgrade('Purity', 22)) buyMaxBuyable('Fruits', 5)
+        if(hasUpgrade('Purity', 33)) buyMaxBuyable('Fruits', 3)
+        if(hasUpgrade('Purity', 33)) buyMaxBuyable('Fruits', 6)
+        if(hasUpgrade('Purity', 33)) buyMaxBuyable('Fruits', 7)
     },
 update(delta) {
         let onepersec = new Decimal(1)
@@ -44,22 +54,31 @@ update(delta) {
         //Base Gain
         player.Fruits.appleGain = new Decimal(0.1)
         player.Fruits.pearGain = new Decimal(0.1)
+        player.Fruits.bananasGain = new Decimal(0.1)
 
         //Best Fruits
         if (player.Fruits.bestApples.lt(player.Fruits.apples)) player.Fruits.bestApples = player.Fruits.apples
         if (player.Fruits.bestPears.lt(player.Fruits.pears)) player.Fruits.bestPears = player.Fruits.pears
+        if (player.Fruits.bestBananas.lt(player.Fruits.bananas)) player.Fruits.bestBananas = player.Fruits.bananas
 
         //Apple Gain
         player.Fruits.appleGain = player.Fruits.appleGain.times(buyableEffect('Fruits', 1))
         player.Fruits.appleGain = player.Fruits.appleGain.times(buyableEffect('Fruits', 3))
+        if (hasUpgrade('Purity', 11)) player.Fruits.appleGain = player.Fruits.appleGain.times(3)
         if (hasUpgrade('Fruits', 11)) player.Fruits.apples = player.Fruits.apples.add(player.Fruits.appleGain.mul(delta))
         //For currencies generated like this, delta MUST go after upgrade effects
         
         //Pear Gain
         player.Fruits.pearGain = player.Fruits.pearGain.times(buyableEffect('Fruits', 4))
         player.Fruits.pearGain = player.Fruits.pearGain.times(buyableEffect('Fruits', 6))
+        if (hasUpgrade('Purity', 11)) player.Fruits.pearGain = player.Fruits.pearGain.times(3)
         if (hasUpgrade('Fruits', 13)) player.Fruits.pears = player.Fruits.pears.add(player.Fruits.pearGain.mul(delta))
         
+        //Banana Gain
+        player.Fruits.bananasGain = player.Fruits.bananasGain.times(buyableEffect('Fruits', 7))
+        player.Fruits.bananasGain = player.Fruits.bananasGain.times(buyableEffect('Fruits', 9))
+        if (hasUpgrade('Fruits', 21)) player.Fruits.bananas = player.Fruits.bananas.add(player.Fruits.bananasGain.mul(delta))
+
         },
         
     milestones: {
@@ -212,7 +231,81 @@ update(delta) {
                     }
                 }
             },
-        },               
+        },
+        21: {
+            fullDisplay() {return `<font size="2"><b>[FR21] Bananas</b><font size="1"><br>Unlocks Bananas and two Banana upgrades.<br>――――――――――――――――――<br>
+                Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Essence`},        
+            unlocked() { return hasUpgrade('Fruits', 14) && hasUpgrade('Purity', 31) },
+            cost: new Decimal(2.5e7),
+            tooltip() {return "<span style='color:#ffffff'>[FR21] Bananas</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            currencyInternalName: "points",
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#F5EB82',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#549D07',
+                'background-color': '#FFF9B8',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        22: {
+            fullDisplay() {return `<font size="2"><b>[FR22] Bananas II</b><font size="1"><br>Unlocks one more Banana upgrade.<br>――――――――――――――――――<br>
+                Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Essence`},        
+            unlocked() { return hasUpgrade('Fruits', 21) },
+            cost: new Decimal(3.5e8),
+            tooltip() {return "<span style='color:#ffffff'>[FR22] Bananas II</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
+            currencyInternalName: "points",
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#F5EB82',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#549D07',
+                'background-color': '#FFF9B8',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },                              
     },
     buyables: {
         1: {
@@ -234,7 +327,7 @@ update(delta) {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(1000)
+                cap = new Decimal(100)
                 return cap
             },
             buyMax() {
@@ -286,7 +379,7 @@ update(delta) {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(100)
+                cap = new Decimal(50)
                 return cap
             },
             buyMax() {
@@ -392,7 +485,7 @@ update(delta) {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(1000)
+                cap = new Decimal(100)
                 return cap
             },
             buyMax() {
@@ -444,7 +537,7 @@ update(delta) {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(100)
+                cap = new Decimal(50)
                 return cap
             },
             buyMax() {
@@ -531,6 +624,166 @@ update(delta) {
             unlocked() {return hasUpgrade("Fruits", 14)},
     
         },
+        7: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Banana Boosters</b>
+                <font size="2">Which boost Banana gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Bananas</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(1.30);
+                let cost = base.pow(x).times(0.5);
+                return cost;
+              },
+            canAfford() { if (player.Fruits.bananas.gte(this.cost())) {return true}},
+            effect() {
+                let eff = getBuyableAmount('Fruits', 7).mul(1).plus(1)
+                return eff
+            },           
+            buy() {
+                player.Fruits.bananas = player.Fruits.bananas.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(100)
+                return cap
+            },
+            buyMax() {
+                let max = player.Fruits.bananas.div(this.cost(0)).add(0.5).log(1.30) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Fruits', 7))) setBuyableAmount('Fruits', 7, max.add(1).floor())
+            },
+            tooltip() {return "<span style='color:#ffffff'>Banana Boosters</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Banana gain by 100%."},
+            style() {
+                if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "150px",
+                'background-color':'#FFF9B8', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "200px",
+                "height": "150px",
+                'background-color':'#FFF9B8', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return hasUpgrade("Fruits", 21)},
+    
+        },
+        8: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Purity Bananas</b>
+                <font size="2">Which boost Purity gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Bananas</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(1.50);
+                let cost = base.pow(x).times(1);
+                return cost;
+              },
+            canAfford() { if (player.Fruits.bananas.gte(this.cost())) {return true}},
+            effect() {
+                let eff = getBuyableAmount('Fruits', 8).mul(0.01).plus(1)
+                return eff
+            },           
+            buy() {
+                player.Fruits.bananas = player.Fruits.bananas.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1000)
+                return cap
+            },
+            buyMax() {
+                let max = player.Fruits.bananas.div(this.cost(0)).add(1).log(1.50) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Fruits', 8))) setBuyableAmount('Fruits', 8, max.add(1).floor())
+            },
+            tooltip() {return "<span style='color:#ffffff'>Purity Bananas</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Purity gain by 1%."},
+            style() {
+                if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "150px",
+                'background-color':'#FFF9B8', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "200px",
+                "height": "150px",
+                'background-color':'#FFF9B8', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return hasUpgrade("Fruits", 21)},
+    
+        },
+        9: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Banana Pickers</b>
+                <font size="2">Which boost Banana gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Bananas</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(1.5);
+                let cost = base.pow(x).times(2);
+                return cost;
+              },
+            canAfford() { if (player.Fruits.bananas.gte(this.cost())) {return true}},
+            effect() { 
+                        return getBuyableAmount('Fruits', 9).pow_base(1.15) },           
+            buy() {
+                player.Fruits.bananas = player.Fruits.bananas.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(25)
+                return cap
+            },
+            buyMax() {
+                let max = player.Fruits.bananas.div(this.cost(0)).add(2).log(1.5) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Fruits', 9))) setBuyableAmount('Fruits', 9, max.add(1).floor())
+            },
+            tooltip() {return "<span style='color:#ffffff'>Banana Pickers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Banana gain by 15% compounding."},
+            style() {
+                if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "150px",
+                'background-color':'#FFF9B8', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "200px",
+                "height": "150px",
+                'background-color':'#FFF9B8', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return hasUpgrade("Fruits", 22)},
+    
+        },
     },
     challenges: {
     },
@@ -544,10 +797,8 @@ update(delta) {
             ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],
-                    ["style-column", [
                         ["column", [ ["row", [ ["upgrade", 11], ["upgrade", 12], ["upgrade", 13], ["upgrade", 14], ]]]],
-                     ], {width: "700px", height: "200px", backgroundColor: "#5E5D5D", border: "3px solid #BABABA", borderRadius: "10px"}],
-
+                        ["column", [ ["row", [ ["upgrade", 21], ["upgrade", 22], ["upgrade", 23], ["upgrade", 24], ]]]],
                             ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],
@@ -570,6 +821,9 @@ update(delta) {
                     "blank",
                     ["raw-html", function() {if (hasUpgrade('Fruits', 13)) {return ''+format(player.Fruits.pears)+' Pears'}}, {"color": "#C3FA89", "font-size": "30px"}],
                     ["raw-html", function() {if (hasUpgrade('Fruits', 13)) return "(+" + format(player.Fruits.pearGain.mul(1)) + "/s)"}, {"color": "#C7E6A8", "font-size": "20px"}],
+                    "blank",
+                    ["raw-html", function() {if (hasUpgrade('Fruits', 21)) {return ''+format(player.Fruits.bananas)+' Bananas'}}, {"color": "#F5EB82", "font-size": "30px"}],
+                    ["raw-html", function() {if (hasUpgrade('Fruits', 21)) return "(+" + format(player.Fruits.bananasGain.mul(1)) + "/s)"}, {"color": "#FFF9B8", "font-size": "20px"}],
                     ["raw-html", function() {if (hasUpgrade('Fruits', 11)) {return '―――――――――――――――――――――――――――――'}}, {"color": "#FFFFFF", "font-size": "30px"}],
                 ]
                 },
@@ -614,6 +868,28 @@ update(delta) {
                     {"color": "#FFFFFF", "font-size": "32px"}],
 
                      ], {width: "500px", height: "450px", backgroundColor: "#43572F", border: "3px solid #BABABA", borderRadius: "10px"}],
+                     "blank",
+                    ]
+                },
+                "Bananas": {
+                    unlocked() { return hasUpgrade("Fruits", 21) },
+                    buttonStyle: {"border-color": "#F5EB82"},
+                    content: [
+                        ["style-column", [
+                            ["display-text",
+                           function() {return ''+format(player.Fruits.bananas)+' Bananas'},
+                           {"color": "#F5EB82", "font-size": "30px"}],
+                           ["raw-html", function() {if (hasUpgrade('Fruits', 21)) return "(+" + format(player.Fruits.bananasGain.mul(1)) + "/s)"}, {"color": "#FFF9B8", "font-size": "20px"}],
+                        ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#FFFFFF", "font-size": "32px"}],
+                    ["column", [ ["row", [ ["buyable", 7], "blank", ["buyable", 8], ]]]],
+                    ["column", [ ["row", [ ["buyable", 9] ]]]],
+                    ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#FFFFFF", "font-size": "32px"}],
+
+                     ], {width: "500px", height: "450px", backgroundColor: "#735E00", border: "3px solid #BABABA", borderRadius: "10px"}],
                      "blank",
                     ]
                 },

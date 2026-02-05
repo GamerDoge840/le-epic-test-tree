@@ -3,7 +3,7 @@ addLayer("Level", {
     symbol: "↑", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
-        unlocked(){return hasUpgrade("Essence", 22)},
+        unlocked(){return hasUpgrade("Essence", 14)},
 		points: new Decimal(0),
         bestLevel: new Decimal(0),
     }},
@@ -22,7 +22,10 @@ addLayer("Level", {
     resource: "Level", // Name of prestige currency
     baseResource: "Essence", // Name of resource prestige is based on
     resetDescription: "Reset Essence amount, but Level up.<br>―――――――――――<br>",
+    resetsNothing() {return hasUpgrade("Purity", 23)},
+    autoPrestige() {return hasUpgrade("Purity", 23)},
     autoUpgrade() {return hasUpgrade('Essence', 1111)},
+    canBuyMax() {return hasUpgrade('Purity', 14)},
     branches: ["Essence"],
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -33,6 +36,10 @@ addLayer("Level", {
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+
+
+        //Can't Level Up without it unlocked
+        if (!hasUpgrade("Essence", 14)) mult = mult.times(1e100)
 
         //Fix Static only doubling on first amount
         if (player.Level.points.gte(1) && !player.Level.points.gte(2)) mult = mult.dividedBy(1.05)
@@ -59,7 +66,7 @@ addLayer("Level", {
          return eff
     },
     onPrestige() {
-        if (!hasUpgrade("Essence", 1011)) player.points = new Decimal(0)
+        if (!hasUpgrade("Purity", 23)) player.points = new Decimal(0)
     },
     bars: {
         levelbar: {
@@ -221,9 +228,9 @@ addLayer("Level", {
             }
     },
     8: {
-        requirementDescription: "<font size='3'><b>(Level 33) Purity</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>(Level 32) Purity</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlocks Purity, the first reset layer.'},
-        done() {return player.Level.points.gte(33)},
+        done() {return player.Level.points.gte(32)},
         unlocked() {return hasMilestone('Level', 7)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {

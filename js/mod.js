@@ -7,7 +7,7 @@ let modInfo = {
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (1), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
@@ -46,11 +46,15 @@ function getPointGen() {
 	let gain = new Decimal(0.1)
 
     //Direct Boosts
+    if (hasUpgrade('Purity', 13) && !player.points.gte('5e6')) gain = gain.times(2)
 
 	//Upgrades
 	if (hasUpgrade('Essence', 12)) gain = gain.times(upgradeEffect('Essence', 12))
 	if (hasUpgrade('Essence', 13)) gain = gain.times(upgradeEffect('Essence', 13))
     if (hasUpgrade('Essence', 23)) gain = gain.times(upgradeEffect('Essence', 23))
+	if (hasUpgrade('Purity', 1)) gain = gain.times(upgradeEffect('Purity', 1))
+	if (hasUpgrade('Purity', 24)) gain = gain.times(upgradeEffect('Purity', 24))
+    if (hasUpgrade('Purity', 32)) gain = gain.times(upgradeEffect('Purity', 32))
 	
 	//Buyables
 	gain=gain.times(buyableEffect('Fruits', 2))

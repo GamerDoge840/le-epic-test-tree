@@ -50,9 +50,9 @@ addLayer("Essence", {
         11: {
             fullDisplay() {return `<font size="2"><b>[E11] Genesis</b><font size="1"><br>Enables Essence generation.<br>――――――――――――――――――<br>
                 Effect: `+formatSmall(getPointGen())+`/s <br>――――――――――――――――――<br>
-                Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Essence`},        
+                Cost: Free`},        
             unlocked() { return true },
-            cost: new Decimal(1),
+            cost: new Decimal(0),
             tooltip() {return "<span style='color:#ffffff'>[E11] Genesis</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>"},
             currencyInternalName: "points",
             style() {
