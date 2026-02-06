@@ -56,9 +56,10 @@ addLayer("Money", {
         player.Money.moneyToGet = player.Money.moneyToGet.mul(buyableEffect("Beans", 5))
         player.Money.moneyToGet = player.Money.moneyToGet.mul(buyableEffect("Gold", 2))
         player.Money.moneyToGet = player.Money.moneyToGet.mul(buyableEffect("Factory", 6))
-        //Layer Effects
+        //Layer Effects/Milestones
         if (player.Factory.total.gte(1)) player.Money.moneyToGet = player.Money.moneyToGet.mul(tmp.BeanTier.moneyEffect)
         if (hasMilestone('Factory', 3)) player.Money.moneyToGet = player.Money.moneyToGet.times(tmp.Factory.milestones[3].effect)
+        if (hasMilestone('Factory', 1005)) player.Money.moneyToGet = player.Money.moneyToGet.times(tmp.Factory.milestones[1005].effect)
         //Money Generation
         player.Money.dollars = player.Money.dollars.add(player.Money.moneyToGet.mul(buyableEffect("Gold", 5).mul(delta)))
     },

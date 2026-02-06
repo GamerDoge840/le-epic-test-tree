@@ -21,7 +21,10 @@ addLayer("BeanTier", {
     exponent: 1.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        //Fix Stupid Doubling
         if (player.BeanTier.points.gte(1)) mult = mult.times(5)
+        //Milestones
+        if (hasMilestone('Factory', 1007)) mult = mult.dividedBy(tmp.Factory.milestones[1007].effect)
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -45,6 +48,7 @@ addLayer("BeanTier", {
         if (hasMilestone("Factory", 4)) player.BeanTier.tpGain = player.BeanTier.tpGain.mul(20)
         if (hasMilestone("Factory", 5)) player.BeanTier.tpGain = player.BeanTier.tpGain.mul(20)
         if (hasMilestone("Factory", 6)) player.BeanTier.tpGain = player.BeanTier.tpGain.mul(20)
+        if (hasMilestone('Factory', 1004)) player.BeanTier.tpGain = player.BeanTier.tpGain.times(tmp.Factory.milestones[1004].effect)
         //Can Generate TP?
         if (hasMilestone("Factory", 0)) player.BeanTier.tierPoints = player.BeanTier.tierPoints.add(player.BeanTier.tpGain.mul(1).mul(delta))
         //Get Best TP and Tier
@@ -70,6 +74,10 @@ addLayer("BeanTier", {
     },
     goldEffect() {
         let eff = player.BeanTier.points.pow_base(1.05);
+        return eff
+    },
+    wattEffect() {
+        let eff = player.BeanTier.points.pow_base(1.01);
         return eff
     },
 milestones: {

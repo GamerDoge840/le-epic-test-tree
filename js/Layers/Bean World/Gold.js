@@ -60,9 +60,11 @@ addLayer("Gold", {
         //Buyables
         player.Gold.goldToGet = player.Gold.goldToGet.mul(buyableEffect("Gold", 4))
         player.Gold.goldToGet = player.Gold.goldToGet.mul(buyableEffect("Money", 5))
+        player.Gold.goldToGet = player.Gold.goldToGet.mul(buyableEffect("Factory", 11))
         //Layer Effects
         if (hasMilestone('Factory', 10)) player.Gold.goldToGet = player.Gold.goldToGet.mul(tmp.BeanTier.goldEffect)
         if (hasMilestone('Factory', 4)) player.Gold.goldToGet = player.Gold.goldToGet.times(tmp.Factory.milestones[4].effect)
+        if (hasMilestone('Factory', 1006)) player.Gold.goldToGet = player.Gold.goldToGet.times(tmp.Factory.milestones[1006].effect)
         //Gold Generation
         player.Gold.goldBars = player.Gold.goldBars.add(player.Gold.goldToGet.mul(buyableEffect("Factory", 4).mul(delta)))
 

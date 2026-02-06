@@ -418,6 +418,7 @@ addLayer("Beans", {
             },
             purchaseLimit() {
                 cap = new Decimal(60)
+                if (hasMilestone('Factory', 1002)) cap = cap.times(tmp.Factory.milestones[1002].effect)
                 return cap
             },
             buyMax() {
@@ -495,6 +496,7 @@ addLayer("Beans", {
             function() {return "Boosting Money by <span style='color:#81F72D'> "+ format(tmp.BeanTier.moneyEffect) +"x</span>"},
             {"font-size": "19px"}],
             ["raw-html", function() {if (hasMilestone("Factory", 10)) return "Boosting Gold by <span style='color:#FFE77D'> "+ format(tmp.BeanTier.goldEffect) +"x</span>"}, {"font-size": "19px"}],
+            ["raw-html", function() {if (hasMilestone("Factory", 1004)) return "Boosting Watts by <span style='color:#FFF196'> "+ format(tmp.BeanTier.wattEffect) +"x</span>"}, {"font-size": "19px"}],
                 ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#D4B739", "font-size": "32px"}],

@@ -22,7 +22,9 @@ addLayer("BeanLevel", {
         //Buyables
         mult = mult.dividedBy(buyableEffect('Beans', 2))
         mult = mult.dividedBy(buyableEffect('Money', 2))
-
+         
+        //Milestones
+        if (hasMilestone('Factory', 1001)) mult = mult.dividedBy(tmp.Factory.milestones[1001].effect)
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -44,7 +46,10 @@ addLayer("BeanLevel", {
         //Buyables
          eff=eff.times(buyableEffect('Beans', 4))
          eff=eff.times(buyableEffect('Gold', 3))
-         
+         eff=eff.times(buyableEffect('Factory', 10))
+          
+         //Milestones
+         if (hasMilestone('Factory', 1003)) eff=eff.times(tmp.Factory.milestones[1003].effect)
          return eff
     },
 milestones: {

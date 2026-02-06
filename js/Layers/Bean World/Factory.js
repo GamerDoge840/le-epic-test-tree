@@ -11,6 +11,9 @@ addLayer("Factory", {
         ironPlates: new Decimal(0),
         ironPlateGain: new Decimal(0),
         bestIronPlates: new Decimal(0),
+        watts: new Decimal(0),
+        wattGain: new Decimal(0),
+        bestWatts: new Decimal(0),
     }},
     color: "#5E5D5D",
     nodeStyle() {
@@ -33,7 +36,8 @@ addLayer("Factory", {
     exponent: 2, // Prestige currency exponent
     tooltip() {
         let tooltip = "<font size='3'>The Factory<br>――――――――――――――<br> <font size='2'><span style='color:#5E5D5D'> Factory Level " +formatWhole(player.Factory.points)+"</span>"
-        if(player.Factory.ironResetAmount.gte('1')) tooltip = tooltip + "<br><font size='2'><span style='color:#BABABA'>"+format(player.Factory.ironPlates)+" Iron Plates</span>"
+        if(player.Factory.ironResetAmount.gte('1')) tooltip = tooltip + "<br><font size='2'><span style='color:#BABABA'>"+format(player.Factory.ironPlates)+" Iron Plates<br></span>"
+        if(hasUpgrade("Factory", 1) ) tooltip = tooltip + "<font size='2'><span style='color:#FFF196'>"+format(player.Factory.watts)+"W</span>"
         return tooltip
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -50,7 +54,11 @@ addLayer("Factory", {
         if (player.Factory.points.gte(9) && player.Factory.points.lte(10)) mult = mult.dividedBy(25000000)
         if (player.Factory.points.gte(10) && player.Factory.points.lte(11)) mult = mult.dividedBy(500000)
         if (player.Factory.points.gte(11) && player.Factory.points.lte(12)) mult = mult.dividedBy(3e11)
-        if (player.Factory.points.gte(12) && player.Factory.points.lte(13)) mult = mult.dividedBy(4e4)
+        if (player.Factory.points.gte(12) && player.Factory.points.lte(13)) mult = mult.dividedBy(3e9)
+        if (player.Factory.points.gte(13) && player.Factory.points.lte(14)) mult = mult.dividedBy(8e15)
+        if (player.Factory.points.gte(14) && player.Factory.points.lte(15)) mult = mult.dividedBy(2e13)
+        if (player.Factory.points.gte(15) && player.Factory.points.lte(16)) mult = mult.dividedBy(4e21)
+        if (player.Factory.points.gte(16) && player.Factory.points.lte(17)) mult = mult.dividedBy(6.5e20)
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -60,15 +68,29 @@ addLayer("Factory", {
     row: '0', // Row the layer is in on the tree (0 is the first row)
     layerShown(){return hasMilestone("Gold", 4) || player.Factory.factoryResetAmount.gte('1')},
     update(delta){
-        //Best Factory Level and Plates
+        //Best Factory Currencies
         if (player.Factory.bestFactoryLevel.lt(player.Factory.points)) player.Factory.bestFactoryLevel = player.Factory.points
         if (player.Factory.bestIronPlates.lt(player.Factory.ironPlates)) player.Factory.bestIronPlates = player.Factory.ironPlates
+        if (player.Factory.bestWatts.lt(player.Factory.watts)) player.Factory.bestWatts = player.Factory.watts
 
         //Get base Iron Plate gain
         player.Factory.ironPlateGain = player.points.div(1e22).pow(0.5)
 
-        //Iron Plate Effect Boosts
+        //Iron Plate Boosts
         if (hasMilestone('Factory', 8)) player.Factory.ironPlateGain = player.Factory.ironPlateGain.times(tmp.Factory.milestones[8].effect)
+
+        //Base Watt Gain
+        player.Factory.wattGain = new Decimal(0.01)
+
+        //Watt Generation and Boosts
+        player.Factory.wattGain = player.Factory.wattGain.mul(buyableEffect("Factory", 100))
+        player.Factory.wattGain = player.Factory.wattGain.mul(buyableEffect("Factory", 101))
+        player.Factory.wattGain = player.Factory.wattGain.mul(buyableEffect("Factory", 102))
+        player.Factory.wattGain = player.Factory.wattGain.mul(buyableEffect("Factory", 103))
+        if (hasMilestone('Factory', 14)) player.Factory.wattGain = player.Factory.wattGain.times(tmp.Factory.milestones[14].effect)
+        if (hasMilestone('Factory', 1004)) player.Factory.wattGain = player.Factory.wattGain.mul(tmp.BeanTier.wattEffect)
+        if (hasUpgrade('Factory', 1)) player.Factory.watts = player.Factory.watts.add(player.Factory.wattGain.mul(delta))
+        //For currencies generated like this, delta MUST go after upgrade effects
     },
     milestones: {
         0: {
@@ -80,11 +102,15 @@ addLayer("Factory", {
             if (hasMilestone(this.layer, this.id)) return {
             "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
         'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
         'border-color': 'rgba(0, 0, 0, 0.125)',
             }
             else return {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
@@ -98,11 +124,15 @@ addLayer("Factory", {
             if (hasMilestone(this.layer, this.id)) return {
             "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
         'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
         'border-color': 'rgba(0, 0, 0, 0.125)',
             }
             else return {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
@@ -120,11 +150,15 @@ addLayer("Factory", {
             if (hasMilestone(this.layer, this.id)) return {
             "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)',
             }
             else return {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
@@ -142,11 +176,15 @@ addLayer("Factory", {
             if (hasMilestone(this.layer, this.id)) return {
             "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)',
             }
             else return {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
@@ -164,11 +202,15 @@ addLayer("Factory", {
             if (hasMilestone(this.layer, this.id)) return {
             "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)',
             }
             else return {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
@@ -182,11 +224,15 @@ addLayer("Factory", {
             if (hasMilestone(this.layer, this.id)) return {
             "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)',
             }
             else return {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
@@ -200,11 +246,15 @@ addLayer("Factory", {
             if (hasMilestone(this.layer, this.id)) return {
             "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
         'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
         'border-color': 'rgba(0, 0, 0, 0.125)',
             }
             else return {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
@@ -218,11 +268,15 @@ addLayer("Factory", {
             if (hasMilestone(this.layer, this.id)) return {
             "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)',
             }
             else return {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
@@ -240,11 +294,15 @@ addLayer("Factory", {
             if (hasMilestone(this.layer, this.id)) return {
             "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)',
             }
             else return {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
@@ -258,11 +316,15 @@ addLayer("Factory", {
             if (hasMilestone(this.layer, this.id)) return {
             "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)',
             }
             else return {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
@@ -276,11 +338,15 @@ addLayer("Factory", {
             if (hasMilestone(this.layer, this.id)) return {
             "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)',
             }
             else return {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
@@ -294,17 +360,429 @@ addLayer("Factory", {
             if (hasMilestone(this.layer, this.id)) return {
             "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
         'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
         'border-color': 'rgba(0, 0, 0, 0.125)',
             }
             else return {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+     12: {
+        requirementDescription: "<font size='3'><b>(FL13) Bean Factory II</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Every Factory Level also boosts Bean gain by 1.10x compounding, unlock another new Iron Plate upgrade.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        done() {return player.Factory.points.gte(13)},
+        effect() {
+                let eff = new Decimal(1.10).pow(player.Factory.points)
+                return eff;
+            },  
+        unlocked() {return hasMilestone("Factory", 11)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    13: {
+        requirementDescription: "<font size='3'><b>(FL14) Power Factory</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlocks the Power Plant (In this tab) and yet another new Iron Plate upgrade.</span>'},
+        done() {return player.Factory.points.gte(14)},
+        unlocked() {return hasMilestone("Factory", 12)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    14: {
+        requirementDescription: "<font size='3'><b>(FL15) Power Factory II</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Start Layer 3 resets with 1e9 Money, unlock a new Watt generation upgrade, and each Factory Level past 14 boosts Watt gain by 1.25x compounding.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        done() {return player.Factory.points.gte(15)},
+        effect() {
+                let eff = new Decimal(1.25).pow(player.Factory.points.sub(14)).max(1)
+                return eff;
+            }, 
+        unlocked() {return hasMilestone("Factory", 13)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    15: {
+        requirementDescription: "<font size='3'><b>(FL16) Power Factory III</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlock another new Watt generation upgrade.'},
+        done() {return player.Factory.points.gte(16)},
+        unlocked() {return hasMilestone("Factory", 14)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    16: {
+        requirementDescription: "<font size='3'><b>(FL17) Power Factory IV</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlock another new Watt generation upgrade.'},
+        done() {return player.Factory.points.gte(17)},
+        unlocked() {return hasMilestone("Factory", 15)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    1000: {
+        requirementDescription: "<font size='3'><b>(0.25 Best Watts)</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Watts boost Bean gain, and unlock a new buyable in the Watt Generation tab.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        done() {return player.Factory.bestWatts.gte(0.25)},
+        effect() {
+                let eff = player.Factory.watts.pow(0.3).div(1.5).add(1)
+                return eff;
+            },  
+        unlocked() {return hasUpgrade("Factory", 1)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    1001: {
+        requirementDescription: "<font size='3'><b>(15 Best Watts)</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Watts divide the Bean Level requirement.</span><br>――――――――――――――<br> Currently: /'+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'</span>'},
+        done() {return player.Factory.bestWatts.gte(15)},
+        effect() {
+                let eff = player.Factory.watts.pow(0.2).div(2.5).add(1)
+                return eff;
+            },  
+        unlocked() {return hasMilestone("Factory", 1000)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    1002: {
+        requirementDescription: "<font size='3'><b>(750 Best Watts)</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Watts extend the purchase cap of Valuable Beans (Capped at 7x).</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        done() {return player.Factory.bestWatts.gte(750)},
+        effect() {
+                let eff = player.Factory.watts.pow(0.5).div(5).add(1)
+                return eff.min(7);
+            },  
+        unlocked() {return hasMilestone("Factory", 1001)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    1003: {
+        requirementDescription: "<font size='3'><b>(2,000 Best Watts)</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Watts boost the Bean Level effect.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        done() {return player.Factory.bestWatts.gte(2000)},
+        effect() {
+                let eff = player.Factory.watts.add(1).log(10).pow(0.1).add(1)
+                return eff;
+            },  
+        unlocked() {return hasMilestone("Factory", 1002)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    1004: {
+        requirementDescription: "<font size='3'><b>(15,000 Best Watts)</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Watts boost TP gain, and Bean Tiers gain another new effect which boosts Watt gain.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        done() {return player.Factory.bestWatts.gte(15000)},
+        effect() {
+                let eff = player.Factory.watts.pow(0.25).div(1.75).add(1)
+                if (hasMilestone('Factory', 1008)) eff = eff.times(tmp.Factory.milestones[1008].effect)
+                return eff;
+            },  
+        unlocked() {return hasMilestone("Factory", 1003)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    1005: {
+        requirementDescription: "<font size='3'><b>(50,000 Best Watts)</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Watts boost Money gain.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        done() {return player.Factory.bestWatts.gte(50000)},
+        effect() {
+                let eff = player.Factory.watts.pow(0.15).div(1.3).add(1)
+                if (hasMilestone('Factory', 1008)) eff = eff.times(tmp.Factory.milestones[1008].effect)
+                return eff;
+            },   
+        unlocked() {return hasMilestone("Factory", 1004)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    1006: {
+        requirementDescription: "<font size='3'><b>(75,000 Best Watts)</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Watts boost Gold gain.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        done() {return player.Factory.bestWatts.gte(75000)},
+        effect() {
+                let eff = player.Factory.watts.pow(0.07).div(1.3).add(1)
+                if (hasMilestone('Factory', 1008)) eff = eff.times(tmp.Factory.milestones[1008].effect)
+                return eff;
+            },   
+        unlocked() {return hasMilestone("Factory", 1005)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    1007: {
+        requirementDescription: "<font size='3'><b>(300,000 Best Watts)</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Watts divide Bean Tier requirement.</span><br>――――――――――――――<br> Currently: /'+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'</span>'},
+        done() {return player.Factory.bestWatts.gte(300000)},
+        effect() {
+                let eff = player.Factory.watts.add(1).log(10).pow(2).add(1)
+                return eff;
+            },   
+        unlocked() {return hasMilestone("Factory", 1006)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
+    1008: {
+        requirementDescription: "<font size='3'><b>(1,500,000 Best Watts)</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Watts boost the effects of the fifth, sixth, and seventh previous Watt milestones.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        done() {return player.Factory.bestWatts.gte(1.5e6)},
+        effect() {
+                let eff = player.Factory.watts.add(1).log(10).pow(0.5).add(1)
+                return eff;
+            },   
+        unlocked() {return hasMilestone("Factory", 1007)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
     },
     },
-    upgrades: {        
+    upgrades: { 
+        1: {
+            title: "Build the Power Plant",
+            fullDisplay() {return `<font size="3"><b>Build the Power Plant</b><font size="2"><br>Enables Watt generation.<br>――――――――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Beans)+` Beans, <br>`+format(tmp[this.layer].upgrades[this.id].costs.IronPlates)+` Iron Plates,<br>`+format(tmp[this.layer].upgrades[this.id].costs.Money)+`$ Dollars,<br>`+format(tmp[this.layer].upgrades[this.id].costs.Gold)+` Gold Bars`},        
+            unlocked() { return hasMilestone("Factory", 13) },
+            costs: {
+                Beans: 2e42,
+                IronPlates: 3.5e10,
+                Money: 7e28,
+                Gold: 3e14,
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Beans)
+                    && player.Factory.ironPlates.gte(this.costs.IronPlates)
+                    && player.Money.dollars.gte(this.costs.Money)
+                    && player.Gold.goldBars.gte(this.costs.Gold)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Beans);
+                player.Factory.ironPlates = player.Factory.ironPlates.minus(this.costs.IronPlates);
+                player.Money.dollars = player.Money.dollars.minus(this.costs.Money);
+                player.Gold.goldBars = player.Gold.goldBars.minus(this.costs.Gold);
+              },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                    "width": "185px",
+            "height": "185px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f',
+                    "width": "185px",
+            "height": "185px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                "background": "linear-gradient(70deg, #FFF6CC, #FFED99, #FFD500)",
+                'color': 'black',
+                        "width": "185px",
+            "height": "185px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },           
     },
     buyables: {
         1: {
@@ -784,6 +1262,335 @@ addLayer("Factory", {
             unlocked() {return hasMilestone("Factory", 11)},
     
         },
+        10: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Level Enhancers</b>
+                <font size="2">Which boost Bean Level effect by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(10);
+                let cost = base.pow(x).times(1e6);
+                return cost;
+              },
+            effect(x) { return getBuyableAmount('Factory', 10).pow_base(1.5) }, 
+            canAfford() { if (player.Factory.ironPlates.gte(this.cost())) {return true}},
+            buy() {
+                player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(5)
+                return cap
+            },
+            buyMax() {
+                let max = player.Factory.ironPlates.div(this.cost(0)).add(1e6).log(10) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Factory', 10))) setBuyableAmount('Factory', 10, max.add(1).floor())
+            },
+            tooltip() {return "<span style='color:#ffffff'>Level Enhancers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Bean Level effect by 1.5x compounding each purchase."},
+            style() {
+                if(!this.canAfford()){return {
+                "width": "250px",
+                "height": "125px",
+                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "250px",
+                "height": "125px",
+                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return hasMilestone("Factory", 12)},
+    
+        },
+        11: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Gold Drills</b>
+                <font size="2">Which boost Gold gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(1.5);
+                let cost = base.pow(x).times(1e8);
+                return cost;
+              },
+              effect() {
+                let eff = getBuyableAmount("Factory", 11).mul(0.10).plus(1)
+                return eff
+            },               
+            canAfford() { if (player.Factory.ironPlates.gte(this.cost())) {return true}},
+            buy() {
+                player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1000)
+                return cap
+            },
+            buyMax() {
+                let max = player.Factory.ironPlates.div(this.cost(0)).add(1e8).log(1.5) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Factory', 11))) setBuyableAmount('Factory', 11, max.add(1).floor())
+            },
+            tooltip() {return "<span style='color:#ffffff'>Gold Drills</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Gold gain by 10% each purchase."},
+            style() {
+                if(!this.canAfford()){return {
+                "width": "250px",
+                "height": "125px",
+                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "250px",
+                "height": "125px",
+                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return hasMilestone("Factory", 13)},
+    
+        },
+        100: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Bean Boilers</b>
+                <font size="2">Which boost Watt generation by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Beans</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(1.5);
+                let cost = base.pow(x).times(5e41);
+                return cost;
+              },
+              effect() {
+               let amt = getBuyableAmount("Factory", 100)  
+               let base = new Decimal(1).add(amt.mul(1))
+               let bonus = Decimal.pow(1.10, Math.floor(amt / 10))
+               return base.times(bonus) 
+               },             
+            canAfford() { if (player.points.gte(this.cost())) {return true}},
+            buy() {
+                player.points = player.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1000)
+                return cap
+            },
+            buyMax() {
+                let max = player.points.div(this.cost(0)).add(1e8).log(1.5) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Factory', 100))) setBuyableAmount('Factory', 100, max.add(1).floor())
+            },
+            tooltip() {return "<span style='color:#ffffff'>Bean Boilers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Watt gain by 100%. Every ten purchases, this effect is boosted by 1.10x."},
+            style() {
+                if(!this.canAfford()){return {
+                "width": "250px",
+                "height": "125px",
+                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "250px",
+                "height": "125px",
+                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return hasMilestone("Factory", 1000)},
+    
+        },
+        101: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Money Burners</b>
+                <font size="2">Which boost Watt generation by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+`$</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(1.5);
+                let cost = base.pow(x).times(2.5e26);
+                return cost;
+              },
+              effect() {
+               let amt = getBuyableAmount("Factory", 101)  
+               let base = new Decimal(1).add(amt.mul(0.50))
+               let bonus = Decimal.pow(1.10, Math.floor(amt / 10))
+               return base.times(bonus) 
+               },             
+            canAfford() { if (player.Money.dollars.gte(this.cost())) {return true}},
+            buy() {
+                player.Money.dollars = player.Money.dollars.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1000)
+                return cap
+            },
+            buyMax() {
+                let max = Money.dollars.div(this.cost(0)).add(1e26).log(1.5) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Factory', 101))) setBuyableAmount('Factory', 101, max.add(1).floor())
+            },
+            tooltip() {return "<span style='color:#ffffff'>Money Burners</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Watt gain by 50%. Every ten purchases, this effect is boosted by 1.10x."},
+            style() {
+                if(!this.canAfford()){return {
+                "width": "250px",
+                "height": "125px",
+                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "250px",
+                "height": "125px",
+                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return hasMilestone("Factory", 14)},
+    
+        },
+        102: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Gold Batteries</b>
+                <font size="2">Which boost Watt generation by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Gold Bars</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(1.5);
+                let cost = base.pow(x).times(1e15);
+                return cost;
+              },
+              effect() {
+               let amt = getBuyableAmount("Factory", 102)  
+               let base = new Decimal(1).add(amt.mul(0.25))
+               let bonus = Decimal.pow(1.10, Math.floor(amt / 10))
+               return base.times(bonus) 
+               },             
+            canAfford() { if (player.Gold.goldBars.gte(this.cost())) {return true}},
+            buy() {
+                player.Gold.goldBars = player.Gold.goldBars.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1000)
+                return cap
+            },
+            buyMax() {
+                let max = Gold.goldBars.div(this.cost(0)).add(1e26).log(1.5) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Factory', 102))) setBuyableAmount('Factory', 102, max.add(1).floor())
+            },
+            tooltip() {return "<span style='color:#ffffff'>Gold Batteries</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Watt gain by 25%. Every ten purchases, this effect is boosted by 1.10x."},
+            style() {
+                if(!this.canAfford()){return {
+                "width": "250px",
+                "height": "125px",
+                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "250px",
+                "height": "125px",
+                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return hasMilestone("Factory", 15)},
+    
+        },
+        103: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Steam Engines</b>
+                <font size="2">Which boost Watt generation by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(1.5);
+                let cost = base.pow(x).times(1e10);
+                return cost;
+              },
+              effect() {
+               let amt = getBuyableAmount("Factory", 103)  
+               let base = new Decimal(1).add(amt.mul(0.25))
+               let bonus = Decimal.pow(1.10, Math.floor(amt / 10))
+               return base.times(bonus) 
+               },             
+            canAfford() { if (player.Factory.ironPlates.gte(this.cost())) {return true}},
+            buy() {
+                player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1000)
+                return cap
+            },
+            buyMax() {
+                let max = player.Factory.ironPlates.div(this.cost(0)).add(1e10).log(1.5) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Factory', 103))) setBuyableAmount('Factory', 103, max.add(1).floor())
+            },
+            tooltip() {return "<span style='color:#ffffff'>Steam Engines</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Watt gain by 50%. Every ten purchases, this effect is boosted by 1.10x."},
+            style() {
+                if(!this.canAfford()){return {
+                "width": "250px",
+                "height": "125px",
+                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "250px",
+                "height": "125px",
+                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return hasMilestone("Factory", 16)},
+    
+        },
     },
     challenges: {
     },
@@ -815,7 +1622,9 @@ addLayer("Factory", {
 
      player.BeanTier.tierPoints = new Decimal(0)
 
-     player.Money.dollars = new Decimal(0)
+     if (!hasMilestone("Factory", 14)) player.Money.dollars = new Decimal(0)
+
+     if (hasMilestone("Factory", 14)) player.Money.dollars = new Decimal(1e9)
 
      player.Gold.goldBars = new Decimal(0)
      
@@ -840,6 +1649,8 @@ addLayer("Factory", {
     for (let i in player.Gold.buyables) {
          player.Gold.buyables[i] = new Decimal(0)
     }
+
+    player.Factory.watts = new Decimal(0)
     
     
     player.Factory.factoryResetAmount = player.Factory.factoryResetAmount.add(1)
@@ -853,7 +1664,9 @@ addLayer("Factory", {
 
      player.BeanTier.tierPoints = new Decimal(0)
 
-     player.Money.dollars = new Decimal(0)
+     if (!hasMilestone("Factory", 14)) player.Money.dollars = new Decimal(0)
+
+     if (hasMilestone("Factory", 14)) player.Money.dollars = new Decimal(1e9)
 
      player.Gold.goldBars = new Decimal(0)
      
@@ -878,6 +1691,8 @@ addLayer("Factory", {
     for (let i in player.Gold.buyables) {
          player.Gold.buyables[i] = new Decimal(0)
     }
+
+    player.Factory.watts = new Decimal(0)
     
     },
 componentStyles: {
@@ -905,7 +1720,24 @@ componentStyles: {
                     ["display-text",
                     function() {return "―――――――――――――――――"},
                     {"color": "#5E5D5D", "font-size": "32px"}],
-                    "milestones",
+                    ["column", [ ["row", [ ["milestone", 0], ]]]],
+                    ["column", [ ["row", [ ["milestone", 1], ]]]],
+                    ["column", [ ["row", [ ["milestone", 2], ]]]],
+                    ["column", [ ["row", [ ["milestone", 3], ]]]],
+                    ["column", [ ["row", [ ["milestone", 4], ]]]],
+                    ["column", [ ["row", [ ["milestone", 5], ]]]],
+                    ["column", [ ["row", [ ["milestone", 6], ]]]],
+                    ["column", [ ["row", [ ["milestone", 7], ]]]],
+                    ["column", [ ["row", [ ["milestone", 8], ]]]],
+                    ["column", [ ["row", [ ["milestone", 9], ]]]],
+                    ["column", [ ["row", [ ["milestone", 10], ]]]],
+                    ["column", [ ["row", [ ["milestone", 11], ]]]],
+                    ["column", [ ["row", [ ["milestone", 12], ]]]],
+                    ["column", [ ["row", [ ["milestone", 13], ]]]],
+                    ["column", [ ["row", [ ["milestone", 14], ]]]],
+                    ["column", [ ["row", [ ["milestone", 15], ]]]],
+                    ["column", [ ["row", [ ["milestone", 16], ]]]],
+
                 ]
             
         },
@@ -926,6 +1758,23 @@ componentStyles: {
                     function() {return "―――――――――――――――――"},
                     {"color": "#5E5D5D", "font-size": "32px"}],
                     ["microtabs", "IronTabs"],
+                ]
+            
+        },
+        
+        "Power Plant": {
+        style() {return  {'background-color': '#1A1600'}},
+        unlocked() { return hasMilestone("Factory", 13) },
+        buttonStyle: {"border-color": "#FFF196"},
+        content: [
+            ["display-text",
+            function() {return ''+format(player.Factory.watts)+'W'},
+            {"color": "#FFF196", "font-size": "30px"}],
+                        ["raw-html", function() {if (hasUpgrade("Factory", 1) ) return "(+" + format(player.Factory.wattGain) + "/s)"}, {"color": "#E8DFB5", "font-size": "20px"}],
+            ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#FFF196", "font-size": "32px"}],
+                        ["microtabs", "WattTabs"],
                 ]
             
         },
@@ -950,9 +1799,65 @@ componentStyles: {
                         "blank",
                         ["column", [ ["row", [ ["buyable", 9], "blank", ["buyable", 10],]]]],
                         "blank",
+                        ["column", [ ["row", [ ["buyable", 11], "blank", ["buyable", 12],]]]],
+                        "blank",
                   ["display-text",
                     function() {return "―――――――――――――――――"},
                     {"color": "#5E5D5D", "font-size": "32px"}],    
+                    ]
+                },
+            },
+            WattTabs: {
+                "Watt Generation": {
+                    buttonStyle: {"border-color": "#FFF196"},
+                    content: [
+                        ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#FFF196", "font-size": "32px"}],
+                    "blank",
+                    ["column", [ ["row", [ ["upgrade", 1], ]]]],
+                    ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#FFF196", "font-size": "32px"}],
+                        "blank",
+                        ["column", [ ["row", [ ["buyable", 100], "blank",  ["buyable", 101], ]]]],
+                        "blank",
+                        ["column", [ ["row", [ ["buyable", 102], "blank", ["buyable", 103],]]]],
+                        "blank",
+                  ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#FFF196", "font-size": "32px"}],    
+                    ]
+                },
+                "Watt Boosts": {
+                    buttonStyle: {"border-color": "#FFF196"},
+                    unlocked() { return hasUpgrade("Factory", 1) },
+                    content: [
+                        ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#FFF196", "font-size": "32px"}],
+                        ["display-text",
+            function() {return ''+format(player.Factory.bestWatts)+' Best Watts'},
+            {"color": "#E8DFB5", "font-size": "25px"}],
+                    ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#FFF196", "font-size": "32px"}],
+                        "blank",
+                        ["column", [ ["row", [ ["milestone", 1000], ]]]],
+                        ["column", [ ["row", [ ["milestone", 1001], ]]]],
+                        ["column", [ ["row", [ ["milestone", 1002], ]]]],
+                        ["column", [ ["row", [ ["milestone", 1003], ]]]],
+                        ["column", [ ["row", [ ["milestone", 1004], ]]]],
+                        ["column", [ ["row", [ ["milestone", 1005], ]]]],
+                        ["column", [ ["row", [ ["milestone", 1006], ]]]],
+                        ["column", [ ["row", [ ["milestone", 1007], ]]]],
+                        ["column", [ ["row", [ ["milestone", 1008], ]]]],
+                        ["column", [ ["row", [ ["milestone", 1009], ]]]],
+
+                        "blank",
+                  ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#FFF196", "font-size": "32px"}],    
                     ]
                 },
             }
