@@ -59,6 +59,7 @@ addLayer("Factory", {
         if (player.Factory.points.gte(14) && player.Factory.points.lte(15)) mult = mult.dividedBy(2e13)
         if (player.Factory.points.gte(15) && player.Factory.points.lte(16)) mult = mult.dividedBy(4e21)
         if (player.Factory.points.gte(16) && player.Factory.points.lte(17)) mult = mult.dividedBy(6.5e20)
+        if (player.Factory.points.gte(17) && player.Factory.points.lte(18)) mult = mult.dividedBy(2e27)
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -491,6 +492,28 @@ addLayer("Factory", {
                 }
             }
     },
+    17: {
+        requirementDescription: "<font size='3'><b>(FL18) A Strange Discovery</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlock a new subtab in the Assembly Line.'},
+        done() {return player.Factory.points.gte(18)},
+        unlocked() {return hasMilestone("Factory", 16)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "60px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
     1000: {
         requirementDescription: "<font size='3'><b>(0.25 Best Watts)</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Watts boost Bean gain, and unlock a new buyable in the Watt Generation tab.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
@@ -728,6 +751,32 @@ addLayer("Factory", {
                 }
             }
     },
+    1009: {
+        requirementDescription: "<font size='3'><b>(4,000,000 Best Watts)</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Watts extend the purchase cap of Hydroponics Basins (Capped at 2x).</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        done() {return player.Factory.bestWatts.gte(4e6)},
+        effect() {
+                let eff = player.Factory.watts.pow(0.1).div(5).add(1)
+                return eff.min(2);
+            },   
+        unlocked() {return hasMilestone("Factory", 1008)},
+        style() {
+            if (hasMilestone(this.layer, this.id)) return {
+            "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)',
+            }
+            else return {
+                'background-color': '#bf8f8f',
+        'border': '5px solid',
+        "width": "400px",
+        "height": "100px",
+        'border-color': 'rgba(0, 0, 0, 0.125)'
+                }
+            }
+    },
     },
     upgrades: { 
         1: {
@@ -807,6 +856,7 @@ addLayer("Factory", {
             },
             purchaseLimit() {
                 cap = new Decimal(100)
+                if (hasMilestone('Factory', 1009)) cap = cap.times(tmp.Factory.milestones[1009].effect)
                 return cap
             },
             buyMax() {
@@ -1737,6 +1787,7 @@ componentStyles: {
                     ["column", [ ["row", [ ["milestone", 14], ]]]],
                     ["column", [ ["row", [ ["milestone", 15], ]]]],
                     ["column", [ ["row", [ ["milestone", 16], ]]]],
+                    ["column", [ ["row", [ ["milestone", 17], ]]]],
 
                 ]
             
@@ -1853,7 +1904,6 @@ componentStyles: {
                         ["column", [ ["row", [ ["milestone", 1007], ]]]],
                         ["column", [ ["row", [ ["milestone", 1008], ]]]],
                         ["column", [ ["row", [ ["milestone", 1009], ]]]],
-
                         "blank",
                   ["display-text",
                     function() {return "―――――――――――――――――"},
