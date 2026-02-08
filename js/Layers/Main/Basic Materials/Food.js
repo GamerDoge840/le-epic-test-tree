@@ -14,8 +14,14 @@ addLayer("Food", {
 
         //Food Boosts
         player.Food.foodGain = player.Food.foodGain.mul(buyableEffect("Homeworld", 1))
+        player.Food.foodGain = player.Food.foodGain.mul(buyableEffect("Homeworld", 101))
         if (hasUpgrade('Research', 13)) player.Food.foodGain = player.Food.foodGain.mul(1.50)
+        if (hasUpgrade('Workshop', 7)) player.Food.foodGain = player.Food.foodGain.mul(1.05)
+        if (hasUpgrade('Research', 21)) player.Food.foodGain = player.Food.foodGain.mul(1.05)
+
+        //Penalties
         player.Food.foodGain = player.Food.foodGain.dividedBy(tmp.Homeworld.buyables[100].consumption)
+
         if (hasUpgrade('Research', 2)) player.Food.foodPoints = player.Food.foodPoints.add(player.Food.foodGain.mul(delta))
         //For currencies generated like this, delta MUST go after upgrade effects
         

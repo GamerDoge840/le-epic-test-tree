@@ -104,7 +104,7 @@ addLayer("Start", {
             },
         }, 
         1000: {    
-            fullDisplay() {return `<font size="3"><b>Continental World</b><font size="2"><br>――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` DNA`},        
+            fullDisplay() {return `<font size="3"><b>Continental World</b><font size="2"><br>――――――――――――<br>Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Homeworlds`},        
             cost: new Decimal(1),
             currencyLocation() { return player.Start },
             currencyInternalName: "planetPoints",

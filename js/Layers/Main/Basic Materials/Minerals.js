@@ -13,7 +13,15 @@ addLayer("Minerals", {
         player.Minerals.mineralGain = new Decimal(0.03)
 
         //Mineral Boosts
+        if (hasUpgrade('Research', 17)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.25)
+        if (hasUpgrade('Research', 18)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.10)
+        if (hasUpgrade('Workshop', 7))  player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.05)
+        if (hasUpgrade('Research', 22))  player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.25)
         if (hasUpgrade('Research', 12)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(tmp.Homeworld.buyables[1].effect3)
+
+        //Penalties
+        player.Minerals.mineralGain = player.Minerals.mineralGain.dividedBy(tmp.Homeworld.buyables[102].mineralConsumption)
+
         if (hasUpgrade('Research', 11)) player.Minerals.mineralPoints = player.Minerals.mineralPoints.add(player.Minerals.mineralGain.mul(delta))
         //For currencies generated like this, delta MUST go after upgrade effects
         

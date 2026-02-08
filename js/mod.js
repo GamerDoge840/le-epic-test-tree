@@ -3,11 +3,11 @@ let modInfo = {
 	id: "evolvemaxxing",
 	author: "The Big G",
 	pointsName: "Research",
-	modFiles: ["Layers/Main/Basic Materials/Minerals.js","Layers/Main/Workshop.js","Layers/Main/Basic Materials/Wood.js","Layers/Main/Core Resources/Population.js","Layers/Main/Basic Materials/Food.js","Layers/Meta-Progression/Start.js","Layers/Main/Core Resources/Research.js","Layers/Main/Homeworld.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
+	modFiles: ["Layers/Main/Intermediate Materials/Metals.js","Layers/Main/Basic Materials/Minerals.js","Layers/Main/Workshop.js","Layers/Main/Basic Materials/Wood.js","Layers/Main/Core Resources/Population.js","Layers/Main/Basic Materials/Food.js","Layers/Meta-Progression/Start.js","Layers/Main/Core Resources/Research.js","Layers/Main/Homeworld.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (1), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
@@ -44,7 +44,10 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(0.001)
+	//Direct Bonuses
 	if (hasUpgrade('Research', 8)) gain = gain.times(2)
+	if (hasUpgrade('Research', 16)) gain = gain.times(3)
+
 	return gain
 }
 
