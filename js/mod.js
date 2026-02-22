@@ -1,9 +1,9 @@
 let modInfo = {
-	name: "Beans Incremental",
+	name: "The Tree of Beans",
 	id: "beansmaxxing",
 	author: "The Big G",
 	pointsName: "Beans",
-	modFiles: ["Layers/Bean World/BeanTier.js","Layers/Bean World/Factory.js","Layers/Bean World/Gold.js","Layers/Bean World/Money.js","Layers/Bean World/BeanLevel.js","Layers/Bean World/Beans.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
+	modFiles: ["Layers/Side/Worlds.js","Layers/Overworld/BeanTier.js","Layers/Overworld/Factory.js","Layers/Overworld/Gold.js","Layers/Overworld/Money.js","Layers/Overworld/BeanLevel.js","Layers/Overworld/Beans.js","math.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -14,7 +14,7 @@ let modInfo = {
 // Set your version in num and name
 let VERSION = {
 	num: "1.0",
-	name: "Beans Incremental",
+	name: "The Beans are Released",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -44,6 +44,10 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(0.001)
+
+	//Static Multipliers
+	if (hasMilestone('Factory', 1) && !player.points.gte('1e12')) gain = gain.times(2)
+	if (hasUpgrade('Factory', 2)) gain = gain.times(100)
 
 	//Buyables
     gain=gain.times(buyableEffect('Beans', 1))

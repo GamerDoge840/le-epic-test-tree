@@ -1,6 +1,6 @@
 var layoutInfo = {
-    startTab: "none",
-    startNavTab: "tree-tab",
+    startTab: "tree-tab",
+    startNavTab: "Overworld",
 	showTree: true,
 
     treeLayout: ""
@@ -24,7 +24,7 @@ addNode("PAU",{
     canClick(){return true}
 })
 
-addLayer("tree-tab", {
+addLayer("Overworld", {
     tabFormat: [["tree", [
         ['Beans'],
         ['Money', 'Gold'],

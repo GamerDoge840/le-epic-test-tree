@@ -36,7 +36,7 @@ addLayer("BeanTier", {
     },
     update(delta){
         //Base TP Gain
-        player.BeanTier.tpGain = new Decimal(0.10)
+        player.BeanTier.tpGain = new Decimal(0.15)
         //Buyables
         player.BeanTier.tpGain = player.BeanTier.tpGain.mul(buyableEffect("Gold", 6))
         player.BeanTier.tpGain = player.BeanTier.tpGain.mul(buyableEffect("Money", 6))

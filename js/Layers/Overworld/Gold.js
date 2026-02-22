@@ -1,6 +1,6 @@
 addLayer("Gold", {
     name: "Gold", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "💰", // This appears on the layer's node. Default is the id with the first letter capitalized
+    symbol: "G", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked(){return hasMilestone("Money", 2) || player.Gold.goldResetAmount.gte('1')},
@@ -95,7 +95,7 @@ addLayer("Gold", {
     milestones: {
         0: {
         requirementDescription: "<font size='3'><b>4 Gold Bars</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Keep previous Money automation upgrades on the next Gold resets.</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Keep previous Money automation upgrades on Gold resets after you have obtained this milestone.</span>'},
         done() {return player.Gold.goldBars.gte(4)},
         unlocked() {return true},
         style() {
@@ -148,9 +148,9 @@ addLayer("Gold", {
             }
     },
     3: {
-        requirementDescription: "<font size='3'><b>1,000 Gold Bars</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>750 Gold Bars</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlock a new Gold upgrade that enables Money generation. <br>Interest can be bought 10 more times.</span>'},
-        done() {return player.Gold.goldBars.gte(1000)},
+        done() {return player.Gold.goldBars.gte(750)},
         unlocked() {return hasMilestone("Gold", 2)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
@@ -166,9 +166,9 @@ addLayer("Gold", {
             }
     },
     4: {
-        requirementDescription: "<font size='3'><b>5,000 Gold Bars</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>3,000 Gold Bars</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlocks the next reset layer.</span>'},
-        done() {return player.Gold.goldBars.gte(5000)},
+        done() {return player.Gold.goldBars.gte(3000)},
         unlocked() {return hasMilestone("Gold", 3)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
@@ -360,7 +360,7 @@ addLayer("Gold", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(250)
+                cap = new Decimal(500)
                 return cap
             },
             buyMax() {
@@ -703,6 +703,19 @@ addLayer("Gold", {
     },
         microtabs: {
             GoldTabs: {
+                "Info": {
+                    content: [
+                        ["display-text",
+                    function() {return "――――――Layer 2 Reset――――――"},
+                    {"color": "#EBCB3F", "font-size": "32px"}],
+                    ["display-text",
+                    function() {return "Buying Gold resets everything Money does along with Money, Money Upgrades, and Money Milestones. In exchange, you will gain Gold Bars to spend on more powerful upgrades."},
+                    {"color": "#FFFFFF", "font-size": "20px"}],
+                  ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#EBCB3F", "font-size": "32px"}],                        
+                    ]
+                },
                 "Upgrades": {
                     content: [
                         ["display-text",

@@ -1,6 +1,6 @@
 addLayer("Factory", {
     name: "Factory", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "🏭", // This appears on the layer's node. Default is the id with the first letter capitalized
+    symbol: "F", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked(){return hasMilestone("Gold", 4) || player.Factory.factoryResetAmount.gte('1')},
@@ -59,7 +59,7 @@ addLayer("Factory", {
         if (player.Factory.points.gte(14) && player.Factory.points.lte(15)) mult = mult.dividedBy(2e13)
         if (player.Factory.points.gte(15) && player.Factory.points.lte(16)) mult = mult.dividedBy(4e21)
         if (player.Factory.points.gte(16) && player.Factory.points.lte(17)) mult = mult.dividedBy(6.5e20)
-        if (player.Factory.points.gte(17) && player.Factory.points.lte(18)) mult = mult.dividedBy(2e27)
+        if (player.Factory.points.gte(17) && player.Factory.points.lte(18)) mult = mult.dividedBy(1e27)
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -118,7 +118,7 @@ addLayer("Factory", {
     },
     1: {
         requirementDescription: "<font size='3'><b>(FL2) Bean Enhancement II</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">20x to TP gain. Bean Booster I can be bought 50 more times.</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Each Factory Level from 2 to 7 boosts TP gain by 20x. Bean Booster I can be bought 50 more times, and Bean gain is doubled while under a trillion.</span>'},
         done() {return player.Factory.points.gte(2)},
         unlocked() {return hasMilestone("Factory", 0)},
         style() {
@@ -140,7 +140,7 @@ addLayer("Factory", {
     },
     2: {
         requirementDescription: "<font size='3'><b>(FL3) Bean Factory</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">20x to TP gain. Boost Bean gain by 50% for each Factory Level.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Boost Bean gain by 50% for each Factory Level.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.points.gte(3)},
         unlocked() {return hasMilestone("Factory", 1)},
         effect() {
@@ -166,7 +166,7 @@ addLayer("Factory", {
     },
     3: {
         requirementDescription: "<font size='3'><b>(FL4) Money Factory</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">20x to TP gain. Boost Money gain by 25% for each Factory Level.<br>Always keep Bean and Money milestones on Gold reset.<br>Bean Level Booster can be bought 50 more times.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Boost Money gain by 25% for each Factory Level.<br>Always keep Bean and Money milestones on Gold reset.<br>Bean Level Booster can be bought 50 more times.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.points.gte(4)},
         unlocked() {return hasMilestone("Factory", 2)},
         effect() {
@@ -192,7 +192,7 @@ addLayer("Factory", {
     },
     4: {
         requirementDescription: "<font size='3'><b>(FL5) Gold Factory</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">20x to TP gain. Boost Gold gain by 5% for each Factory Level.<br>Always keep Money automation upgrades on Gold reset.<br>Unlock a new Gold upgrade that boosts TP.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Boost Gold gain by 5% for each Factory Level.<br>Always keep Money automation upgrades on Gold reset.<br>Unlock a new Gold upgrade that boosts TP.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.points.gte(5)},
         unlocked() {return hasMilestone("Factory", 3)},
         effect() {
@@ -218,7 +218,7 @@ addLayer("Factory", {
     },
     5: {
         requirementDescription: "<font size='3'><b>(FL6) Money Factory II</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">20x to TP gain. The first five Money upgrades are always automated.<br>Bean Level Enhancer can be bought 20 more times.<br>Unlock a new Money upgrade that boosts TP gain.</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">The first five Money upgrades are always automated.<br>Bean Level Enhancer can be bought 20 more times.<br>Unlock a new Money upgrade that boosts TP gain.</span>'},
         done() {return player.Factory.points.gte(6)},
         unlocked() {return hasMilestone("Factory", 4)},
         style() {
@@ -240,7 +240,7 @@ addLayer("Factory", {
     },
     6: {
         requirementDescription: "<font size='3'><b>(FL7) Iron Factory</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">20x to TP gain. Unlock the Forge Iron reset (In this layer).</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlock the Forge Iron reset (In this layer).</span>'},
         done() {return player.Factory.points.gte(7)},
         unlocked() {return hasMilestone("Factory", 5)},
         style() {
@@ -255,14 +255,14 @@ addLayer("Factory", {
                 'background-color': '#bf8f8f',
         'border': '5px solid',
         "width": "400px",
-        "height": "100px",
+        "height": "40px",
         'border-color': 'rgba(0, 0, 0, 0.125)'
                 }
             }
     },
     7: {
         requirementDescription: "<font size='3'><b>(FL8) Get Rid of Those Annoying Milestone Popups</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Keep all previous milestones on Layer 3 resets.<br>Keep Bean milestones on Money reset and automate the Tier Booster Money upgrade.</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Keep all previous milestones on Layer 3 resets after you have obtained this milestone.<br>Keep Bean milestones on Money resets and automate the Tier Booster Money upgrade.</span>'},
         done() {return player.Factory.points.gte(8)},
         unlocked() {return hasMilestone("Factory", 6)},
         style() {
@@ -450,7 +450,7 @@ addLayer("Factory", {
     },
     15: {
         requirementDescription: "<font size='3'><b>(FL16) Power Factory III</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Unlock another new Watt generation upgrade.'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlock the third Watt generation upgrade.'},
         done() {return player.Factory.points.gte(16)},
         unlocked() {return hasMilestone("Factory", 14)},
         style() {
@@ -472,7 +472,7 @@ addLayer("Factory", {
     },
     16: {
         requirementDescription: "<font size='3'><b>(FL17) Power Factory IV</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Unlock another new Watt generation upgrade.'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlock the fourth Watt generation upgrade.'},
         done() {return player.Factory.points.gte(17)},
         unlocked() {return hasMilestone("Factory", 15)},
         style() {
@@ -832,11 +832,47 @@ addLayer("Factory", {
                 }
             },
         },           
+        2: {
+            fullDisplay() {return `<font size="3"><b>Beans Portal Piece</b><font size="2"><br>Boost Bean Gain by 100x.<br>――――――――――――――――――<br>
+                Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Beans`},        
+            unlocked() { return hasMilestone("Factory", 17) },
+            cost: new Decimal(1e53),
+            currencyInternalName: "points",
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#FFFFFF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
     },
     buyables: {
         1: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Hydroponics Basins</b>
-                <font size="2">Which boost Bean gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Which boost Bean gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.25);
@@ -867,7 +903,7 @@ addLayer("Factory", {
             tooltip() {return "<span style='color:#ffffff'>Hydroponics Basins</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Bean gain by 50%. Every ten purchases, this effect is boosted by 1.25x."},
             style() {
                 if(!this.canAfford()){return {
-                "width": "250px",
+                "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -877,7 +913,7 @@ addLayer("Factory", {
                 "border-bottom-right-radius": "0px",}}
 
                 else return {
-                "width": "250px",
+                "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -893,7 +929,7 @@ addLayer("Factory", {
         },
         2: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Sprinklers</b>
-                <font size="2">Boosting purchase caps of first two Bean Upgrades by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosting purchase caps of first two Bean Upgrades by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(10);
@@ -921,7 +957,7 @@ addLayer("Factory", {
             tooltip() {return "<span style='color:#ffffff'>Sprinklers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Increases the maximum purchase caps of Bean Booster and Bean Level booster by 20% each level."},
             style() {
                 if(!this.canAfford()){return {
-                "width": "250px",
+                "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -931,7 +967,7 @@ addLayer("Factory", {
                 "border-bottom-right-radius": "0px",}}
 
                 else return {
-                "width": "250px",
+                "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -1703,7 +1739,7 @@ addLayer("Factory", {
     player.Factory.watts = new Decimal(0)
     
     
-    player.Factory.factoryResetAmount = player.Factory.factoryResetAmount.add(1)
+    if (!hasUpgrade('Money', 1111)) player.Factory.factoryResetAmount = player.Factory.factoryResetAmount.add(1)
 },
     ironReset(){
      player.points = new Decimal(0)
@@ -1766,29 +1802,12 @@ componentStyles: {
             ["display-text",
                     function() {return "―――――――――――――――――"},
                     {"color": "#5E5D5D", "font-size": "32px"}],
-                    function() {if (!hasUpgrade("Beans", 1011)) return "prestige-button"},
+                    function() {if (!hasUpgrade("Beans", 1011) && hasMilestone("Gold", 4)) return "prestige-button"},
+                    ["raw-html", function() {if (!hasMilestone("Gold", 4)) return 'You need the fifth Gold Milestone to expand the Factory.'}, {"font-size": "20px"}],
                     ["display-text",
                     function() {return "―――――――――――――――――"},
                     {"color": "#5E5D5D", "font-size": "32px"}],
-                    ["column", [ ["row", [ ["milestone", 0], ]]]],
-                    ["column", [ ["row", [ ["milestone", 1], ]]]],
-                    ["column", [ ["row", [ ["milestone", 2], ]]]],
-                    ["column", [ ["row", [ ["milestone", 3], ]]]],
-                    ["column", [ ["row", [ ["milestone", 4], ]]]],
-                    ["column", [ ["row", [ ["milestone", 5], ]]]],
-                    ["column", [ ["row", [ ["milestone", 6], ]]]],
-                    ["column", [ ["row", [ ["milestone", 7], ]]]],
-                    ["column", [ ["row", [ ["milestone", 8], ]]]],
-                    ["column", [ ["row", [ ["milestone", 9], ]]]],
-                    ["column", [ ["row", [ ["milestone", 10], ]]]],
-                    ["column", [ ["row", [ ["milestone", 11], ]]]],
-                    ["column", [ ["row", [ ["milestone", 12], ]]]],
-                    ["column", [ ["row", [ ["milestone", 13], ]]]],
-                    ["column", [ ["row", [ ["milestone", 14], ]]]],
-                    ["column", [ ["row", [ ["milestone", 15], ]]]],
-                    ["column", [ ["row", [ ["milestone", 16], ]]]],
-                    ["column", [ ["row", [ ["milestone", 17], ]]]],
-
+                    ["microtabs", "FLTabs"],
                 ]
             
         },
@@ -1830,9 +1849,66 @@ componentStyles: {
             
         },
     },
-    
         microtabs: {
+            FLTabs: {
+                "Info": {
+                    content: [
+                        ["display-text",
+                    function() {return "――――――Layer 3 Reset――――――"},
+                    {"color": "#5E5D5D", "font-size": "32px"}],
+                    ["display-text",
+                    function() {return "Expanding the Factory resets everything Gold does as well as Gold, Gold Upgrades, Gold Milestones, and Bean Tiers (After you unlock them). In exchange, you will increase your Factory Level and unlock new boosts on a milestone-based system.<br><br>At first, you can only gain one Factory Level per reset, meaning you should always perform it as soon as you reach the requirement.<br><br>Factory Level 1 will unlock Bean Tiers, a similar but different feature to Bean Levels. Tier gain is based on a passively-generated subcurrency called Tier Points. Each Tier's TP requirements scale dramatically with each Tier gained, but so does their boost to your Beans."},
+                    {"color": "#FFFFFF", "font-size": "20px"}],
+                  ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#5E5D5D", "font-size": "32px"}],                        
+                    ]
+                },
+            
+            "Milestones": {
+                content: [
+                    ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#5E5D5D", "font-size": "32px"}],   
+                    ["column", [ ["row", [ ["milestone", 0], ]]]],
+                    ["column", [ ["row", [ ["milestone", 1], ]]]],
+                    ["column", [ ["row", [ ["milestone", 2], ]]]],
+                    ["column", [ ["row", [ ["milestone", 3], ]]]],
+                    ["column", [ ["row", [ ["milestone", 4], ]]]],
+                    ["column", [ ["row", [ ["milestone", 5], ]]]],
+                    ["column", [ ["row", [ ["milestone", 6], ]]]],
+                    ["column", [ ["row", [ ["milestone", 7], ]]]],
+                    ["column", [ ["row", [ ["milestone", 8], ]]]],
+                    ["column", [ ["row", [ ["milestone", 9], ]]]],
+                    ["column", [ ["row", [ ["milestone", 10], ]]]],
+                    ["column", [ ["row", [ ["milestone", 11], ]]]],
+                    ["column", [ ["row", [ ["milestone", 12], ]]]],
+                    ["column", [ ["row", [ ["milestone", 13], ]]]],
+                    ["column", [ ["row", [ ["milestone", 14], ]]]],
+                    ["column", [ ["row", [ ["milestone", 15], ]]]],
+                    ["column", [ ["row", [ ["milestone", 16], ]]]],
+                    ["column", [ ["row", [ ["milestone", 17], ]]]],
+                    ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#5E5D5D", "font-size": "32px"}],   
+                ],
+            },
+        },
             IronTabs: {
+                "Info": {
+                    buttonStyle: {"border-color": "#BABABA"},
+                    content: [
+                        ["display-text",
+                    function() {return "――――――Layer 3 Reset――――――"},
+                    {"color": "#BABABA", "font-size": "32px"}],
+                    ["display-text",
+                    function() {return "Forging Iron resets everything Factory Levels do, but instead gain Iron Plates, which can be spent on upgrades in the same way as the other currency-based resets."},
+                    {"color": "#FFFFFF", "font-size": "20px"}],
+                  ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#BABABA", "font-size": "32px"}],                        
+                    ]
+                },
                 "Factory Production": {
                     buttonStyle: {"border-color": "#BABABA"},
                     content: [
@@ -1853,6 +1929,36 @@ componentStyles: {
                         ["column", [ ["row", [ ["buyable", 11], "blank", ["buyable", 12],]]]],
                         "blank",
                   ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#5E5D5D", "font-size": "32px"}],    
+                    ]
+                },
+                "Stone Ruins": {
+                    buttonStyle: {"border-color": "#BABABA"},
+                    unlocked() { return hasMilestone("Factory", 17) },
+                    content: [
+                    ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#5E5D5D", "font-size": "32px"}],
+                        "blank",
+                        ["column", [ ["row", [ ["upgrade", 2], ["upgrade", 3], ["upgrade", 4], ["upgrade", 5], ]]]],
+                        ["column", [ ["row", [ ["upgrade", 6], ["upgrade", 7], ["upgrade", 8], ["upgrade", 9], ]]]],
+                        ["column", [ ["row", [ ["upgrade", 10], ["upgrade", 11],]]]],
+                        "blank",
+                  ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#5E5D5D", "font-size": "32px"}],
+                    ["raw-html", function() {if (hasMilestone("Factory", 17) && !hasUpgrade("Factory", 2)) return "0/10 Portal Pieces Rebuilt"}, {"color": "#FFFFFF", "font-size": "30px"}],
+                    ["raw-html", function() {if (hasUpgrade("Factory", 2) && !hasUpgrade("Factory", 3)) return "1/10 Portal Pieces Rebuilt"}, {"color": "#FFFFFF", "font-size": "30px"}],
+                    ["raw-html", function() {if (hasUpgrade("Factory", 3) && !hasUpgrade("Factory", 4)) return "2/10 Portal Pieces Rebuilt"}, {"color": "#FFFFFF", "font-size": "30px"}],
+                    ["raw-html", function() {if (hasUpgrade("Factory", 4) && !hasUpgrade("Factory", 5)) return "3/10 Portal Pieces Rebuilt"}, {"color": "#FFFFFF", "font-size": "30px"}],
+                    ["raw-html", function() {if (hasUpgrade("Factory", 5) && !hasUpgrade("Factory", 6)) return "4/10 Portal Pieces Rebuilt"}, {"color": "#FFFFFF", "font-size": "30px"}],
+                    ["raw-html", function() {if (hasUpgrade("Factory", 6) && !hasUpgrade("Factory", 7)) return "5/10 Portal Pieces Rebuilt"}, {"color": "#FFFFFF", "font-size": "30px"}],
+                    ["raw-html", function() {if (hasUpgrade("Factory", 7) && !hasUpgrade("Factory", 8)) return "6/10 Portal Pieces Rebuilt"}, {"color": "#FFFFFF", "font-size": "30px"}],
+                    ["raw-html", function() {if (hasUpgrade("Factory", 8) && !hasUpgrade("Factory", 9)) return "7/10 Portal Pieces Rebuilt"}, {"color": "#FFFFFF", "font-size": "30px"}],
+                    ["raw-html", function() {if (hasUpgrade("Factory", 9) && !hasUpgrade("Factory", 10)) return "8/10 Portal Pieces Rebuilt"}, {"color": "#FFFFFF", "font-size": "30px"}],
+                    ["raw-html", function() {if (hasUpgrade("Factory", 10) && !hasUpgrade("Factory", 11)) return "9/10 Portal Pieces Rebuilt"}, {"color": "#FFFFFF", "font-size": "30px"}],
+                    ["display-text",
                     function() {return "―――――――――――――――――"},
                     {"color": "#5E5D5D", "font-size": "32px"}],    
                     ]

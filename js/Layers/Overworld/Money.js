@@ -1,6 +1,6 @@
 addLayer("Money", {
     name: "Money", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "💵", // This appears on the layer's node. Default is the id with the first letter capitalized
+    symbol: "M", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked(){return hasMilestone("Beans", 3) || player.Money.moneyResetAmount.gte('1')},
@@ -24,7 +24,7 @@ addLayer("Money", {
     autoUpgrade() {return hasUpgrade('Beans', 1111)},
     baseAmount() {return player.points}, // Get the current amount of baseResource
     tooltip() {
-        let tooltip = "<font size='3'>Money<br>――――――――――――――<br> <font size='2'><span style='color:#81F72D'> $"+format(player.Money.dollars)+"</span>"
+        let tooltip = "<font size='3'>Money<br>――――――――――――――<br> <font size='2'><span style='color:#81F72D'> "+format(player.Money.dollars)+"$</span>"
         return tooltip
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -78,7 +78,7 @@ addLayer("Money", {
     },
     milestones: {
         0: {
-        requirementDescription: "<font size='3'><b>$15</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>15$</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlocks a new Bean upgrade that boosts the Bean Level effect.</span>'},
         done() {return player.Money.dollars.gte(15)},
         unlocked() {return true},
@@ -96,7 +96,7 @@ addLayer("Money", {
             }
     },
     1: {
-        requirementDescription: "<font size='3'><b>$125</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>125$</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlocks a new Bean upgrade that boosts Money gain.</span>'},
         done() {return player.Money.dollars.gte(125)},
         unlocked() {return hasMilestone("Money", 0)},
@@ -114,7 +114,7 @@ addLayer("Money", {
             }
     },
     2: {
-        requirementDescription: "<font size='3'><b>$10,000</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>10,000$</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlocks the second reset layer.</span>'},
         done() {return player.Money.dollars.gte(10000)},
         unlocked() {return hasMilestone("Money", 1)},
@@ -628,6 +628,19 @@ addLayer("Money", {
     },
         microtabs: {
             MoneyTabs: {
+                "Info": {
+                    content: [
+                        ["display-text",
+                    function() {return "――――――Layer 1 Reset――――――"},
+                    {"color": "#1BC42F", "font-size": "32px"}],
+                    ["display-text",
+                    function() {return "Selling Beans resets Beans, Bean Upgrades, Bean Milestones and Bean Levels in exchange for Cash to spend on new upgrades which will allow you to get back to where you were faster than before."},
+                    {"color": "#FFFFFF", "font-size": "20px"}],
+                  ["display-text",
+                    function() {return "―――――――――――――――――"},
+                    {"color": "#1BC42F", "font-size": "32px"}],                        
+                    ]
+                },
                 "Upgrades": {
                     content: [
                         ["display-text",

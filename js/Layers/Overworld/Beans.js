@@ -1,6 +1,6 @@
 addLayer("Beans", {
     name: "Beans", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "🫘", // This appears on the layer's node. Default is the id with the first letter capitalized
+    symbol: "B", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked(){return true},
@@ -90,9 +90,9 @@ addLayer("Beans", {
 },
     milestones: {
         0: {
-        requirementDescription: "<font size='3'><b>1.75 Beans</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>1.50 Beans</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlocks Bean Levels.</span>'},
-        done() {return player.points.gte(1.75) && getBuyableAmount("Beans", 1).gte(17)},
+        done() {return player.points.gte(1.5) && getBuyableAmount("Beans", 1).gte(17)},
         unlocked() {return getBuyableAmount("Beans", 1).gte(17)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
@@ -305,7 +305,7 @@ addLayer("Beans", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit() {
-                cap = new Decimal(250)
+                cap = new Decimal(1000)
                 return cap
             },
             buyMax() {
@@ -393,7 +393,7 @@ addLayer("Beans", {
                 'box-shadow':'0px 0px 15px #8eff00'
                 }
             },
-            unlocked() {return hasMilestone("Money", 0) && player.BeanLevel.points.gte('1')},
+            unlocked() {return hasMilestone("Money", 0)},
     
         },
         5: {
@@ -529,12 +529,12 @@ addLayer("Beans", {
                     function() {return "―――――――――――――――――"},
                     {"color": "#C19A6B", "font-size": "32px"}],                        
                     "blank",
-                        ["raw-html", function() {if (getBuyableAmount("Beans", 1).gte(10) && !getBuyableAmount("Beans", 1).gte(17)  ) return 'Unlock Bean Milestones at 17 Bean Boosters'}, {"color": "#FFFFFF", "font-size": "23px"}],
+                        ["raw-html", function() {if (getBuyableAmount("Beans", 1).gte(10) && !getBuyableAmount("Beans", 1).gte(17) && !hasMilestone("Gold", 1)) return 'Unlock Bean Milestones at 17 Bean Boosters'}, {"color": "#FFFFFF", "font-size": "23px"}],
                         "blank",
                     ]
                 },
                 "Milestones": {
-                     unlocked() { return getBuyableAmount("Beans", 1).gte(17) },
+                     unlocked() { return getBuyableAmount("Beans", 1).gte(17) || hasMilestone("Gold", 1)},
                     content: [
                         ["display-text",
                     function() {return "―――――――――――――――――"},
