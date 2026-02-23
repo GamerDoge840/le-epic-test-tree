@@ -1,26 +1,26 @@
 let modInfo = {
-	name: "The Prestige Realm",
-	id: "comicallylongetmtgame",
+	name: "The Prestige Twig",
+	id: "twiggedup",
 	author: "The Big G",
-	pointsName: "Essence",
-	modFiles: ["Layers/Row 2/Hindrance.js","Layers/Row 2/Glory.js","Layers/Row 1/Energy.js","Layers/Row 1/Rank.js","Layers/Row 1/Honor.js","Layers/Row 0/Level.js","Layers/Row 0/Prestige.js", "math.js", "Layers/Side/achievements.js", "tree.js"],
+	pointsName: "Points",
+	modFiles: ["Layers/Prestige.js","math.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (0.025), // Used for hard resets and new players
+	initialStartPoints: new Decimal (10), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
 	num: "1.0",
-	name: "The Whole Game",
+	name: "Full Release",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v1.0</h3><br>
-		- Added the entire game.<br>
-		- Added nothing else other than that.`
+	<h3>v0.0</h3><br>
+		- Added things.<br>
+		- Added stuff.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -34,35 +34,19 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("Prestige", 11);
+	return hasUpgrade("Prestige", 11)
 }
+
 
 // Calculate points/sec!
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.0010)
-	if (hasUpgrade('Prestige', 21)) gain = gain.times(upgradeEffect('Prestige', 21))
-	if (hasUpgrade('Prestige', 31)) gain = gain.times(upgradeEffect('Prestige', 31))
-	if (hasUpgrade('Prestige', 32)) gain = gain.times(upgradeEffect('Prestige', 32))
-	if (hasUpgrade('Prestige', 33)) gain = gain.times(upgradeEffect('Prestige', 23))
-	if (hasUpgrade('Level', 12)) gain = gain.times(upgradeEffect('Level', 12))
-	if (hasUpgrade('Honor', 11)) gain = gain.times(upgradeEffect('Honor', 11))
-	if (hasUpgrade('Hindrance', 54)) gain = gain.times(upgradeEffect('Hindrance', 54))
-	if (inChallenge('Glory', 11)) gain = gain.dividedBy(1e70)
-	if (hasMilestone('Rank', 1)) gain = gain.times(tmp.Rank.milestones[1].effect)	
-	gain=gain.times(buyableEffect('Glory', 11))
-	if (hasUpgrade('Prestige', 51))
-		gain = gain.times(tmp.Level.effect);
-
-
-	//stoerege
-	//gain=gain.times(buyableEffect('Knowledge', 11))
-	//gain=gain.times(buyableEffect('Knowledge', 12))
-	//gain=gain.times(buyableEffect('Knowledge', 21))
-	//gain=gain.times(buyableEffect('Scrolls', 11))
-	//if (hasUpgrade('Knowledge', 12)) gain = gain.times(3)
+	let gain = new Decimal(1)
+    if (hasUpgrade("Prestige", 12)) gain = gain.times(upgradeEffect("Prestige", 12))
+	if (hasUpgrade("Prestige", 13)) gain = gain.times(upgradeEffect("Prestige", 13))
+	if (hasUpgrade("Prestige", 22)) gain = gain.times(upgradeEffect("Prestige", 22))
 	return gain
 }
 
@@ -70,6 +54,7 @@ function getPointGen() {
 function addedPlayerData() { return {
     notation:'Mixed Scientific',
 }}
+
 // Display extra things at the top of the page
 var displayThings = [
 ]
@@ -97,3 +82,4 @@ function maxTickLength() {
 // you can cap their current resources with this.
 function fixOldSave(oldVersion){
 }
+
