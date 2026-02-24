@@ -1,4 +1,5 @@
 let modInfo = {
+<<<<<<< Updated upstream
 	name: "The Tree of Knowledge",
 	id: "superultraduperamogussmartspunchisus",
 	author: "The Big G",
@@ -8,6 +9,17 @@ let modInfo = {
 	discordName: "",
 	discordLink: "",
 	initialStartPoints: new Decimal (0.0010), // Used for hard resets and new players
+=======
+	name: "The Prestige Realm",
+	id: "realmingthatprestige",
+	author: "The Big G",
+	pointsName: "Essence",
+	modFiles: ["Layers/Side/Stats.js","Layers/Prestige Realm/Prestige.js","math.js", "tree.js"],
+
+	discordName: "",
+	discordLink: "",
+	initialStartPoints: new Decimal (1), // Used for hard resets and new players
+>>>>>>> Stashed changes
 	offlineLimit: 1,  // In hours
 }
 
@@ -42,12 +54,19 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
+<<<<<<< Updated upstream
 	let gain = new Decimal(0.0001)
 	gain=gain.times(buyableEffect('Knowledge', 11))
 	gain=gain.times(buyableEffect('Knowledge', 12))
 	gain=gain.times(buyableEffect('Knowledge', 21))
 	gain=gain.times(buyableEffect('Scrolls', 11))
 	if (hasUpgrade('Knowledge', 12)) gain = gain.times(3)
+=======
+	let gain = new Decimal(0.1)
+    if (hasUpgrade("Prestige", 12)) gain = gain.times(upgradeEffect("Prestige", 12))
+	if (hasUpgrade("Prestige", 13)) gain = gain.times(upgradeEffect("Prestige", 13))
+	if (hasUpgrade("Prestige", 22)) gain = gain.times(upgradeEffect("Prestige", 22))
+>>>>>>> Stashed changes
 	return gain
 }
 
