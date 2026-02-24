@@ -3,7 +3,11 @@ let modInfo = {
 	id: "realmingthatprestige",
 	author: "The Big G",
 	pointsName: "Essence",
+<<<<<<< Updated upstream
 	modFiles: ["Layers/Prestige Realm/Prestige.js","math.js", "tree.js"],
+=======
+	modFiles: ["Layers/Side/Stats.js","Layers/Prestige Realm/Prestige.js","math.js", "tree.js"],
+>>>>>>> Stashed changes
 
 	discordName: "",
 	discordLink: "",
