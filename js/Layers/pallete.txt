@@ -1,0 +1,25 @@
+//requirements
+(hasUpgrade("Prestige", 11))
+
+//call effects
+(upgradeEffect("Prestige", 11))
+
+//actual effects
+   /prestige boost
+ 	let eff = player.p.points.plus(2).pow(0.5);
+   /self synergy
+    let eff = player.points.plus(1).log10().pow(0.75).plus(1);
+   /other upgrade effect
+    let eff = upgradeEffect('Essence', 13).pow(0.5);
+   /static boost
+    eff = new Decimal(1.50)
+   /effect based on upgrade amount
+    let eff = Decimal.pow(1.10, player.Essence.upgrades.length);
+   /reverse prestige boost
+    let eff = player.points.plus(1).log10().cbrt().plus(1);
+//display upgrade effects
+ `+format(upgradeEffect(this.layer, this.id))+`
+
+//upgrade effect softcap
+      scpow = 0.25
+      eff = softcap(eff, new Decimal("100"), scpow)
