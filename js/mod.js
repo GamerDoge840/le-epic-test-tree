@@ -1,14 +1,9 @@
 let modInfo = {
-	name: "The Prestige Realm",
-	id: "realmingthatprestige",
+	name: "Stupid Upgrade Tree",
+	id: "stupidupgradetree",
 	author: "The Big G",
 	pointsName: "Essence",
-<<<<<<< Updated upstream
-	modFiles: ["Layers/Prestige Realm/Prestige.js","math.js", "tree.js"],
-=======
 	modFiles: ["Layers/Side/Stats.js","Layers/Prestige Realm/Prestige.js","math.js", "tree.js"],
->>>>>>> Stashed changes
-
 	discordName: "",
 	discordLink: "",
 	initialStartPoints: new Decimal (1), // Used for hard resets and new players
