@@ -1,6 +1,6 @@
 var layoutInfo = {
     startTab: "none",
-    startNavTab: "prestige-realm",
+    startNavTab: "overworld",
 	showTree: true,
 
     treeLayout: ""
@@ -24,9 +24,9 @@ addNode("PAU",{
     canClick(){return true}
 })
 
-addLayer("prestige-realm", {
+addLayer("overworld", {
     tabFormat: [["tree", [
-        ['Prestige'],
+        ['p'],
         ],
     ]],
     previousTab: "",

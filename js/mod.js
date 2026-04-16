@@ -1,13 +1,13 @@
 let modInfo = {
-	name: "The Prestige Realm",
-	id: "realmingthatprestige",
+	name: "Stupid Bee Game",
+	id: "swarmingupthosebees",
 	author: "The Big G",
-	pointsName: "Essence",
-	modFiles: ["Layers/Prestige Realm/Prestige.js","math.js", "tree.js"],
+	pointsName: "Gathering Power",
+	modFiles: ["Layers/Overworld/Pollen.js","Layers/Side/stats.js","math.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (1), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
@@ -34,7 +34,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("Prestige", 11)
+	return true
 }
 
 
@@ -43,10 +43,8 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.1)
-    if (hasUpgrade("Prestige", 12)) gain = gain.times(upgradeEffect("Prestige", 12))
-	if (hasUpgrade("Prestige", 13)) gain = gain.times(upgradeEffect("Prestige", 13))
-	if (hasUpgrade("Prestige", 22)) gain = gain.times(upgradeEffect("Prestige", 22))
+	let gain = new Decimal(0.01)
+	gain=gain.times(buyableEffect('p', 1))
 	return gain
 }
 
