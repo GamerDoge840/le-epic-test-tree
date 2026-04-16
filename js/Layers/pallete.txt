@@ -1,0 +1,51 @@
+//requirements
+(hasUpgrade("Prestige", 11))
+(hasMilestone('Level', 1))
+getBuyableAmount("Beans", 1).gte(10)
+
+//call effects
+(upgradeEffect("Prestige", 11))
+gain=gain.times(buyableEffect('Fruits', 2))
+if (player.Level.total.gte(1))
+		gain = gain.times(tmp.Level.essenceEffect);
+if (hasMilestone('Level', 1)) gain = gain.times(tmp.Level.milestones[1].effect)
+
+//actual effects
+   /prestige boost
+ 	let eff = player.p.points.plus(2).pow(0.5);
+   /self synergy
+    let eff = player.points.plus(1).log10().pow(0.75).plus(1);
+   /other upgrade effect
+    let eff = upgradeEffect('Essence', 13).pow(0.5);
+   /static boost
+    eff = new Decimal(1.50)
+   /effect based on upgrade amount
+    let eff = Decimal.pow(1.10, player.Essence.upgrades.length);
+   /reverse prestige boost
+    let eff = player.points.plus(1).log10().cbrt().plus(1);
+//buyable effects
+  /scales every 10 levels
+   effect() {
+               let amt = getBuyableAmount("p", 1)  
+               let base = new Decimal(1).add(amt.mul(1))
+               let bonus = Decimal.pow(2, Math.floor(amt / 10))
+               return base.times(bonus) 
+               },
+   /static
+             effect() {
+                let eff = getBuyableAmount("Factory", 11).mul(0.10).plus(1)
+                return eff
+            },     
+   /compounding
+    effect(x) { return getBuyableAmount('Factory', 8).pow_base(1.15) }, 
+
+//display upgrade effects
+ `+format(upgradeEffect(this.layer, this.id))+`
+
+//upgrade effect softcap
+      scpow = 0.25
+      eff = softcap(eff, new Decimal("100"), scpow)
+//branches
+     branches: ["Gold"],
+//prestige button
+   function() {if (!hasUpgrade("Prestige", 111111)) return "prestige-button"},
