@@ -38,8 +38,7 @@ addLayer("ach", {
     achievements: {
 		11:{
 			name: "<font size='3'>[1]<br><span style='color:#FFFFFF'>Genesis</span>",
-            //done() {return getBuyableAmount("Beans", 1).gte(1)},
-            done() {return player.Start.gameStarted.gte('1')},
+            done() {return player.points.gte(0.0000001)},
             tooltip() {return "Start playing the game.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>“Every journey has to start somewhere...”"},
             style() {
                 return {

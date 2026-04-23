@@ -1,6 +1,6 @@
 addLayer("stats", {
     name: "stats", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "📊", // This appears on the layer's node. Default is the id with the first letter capitalized
+    symbol: "ST", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: true,
@@ -57,13 +57,8 @@ addLayer("stats", {
 
             ],
         },
-        "Main": {
+        "Misc": {
             content: ["blank",
-                ["display-text",
-                            function() {return "――+―― Current Run ――+――"},
-                            {"color": "#9d9d9d", "font-size": "37px"}],
-                            ["raw-html", function() {if (hasUpgrade("Start", 1)) return '(You are currently playing as Humans)'}, {"font-size": "25px"}], 
-                            ["raw-html", function() {if (hasUpgrade("Start", 1000)) return '(Your homeworld is a Continental Planet)'}, {"font-size": "25px"}], 
                             ["display-text",
                             function() {return "――+―― Misc. ――+――"},
                             {"color": "#9d9d9d", "font-size": "37px"}], 

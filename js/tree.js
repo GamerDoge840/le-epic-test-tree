@@ -1,6 +1,6 @@
 var layoutInfo = {
     startTab: "none",
-    startNavTab: "tree-tab",
+    startNavTab: "main-tab",
 	showTree: true,
 
     treeLayout: ""
@@ -24,11 +24,10 @@ addNode("PAU",{
     canClick(){return true}
 })
 
-addLayer("tree-tab", {
+addLayer("main-tab", {
     tabFormat: [["tree", [
         ['Research', 'Workshop'],
         ['Homeworld'],
-        ['Start'],
         ],
     ]],
     previousTab: "",

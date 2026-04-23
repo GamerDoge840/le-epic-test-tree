@@ -13,6 +13,7 @@ addLayer("Minerals", {
         player.Minerals.mineralGain = new Decimal(0.03)
 
         //Mineral Boosts
+        player.Minerals.mineralGain = player.Minerals.mineralGain.mul(buyableEffect("Homeworld", 3))
         if (hasUpgrade('Research', 17)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.25)
         if (hasUpgrade('Research', 18)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.10)
         if (hasUpgrade('Workshop', 7))  player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.05)

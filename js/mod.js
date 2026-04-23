@@ -3,7 +3,7 @@ let modInfo = {
 	id: "evolvemaxxing",
 	author: "The Big G",
 	pointsName: "Research",
-	modFiles: ["Layers/Main/Intermediate Materials/Metals.js","Layers/Main/Basic Materials/Minerals.js","Layers/Main/Workshop.js","Layers/Main/Basic Materials/Wood.js","Layers/Main/Core Resources/Population.js","Layers/Main/Basic Materials/Food.js","Layers/Meta-Progression/Start.js","Layers/Main/Core Resources/Research.js","Layers/Main/Homeworld.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
+	modFiles: ["Layers/Main/Intermediate Materials/Metals.js","Layers/Main/Basic Materials/Minerals.js","Layers/Main/Workshop.js","Layers/Main/Basic Materials/Wood.js","Layers/Main/Core Resources/Population.js","Layers/Main/Basic Materials/Food.js","Layers/Main/Core Resources/Research.js","Layers/Main/Homeworld.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -47,6 +47,7 @@ function getPointGen() {
 	//Direct Bonuses
 	if (hasUpgrade('Research', 8)) gain = gain.times(2)
 	if (hasUpgrade('Research', 16)) gain = gain.times(3)
+	if (hasUpgrade('Research', 26)) gain = gain.times(2)
 
 	return gain
 }

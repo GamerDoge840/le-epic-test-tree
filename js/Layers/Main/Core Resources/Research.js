@@ -1,6 +1,6 @@
 addLayer("Research", {
     name: "Research", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "🔍", // This appears on the layer's node. Default is the id with the first letter capitalized
+    symbol: "R", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked(){return true},
@@ -38,7 +38,7 @@ addLayer("Research", {
         return new Decimal(1)
     },
     row: '0', // Row the layer is in on the tree (0 is the first row)
-    layerShown(){return player.Start.gameStarted.gte(1)},
+    layerShown(){return true},
     passiveGeneration() {
         //if (hasUpgrade('Essence', 1111)) return 1
 	return 0
@@ -1291,7 +1291,170 @@ addLayer("Research", {
                     }
                 }
             },
-        },                                                             
+        },
+        24: {    
+            fullDisplay() {return `<font size="3"><b>[R24] Mining</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, 
+                `+format(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals `},                
+            costs: {
+                Research: 0.6,
+                Metals: 1.25
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Metals.metalPoints.gte(this.costs.Metals)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Metals.metalPoints = player.Metals.metalPoints.minus(this.costs.Metals);
+              },
+            unlocked() {return (hasUpgrade('Research', 23))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Mining</span><br>――――――――――――<br><span style='font-size:11px'>Venture into caves in search of more ores. Unlocks the Miners job, and more Workshop upgrades.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        25: {    
+            fullDisplay() {return `<font size="3"><b>[R25] Prospecting</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, 
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals, `
+                 +formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals`},                
+            costs: {
+                Research: 1.3,
+                Metals: 5,
+                Minerals: 5
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Metals.metalPoints.gte(this.costs.Metals)
+                    && player.Minerals.mineralPoints.gte(this.costs.Minerals)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Metals.metalPoints = player.Metals.metalPoints.minus(this.costs.Metals);
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+              },
+            branches: ["Research", 24,],
+            unlocked() {return (hasUpgrade('Research', 24))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Prospecting</span><br>――――――――――――<br><span style='font-size:11px'>Look into techniques for better locating ore. Miners gain a new effect which also very slightly boosts Metal gain.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        26: {    
+            fullDisplay() {return `<font size="3"><b>[R26] Stone Carving</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, 
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals, `
+                 +formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals`},                
+            costs: {
+                Research: 0.25,
+                Metals: 1,
+                Minerals: 3
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Metals.metalPoints.gte(this.costs.Metals)
+                    && player.Minerals.mineralPoints.gte(this.costs.Minerals)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Metals.metalPoints = player.Metals.metalPoints.minus(this.costs.Metals);
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+              },
+            branches: ["Research", 24,],
+            unlocked() {return (hasUpgrade('Research', 24))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Stone Carving</span><br>――――――――――――<br><span style='font-size:11px'>The most rudimentary technique for long-term knowledge storage. Doubles Research gain.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },                                                                      
     },
     buyables: {
     },
@@ -1331,6 +1494,10 @@ addLayer("Research", {
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#BDF9FF", "font-size": "32px"}],
+                    ["raw-html", function() {if (hasUpgrade('Research', 2)) return "(" + format(player.Food.foodPoints) + " Food)"}, {"color": "#8ED47F", "font-size": "20px"}],
+                    ["raw-html", function() {if (hasUpgrade('Research', 5)) return '('+format(player.Wood.woodPoints)+' Wood)'}, {"color": "#A35F00", "font-size": "20px"}],
+                    ["raw-html", function() {if (hasUpgrade('Research', 11)) return '('+format(player.Minerals.mineralPoints)+' Minerals)'}, {"color": "#8C8888", "font-size": "20px"}],
+                    ["raw-html", function() {if (hasUpgrade('Research', 2)) return "―――――――――――――――――――――――――――――"}, {"color": "#BDF9FF",}],
                     "blank",
                     ["column", [ ["row", [ ["upgrade", 1],]]]],
                     "blank",
@@ -1360,10 +1527,6 @@ addLayer("Research", {
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#BDF9FF", "font-size": "32px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 2)) return "(" + format(player.Food.foodPoints) + " Food)"}, {"color": "#8ED47F", "font-size": "20px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 5)) return '('+format(player.Wood.woodPoints)+' Wood)'}, {"color": "#A35F00", "font-size": "20px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 11)) return '('+format(player.Minerals.mineralPoints)+' Minerals)'}, {"color": "#8C8888", "font-size": "20px"}],
-
                     ]
                 },
                 "[RT1]": {
@@ -1378,16 +1541,18 @@ addLayer("Research", {
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#BDF9FF", "font-size": "32px"}],
-                    "blank",
-                    ["column", [ ["row", [ ["upgrade", 24],]]]],
-                    "blank",
-                    ["display-text",
-                    function() {return "―――――――――――――――――――――――――――――"},
-                    {"color": "#BDF9FF", "font-size": "32px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 2)) return "(" + format(player.Food.foodPoints) + " Food)"}, {"color": "#8ED47F", "font-size": "20px"}],
+                    ["raw-html", function() {if (hasUpgrade('Research', 2)) return "―――――――――――――――――――――――――――――"}, {"color": "#BDF9FF",}],
+                     ["raw-html", function() {if (hasUpgrade('Research', 2)) return "(" + format(player.Food.foodPoints) + " Food)"}, {"color": "#8ED47F", "font-size": "20px"}],
                     ["raw-html", function() {if (hasUpgrade('Research', 5)) return '('+format(player.Wood.woodPoints)+' Wood)'}, {"color": "#A35F00", "font-size": "20px"}],
                     ["raw-html", function() {if (hasUpgrade('Research', 11)) return '('+format(player.Minerals.mineralPoints)+' Minerals)'}, {"color": "#8C8888", "font-size": "20px"}],
                     ["raw-html", function() {if (hasUpgrade('Research', 23)) return '('+format(player.Metals.metalPoints)+' Metals)'}, {"color": "#BABABA", "font-size": "20px"}],
+                    "blank",
+                    ["column", [ ["row", [ ["upgrade", 24],]]]],
+                    "blank",
+                    ["column", [ ["row", [ ["upgrade", 25], "blank", ["upgrade", 26],]]]],
+                    ["display-text",
+                    function() {return "―――――――――――――――――――――――――――――"},
+                    {"color": "#BDF9FF", "font-size": "32px"}],
 
                     ]
                 },

@@ -1,6 +1,6 @@
 addLayer("Homeworld", {
     name: "Homeworld", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "🌎", // This appears on the layer's node. Default is the id with the first letter capitalized
+    symbol: "H", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked(){return true},
@@ -146,7 +146,7 @@ addLayer("Homeworld", {
             buyMax() {
                 let max = player.Population.populationPoints.div(this.cost(0)).add(1).log(1.65) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
-                if(max.gt(getBuyableAmount('Homeworld', 1))) setBuyableAmount('Homeworld', 1, max.add(1).floor())
+                if(max.gt(getBuyableAmount('Homeworld', 2))) setBuyableAmount('Homeworld', 2, max.add(1).floor())
             },
             tooltip(){
                 if (hasUpgrade('Research', 15)) return `<span style='font-size:16px'><span style='color:#ffffff'>Lumberjacks</span><br>――――――――――――<br><span style='font-size:11px'>Each Lumberjack boosts Wood gain.</span><br>――――――――――――――――――<br>
@@ -176,6 +176,69 @@ addLayer("Homeworld", {
                 }
             },
             unlocked() {return (hasUpgrade('Research', 15))},
+    
+        },
+        3: {
+            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Miners<br>――――――――――――――――</b>
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Population</b><br><b>`},
+            cost(x) {
+                let base = new Decimal(1.70);
+                let cost = base.pow(x).times(1);
+                return cost;
+              },
+            effect() {
+                let eff = getBuyableAmount('Homeworld', 3).mul(0.10).plus(1)
+                if (hasUpgrade("Workshop", 9)) eff = eff.times(1.15)
+                return eff
+            }, 
+            effect2() {
+                let eff = getBuyableAmount('Homeworld', 3).mul(0.01).plus(1)
+                return eff
+            },             
+            canAfford() { if (player.Population.populationPoints.gte(this.cost())) {return true}},
+            buy() {
+                player.Population.populationPoints = player.Population.populationPoints.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1e100)
+                return cap
+            },
+            buyMax() {
+                let max = player.Population.populationPoints.div(this.cost(0)).add(1).log(1.70) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Homeworld', 3))) setBuyableAmount('Homeworld', 3, max.add(1).floor())
+            },
+            tooltip(){
+                if (hasUpgrade('Research', 24) && !hasUpgrade('Research', 25)) return `<span style='font-size:16px'><span style='color:#ffffff'>Miners</span><br>――――――――――――<br><span style='font-size:11px'>Each Miner boosts Minerals gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Minerals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Searches for ore within caverns.”`
+                if (hasUpgrade('Research', 25)) return `<span style='font-size:16px'><span style='color:#ffffff'>Miners</span><br>――――――――――――<br><span style='font-size:11px'>Each Miner boosts Minerals and Metals gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Minerals, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x to Metals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Searches for ore within caverns.”`
+            },          
+            style() {
+                if(!this.canAfford()){return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#C19A6B', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#C19A6B', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return (hasUpgrade('Research', 24))},
     
         },
         100: {
@@ -319,14 +382,17 @@ addLayer("Homeworld", {
               },
               effect() {
                 let eff = getBuyableAmount('Homeworld', 102).mul(0.25).plus(1)
+                if (hasUpgrade("Workshop", 10)) eff = eff.times(1.20)
                 return eff
             },
             woodConsumption() {
                 let eff = getBuyableAmount('Homeworld', 102).mul(0.04).plus(1)
+                if (hasUpgrade("Workshop", 10)) eff = eff.times(1.20)
                 return eff
             },
             mineralConsumption() {
                 let eff = getBuyableAmount('Homeworld', 102).mul(0.07).plus(1)
+                if (hasUpgrade("Workshop", 10)) eff = eff.times(1.20)
                 return eff
             },
             canAfford() { if (player.Minerals.mineralPoints.gte(this.cost())) {return true}},
@@ -426,7 +492,7 @@ addLayer("Homeworld", {
                         ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],
-                        ["column", [ ["row", [ ["buyable", 1], "blank", ["buyable", 2],]]]],
+                        ["column", [ ["row", [ ["buyable", 1], "blank", ["buyable", 2], "blank", ["buyable", 3],]]]],
                       ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],
