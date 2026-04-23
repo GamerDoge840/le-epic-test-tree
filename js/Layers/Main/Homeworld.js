@@ -51,7 +51,8 @@ addLayer("Homeworld", {
     },
     buyables: {
       1: {
-            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Hunter-Gatherers<br>――――――――――――――――</b>
+            display(){
+                if (!hasUpgrade("Workshop", 9999)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Hunter-Gatherers<br>――――――――――――――――</b>
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Population</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.75);
@@ -123,7 +124,8 @@ addLayer("Homeworld", {
     
         },
          2: {
-            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Lumberjacks<br>――――――――――――――――</b>
+            display(){
+                if (!hasUpgrade("Workshop", 9999)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Lumberjacks<br>――――――――――――――――</b>
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Population</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.65);
@@ -179,7 +181,8 @@ addLayer("Homeworld", {
     
         },
         3: {
-            display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Miners<br>――――――――――――――――</b>
+            display(){
+                if (!hasUpgrade("Workshop", 9999)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Miners<br>――――――――――――――――</b>
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Population</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.70);
@@ -383,6 +386,7 @@ addLayer("Homeworld", {
               effect() {
                 let eff = getBuyableAmount('Homeworld', 102).mul(0.25).plus(1)
                 if (hasUpgrade("Workshop", 10)) eff = eff.times(1.20)
+                if (hasUpgrade("Workshop", 11)) eff = eff.times(1.50)
                 return eff
             },
             woodConsumption() {
@@ -393,6 +397,10 @@ addLayer("Homeworld", {
             mineralConsumption() {
                 let eff = getBuyableAmount('Homeworld', 102).mul(0.07).plus(1)
                 if (hasUpgrade("Workshop", 10)) eff = eff.times(1.20)
+                return eff
+            },
+            fuelConsumption() {
+                let eff = getBuyableAmount('Homeworld', 102).mul(0.04).plus(1)
                 return eff
             },
             canAfford() { if (player.Minerals.mineralPoints.gte(this.cost())) {return true}},
@@ -410,8 +418,10 @@ addLayer("Homeworld", {
                 if(max.gt(getBuyableAmount('Homeworld', 102))) setBuyableAmount('Homeworld', 102, max.add(1).floor())
             },
             tooltip(){
-                if (hasUpgrade('Research', 23)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Smelters</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Smelter boosts Metals gain, but slightly lowers Wood and Mineral gain. Having at least one enables Metal gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Metals, /` +format(tmp[this.layer].buyables[this.id].mineralConsumption) + ` to Minerals, /` +format(tmp[this.layer].buyables[this.id].woodConsumption) + ` to Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A simple, wood-fueled brick furnace.”`
+                if (hasUpgrade('Research', 23) && !hasUpgrade('Workshop', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Smelters</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Smelter generates Metals, but slightly lowers Wood and Mineral gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Metals, /` +format(tmp[this.layer].buyables[this.id].mineralConsumption) + ` to Minerals, /` +format(tmp[this.layer].buyables[this.id].woodConsumption) + ` to Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A simple, wood-fueled furnace made out of clay.”`
+                if (hasUpgrade('Workshop', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Smelters</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Smelter generates Metals, but slightly lowers Fuel and Mineral gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Metals, /` +format(tmp[this.layer].buyables[this.id].mineralConsumption) + ` to Minerals, /` +format(tmp[this.layer].buyables[this.id].fuelConsumption) + ` to Fuel</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A simple, charcoal-fueled furnace made out of clay.”`
             },          
             style() {
                 if(!this.canAfford()){return {
@@ -436,8 +446,188 @@ addLayer("Homeworld", {
                 'box-shadow':'0px 0px 15px #8eff00'
                 }
             },
-            unlocked() {return (hasUpgrade('Research', 19))},
+            unlocked() {return (hasUpgrade('Research', 23))},
         },
+        103: {
+            display(){
+                if (!hasUpgrade("Workshop", 1111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Charcoal Pits<br>――――――――――――――――</b></b>
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Wood</b><br><b>`
+            },
+            cost(x) {
+                let base = new Decimal(1.65);
+                let cost = base.pow(x).times(1);
+                return cost;
+              },
+              effect() {
+                let eff = getBuyableAmount('Homeworld', 103).mul(0.10).plus(1)
+                return eff
+            },
+            woodConsumption() {
+                let eff = getBuyableAmount('Homeworld', 103).mul(0.04).plus(1)
+                return eff
+            },
+            canAfford() { if (player.Wood.woodPoints.gte(this.cost())) {return true}},
+            buy() {
+                player.Wood.woodPoints = player.Wood.woodPoints.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1e100)
+                return cap
+            },
+            buyMax() {
+                let max = player.Wood.woodPoints.div(this.cost(0)).add(1).log(1.65) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Homeworld', 103))) setBuyableAmount('Homeworld', 103, max.add(1).floor())
+            },
+            tooltip(){
+                if (hasUpgrade('Research', 27)) return `<span style='font-size:16px'><span style='color:#ffffff'>Charcoal Pits</span><br>――――――――――――<br><span style='font-size:11px'>Increases Fuel gain, but slightly decreases Wood gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Fuel, /` +format(tmp[this.layer].buyables[this.id].woodConsumption) + ` to Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Pit dug in the ground for burning firewood into charcoal.”`
+            },          
+            style() {
+                if(!this.canAfford()){return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#b37171', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#b37171', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return (hasUpgrade('Research', 27))},
+        },
+        104: {
+            display(){
+                if (!hasUpgrade("Workshop", 1111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Stone Cabins<br>――――――――――――――――</b></b>
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Minerals</b><br><b>`
+            },
+            cost(x) {
+                let base = new Decimal(1.75);
+                let cost = base.pow(x).times(2);
+                return cost;
+              },
+              effect() {
+                let eff = getBuyableAmount('Homeworld', 104).mul(0.30).plus(1)
+                return eff
+            },
+            consumption() {
+                let eff = getBuyableAmount('Homeworld', 104).mul(0.10).plus(1)
+                return eff
+            },
+            canAfford() { if (player.Minerals.mineralPoints.gte(this.cost())) {return true}},
+            buy() {
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1e100)
+                return cap
+            },
+            buyMax() {
+                let max = player.Minerals.mineralPoints.div(this.cost(0)).add(1).log(1.75) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Homeworld', 100))) setBuyableAmount('Homeworld', 100, max.add(1).floor())
+            },
+            tooltip(){
+                if (!hasUpgrade('Workshop', 1111)) return `<span style='font-size:16px'><span style='color:#ffffff'>Stone Cabins</span><br>――――――――――――<br><span style='font-size:11px'>Better house that boosts Population gain more but also halves Food gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Population, /` +format(tmp[this.layer].buyables[this.id].consumption) + ` to Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Rudimentary housing made out of cobblestone, with just enough room to fit a family.”`
+            },          
+            style() {
+                if(!this.canAfford()){return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#8C8888', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#8C8888', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return (hasUpgrade('Research', 31))},
+        },
+        105: {
+            display(){
+                if (!hasUpgrade("Workshop", 1111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Barns<br>――――――――――――――――</b></b>
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Metals</b><br><b>`
+            },
+            cost(x) {
+                let base = new Decimal(2);
+                let cost = base.pow(x).times(0.25);
+                return cost;
+              },
+              effect() {
+                let eff = getBuyableAmount('Homeworld', 105).mul(0.02).plus(1)
+                return eff
+            },
+            canAfford() { if (player.Metals.metalPoints.gte(this.cost())) {return true}},
+            buy() {
+                player.Metals.metalPoints = player.Metals.metalPoints.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1e100)
+                return cap
+            },
+            buyMax() {
+                let max = player.Metals.metalPoints.div(this.cost(0)).add(1).log(1.75) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Homeworld', 100))) setBuyableAmount('Homeworld', 100, max.add(1).floor())
+            },
+            tooltip(){
+                if (!hasUpgrade('Workshop', 1111)) return `<span style='font-size:16px'><span style='color:#ffffff'>Barns</span><br>――――――――――――<br><span style='font-size:11px'>Gives a small boost to Food, Wood, and Mineral production.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Food, Wood, Minerals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A wooden barn reinforced with a bit of metal for storage purposes.”`
+            },          
+            style() {
+                if(!this.canAfford()){return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return (hasUpgrade('Research', 33))},
+        },
+        
     },
     challenges: {
     },
@@ -461,6 +651,9 @@ addLayer("Homeworld", {
         ["raw-html", function() {if (hasUpgrade('Research', 11) && !getBuyableAmount("Homeworld", 102).gte(1)) return '(+' + format(player.Minerals.mineralGain.mul(1)) + '/s)'}, {"color": "#8C8888", "font-size": "15px"}],
         ["raw-html", function() {if (hasUpgrade('Research', 23) && getBuyableAmount("Homeworld", 102).gte(1) && !hasUpgrade('Research', 1111)) return '<span style="color:#8C8888">('+format(player.Minerals.mineralPoints)+' Minerals)</span>⠀⠀<span style="color:#BABABA">('+format(player.Metals.metalPoints)+' Metals)'}, {"color": "#A35F00", "font-size": "18px"}],
             ["raw-html", function() {if (hasUpgrade('Research', 23) && getBuyableAmount("Homeworld", 102).gte(1) && !hasUpgrade('Research', 1111)) return '<span style="color:#8C8888">('+ format(player.Minerals.mineralGain.mul(1)) + '/s)</span>⠀⠀⠀⠀⠀⠀⠀⠀<span style="color:#BABABA">(' + format(player.Metals.metalGain.mul(1)) + '/s)'}, {"color": "#A35F00", "font-size": "15px"}],
+            "blank",
+            ["raw-html", function() {if (hasUpgrade('Research', 27) && getBuyableAmount("Homeworld", 103).gte(1)) return '('+format(player.Fuel.fuelPoints)+' Fuel)'}, {"color": "#b37171", "font-size": "18px"}],
+        ["raw-html", function() {if (hasUpgrade('Research', 27) && getBuyableAmount("Homeworld", 103).gte(1)) return '(+' + format(player.Fuel.fuelGain.mul(1)) + '/s)'}, {"color": "#b37171", "font-size": "15px"}],
                 ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],
@@ -480,6 +673,8 @@ addLayer("Homeworld", {
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],
                         ["column", [ ["row", [ ["buyable", 100], "blank", ["buyable", 101], "blank", ["buyable", 102],]]]],
+                        "blank",
+                        ["column", [ ["row", [ ["buyable", 103], "blank", ["buyable", 104], "blank", ["buyable", 105],]]]],
                       ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],

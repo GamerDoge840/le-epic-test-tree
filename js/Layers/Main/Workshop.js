@@ -326,7 +326,7 @@ addLayer("Workshop", {
               },
             unlocked() {return (hasUpgrade('Research', 18))},
             tooltip(){
-                return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Housing</span><br>――――――――――――<br><span style='font-size:11px'>Build better shelter using bricks. Upgrades Huts into Brick Houses, boosting their effect by 1.50x, but also their consumption by 1.75x.</span><br>――――――――――――――――――<br>
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Housing</span><br>――――――――――――<br><span style='font-size:11px'>Build better shelter using clay bricks. Upgrades Huts into Brick Houses, boosting their effect by 1.50x, but also their Food penalty by 1.75x.</span><br>――――――――――――――――――<br>
                     </span><span style='font-size:11px'><span style='color:#757575'>“”`
             },
             style() {
@@ -477,7 +477,7 @@ addLayer("Workshop", {
             costs: {
                 Minerals: 5,
                 Food: 50,
-                Wood: 25,
+                Wood: 50,
               },
               canAfford() {
                 return player.Minerals.mineralPoints.gte(this.costs.Minerals)
@@ -525,7 +525,7 @@ addLayer("Workshop", {
             },
         },
         10: {    
-            fullDisplay() {return `<font size="3"><b>[W10] Kilns</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[WO10] Kilns</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
@@ -578,7 +578,223 @@ addLayer("Workshop", {
                     }
                 }
             },
-        },                                                           
+        },
+        11: {    
+            fullDisplay() {return `<font size="3"><b>[WO11] Charcoal-Fueled Furnaces</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Fuel)+` Fuel`},        
+            costs: {
+                Minerals: 7,
+                Wood: 20,
+                Fuel: 2,
+              },
+              canAfford() {
+                return player.Minerals.mineralPoints.gte(this.costs.Minerals)
+                    && player.Wood.woodPoints.gte(this.costs.Wood)
+                    && player.Fuel.fuelPoints.gte(this.costs.Fuel)
+              },
+              pay() {
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+                player.Fuel.fuelPoints = player.Fuel.fuelPoints.minus(this.costs.Fuel);
+              },
+            unlocked() {return (hasUpgrade('Research', 27))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Charcoal-Fueled Furnaces</span><br>――――――――――――<br><span style='font-size:11px'>Upgrade Brick Furnaces with better fuel. Boosts furnaces' Metal boost by 50%, and they now halve Fuel instead of Wood.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#918D80',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        12: {    
+            fullDisplay() {return `<font size="3"><b>[WO12] Tin Tools</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Fuel)+` Fuel`},        
+            costs: {
+                Minerals: 8,
+                Metals: 2,
+                Fuel: 2,
+              },
+              canAfford() {
+                return player.Minerals.mineralPoints.gte(this.costs.Minerals)
+                    && player.Metals.metalPoints.gte(this.costs.Metals)
+                    && player.Fuel.fuelPoints.gte(this.costs.Fuel)
+              },
+              pay() {
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+                player.Metals.metalPoints = player.Metals.metalPoints.minus(this.costs.Metals);
+                player.Fuel.fuelPoints = player.Fuel.fuelPoints.minus(this.costs.Fuel);
+              },
+            unlocked() {return (hasUpgrade('Research', 29))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Tin Tools</span><br>――――――――――――<br><span style='font-size:11px'>Tin axes, farming tools, and pickaxes. Boosts Wood, Food, and Minerals gain by 25%.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#918D80',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        13: {    
+            fullDisplay() {return `<font size="3"><b>[WO13] Stone Wall</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
+            costs: {
+                Minerals: 4,
+                Wood: 80,
+              },
+              canAfford() {
+                return player.Minerals.mineralPoints.gte(this.costs.Minerals)
+                    && player.Wood.woodPoints.gte(this.costs.Wood)
+              },
+              pay() {
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+              },
+            unlocked() {return (hasUpgrade('Research', 30))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Stone Wall</span><br>――――――――――――<br><span style='font-size:11px'>Reinforce wooden walls with stone. Boosts Population gain by 10% and Food gain by 5%.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#918D80',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        14: {    
+            fullDisplay() {return `<font size="3"><b>[WO14] Copper Tools</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Fuel)+` Fuel`},        
+            costs: {
+                Minerals: 10,
+                Metals: 3,
+                Fuel: 6,
+              },
+              canAfford() {
+                return player.Minerals.mineralPoints.gte(this.costs.Minerals)
+                    && player.Metals.metalPoints.gte(this.costs.Metals)
+                    && player.Fuel.fuelPoints.gte(this.costs.Fuel)
+              },
+              pay() {
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+                player.Metals.metalPoints = player.Metals.metalPoints.minus(this.costs.Metals);
+                player.Fuel.fuelPoints = player.Fuel.fuelPoints.minus(this.costs.Fuel);
+              },
+            unlocked() {return (hasUpgrade('Research', 32))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Copper Tools</span><br>――――――――――――<br><span style='font-size:11px'>Copper axes, farming tools, and pickaxes. Boosts Wood, Food, and Minerals gain by 10%.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#918D80',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },                                                                                        
     },
     buyables: {
     },
@@ -636,14 +852,15 @@ addLayer("Workshop", {
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#5E5D5D", "font-size": "32px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 10)) return "―――――――――――――――――――――――――――――"}, {"color": "#5E5D5D",}],
                     ["raw-html", function() {if (hasUpgrade('Research', 10)) return "(" + format(player.Food.foodPoints) + " Food)"}, {"color": "#8ED47F", "font-size": "20px"}],
                     ["raw-html", function() {if (hasUpgrade('Research', 10)) return '('+format(player.Wood.woodPoints)+' Wood)'}, {"color": "#A35F00", "font-size": "20px"}],
                     ["raw-html", function() {if (hasUpgrade('Research', 11)) return '('+format(player.Minerals.mineralPoints)+' Minerals)'}, {"color": "#8C8888", "font-size": "19px"}],
                     ["raw-html", function() {if (hasUpgrade('Research', 23)) return '('+format(player.Metals.metalPoints)+' Metals)'}, {"color": "#BABABA", "font-size": "20px"}],
+                    ["raw-html", function() {if (hasUpgrade('Research', 27)) return '('+format(player.Fuel.fuelPoints)+' Fuel)'}, {"color": "#b37171", "font-size": "20px"}],
                     ["raw-html", function() {if (hasUpgrade('Research', 10)) return "―――――――――――――――――――――――――――――"}, {"color": "#5E5D5D",}],
                     "blank",
                     ["column", [ ["row", [ ["upgrade", 9], ["upgrade", 10], ["upgrade", 11], ["upgrade", 12],]]]],
+                    ["column", [ ["row", [ ["upgrade", 13], ["upgrade", 14], ["upgrade", 15], ["upgrade", 16],]]]],
                     "blank",
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},

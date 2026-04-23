@@ -3,7 +3,7 @@ let modInfo = {
 	id: "evolvemaxxing",
 	author: "The Big G",
 	pointsName: "Research",
-	modFiles: ["Layers/Main/Intermediate Materials/Metals.js","Layers/Main/Basic Materials/Minerals.js","Layers/Main/Workshop.js","Layers/Main/Basic Materials/Wood.js","Layers/Main/Core Resources/Population.js","Layers/Main/Basic Materials/Food.js","Layers/Main/Core Resources/Research.js","Layers/Main/Homeworld.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
+	modFiles: ["Layers/Main/Intermediate Materials/Fuel.js","Layers/Main/Intermediate Materials/Metals.js","Layers/Main/Basic Materials/Minerals.js","Layers/Main/Workshop.js","Layers/Main/Basic Materials/Wood.js","Layers/Main/Core Resources/Population.js","Layers/Main/Basic Materials/Food.js","Layers/Main/Core Resources/Research.js","Layers/Main/Homeworld.js","math.js", "Layers/Side/achievements.js", "Layers/Side/stats.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",

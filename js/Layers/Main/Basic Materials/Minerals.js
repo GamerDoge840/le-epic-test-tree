@@ -14,10 +14,17 @@ addLayer("Minerals", {
 
         //Mineral Boosts
         player.Minerals.mineralGain = player.Minerals.mineralGain.mul(buyableEffect("Homeworld", 3))
+        player.Minerals.mineralGain = player.Minerals.mineralGain.mul(buyableEffect("Homeworld", 105))
         if (hasUpgrade('Research', 17)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.25)
         if (hasUpgrade('Research', 18)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.10)
         if (hasUpgrade('Workshop', 7))  player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.05)
         if (hasUpgrade('Research', 22))  player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.25)
+        if (hasUpgrade('Research', 28))  player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.20)
+        if (hasUpgrade('Research', 29))  player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.05)
+        if (hasUpgrade('Research', 30))  player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.10)
+        if (hasUpgrade('Research', 32))  player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.05)
+        if (hasUpgrade('Workshop', 12)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.25)
+        if (hasUpgrade('Workshop', 14)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.10)
         if (hasUpgrade('Research', 12)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(tmp.Homeworld.buyables[1].effect3)
 
         //Penalties
