@@ -63,16 +63,22 @@ addLayer("Homeworld", {
                 let eff = getBuyableAmount('Homeworld', 1).mul(1).plus(1)
                 if (hasUpgrade("Workshop", 1)) eff = eff.times(1.05)
                 if (hasUpgrade("Workshop", 5)) eff = eff.times(1.20)
+                if (hasUpgrade("Research", 34)) eff = eff.times(1.10)
+                if (hasUpgrade("Workshop", 15)) eff = eff.times(1.05)
                 return eff
             },
             effect2() {
                 let eff = getBuyableAmount('Homeworld', 1).mul(0.25).plus(1)
                 if (hasUpgrade("Workshop", 2)) eff = eff.times(1.25)
                 if (hasUpgrade("Workshop", 3)) eff = eff.times(1.25)
+                if (hasUpgrade("Research", 34)) eff = eff.times(1.10)
+                if (hasUpgrade("Workshop", 15)) eff = eff.times(1.05)
                 return eff
             },
             effect3() {
                 let eff = getBuyableAmount('Homeworld', 1).mul(0.05).plus(1)
+                if (hasUpgrade("Research", 34)) eff = eff.times(1.10)
+                if (hasUpgrade("Workshop", 15)) eff = eff.times(1.05)
                 return eff
             },       
             canAfford() { if (player.Population.populationPoints.gte(this.cost())) {return true}},
@@ -375,7 +381,7 @@ addLayer("Homeworld", {
         },
         102: {
             display(){
-                if (!hasUpgrade("Workshop", 1111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Brick Smelters<br>――――――――――――――――</b></b>
+                if (!hasUpgrade("Workshop", 1111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Brick Furnaces<br>――――――――――――――――</b></b>
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Minerals</b><br><b>`
             },
             cost(x) {
@@ -418,9 +424,9 @@ addLayer("Homeworld", {
                 if(max.gt(getBuyableAmount('Homeworld', 102))) setBuyableAmount('Homeworld', 102, max.add(1).floor())
             },
             tooltip(){
-                if (hasUpgrade('Research', 23) && !hasUpgrade('Workshop', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Smelters</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Smelter generates Metals, but slightly lowers Wood and Mineral gain.</span><br>――――――――――――――――――<br>
+                if (hasUpgrade('Research', 23) && !hasUpgrade('Workshop', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Furnaces</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Furnace generates Metals, but slightly lowers Wood and Mineral gain.</span><br>――――――――――――――――――<br>
                     <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Metals, /` +format(tmp[this.layer].buyables[this.id].mineralConsumption) + ` to Minerals, /` +format(tmp[this.layer].buyables[this.id].woodConsumption) + ` to Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A simple, wood-fueled furnace made out of clay.”`
-                if (hasUpgrade('Workshop', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Smelters</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Smelter generates Metals, but slightly lowers Fuel and Mineral gain.</span><br>――――――――――――――――――<br>
+                if (hasUpgrade('Workshop', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Furnaces</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Furnace generates Metals, but slightly lowers Fuel and Mineral gain.</span><br>――――――――――――――――――<br>
                     <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Metals, /` +format(tmp[this.layer].buyables[this.id].mineralConsumption) + ` to Minerals, /` +format(tmp[this.layer].buyables[this.id].fuelConsumption) + ` to Fuel</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A simple, charcoal-fueled furnace made out of clay.”`
             },          
             style() {
@@ -521,6 +527,7 @@ addLayer("Homeworld", {
               },
               effect() {
                 let eff = getBuyableAmount('Homeworld', 104).mul(0.30).plus(1)
+                if (hasUpgrade("Workshop", 16)) eff = eff.times(1.25)
                 return eff
             },
             consumption() {

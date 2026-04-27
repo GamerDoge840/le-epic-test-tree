@@ -794,7 +794,168 @@ addLayer("Workshop", {
                     }
                 }
             },
-        },                                                                                        
+        },
+        15: {    
+            fullDisplay() {return `<font size="3"><b>[WO15] Straw Baskets</b><font size="2"><br>――――――――――――<br>
+                  Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood, `
+                 +formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food`},                
+            costs: {
+                Food: 15,
+                Wood: 22
+              },
+              canAfford() {
+                return player.Food.foodPoints.gte(this.costs.Food)
+                    && player.Wood.woodPoints.gte(this.costs.Wood)
+              },
+              pay() {
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+              },
+            unlocked() {return (hasUpgrade('Research', 35))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Straw Baskets</span><br>――――――――――――<br><span style='font-size:11px'>Better implements for gathering. Boosts Hunter-Gatherers' effects by 5%.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#918D80',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        16: {    
+            fullDisplay() {return `<font size="3"><b>[WO16] Straw Bedding</b><font size="2"><br>――――――――――――<br>
+                  Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood, `
+                 +formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, `
+                +formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals`},                
+            costs: {
+                Food: 35,
+                Wood: 55,
+                Minerals: 23
+              },
+              canAfford() {
+                return player.Food.foodPoints.gte(this.costs.Food)
+                    && player.Wood.woodPoints.gte(this.costs.Wood)
+                    && player.Minerals.mineralPoints.gte(this.costs.Minerals)
+              },
+              pay() {
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+              },
+            unlocked() {return (hasUpgrade('Workshop', 15))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Straw Bedding</span><br>――――――――――――<br><span style='font-size:11px'>Bedding made out of straw. Boosts Stone Cabins' Population effect by 25%.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#918D80',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        17: {    
+            fullDisplay() {return `<font size="3"><b>[WO17] Copper Shovels</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Fuel)+` Fuel`},        
+            costs: {
+                Wood: 58,
+                Metals: 7,
+                Fuel: 7,
+              },
+              canAfford() {
+                return player.Wood.woodPoints.gte(this.costs.Wood)
+                    && player.Metals.metalPoints.gte(this.costs.Metals)
+                    && player.Fuel.fuelPoints.gte(this.costs.Fuel)
+              },
+              pay() {
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+                player.Metals.metalPoints = player.Metals.metalPoints.minus(this.costs.Metals);
+                player.Fuel.fuelPoints = player.Fuel.fuelPoints.minus(this.costs.Fuel);
+              },
+            unlocked() {return (hasUpgrade('Research', 36))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Copper Shovels</span><br>――――――――――――<br><span style='font-size:11px'>Shovels for digging. Boosts Mineral gain by 10%.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#918D80',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },                                                                                            
     },
     buyables: {
     },
@@ -861,6 +1022,7 @@ addLayer("Workshop", {
                     "blank",
                     ["column", [ ["row", [ ["upgrade", 9], ["upgrade", 10], ["upgrade", 11], ["upgrade", 12],]]]],
                     ["column", [ ["row", [ ["upgrade", 13], ["upgrade", 14], ["upgrade", 15], ["upgrade", 16],]]]],
+                    ["column", [ ["row", [ ["upgrade", 17], ["upgrade", 18], ["upgrade", 19], ["upgrade", 20],]]]],
                     "blank",
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},

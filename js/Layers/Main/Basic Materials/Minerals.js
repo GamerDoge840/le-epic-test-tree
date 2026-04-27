@@ -25,6 +25,7 @@ addLayer("Minerals", {
         if (hasUpgrade('Research', 32))  player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.05)
         if (hasUpgrade('Workshop', 12)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.25)
         if (hasUpgrade('Workshop', 14)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.10)
+        if (hasUpgrade('Workshop', 17)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(1.10)
         if (hasUpgrade('Research', 12)) player.Minerals.mineralGain = player.Minerals.mineralGain.mul(tmp.Homeworld.buyables[1].effect3)
 
         //Penalties

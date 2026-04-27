@@ -25,6 +25,7 @@ addLayer("Food", {
         if (hasUpgrade('Workshop', 14)) player.Food.foodGain = player.Food.foodGain.mul(1.10)
 
         //Penalties
+        if (hasUpgrade('Research', 34)) player.Food.foodGain = player.Food.foodGain.dividedBy(1.30)
         player.Food.foodGain = player.Food.foodGain.dividedBy(tmp.Homeworld.buyables[100].consumption)
         player.Food.foodGain = player.Food.foodGain.dividedBy(tmp.Homeworld.buyables[104].consumption)
 

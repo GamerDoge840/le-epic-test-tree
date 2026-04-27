@@ -1259,7 +1259,7 @@ addLayer("Research", {
             branches: ["Research", 22,],
             unlocked() {return (hasUpgrade('Research', 22))},
             tooltip(){
-                return `<span style='font-size:16px'><span style='color:#ffffff'>Smelting</span><br>――――――――――――<br><span style='font-size:11px'>Figure out how to smelt minerals and bring the Stone Age to the end. Unlocks Research Tier 1, a new resource, and the Brick Smelter.</span><br>――――――――――――――――――<br>
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Smelting</span><br>――――――――――――<br><span style='font-size:11px'>Figure out how to smelt minerals and bring the Stone Age to the end. Unlocks Research Tier 1, a new resource, and the Brick Furnace.</span><br>――――――――――――――――――<br>
                     </span><span style='font-size:11px'><span style='color:#757575'>“”`
             },
             style() {
@@ -1847,7 +1847,171 @@ addLayer("Research", {
                     }
                 }
             },
-        },                                                                                                                   
+        },
+        34: {    
+            fullDisplay() {return `<font size="3"><b>[R34] Leatherworking</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, `
+                 +formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food`},                
+            costs: {
+                Research: 1.5,
+                Food: 50
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Food.foodPoints.gte(this.costs.Food)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+              },
+            branches: ["Research", 32, "Research", 33,],
+            unlocked() {return (hasUpgrade('Research', 32) && hasUpgrade('Research', 33))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Leatherworking</span><br>――――――――――――<br><span style='font-size:11px'>Clothing and armor from animal skins. Boosts Hunter-Gatherers by 10% but divides Food gain by /0.30.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        35: {    
+            fullDisplay() {return `<font size="3"><b>[R35] Straw Working</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, `
+                +format(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood,`
+                 +formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food`},                
+            costs: {
+                Research: 1.3,
+                Food: 60,
+                Wood: 50
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Food.foodPoints.gte(this.costs.Food)
+                    && player.Wood.woodPoints.gte(this.costs.Wood)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+              },
+            branches: ["Research", 34,],
+            unlocked() {return (hasUpgrade('Research', 34))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Straw Working</span><br>――――――――――――<br><span style='font-size:11px'>Look into using dry stalk byproducts from farming as a new building material. Unlocks new Workshop upgrades.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        36: {    
+            fullDisplay() {return `<font size="3"><b>[R36] Digging Tools</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, `
+                +format(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood, `
+                 +formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals`},                
+            costs: {
+                Research: 1,
+                Minerals: 10,
+                Wood: 30
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Minerals.mineralPoints.gte(this.costs.Minerals)
+                    && player.Wood.woodPoints.gte(this.costs.Wood)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+              },
+            branches: ["Research", 34,],
+            unlocked() {return (hasUpgrade('Research', 34))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Digging Tools</span><br>――――――――――――<br><span style='font-size:11px'>Implements for soil collection and more. Unlocks a new workshop upgrade.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },                                                                                                                               
     },
     buyables: {
     },
@@ -1950,6 +2114,10 @@ addLayer("Research", {
                     ["column", [ ["row", [ ["upgrade", 28], "blank", ["upgrade", 29], "blank", ["upgrade", 30],]]]],
                     "blank",
                     ["column", [ ["row", [ ["upgrade", 32], "blank", ["upgrade", 31], "blank", ["upgrade", 33],]]]],
+                    "blank",
+                    ["column", [ ["row", [ ["upgrade", 34],]]]],
+                    "blank",
+                    ["column", [ ["row", [ ["upgrade", 35], "blank", ["upgrade", 36],]]]],
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#BDF9FF", "font-size": "32px"}],
