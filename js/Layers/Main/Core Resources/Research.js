@@ -2011,7 +2011,63 @@ addLayer("Research", {
                     }
                 }
             },
-        },                                                                                                                               
+        },
+        37: {    
+            fullDisplay() {return `<font size="3"><b>[R37] Culture</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, `
+                +format(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, `
+                 +formatWhole(tmp[this.layer].upgrades[this.id].costs.Population)+` Population`},                
+            costs: {
+                Research: 1,
+                Population: 100,
+                Food: 90
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Population.populationPoints.gte(this.costs.Population)
+                    && player.Food.foodPoints.gte(this.costs.Food)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Population.populationPoints = player.Population.populationPoints.minus(this.costs.Population);
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+              },
+            branches: ["Research", 36, 'Research', 35],
+            unlocked() {return (hasUpgrade('Research', 36) && hasUpgrade('Research', 35))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Culture</span><br>――――――――――――<br><span style='font-size:11px'>Unlocks a new resource and tab in the Homeworld layer.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },                                                                                                                                  
     },
     buyables: {
     },
@@ -2118,6 +2174,8 @@ addLayer("Research", {
                     ["column", [ ["row", [ ["upgrade", 34],]]]],
                     "blank",
                     ["column", [ ["row", [ ["upgrade", 35], "blank", ["upgrade", 36],]]]],
+                    "blank",
+                    ["column", [ ["row", [ ["upgrade", 37], "blank", ["upgrade", 38],]]]],
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#BDF9FF", "font-size": "32px"}],

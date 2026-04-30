@@ -496,7 +496,7 @@ addLayer("Workshop", {
             },
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
                     "width": "155px",
             "height": "155px",
             'border': '5px solid',
@@ -551,7 +551,7 @@ addLayer("Workshop", {
             },
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
                     "width": "155px",
             "height": "155px",
             'border': '5px solid',
@@ -606,7 +606,7 @@ addLayer("Workshop", {
             },
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
                     "width": "155px",
             "height": "155px",
             'border': '5px solid',
@@ -661,7 +661,7 @@ addLayer("Workshop", {
             },
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
                     "width": "155px",
             "height": "155px",
             'border': '5px solid',
@@ -712,7 +712,7 @@ addLayer("Workshop", {
             },
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
                     "width": "155px",
             "height": "155px",
             'border': '5px solid',
@@ -767,7 +767,7 @@ addLayer("Workshop", {
             },
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
                     "width": "155px",
             "height": "155px",
             'border': '5px solid',
@@ -818,7 +818,7 @@ addLayer("Workshop", {
             },
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
                     "width": "155px",
             "height": "155px",
             'border': '5px solid',
@@ -873,7 +873,7 @@ addLayer("Workshop", {
             },
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
                     "width": "155px",
             "height": "155px",
             'border': '5px solid',
@@ -928,7 +928,7 @@ addLayer("Workshop", {
             },
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
-                    "background": "linear-gradient(60deg, #FFFFFF, #969696)",
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
                     "width": "155px",
             "height": "155px",
             'border': '5px solid',
