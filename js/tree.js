@@ -1,6 +1,6 @@
 var layoutInfo = {
     startTab: "none",
-    startNavTab: "tree-tab",
+    startNavTab: "universe-1",
 	showTree: true,
 
     treeLayout: ""
@@ -18,15 +18,15 @@ addNode("blank", {
 addNode("PAU",{
     row: "side",
     color:'blue',
+    tooltip: 'Pause Game',
     onClick(){if(player.devSpeed!=1e-300) player.devSpeed = 1e-300
     else player.devSpeed = 1},
     canClick(){return true}
 })
 
-addLayer("tree-tab", {
+addLayer("universe-1", {
     tabFormat: [["tree", [
-        ['Charge'],
-        ['ColorCharge', 'Quarks'],
+        ['e'],
         ],
     ]],
     previousTab: "",

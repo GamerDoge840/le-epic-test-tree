@@ -225,3 +225,92 @@ var systemComponents = {
 
 }
 
+function GlowingColor(input, timefactor = 1, basecolor = "#000000"){
+	let RGBArray = [0,0,0];
+	if (typeof(input)==='object') RGBArray = input;
+	if (typeof(input)==='string') {
+		if (input != HexToRGBString(input)) input = HexToRGBString(input);
+		RGBArray = RGBStringToArray(input);
+	};
+
+	let basecolorArray = [0,0,0]
+	let outputArray = [0,0,0];
+
+	if (typeof(basecolor)==='object') basecolorArray = input;
+	if (typeof(basecolor)==='string') {
+		if (basecolor != HexToRGBString(basecolor)) basecolor = HexToRGBString(basecolor);
+		basecolorArray = RGBStringToArray(basecolor);
+	};
+
+	for (index in RGBArray)
+	{
+		outputArray[index] = Math.min(Math.round((basecolorArray[index]+RGBArray[index])/2+(RGBArray[index]-basecolorArray[index])/2*Math.sin((Date.now()/1000)/timefactor*2*Math.PI)),255);
+	}
+
+	return RGBToHexString(RGBArrayToString(outputArray))
+}
+function HexToRGBString(Hexinput){
+    // 16进制颜色值的正则
+  let reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+  // 把颜色值变成小写
+  Hexinput = Hexinput.toLowerCase();
+  if (reg.test(Hexinput)) {
+    // 如果只有三位的值，需变成六位，如：#fff => #ffffff
+    if (Hexinput.length === 4) {
+      let colorNew = "#";
+      for (let i = 1; i < 4; i += 1) {
+        colorNew += Hexinput.slice(i, i + 1).concat(Hexinput.slice(i, i + 1));
+      }
+      Hexinput = colorNew;
+    }
+    // 处理六位的颜色值，转为RGB
+    let colorChange = [];
+    for (let i = 1; i < 7; i += 2) {
+      colorChange.push(parseInt("0x" + Hexinput.slice(i, i + 2)));
+    }
+    return "RGB(" + colorChange.join(",") + ")";
+  } else {
+    return Hexinput;
+  }
+}
+function RGBStringToArray(RGBinput){
+    let reg = /^(rgb|RGB)/;
+    if (reg.test(RGBinput)){
+        // 把RGB的3个数值变成数组
+        let colorArr = RGBinput.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+        for (index in colorArr)
+            colorArr[index] = Number(colorArr[index]);
+        return colorArr;
+    }
+    else return [NaN,NaN,NaN];
+}
+function RGBToHexString(RGBinput){
+    // RGB颜色值的正则
+  let reg = /^(rgb|RGB)/;
+  if (reg.test(RGBinput)) {
+    let strHex = "#";
+    // 把RGB的3个数值变成数组
+    let colorArr = RGBinput.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+    // 转成16进制
+    for (let i = 0; i < colorArr.length; i++) {
+      let hex = Number(colorArr[i]).toString(16);
+      if (hex === "0") {
+        hex += hex;
+      }
+	  else if (colorArr[i]<16){
+		hex = "0"+hex;
+	  }
+      strHex += hex;
+    }
+    return strHex;
+  } else {
+    return String(RGBinput);
+  }
+}
+function RGBArrayToString(Arrayinput){
+    if (Arrayinput.length!=3) return "RGB(0,0,0)";
+    else return ("RGB("+Arrayinput[0]+","+Arrayinput[1]+","+Arrayinput[2]+")");
+}
+
+
+
