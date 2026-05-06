@@ -8,7 +8,7 @@ addLayer("ach", {
     }},
     nodeStyle() {
         return {
-            'border': '3px solid #E1C16E',
+            'border': '2px solid #ffffff',
             "width": 65,
         "height": 65,
         'min-height': '65px',
@@ -22,7 +22,7 @@ addLayer("ach", {
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
-    tooltip() {return format(player.ach.achievements.length,0)+"/1 Achievements Completed"},
+    tooltip() {return format(player.ach.achievements.length,0)+"/"+format(Object.keys(tmp.ach.achievements).length - 2,0)+" Achievements Completed"},
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         return mult
@@ -36,11 +36,44 @@ addLayer("ach", {
     ],
     layerShown(){return true},
     achievements: {
-		11:{
+		1:{
 			name: "[1]<br><span style='color:#bebe8e'>The Beginning</span>",
             done() {return hasUpgrade("e", 11)},
             //done() {return player.points.gte('1')},
-            tooltip() {return "Start generation of Energy.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>This should be simple enough, I hope."},
+            tooltip() {return "Start generation of Energy.<br>――――――――――――<br> <span style='font-size:11px'>"},
+            style() {
+                return {
+                    "border-color": "#bebe8e",
+                    "border-width": "3px"
+                }
+            }
+        },
+        2:{
+			name: "[2]<br><span style='color:#bebe8e'>Energy, I</span>",
+            done() {return hasUpgrade("e", 14)},
+            tooltip() {return "Buy the first row of Energy upgrades.<br>――――――――――――<br> <span style='font-size:11px'>"},
+            style() {
+                return {
+                    "border-color": "#bebe8e",
+                    "border-width": "3px"
+                }
+            }
+        },
+        3:{
+			name: "[3]<br><span style='color:#bebe8e'>Energy, II</span>",
+            done() {return hasUpgrade("e", 24)},
+            tooltip() {return "Buy the second row of Energy upgrades.<br>――――――――――――<br> <span style='font-size:11px'>"},
+            style() {
+                return {
+                    "border-color": "#bebe8e",
+                    "border-width": "3px"
+                }
+            }
+        },
+        4:{
+			name: "[4]<br><span style='color:#bebe8e'>Energy, III</span>",
+            done() {return hasUpgrade("e", 34)},
+            tooltip() {return "Buy the third row of Energy upgrades.<br>――――――――――――<br> <span style='font-size:11px'>"},
             style() {
                 return {
                     "border-color": "#bebe8e",
@@ -62,7 +95,7 @@ addLayer("ach", {
                     {"color": "Gray", "font-size": "23px"}],
                     "blank",
                     "blank",
-                    ["achievements", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]],
+                    ["column", [ ["row", [ ["achievement", 1], ["achievement", 2], ["achievement", 3], ["achievement", 4], ["achievement", 5], ]]]],
                     "blank",
             ],
         },

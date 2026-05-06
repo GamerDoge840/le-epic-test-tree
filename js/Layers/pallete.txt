@@ -9,6 +9,7 @@ gain=gain.times(buyableEffect('Fruits', 2))
 if (player.Level.total.gte(1))
 		gain = gain.times(tmp.Level.essenceEffect);
 if (hasMilestone('Level', 1)) gain = gain.times(tmp.Level.milestones[1].effect)
+gain=gain.times(buyableEffect('Beans', 1))
 
 //actual effects
    /prestige boost
@@ -60,3 +61,14 @@ if (hasMilestone('Level', 1)) gain = gain.times(tmp.Level.milestones[1].effect)
 
 //linear gradient
    "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+
+//display softcap
+  fullDisplay(){
+                if (!upgradeEffect(this.layer, this.id).gte("1.5")) return `<font size="2"><b>[E12] Friction</b><font size="1"><br>Boost Energy gain based on Energy upgrades bought.<br>――――――――――――――――――<br>
+                Effect:  `+format(upgradeEffect(this.layer, this.id))+`x <br>――――――――――――――――――<br>
+                Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`    
+                if (upgradeEffect(this.layer, this.id).gte("1.5")) return `<font size="2"><b>[E12] Friction</b><font size="1"><br>Boost Energy gain based on Energy upgrades bought.<br>――――――――――――――――――<br>
+                Effect:  `+format(upgradeEffect(this.layer, this.id))+`x <br><span style='color:red'>[SOFTCAPPED]</span><br>――――――――――――――――――<br>
+                Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`},
+//simple hardcap
+  return eff.min(3);
