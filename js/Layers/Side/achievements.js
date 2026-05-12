@@ -81,6 +81,52 @@ addLayer("ach", {
                 }
             }
         },
+        5:{
+			name: "[5]<br><span style='color:#FFFFBD'>First Reset</span>",
+            done() {return player.c.points.gte('1')},
+            tooltip() {return "Do your first Charge reset.<br>――――――――――――<br> <span style='font-size:11px'>"},
+            style() {
+                return {
+                    "border-color": "#FFFFBD",
+                    "border-width": "3px"
+                }
+            }
+        },
+        6:{
+			name: "[6]<br><span style='color:#FFFFBD'>Charge, I</span>",
+            done() {return hasUpgrade("c", 14)},
+            tooltip() {return "Buy the first row of Charge upgrades.<br>――――――――――――<br> <span style='font-size:11px'>"},
+            style() {
+                return {
+                    "border-color": "#FFFFBD",
+                    "border-width": "3px"
+                }
+            }
+        },
+        7:{
+			name: "[7]<br><span style='color:#FFFFBD'>Charge, II</span>",
+            done() {return hasUpgrade("c", 24)},
+            unlocked() { return hasAchievement("ach", 6) },
+            tooltip() {return "Buy the second row of Charge upgrades.<br>――――――――――――<br> <span style='font-size:11px'>"},
+            style() {
+                return {
+                    "border-color": "#FFFFBD",
+                    "border-width": "3px"
+                }
+            }
+        },
+        8:{
+			name: "[8]<br><span style='color:#FFFFBD'>Charge, III</span>",
+            done() {return hasUpgrade("c", 34)},
+            unlocked() { return hasAchievement("ach", 6) },
+            tooltip() {return "Buy the third row of Charge upgrades.<br>――――――――――――<br> <span style='font-size:11px'>"},
+            style() {
+                return {
+                    "border-color": "#FFFFBD",
+                    "border-width": "3px"
+                }
+            }
+        },
     },
     
     tabFormat: {
@@ -95,7 +141,8 @@ addLayer("ach", {
                     {"color": "Gray", "font-size": "23px"}],
                     "blank",
                     "blank",
-                    ["column", [ ["row", [ ["achievement", 1], ["achievement", 2], ["achievement", 3], ["achievement", 4], ["achievement", 5], ]]]],
+                    ["column", [ ["row", [ ["achievement", 1], ["achievement", 2], ["achievement", 3], ["achievement", 4], ["achievement", 5], ["achievement", 6], ]]]],
+                    ["column", [ ["row", [ ["achievement", 7], ["achievement", 8], ["achievement", 9], ["achievement", 10], ["achievement", 11], ["achievement", 12], ]]]],
                     "blank",
             ],
         },

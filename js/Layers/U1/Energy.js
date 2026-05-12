@@ -39,7 +39,10 @@ addLayer("e", {
         //if (hasUpgrade('Essence', 1111)) return 1
 	return 0
     },
-    milestones: {
+    automate() {
+        if(hasUpgrade('c', 14)) buyMaxBuyable('e', 11)
+        if(hasUpgrade('c', 24)) buyMaxBuyable('e', 12)
+        if(hasUpgrade('c', 34)) buyMaxBuyable('e', 13)
     },
     upgrades: {
         11: {
@@ -53,8 +56,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -62,8 +65,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -73,8 +76,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -82,17 +85,17 @@ addLayer("e", {
         },
         12: {
             fullDisplay(){
-                if (!upgradeEffect(this.layer, this.id).gte("1000")) return `<font size="2"><b>[E12] Friction</b><font size="1"><br>Boost Energy gain based on Energy upgrades bought.<br>――――――――――――――――――<br>
+                if (!upgradeEffect(this.layer, this.id).gte("40")) return `<font size="2"><b>[E12] Friction</b><font size="1"><br>Boost Energy gain based on Energy upgrades bought.<br>――――――――――――――――――<br>
                 Effect:  `+format(upgradeEffect(this.layer, this.id))+`x <br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy` 
-                if (upgradeEffect(this.layer, this.id).gte("1000")) return `<font size="2"><b>[E12] Friction</b><font size="1"><br>Boost Energy gain based on Energy upgrades bought.<br>――――――――――――――――――<br>
+                if (upgradeEffect(this.layer, this.id).gte("40")) return `<font size="2"><b>[E12] Friction</b><font size="1"><br>Boost Energy gain based on Energy upgrades bought.<br>――――――――――――――――――<br>
                 Effect:  `+format(upgradeEffect(this.layer, this.id))+`x <br><span style='color:red'>[SOFTCAPPED]</span <br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`},
             unlocked() { return hasUpgrade("e", 11) },
             effect() {
                 let eff = Decimal.pow(1.25, player.e.upgrades.length);
-                scpow = 0.50
-                eff = softcap(eff, new Decimal("1000"), scpow)
+                scpow = 0.1
+                eff = softcap(eff, new Decimal("40"), scpow)
                 return eff;
             },
             cost: new Decimal(0.0050),
@@ -101,8 +104,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -110,8 +113,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -121,8 +124,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -147,8 +150,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -156,8 +159,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -167,8 +170,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -176,7 +179,7 @@ addLayer("e", {
         },
         14: {
             fullDisplay(){
-                return `<font size="2"><b>[E14] Buyables</b><font size="1"><br>Unlock a repeatable buyable upgrade.<br>――――――――――――――――――<br>
+                return `<font size="2"><b>[E14] Energy Buyables</b><font size="1"><br>Unlock a repeatable buyable upgrade.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`}, 
             unlocked() { return hasUpgrade("e", 13) },
             cost: new Decimal(0.0170),
@@ -185,8 +188,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -194,8 +197,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -205,8 +208,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -227,8 +230,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -236,8 +239,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -247,8 +250,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -262,6 +265,7 @@ addLayer("e", {
             cost: new Decimal(0.0700),
             effect() {
                 eff = new Decimal(1.25)
+                if (hasUpgrade("c", 33)) eff = eff.times(upgradeEffect("c", 33))
                 return eff
             },
             tooltip() {return "<span style='color:#ffffff'>[E22] Accumulation from Nothing</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FFEB00'>"},
@@ -269,8 +273,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -278,8 +282,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -289,13 +293,13 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
             },
-        },    
+        },
         23: {
             fullDisplay(){
                 if (!upgradeEffect(this.layer, this.id).gte("100")) return `<font size="2"><b>[E23] Energy Synergy</b><font size="1"><br>Energy boosts itself.<br>――――――――――――――――――<br>
@@ -317,8 +321,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -326,8 +330,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -337,8 +341,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -346,7 +350,7 @@ addLayer("e", {
         },
         24: {
             fullDisplay(){
-                return `<font size="2"><b>[E24] Buyables, II</b><font size="1"><br>Unlock another repeatable buyable upgrade.<br>――――――――――――――――――<br>
+                return `<font size="2"><b>[E24] Energy Buyables, II</b><font size="1"><br>Unlock another repeatable buyable upgrade.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`}, 
             unlocked() { return hasUpgrade("e", 23) },
             cost: new Decimal(0.160),
@@ -355,8 +359,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -364,8 +368,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -375,8 +379,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -398,8 +402,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -407,8 +411,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -418,8 +422,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -440,18 +444,17 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
-            
 
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -461,8 +464,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -478,6 +481,7 @@ addLayer("e", {
             effect() {
  	            let eff = player.points.plus(2).pow(0.1);
                 let hardcap =  new Decimal(1.5)
+                if (hasUpgrade("c", 32)) hardcap = hardcap.times(1.5)
                 return eff.min(hardcap);
             },
             tooltip() {return "<span style='color:#ffffff'>[E33] Energy-Upgrade Synergy</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FFFFFF'>Initial hardcap is 1.50x, later increased by upgrades"},
@@ -485,8 +489,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -494,8 +498,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -505,16 +509,16 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
             },
-        }, 
+        },
         34: {
             fullDisplay(){
-                return `<font size="2"><b>[E34] Buyables, III</b><font size="1"><br>Unlock another repeatable buyable upgrade.<br>――――――――――――――――――<br>
+                return `<font size="2"><b>[E34] Energy Buyables, III</b><font size="1"><br>Unlock another repeatable buyable upgrade.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`}, 
             unlocked() { return hasUpgrade("e", 33) },
             cost: new Decimal(3),
@@ -523,8 +527,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -532,8 +536,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -543,8 +547,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -566,8 +570,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -575,8 +579,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -586,8 +590,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -608,8 +612,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -617,8 +621,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -628,8 +632,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -650,8 +654,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -659,8 +663,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -670,8 +674,8 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
@@ -688,8 +692,8 @@ addLayer("e", {
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     'background-color': '#f4ffd9',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
 
@@ -697,8 +701,8 @@ addLayer("e", {
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
                     'background-color': '#bf8f8f',
-                    "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
                     }
@@ -708,18 +712,18 @@ addLayer("e", {
                         'border-color': '#8eff00',
                 'background-color': '#bebe8e',
                 'color': 'black',
-                        "width": "155px",
-            "height": "155px",
+                    "width": "175px",
+            "height": "165px",
             'box-shadow':'0px 0px 15px #8eff00'
                     }
                 }
             },
-        },             
+        },
     },
     buyables: {
           11: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Accumulator</b>
-                <font size="2">Boosting Energy gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――
+                <font size="2">Boosts Energy gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Energy</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.35);
@@ -774,7 +778,7 @@ addLayer("e", {
         },
         12: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Accumulator-2</b>
-                <font size="2">Boosting Energy gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――
+                <font size="2">Boosts Energy gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Energy</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.35);
@@ -830,7 +834,7 @@ addLayer("e", {
         },
         13: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Accumulator-3</b>
-                <font size="2">Boosting Energy gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――
+                <font size="2">Boosts Energy gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Energy</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.75);
@@ -852,7 +856,7 @@ addLayer("e", {
                 return cap
             },
             buyMax() {
-                let max = player.points.div(this.cost(0)).add(0.0100).log(1.35) //add is cost, log is base
+                let max = player.points.div(this.cost(0)).add(0.0100).log(1.75) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('e', 13))) setBuyableAmount('e', 13, max.add(1).floor())
             },

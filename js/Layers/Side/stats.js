@@ -22,7 +22,7 @@ addLayer("stats", {
     baseAmount() {return player.points}, // Get the current amount of baseResource
     tooltip() {return "Statistics"},
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
+    exponent: 2, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         return mult
@@ -54,6 +54,9 @@ addLayer("stats", {
                                     function() {return ''+formatWhole(player.e.upgrades.length)+'/16 Energy Upgrades bought'},
                                     {"color": "#f4ffd9", "font-size": "25px"}],
                                     "blank",
+                                    ["raw-html", function() {if (player.c.chargeResetAmount.gte('1')) return ''+formatWhole(player.c.upgrades.length)+'/16 Charge Upgrades bought'},
+                                    {"color": "#FFFFBD", "font-size": "25px"}],
+                                    "blank",
                                 ["display-text",
                                     function() {return "―――――――――――"},
                                     {"color": "#9d9d9d", "font-size": "37px"}],
@@ -81,7 +84,7 @@ addLayer("stats", {
     },
     microtabs: {
             CurrencyTabs: {
-                "": {
+                "Currencies": {
                     content: [
                         ["display-text",
                     function() {return "―――+――― Currencies ―――+―――"},
@@ -96,6 +99,8 @@ addLayer("stats", {
                         ["display-text",
                         function() {return '('+formatSmall(getPointGen())+'/s)'},
                         {"color": "#f4ffd9","font-size": "17px"}],
+                        "blank",
+                        ["raw-html", function() {if (player.c.chargeResetAmount.gte('1')) return '('+format(player.c.points)+' Charge)'}, {"color": "#FFFFBD", "font-size": "25px"}],
                         "blank",
                         ["display-text",
                             function() {return "―――――――――――"},

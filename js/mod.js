@@ -3,7 +3,7 @@ let modInfo = {
 	id: "particlingitup",
 	author: "The Big G",
 	pointsName: "Energy",
-	modFiles: ["Layers/U1/Energy.js","Layers/Side/achievements.js","Layers/Side/stats.js","math.js", "tree.js"],
+	modFiles: ["Layers/U1/Charge.js","Layers/U1/Energy.js","Layers/Side/achievements.js","Layers/Side/stats.js","math.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -51,6 +51,13 @@ function getPointGen() {
 	if (hasUpgrade("e", 13)) gain = gain.times(upgradeEffect("e", 13))
 	if (hasUpgrade("e", 23)) gain = gain.times(upgradeEffect("e", 23))
 	if (hasUpgrade("e", 43)) gain = gain.times(upgradeEffect("e", 43))
+	if (hasUpgrade("c", 11)) gain = gain.times(upgradeEffect("c", 11))
+	if (hasUpgrade("c", 12) && !player.points.gte('10')) gain = gain.times(upgradeEffect("c", 12))
+	if (hasUpgrade("c", 13)) gain = gain.times(upgradeEffect("c", 13))
+	if (hasUpgrade("c", 21))  gain = gain.times(tmp.c.upgrades[21].effect1)
+	if (hasUpgrade("c", 22)) gain = gain.times(upgradeEffect("c", 22))
+	if (hasUpgrade("c", 23) && player.points.gte('100')) gain = gain.times(upgradeEffect("c", 23))
+    if (hasUpgrade("c", 31)) gain = gain.times(upgradeEffect("c", 31))
 	return gain
 }
 
