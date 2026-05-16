@@ -127,6 +127,30 @@ addLayer("ach", {
                 }
             }
         },
+        9:{
+			name: "[9]<br><span style='color:#FFFFBD'>Charge, IV</span>",
+            done() {return hasUpgrade("c", 44)},
+            unlocked() { return hasAchievement("ach", 6) },
+            tooltip() {return "Buy the fourth row of Charge upgrades.<br>――――――――――――<br> <span style='font-size:11px'>"},
+            style() {
+                return {
+                    "border-color": "#FFFFBD",
+                    "border-width": "3px"
+                }
+            }
+        },
+        10:{
+			name: "[10]<br><span style='color:#bebe8e'>Energy, IV</span>",
+            done() {return hasUpgrade("e", 54)},
+            tooltip() {return "Buy the fifth row of Energy upgrades.<br>――――――――――――<br> <span style='font-size:11px'>"},
+            style() {
+                return {
+                    "border-color": "#bebe8e",
+                    "border-width": "3px"
+                }
+            }
+        },
+        
     },
     
     tabFormat: {

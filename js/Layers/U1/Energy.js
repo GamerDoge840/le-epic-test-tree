@@ -89,7 +89,7 @@ addLayer("e", {
                 Effect:  `+format(upgradeEffect(this.layer, this.id))+`x <br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy` 
                 if (upgradeEffect(this.layer, this.id).gte("40")) return `<font size="2"><b>[E12] Friction</b><font size="1"><br>Boost Energy gain based on Energy upgrades bought.<br>――――――――――――――――――<br>
-                Effect:  `+format(upgradeEffect(this.layer, this.id))+`x <br><span style='color:red'>[SOFTCAPPED]</span <br>――――――――――――――――――<br>
+                Effect:  `+format(upgradeEffect(this.layer, this.id))+`x <br><span style='color:red'>[SOFTCAPPED]</span> <br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`},
             unlocked() { return hasUpgrade("e", 11) },
             effect() {
@@ -223,6 +223,8 @@ addLayer("e", {
             cost: new Decimal(0.0410),
             effect() {
                 eff = new Decimal(1.25)
+                if (hasUpgrade("c", 42)) eff = eff.times(upgradeEffect("c", 42))
+                if (hasUpgrade("e", 51)) eff = eff.times(upgradeEffect("e", 51))
                 return eff
             },
             tooltip() {return "<span style='color:#ffffff'>[E21] Upgrades from Nothing</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FFEB00'>"},
@@ -311,6 +313,7 @@ addLayer("e", {
             unlocked() { return hasUpgrade("e", 22) },
             effect() {
                 let eff = player.points.plus(1).log10().pow(0.55).plus(1);
+                if (hasUpgrade("e", 52)) eff = eff.times(upgradeEffect("e", 52))
                 scpow = 0.50
                 eff = softcap(eff, new Decimal("100"), scpow)
                 return eff;
@@ -394,6 +397,7 @@ addLayer("e", {
             unlocked() { return getBuyableAmount("e", 12).gte(13) && hasUpgrade("e", 24) },
             effect() {
                 let eff = buyableEffect('e', 11).pow(0.25);
+                if (hasUpgrade("e", 51)) eff = eff.times(upgradeEffect("e", 51))
                 return eff
             },
             cost: new Decimal(0.55),
@@ -562,6 +566,7 @@ addLayer("e", {
             unlocked() { return getBuyableAmount("e", 13).gte(12) && hasUpgrade("e", 34) },
             effect() {
                 let eff = buyableEffect('e', 13).pow(0.5);
+                if (hasUpgrade("e", 51)) eff = eff.times(upgradeEffect("e", 51))
                 return eff
             },
             cost: new Decimal(8),
@@ -719,6 +724,180 @@ addLayer("e", {
                 }
             },
         },
+        51: {
+            fullDisplay(){
+                return `<font size="2"><b>[E51] Column Leader</b><font size="1"><br>Boost E21, E31, and E41 by `+format(upgradeEffect(this.layer, this.id))+`x.<br>――――――――――――――――――<br>
+                Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`}, 
+            unlocked() { return hasUpgrade("c", 44) && hasUpgrade("e", 44) },
+            cost: new Decimal(1e5),
+            effect() {
+                eff = new Decimal(1.05)
+                return eff
+            },
+            tooltip() {return "<span style='color:#ffffff'>[E51] Column Leader</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FFEB00'>"},
+            currencyInternalName: "points",
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#f4ffd9',
+                    "width": "175px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f',
+                    "width": "175px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#bebe8e',
+                'color': 'black',
+                    "width": "175px",
+            "height": "165px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        52: {
+            fullDisplay(){
+                return `<font size="2"><b>[E52] Synergy Booster</b><font size="1"><br>E23 is `+format(upgradeEffect(this.layer, this.id))+`x stronger.<br>――――――――――――――――――<br>
+                Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`}, 
+            unlocked() { return hasUpgrade("e", 51) },
+            cost: new Decimal(1.5e5),
+            effect() {
+                eff = new Decimal(1.25)
+                return eff
+            },
+            tooltip() {return "<span style='color:#ffffff'>[E52] Synergy Booster</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FFEB00'>"},
+            currencyInternalName: "points",
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#f4ffd9',
+                    "width": "175px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f',
+                    "width": "175px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#bebe8e',
+                'color': 'black',
+                    "width": "175px",
+            "height": "165px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        53: {
+            fullDisplay(){
+                return `<font size="2"><b>[E53] Greater Accumulators</b><font size="1"><br>Boost all three accumulators by `+format(upgradeEffect(this.layer, this.id))+`x.<br>――――――――――――――――――<br>
+                Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`}, 
+            unlocked() { return hasUpgrade("e", 52) },
+            cost: new Decimal(2e5),
+            effect() {
+                eff = new Decimal(1.065)
+                return eff
+            },
+            tooltip() {return "<span style='color:#ffffff'>[E53] Greater Accumulators</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FFEB00'>"},
+            currencyInternalName: "points",
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#f4ffd9',
+                    "width": "175px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f',
+                    "width": "175px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#bebe8e',
+                'color': 'black',
+                    "width": "175px",
+            "height": "165px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        54: {
+            fullDisplay(){
+                if (!upgradeEffect(this.layer, this.id).gte("100")) return `<font size="2"><b>[E54] Energetic Charge</b><font size="1"><br>Energy boosts Charge.<br>――――――――――――――――――<br>
+                Effect:  `+format(upgradeEffect(this.layer, this.id))+`x <br>――――――――――――――――――<br>
+                Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`
+                if (upgradeEffect(this.layer, this.id).gte("100")) return `<font size="2"><b>[E54] Energetic Charge</b><font size="1"><br>Energy boosts Charge.<br>――――――――――――――――――<br>
+                Effect:  `+format(upgradeEffect(this.layer, this.id))+`x <br><span style='color:red'>[SOFTCAPPED]</span><br>――――――――――――――――――<br>
+                Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Energy`},
+            unlocked() { return hasUpgrade("e", 53) },
+            effect() {
+                let eff = player.points.plus(1).log10().pow(0.25).plus(1);
+                scpow = 0.50
+                eff = softcap(eff, new Decimal("100"), scpow)
+                return eff;
+            },
+            cost: new Decimal(2.5e5),
+            tooltip() {return "<span style='color:#ffffff'>[E54] Energetic Charge</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#FFEB00'>"},
+            currencyInternalName: "points",
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#f4ffd9',
+                    "width": "175px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f',
+                    "width": "175px",
+            "height": "165px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#bebe8e',
+                'color': 'black',
+                    "width": "175px",
+            "height": "165px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
     },
     buyables: {
           11: {
@@ -733,6 +912,8 @@ addLayer("e", {
               effect() {
                 let eff = getBuyableAmount('e', 11).mul(0.10).plus(1)
                 if (hasUpgrade("e", 22)) eff = eff.times(upgradeEffect("e", 22))
+                if (hasUpgrade("c", 43)) eff = eff.times(upgradeEffect("c", 43))
+                if (hasUpgrade("e", 53)) eff = eff.times(upgradeEffect("e", 53))
                 return eff
             },
             canAfford() { if (player.points.gte(this.cost())) {return true}},
@@ -789,6 +970,7 @@ addLayer("e", {
                 let eff = getBuyableAmount('e', 12).mul(0.05).plus(1)
                 if (hasUpgrade("e", 32)) eff = eff.times(upgradeEffect("e", 32))
                 if (hasUpgrade("e", 41)) eff = eff.times(upgradeEffect("e", 41))
+                if (hasUpgrade("e", 53)) eff = eff.times(upgradeEffect("e", 53))
                 return eff
             },
             canAfford() { if (player.points.gte(this.cost())) {return true}},
@@ -844,6 +1026,7 @@ addLayer("e", {
               effect() {
                 let eff = getBuyableAmount('e', 13).mul(0.025).plus(1)
                 if (hasUpgrade("e", 42)) eff = eff.times(upgradeEffect("e", 42))
+                if (hasUpgrade("e", 53)) eff = eff.times(upgradeEffect("e", 53))
                 return eff
             },
             canAfford() { if (player.points.gte(this.cost())) {return true}},
@@ -918,6 +1101,7 @@ addLayer("e", {
                     ["column", [ ["row", [ ["upgrade", 21], ["upgrade", 22], ["upgrade", 23], ["upgrade", 24], ]]]],
                     ["column", [ ["row", [ ["upgrade", 31], ["upgrade", 32], ["upgrade", 33], ["upgrade", 34], ]]]],
                     ["column", [ ["row", [ ["upgrade", 41], ["upgrade", 42], ["upgrade", 43], ["upgrade", 44], ]]]],
+                    ["column", [ ["row", [ ["upgrade", 51], ["upgrade", 52], ["upgrade", 53], ["upgrade", 54], ]]]],
                   ["display-text",
                     function() {return "―――――――――――――――――"},
                     {"color": "#f4ffd9", "font-size": "32px"}],   

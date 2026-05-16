@@ -58,12 +58,15 @@ function getPointGen() {
 	if (hasUpgrade("c", 22)) gain = gain.times(upgradeEffect("c", 22))
 	if (hasUpgrade("c", 23) && player.points.gte('100')) gain = gain.times(upgradeEffect("c", 23))
     if (hasUpgrade("c", 31)) gain = gain.times(upgradeEffect("c", 31))
+	if (hasUpgrade("c", 51)) gain = gain.times(2)
+    if (hasUpgrade("c", 52)) gain = gain.times(upgradeEffect("c", 52))
+	if (hasUpgrade("c", 53)) gain = gain.pow(upgradeEffect("c", 53))
 	return gain
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
-    notation:'Mixed Scientific',
+    notation:'Scientific',
 }}
 
 // Display extra things at the top of the page
