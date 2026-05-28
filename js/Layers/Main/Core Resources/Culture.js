@@ -5,89 +5,349 @@ addLayer("Culture", {
     startData() { return {
         unlocked(){return true},
 		points: new Decimal(0),
+        culturePoints: new Decimal(0),
+        cultureGain: new Decimal(0)
     }},
     color: "#cd87b6",
-    //autoUpgrade() {return hasUpgrade('Essence', 1111)},
+    update(delta) {
+        let onepersec = new Decimal(1)
+
+        //Base Culture Gain
+        player.Culture.cultureGain = new Decimal(0.01)
+        if (hasUpgrade('Culture', 1))  player.Culture.cultureGain = player.Culture.cultureGain.mul(1.50)
+        if (hasUpgrade('Research', 38)) player.Culture.cultureGain = player.Culture.cultureGain.mul(tmp.Culture.buyables[1].effect)
+        if (hasUpgrade('Research', 44)) player.Culture.cultureGain = player.Culture.cultureGain.mul(tmp.Culture.buyables[2].effect)
+
+        if (hasUpgrade('Research', 37)) player.Culture.culturePoints = player.Culture.culturePoints.add(player.Culture.cultureGain.mul(delta))
+        //For currencies generated like this, delta MUST go after upgrade effects
+        
+        },
     row: '0', // Row the layer is in on the tree (0 is the first row)
     milestones: {
     },
-    upgrades: {                                                                                          
+    upgrades: {   
+        1: {    
+            fullDisplay() {return `<font size="3"><b>[C01] Culture Boost</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Culture)+` Culture 
+                `},                
+            costs: {
+                Culture: 0.5,
+              },
+              canAfford() {
+                return player.Culture.culturePoints.gte(this.costs.Culture)
+              },
+              pay() {
+                player.Culture.culturePoints = player.Culture.culturePoints.minus(this.costs.Culture);
+              },
+            unlocked() {return (hasUpgrade('Research', 37))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Culture Boost</span><br>――――――――――――<br><span style='font-size:11px'>Boosts Culture gain by 1.5x.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#8C587B',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#cd87b6',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        2: {    
+            fullDisplay() {return `<font size="3"><b>[C02] Cultured Production</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Culture)+` Culture 
+                `},                
+            costs: {
+                Culture: 1,
+              },
+              canAfford() {
+                return player.Culture.culturePoints.gte(this.costs.Culture)
+              },
+              pay() {
+                player.Culture.culturePoints = player.Culture.culturePoints.minus(this.costs.Culture);
+              },
+            branches: ["Culture", 1],
+            unlocked() {return (hasUpgrade('Culture', 1))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Cultured Production</span><br>――――――――――――<br><span style='font-size:11px'>Boosts all previous currencies by 1.025x. This includes Research, Food, Population, Wood, Minerals, Metals and Fuel.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#8C587B',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#cd87b6',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        3: {    
+            fullDisplay() {return `<font size="3"><b>[C03] Cultured Research</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Culture)+` Culture 
+                `},                
+            costs: {
+                Culture: 1,
+              },
+              canAfford() {
+                return player.Culture.culturePoints.gte(this.costs.Culture)
+              },
+              pay() {
+                player.Culture.culturePoints = player.Culture.culturePoints.minus(this.costs.Culture);
+              },
+            effect() {
+                let eff = player.Culture.culturePoints.plus(2).pow(0.075);
+                return eff;
+            }, 
+            branches: ["Culture", 2],
+            unlocked() {return (hasUpgrade('Culture', 2))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Cultured Research</span><br>――――――――――――<br><span style='font-size:11px'>Give a boost to Research based on Culture.</span><br>――――――――――――――――――<br>
+                    Effect: `+format(upgradeEffect(this.layer, this.id))+`x <br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#8C587B',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#cd87b6',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },                                                                                           
     },
     buyables: {
+        1: {
+            display(){
+                if (!hasUpgrade("Workshop", 11111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Trilithons<br>――――――――――――――――</b></b>
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Minerals</b><br><b>`
+            },
+            cost(x) {
+                let base = new Decimal(1.75);
+                let cost = base.pow(x).times(1.50);
+                return cost;
+              },
+              effect() {
+                let eff = getBuyableAmount('Culture', 1).mul(0.15).plus(1)
+                return eff
+            },
+            canAfford() { if (player.Minerals.mineralPoints.gte(this.cost())) {return true}},
+            buy() {
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1e100)
+                return cap
+            },
+            buyMax() {
+                let max = player.Minerals.mineralPoints.div(this.cost(0)).add(1.50).log(1.75) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Culture', 1))) setBuyableAmount('Culture', 1, max.add(1).floor())
+            },
+            tooltip(){
+                if (!hasUpgrade('Workshop', 11111)) return `<span style='font-size:16px'><span style='color:#ffffff'>Trilithons</span><br>――――――――――――<br><span style='font-size:11px'>Each Trilithon boosts Culture gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Culture</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Big stucture comprised out of different stones.”`
+            },          
+            style() {
+                if(!this.canAfford()){return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#8C8888', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#8C8888', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return (hasUpgrade('Research', 38))},
+        },
+        2: {
+            display(){
+                if (!hasUpgrade("Workshop", 11111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Bonfires<br>――――――――――――――――</b></b>
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Wood</b><br><b>`
+            },
+            cost(x) {
+                let base = new Decimal(2);
+                let cost = base.pow(x).times(5);
+                return cost;
+              },
+              effect() {
+                let eff = getBuyableAmount('Culture', 2).mul(0.075).plus(1)
+                return eff
+            },
+            effect2() {
+                let eff = getBuyableAmount('Culture', 2).mul(0.01).plus(1)
+                return eff
+            },
+            canAfford() { if (player.Wood.woodPoints.gte(this.cost())) {return true}},
+            buy() {
+                player.Wood.woodPoints = player.Wood.woodPoints.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {
+                cap = new Decimal(1e100)
+                return cap
+            },
+            buyMax() {
+                let max = player.Wood.woodPoints.div(this.cost(0)).add(5).log(2) //add is cost, log is base
+                max = max.min(this.purchaseLimit())
+                if(max.gt(getBuyableAmount('Culture', 2))) setBuyableAmount('Culture', 2, max.add(1).floor())
+            },
+            tooltip(){
+                if (!hasUpgrade('Workshop', 11111)) return `<span style='font-size:16px'><span style='color:#ffffff'>Bonfires</span><br>――――――――――――<br><span style='font-size:11px'>Each Bonfire boosts Culture gain and gives a small boost to Food gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Culture, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Large, controlled wooden fire.”`
+            },          
+            style() {
+                if(!this.canAfford()){return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#A35F00', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+                else return {
+                "width": "190px",
+                "height": "125px",
+                'background-color':'#A35F00', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00'
+                }
+            },
+            unlocked() {return (hasUpgrade('Research', 44))},
+        },
     },
     challenges: {
     },
     clickables: {
     },
-     tabFormat: {
-        "Culture": {
-        style() {return  {'background-color': '#4d0f2d'}},
-        content: [
-            ["raw-html", function() {if (hasUpgrade('Research', 37)) return '('+format(player.Culture.culturePoints)+' Population)'}, {"color": "#FFF5C7", "font-size": "25px"}],
-        ["raw-html", function() {if (hasUpgrade('Research', 37)) return '(+' + format(player.Culture.cultureGain.mul(1)) + '/s)'}, {"color": "#FFF5C7", "font-size": "20px"}],
+     tabFormat: [
         ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
-                    {"color": "#FFFFFF", "font-size": "32px"}],
+                    {"color": "#cd87b6", "font-size": "32px"}],
+            ["raw-html", function() {if (hasUpgrade('Research', 37)) return '('+format(player.Culture.culturePoints)+' Culture)'}, {"color": "#cd87b6", "font-size": "25px"}],
+        ["raw-html", function() {if (hasUpgrade('Research', 37)) return '(+' + format(player.Culture.cultureGain.mul(1)) + '/s)'}, {"font-size": "20px"}],
+        ["display-text",
+                    function() {return "―――――――――――――――――――――――――――――"},
+                    {"color": "#cd87b6", "font-size": "32px"}],
                     "blank",
-                           ["microtabs", "WorkshopTabs"],
+                           ["microtabs", "CultureTabs"],
 
-                ]
             
-        },
-    },
+        ],
         microtabs: {
-            WorkshopTabs: {
-                "[WT0]": {
+            CultureTabs: {
+                "Upgrades": {
                     content: [
                         ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
-                    {"color": "#5E5D5D", "font-size": "32px"}],
-                        ["display-text",
-                    function() {return "Workshop Tier 0: Rudimentary Tools"},
-                    {"font-size": "32px"}],
+                    {"color": "#cd87b6", "font-size": "32px"}],
+                    "blank",
+                    ["column", [ ["row", [ ["upgrade", 1],]]]],
+                    "blank",
+                    ["column", [ ["row", [ ["upgrade", 2], "blank", ["upgrade", 3],]]]],
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
-                    {"color": "#5E5D5D", "font-size": "32px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 10)) return "(" + format(player.Food.foodPoints) + " Food)"}, {"color": "#8ED47F", "font-size": "20px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 10)) return '('+format(player.Wood.woodPoints)+' Wood)'}, {"color": "#A35F00", "font-size": "20px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 11)) return '('+format(player.Minerals.mineralPoints)+' Minerals)'}, {"color": "#8C8888", "font-size": "19px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 10)) return "―――――――――――――――――――――――――――――"}, {"color": "#5E5D5D",}],
-                    "blank",
-                    ["column", [ ["row", [ ["upgrade", 1], ["upgrade", 2], ["upgrade", 3], ["upgrade", 4],]]]],
-                    ["column", [ ["row", [ ["upgrade", 5], ["upgrade", 6], ["upgrade", 7], ["upgrade", 8],]]]],
-                    "blank",
-                    ["display-text",
-                    function() {return "―――――――――――――――――――――――――――――"},
-                    {"color": "#5E5D5D", "font-size": "32px"}],
-
+                    {"color": "#cd87b6", "font-size": "32px"}],
                     ]
                 },
-                "[WT1]": {
-                    unlocked() { return hasUpgrade('Research', 24) },
+                "Buildings": {
+                    unlocked() { return hasUpgrade('Research', 38) },
                     content: [
                         ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
-                    {"color": "#5E5D5D", "font-size": "32px"}],
-                        ["display-text",
-                    function() {return "Workshop Tier 1: Basic Tools"},
-                    {"font-size": "32px"}],
-                    ["display-text",
-                    function() {return "―――――――――――――――――――――――――――――"},
-                    {"color": "#5E5D5D", "font-size": "32px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 10)) return "(" + format(player.Food.foodPoints) + " Food)"}, {"color": "#8ED47F", "font-size": "20px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 10)) return '('+format(player.Wood.woodPoints)+' Wood)'}, {"color": "#A35F00", "font-size": "20px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 11)) return '('+format(player.Minerals.mineralPoints)+' Minerals)'}, {"color": "#8C8888", "font-size": "19px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 23)) return '('+format(player.Metals.metalPoints)+' Metals)'}, {"color": "#BABABA", "font-size": "20px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 27)) return '('+format(player.Fuel.fuelPoints)+' Fuel)'}, {"color": "#b37171", "font-size": "20px"}],
-                    ["raw-html", function() {if (hasUpgrade('Research', 10)) return "―――――――――――――――――――――――――――――"}, {"color": "#5E5D5D",}],
+                    {"color": "#cd87b6", "font-size": "32px"}],
+                    ["raw-html", function() {if (hasUpgrade('Research', 38)) return '('+format(player.Minerals.mineralPoints)+' Minerals)'}, {"color": "#8C8888", "font-size": "20px"}],
+                    ["raw-html", function() {if (hasUpgrade('Research', 44)) return "(" + format(player.Wood.woodPoints) + " Wood)"}, {"color": "#A35F00", "font-size": "20px"}],
+                    ["raw-html", function() {if (hasUpgrade('Research', 2)) return "―――――――――――――――――――――――――――――"}, {"color": "#cd87b6",}],
                     "blank",
-                    ["column", [ ["row", [ ["upgrade", 9], ["upgrade", 10], ["upgrade", 11], ["upgrade", 12],]]]],
-                    ["column", [ ["row", [ ["upgrade", 13], ["upgrade", 14], ["upgrade", 15], ["upgrade", 16],]]]],
-                    ["column", [ ["row", [ ["upgrade", 17], ["upgrade", 18], ["upgrade", 19], ["upgrade", 20],]]]],
-                    "blank",
-                    ["display-text",
+                        ["column", [ ["row", [ ["buyable", 1], "blank", ["buyable", 2],]]]],
+                        "blank",
+                      ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
-                    {"color": "#5E5D5D", "font-size": "32px"}],
+                    {"color": "#cd87b6", "font-size": "32px"}],
+
                     ]
                 },
             }

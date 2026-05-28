@@ -27,6 +27,8 @@ addLayer("Homeworld", {
     exponent: 0.0000000000000000001, // Prestige currency exponent
     tooltip() {
         let tooltip = "<font size='3'>Homeworld<br>――――――――――――――<br> <font size='2'></span>"
+        if(hasUpgrade('Research', 3)) tooltip = tooltip + "<span style='color:#FFF5C7'> "+format(player.Population.populationPoints)+" Population"
+        if(hasUpgrade('Research', 37)) tooltip = tooltip + "<span style='color:#cd87b6'> "+format(player.Culture.culturePoints)+" Culture"
         return tooltip
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -52,7 +54,7 @@ addLayer("Homeworld", {
     buyables: {
       1: {
             display(){
-                if (!hasUpgrade("Workshop", 9999)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Hunter-Gatherers<br>――――――――――――――――</b>
+                if (!hasUpgrade("Workshop", 11111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Hunter-Gatherers<br>――――――――――――――――</b>
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Population</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.75);
@@ -80,7 +82,11 @@ addLayer("Homeworld", {
                 if (hasUpgrade("Research", 34)) eff = eff.times(1.10)
                 if (hasUpgrade("Workshop", 15)) eff = eff.times(1.05)
                 return eff
-            },       
+            },  
+            effect4() {
+                let eff = getBuyableAmount('Homeworld', 1).mul(0.01).plus(1)
+                return eff
+            },        
             canAfford() { if (player.Population.populationPoints.gte(this.cost())) {return true}},
             buy() {
                 player.Population.populationPoints = player.Population.populationPoints.sub(this.cost())
@@ -97,11 +103,13 @@ addLayer("Homeworld", {
             },
             tooltip(){
                 if (!hasUpgrade('Research', 6)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“”`
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“”`
                 if (hasUpgrade('Research', 6) && !hasUpgrade('Research', 12)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food and Wood gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Food, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x to Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“”`
-                if (hasUpgrade('Research', 12)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food, Wood, and Mineral gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Food, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x to Wood, ` +format(tmp[this.layer].buyables[this.id].effect3) + `x to Minerals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Braves the wilds to gather food and basic resources.”`
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Food, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“”`
+                if (hasUpgrade('Research', 12) && !hasUpgrade('Research', 41)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food, Wood, and Mineral gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Food, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x Wood, ` +format(tmp[this.layer].buyables[this.id].effect3) + `x Minerals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Braves the wilds to gather food and basic resources.”`
+                if (hasUpgrade('Research', 41)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food, Wood, Mineral, and Metal gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Food, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x Wood, ` +format(tmp[this.layer].buyables[this.id].effect3) + `x Minerals, ` +format(tmp[this.layer].buyables[this.id].effect4) + `x to Metals.</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Braves the wilds to gather food and basic resources.”`
             },          
             style() {
                 if(!this.canAfford()){return {
@@ -131,7 +139,7 @@ addLayer("Homeworld", {
         },
          2: {
             display(){
-                if (!hasUpgrade("Workshop", 9999)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Lumberjacks<br>――――――――――――――――</b>
+                if (!hasUpgrade("Workshop", 11111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Lumberjacks<br>――――――――――――――――</b>
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Population</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.65);
@@ -158,7 +166,7 @@ addLayer("Homeworld", {
             },
             tooltip(){
                 if (hasUpgrade('Research', 15)) return `<span style='font-size:16px'><span style='color:#ffffff'>Lumberjacks</span><br>――――――――――――<br><span style='font-size:11px'>Each Lumberjack boosts Wood gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Chops down trees for lumber.”`
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Chops down trees for lumber.”`
             },          
             style() {
                 if(!this.canAfford()){return {
@@ -188,7 +196,7 @@ addLayer("Homeworld", {
         },
         3: {
             display(){
-                if (!hasUpgrade("Workshop", 9999)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Miners<br>――――――――――――――――</b>
+                if (!hasUpgrade("Workshop", 11111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Miners<br>――――――――――――――――</b>
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Population</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.70);
@@ -202,6 +210,7 @@ addLayer("Homeworld", {
             }, 
             effect2() {
                 let eff = getBuyableAmount('Homeworld', 3).mul(0.01).plus(1)
+                if (hasUpgrade("Research", 40)) eff = eff.times(1.5)
                 return eff
             },             
             canAfford() { if (player.Population.populationPoints.gte(this.cost())) {return true}},
@@ -220,9 +229,9 @@ addLayer("Homeworld", {
             },
             tooltip(){
                 if (hasUpgrade('Research', 24) && !hasUpgrade('Research', 25)) return `<span style='font-size:16px'><span style='color:#ffffff'>Miners</span><br>――――――――――――<br><span style='font-size:11px'>Each Miner boosts Minerals gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Minerals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Searches for ore within caverns.”`
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Minerals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Searches for ore within caverns.”`
                 if (hasUpgrade('Research', 25)) return `<span style='font-size:16px'><span style='color:#ffffff'>Miners</span><br>――――――――――――<br><span style='font-size:11px'>Each Miner boosts Minerals and Metals gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Minerals, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x to Metals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Searches for ore within caverns.”`
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Minerals, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x Metals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Searches for ore within caverns.”`
             },          
             style() {
                 if(!this.canAfford()){return {
@@ -274,6 +283,7 @@ addLayer("Homeworld", {
                 if (hasUpgrade("Research", 9)) eff = eff.times(1.167)
                 if (hasUpgrade("Workshop", 4)) eff = eff.times(1.35)
                 if (hasUpgrade("Workshop", 6)) eff = eff.times(1.75)
+                if (hasUpgrade("Workshop", 19)) eff = eff.dividedBy(1.25)
                 return eff
             },
             canAfford() { if (player.Wood.woodPoints.gte(this.cost())) {return true}},
@@ -292,9 +302,9 @@ addLayer("Homeworld", {
             },
             tooltip(){
                 if (hasUpgrade('Research', 6) && !hasUpgrade('Workshop', 6))return `<span style='font-size:16px'><span style='color:#ffffff'>Huts</span><br>――――――――――――<br><span style='font-size:11px'>Each Hut boosts Population gain, but slightly reduces Food gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Population, /` +format(tmp[this.layer].buyables[this.id].consumption) + ` to Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Extremely makeshift, cramped wooden shelter.”`
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Population, /` +format(tmp[this.layer].buyables[this.id].consumption) + ` Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Extremely makeshift, cramped wooden shelter.”`
                 if (hasUpgrade('Workshop', 6)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Houses</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick House boosts Population gain, but reduces Food gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Population, /` +format(tmp[this.layer].buyables[this.id].consumption) + ` to Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Simple, small house made out of bricks, mud, and wood.”`
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Population, /` +format(tmp[this.layer].buyables[this.id].consumption) + ` Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Simple, small house made out of bricks, mud, and wood.”`
             },          
             style() {
                 if(!this.canAfford()){return {
@@ -323,7 +333,9 @@ addLayer("Homeworld", {
         },
         101: {
             display(){
-                if (!hasUpgrade("Workshop", 1111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Growing Plots<br>――――――――――――――――</b></b>
+                if (!hasUpgrade("Research", 43)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Growing Plots<br>――――――――――――――――</b></b>
+                Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Food</b><br><b>`
+                if (hasUpgrade("Research", 43)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Fields<br>――――――――――――――――</b></b>
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Food</b><br><b>`
             },
             cost(x) {
@@ -334,6 +346,7 @@ addLayer("Homeworld", {
               effect() {
                 let eff = getBuyableAmount('Homeworld', 101).mul(0.10).plus(1)
                 if (hasUpgrade("Workshop", 8)) eff = eff.times(1.05)
+                if (hasUpgrade("Research", 43)) eff = eff.times(1.25)
                 return eff
             },
             canAfford() { if (player.Food.foodPoints.gte(this.cost())) {return true}},
@@ -351,8 +364,10 @@ addLayer("Homeworld", {
                 if(max.gt(getBuyableAmount('Homeworld', 101))) setBuyableAmount('Homeworld', 101, max.add(1).floor())
             },
             tooltip(){
-                if (hasUpgrade('Research', 19)) return `<span style='font-size:16px'><span style='color:#ffffff'>Growing Plots</span><br>――――――――――――<br><span style='font-size:11px'>Each Growing Plot boosts Food gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Crudely-dug holes in the ground for growing basic crops.”`
+                if (!hasUpgrade("Research", 43)) return `<span style='font-size:16px'><span style='color:#ffffff'>Growing Plots</span><br>――――――――――――<br><span style='font-size:11px'>Each Growing Plot boosts Food gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Crudely-dug holes in the ground for growing basic crops.”`
+                if (hasUpgrade("Research", 43)) return `<span style='font-size:16px'><span style='color:#ffffff'>Fields</span><br>――――――――――――<br><span style='font-size:11px'>Each Field boosts Food gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Vast fields for growing crops.”`
             },          
             style() {
                 if(!this.canAfford()){return {
@@ -381,7 +396,7 @@ addLayer("Homeworld", {
         },
         102: {
             display(){
-                if (!hasUpgrade("Workshop", 1111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Brick Furnaces<br>――――――――――――――――</b></b>
+                if (!hasUpgrade("Workshop", 11111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Brick Furnaces<br>――――――――――――――――</b></b>
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Minerals</b><br><b>`
             },
             cost(x) {
@@ -425,9 +440,9 @@ addLayer("Homeworld", {
             },
             tooltip(){
                 if (hasUpgrade('Research', 23) && !hasUpgrade('Workshop', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Furnaces</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Furnace generates Metals, but slightly lowers Wood and Mineral gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Metals, /` +format(tmp[this.layer].buyables[this.id].mineralConsumption) + ` to Minerals, /` +format(tmp[this.layer].buyables[this.id].woodConsumption) + ` to Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A simple, wood-fueled furnace made out of clay.”`
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Metals, /` +format(tmp[this.layer].buyables[this.id].mineralConsumption) + ` Minerals, /` +format(tmp[this.layer].buyables[this.id].woodConsumption) + ` Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A simple, wood-fueled furnace made out of clay.”`
                 if (hasUpgrade('Workshop', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Furnaces</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Furnace generates Metals, but slightly lowers Fuel and Mineral gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Metals, /` +format(tmp[this.layer].buyables[this.id].mineralConsumption) + ` to Minerals, /` +format(tmp[this.layer].buyables[this.id].fuelConsumption) + ` to Fuel</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A simple, charcoal-fueled furnace made out of clay.”`
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Metals, /` +format(tmp[this.layer].buyables[this.id].mineralConsumption) + ` Minerals, /` +format(tmp[this.layer].buyables[this.id].fuelConsumption) + ` Fuel</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A simple, charcoal-fueled furnace made out of clay.”`
             },          
             style() {
                 if(!this.canAfford()){return {
@@ -456,7 +471,7 @@ addLayer("Homeworld", {
         },
         103: {
             display(){
-                if (!hasUpgrade("Workshop", 1111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Charcoal Pits<br>――――――――――――――――</b></b>
+                if (!hasUpgrade("Workshop", 11111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Charcoal Pits<br>――――――――――――――――</b></b>
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Wood</b><br><b>`
             },
             cost(x) {
@@ -488,7 +503,7 @@ addLayer("Homeworld", {
             },
             tooltip(){
                 if (hasUpgrade('Research', 27)) return `<span style='font-size:16px'><span style='color:#ffffff'>Charcoal Pits</span><br>――――――――――――<br><span style='font-size:11px'>Increases Fuel gain, but slightly decreases Wood gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Fuel, /` +format(tmp[this.layer].buyables[this.id].woodConsumption) + ` to Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Pit dug in the ground for burning firewood into charcoal.”`
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Fuel, /` +format(tmp[this.layer].buyables[this.id].woodConsumption) + ` Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Pit dug in the ground for burning firewood into charcoal.”`
             },          
             style() {
                 if(!this.canAfford()){return {
@@ -517,7 +532,7 @@ addLayer("Homeworld", {
         },
         104: {
             display(){
-                if (!hasUpgrade("Workshop", 1111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Stone Cabins<br>――――――――――――――――</b></b>
+                if (!hasUpgrade("Workshop", 11111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Stone Cabins<br>――――――――――――――――</b></b>
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Minerals</b><br><b>`
             },
             cost(x) {
@@ -526,7 +541,7 @@ addLayer("Homeworld", {
                 return cost;
               },
               effect() {
-                let eff = getBuyableAmount('Homeworld', 104).mul(0.30).plus(1)
+                let eff = getBuyableAmount('Homeworld', 104).mul(0.20).plus(1)
                 if (hasUpgrade("Workshop", 16)) eff = eff.times(1.25)
                 return eff
             },
@@ -544,13 +559,13 @@ addLayer("Homeworld", {
                 return cap
             },
             buyMax() {
-                let max = player.Minerals.mineralPoints.div(this.cost(0)).add(1).log(1.75) //add is cost, log is base
+                let max = player.Minerals.mineralPoints.div(this.cost(0)).add(2).log(1.75) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Homeworld', 100))) setBuyableAmount('Homeworld', 100, max.add(1).floor())
             },
             tooltip(){
-                if (!hasUpgrade('Workshop', 1111)) return `<span style='font-size:16px'><span style='color:#ffffff'>Stone Cabins</span><br>――――――――――――<br><span style='font-size:11px'>Better house that boosts Population gain more but also halves Food gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Population, /` +format(tmp[this.layer].buyables[this.id].consumption) + ` to Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Rudimentary housing made out of cobblestone, with just enough room to fit a family.”`
+                if (!hasUpgrade('Workshop', 11111)) return `<span style='font-size:16px'><span style='color:#ffffff'>Stone Cabins</span><br>――――――――――――<br><span style='font-size:11px'>Better house that boosts Population gain more but also halves Food gain.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Population, /` +format(tmp[this.layer].buyables[this.id].consumption) + ` Food</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Rudimentary housing made out of cobblestone, with just enough room to fit a family.”`
             },          
             style() {
                 if(!this.canAfford()){return {
@@ -579,7 +594,7 @@ addLayer("Homeworld", {
         },
         105: {
             display(){
-                if (!hasUpgrade("Workshop", 1111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Barns<br>――――――――――――――――</b></b>
+                if (!hasUpgrade("Workshop", 11111)) return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`)<br>Barns<br>――――――――――――――――</b></b>
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Metals</b><br><b>`
             },
             cost(x) {
@@ -606,8 +621,8 @@ addLayer("Homeworld", {
                 if(max.gt(getBuyableAmount('Homeworld', 100))) setBuyableAmount('Homeworld', 100, max.add(1).floor())
             },
             tooltip(){
-                if (!hasUpgrade('Workshop', 1111)) return `<span style='font-size:16px'><span style='color:#ffffff'>Barns</span><br>――――――――――――<br><span style='font-size:11px'>Gives a small boost to Food, Wood, and Mineral production.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x to Food, Wood, Minerals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A wooden barn reinforced with a bit of metal for storage purposes.”`
+                if (!hasUpgrade('Workshop', 11111)) return `<span style='font-size:16px'><span style='color:#ffffff'>Barns</span><br>――――――――――――<br><span style='font-size:11px'>Gives a small boost to Food, Wood, and Mineral production.</span><br>――――――――――――――――――<br>
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Food, Wood, Minerals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A wooden barn reinforced with a bit of metal for storage purposes.”`
             },          
             style() {
                 if(!this.canAfford()){return {
@@ -643,6 +658,9 @@ addLayer("Homeworld", {
      tabFormat: {
         "Civilization": {
         content: [
+        ["display-text",
+                    function() {return "―――――――――――――――――――――――――――――"},
+                    {"color": "#FFFFFF", "font-size": "32px"}],
         ["raw-html", function() {if (hasUpgrade('Research', 3)) return '('+format(player.Population.populationPoints)+' Population)'}, {"color": "#FFF5C7", "font-size": "25px"}],
         ["raw-html", function() {if (hasUpgrade('Research', 3)) return '(+' + format(player.Population.populationGain.mul(1)) + '/s)'}, {"color": "#FFF5C7", "font-size": "20px"}],
         ["display-text",
@@ -665,14 +683,20 @@ addLayer("Homeworld", {
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],
                     "blank",
-                           ["microtabs", "EssenceTabs"],
+                           ["microtabs", "HomeworldTabs"],
 
                 ]
             
         },
+        "Culture": {
+            style() {return  {'background-color': '#1C1219'}},
+            unlocked() {return hasUpgrade('Research', 37)},
+            buttonStyle: {"border-color": "#cd87b6"},
+            embedLayer: 'Culture',
+        },
     },
         microtabs: {
-            EssenceTabs: {
+            HomeworldTabs: {
                 "Buildings": {
                     unlocked() { return hasUpgrade('Research', 7) },
                     content: [

@@ -14,6 +14,7 @@ addLayer("Fuel", {
 
         //Fuel Boosts
         if (hasUpgrade('Research', 27)) player.Fuel.fuelGain = player.Fuel.fuelGain.mul(tmp.Homeworld.buyables[103].effect)
+        if (hasUpgrade('Culture', 2))  player.Fuel.fuelGain = player.Fuel.fuelGain.mul(1.025)
         //Penalties
         if (hasUpgrade('Workshop', 11)) player.Fuel.fuelGain = player.Fuel.fuelGain.dividedBy(tmp.Homeworld.buyables[102].fuelConsumption)
         if (getBuyableAmount("Homeworld", 103).gte(1)) player.Fuel.fuelPoints = player.Fuel.fuelPoints.add(player.Fuel.fuelGain.mul(delta))

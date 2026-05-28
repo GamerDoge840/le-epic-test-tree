@@ -52,8 +52,8 @@ function canAffordPurchase(layer, thing, cost) {
 	}
 }
 
-function buyUpgrade(layer, id) {
-	buyUpg(layer, id)
+function buyUpgrade(layer, id, spend = true) {
+	buyUpg(layer, id, spend)
 }
 
 function buyUpg(layer, id) {

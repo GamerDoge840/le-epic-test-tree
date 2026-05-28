@@ -30,7 +30,7 @@ addLayer("Workshop", {
     },
     upgrades: {     
         1: {    
-            fullDisplay() {return `<font size="3"><b>[WO1] Throwing Spears</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W1] Throwing Spears</b><font size="2"><br>――――――――――――<br>
                 Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
@@ -85,7 +85,7 @@ addLayer("Workshop", {
             },
         },
         2: {    
-            fullDisplay() {return `<font size="3"><b>[WO2] Wooden Axe</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W2] Wooden Axe</b><font size="2"><br>――――――――――――<br>
                 Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food,
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
@@ -140,7 +140,7 @@ addLayer("Workshop", {
             },
         },
         3: {    
-            fullDisplay() {return `<font size="3"><b>[WO3] Stone Axe</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W3] Stone Axe</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
@@ -195,7 +195,7 @@ addLayer("Workshop", {
             },
         },
         4: {    
-            fullDisplay() {return `<font size="3"><b>[WO4] Stone Huts</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W4] Stone Huts</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
@@ -250,7 +250,7 @@ addLayer("Workshop", {
             },
         },
         5: {    
-            fullDisplay() {return `<font size="3"><b>[WO5] Bow and Arrow</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W5] Bow and Arrow</b><font size="2"><br>――――――――――――<br>
                 Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food,
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
@@ -305,7 +305,7 @@ addLayer("Workshop", {
             },
         },
         6: {    
-            fullDisplay() {return `<font size="3"><b>[WO6] Brick Housing</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W6] Brick Housing</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
@@ -360,7 +360,7 @@ addLayer("Workshop", {
             },
         },
         7: {    
-            fullDisplay() {return `<font size="3"><b>[WO7] Walls</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W7] Walls</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
@@ -415,7 +415,7 @@ addLayer("Workshop", {
             },
         }, 
         8: {    
-            fullDisplay() {return `<font size="3"><b>[WO8] Stone Farming Tools</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W8] Stone Farming Tools</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
@@ -470,7 +470,7 @@ addLayer("Workshop", {
             },
         },
         9: {    
-            fullDisplay() {return `<font size="3"><b>[WO9] Stone Pickaxe</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W9] Stone Pickaxe</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
@@ -515,7 +515,7 @@ addLayer("Workshop", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#918D80',
+                'background-color': '#f4bbb5',
                 'color': 'black',
                         "width": "155px",
             "height": "155px",
@@ -525,7 +525,7 @@ addLayer("Workshop", {
             },
         },
         10: {    
-            fullDisplay() {return `<font size="3"><b>[WO10] Kilns</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W10] Kilns</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, 
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
@@ -570,7 +570,7 @@ addLayer("Workshop", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#918D80',
+                'background-color': '#f4bbb5',
                 'color': 'black',
                         "width": "155px",
             "height": "155px",
@@ -580,7 +580,7 @@ addLayer("Workshop", {
             },
         },
         11: {    
-            fullDisplay() {return `<font size="3"><b>[WO11] Charcoal-Fueled Furnaces</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W11] Charcoal-Fueled Furnaces</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals,
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood,
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Fuel)+` Fuel`},        
@@ -625,7 +625,7 @@ addLayer("Workshop", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#918D80',
+                'background-color': '#f4bbb5',
                 'color': 'black',
                         "width": "155px",
             "height": "155px",
@@ -635,7 +635,7 @@ addLayer("Workshop", {
             },
         },
         12: {    
-            fullDisplay() {return `<font size="3"><b>[WO12] Tin Tools</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W12] Tin Tools</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals,
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals,
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Fuel)+` Fuel`},        
@@ -680,7 +680,7 @@ addLayer("Workshop", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#918D80',
+                'background-color': '#f4bbb5',
                 'color': 'black',
                         "width": "155px",
             "height": "155px",
@@ -690,12 +690,12 @@ addLayer("Workshop", {
             },
         },
         13: {    
-            fullDisplay() {return `<font size="3"><b>[WO13] Stone Wall</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W13] Stone Wall</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals,
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
             costs: {
-                Minerals: 4,
-                Wood: 80,
+                Minerals: 8,
+                Wood: 100,
               },
               canAfford() {
                 return player.Minerals.mineralPoints.gte(this.costs.Minerals)
@@ -731,7 +731,7 @@ addLayer("Workshop", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#918D80',
+                'background-color': '#f4bbb5',
                 'color': 'black',
                         "width": "155px",
             "height": "155px",
@@ -741,7 +741,7 @@ addLayer("Workshop", {
             },
         },
         14: {    
-            fullDisplay() {return `<font size="3"><b>[WO14] Copper Tools</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W14] Copper Tools</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals,
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals,
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Fuel)+` Fuel`},        
@@ -786,7 +786,7 @@ addLayer("Workshop", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#918D80',
+                'background-color': '#f4bbb5',
                 'color': 'black',
                         "width": "155px",
             "height": "155px",
@@ -796,8 +796,8 @@ addLayer("Workshop", {
             },
         },
         15: {    
-            fullDisplay() {return `<font size="3"><b>[WO15] Straw Baskets</b><font size="2"><br>――――――――――――<br>
-                  Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood, `
+            fullDisplay() {return `<font size="3"><b>[W15] Straw Baskets</b><font size="2"><br>――――――――――――<br>
+                  Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood, `
                  +formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food`},                
             costs: {
                 Food: 15,
@@ -837,7 +837,7 @@ addLayer("Workshop", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#918D80',
+                'background-color': '#f4bbb5',
                 'color': 'black',
                         "width": "155px",
             "height": "155px",
@@ -847,8 +847,8 @@ addLayer("Workshop", {
             },
         },
         16: {    
-            fullDisplay() {return `<font size="3"><b>[WO16] Straw Bedding</b><font size="2"><br>――――――――――――<br>
-                  Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood, `
+            fullDisplay() {return `<font size="3"><b>[W16] Straw Bedding</b><font size="2"><br>――――――――――――<br>
+                  Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood, `
                  +formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food, `
                 +formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals`},                
             costs: {
@@ -892,7 +892,7 @@ addLayer("Workshop", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#918D80',
+                'background-color': '#f4bbb5',
                 'color': 'black',
                         "width": "155px",
             "height": "155px",
@@ -902,7 +902,7 @@ addLayer("Workshop", {
             },
         },
         17: {    
-            fullDisplay() {return `<font size="3"><b>[WO17] Copper Shovels</b><font size="2"><br>――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>[W17] Copper Shovels</b><font size="2"><br>――――――――――――<br>
                 Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood,
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals,
                 `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Fuel)+` Fuel`},        
@@ -947,7 +947,7 @@ addLayer("Workshop", {
                 else if (canAffordUpgrade(this.layer, this.id)) {
                     return {
                         'border-color': '#8eff00',
-                'background-color': '#918D80',
+                'background-color': '#f4bbb5',
                 'color': 'black',
                         "width": "155px",
             "height": "155px",
@@ -955,7 +955,232 @@ addLayer("Workshop", {
                     }
                 }
             },
-        },                                                                                            
+        },
+        18: {    
+            fullDisplay() {return `<font size="3"><b>[W18] Cisterns</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals`},        
+            costs: {
+                Wood: 300,
+                Metals: 10,
+                Minerals: 20,
+              },
+              canAfford() {
+                return player.Wood.woodPoints.gte(this.costs.Wood)
+                    && player.Metals.metalPoints.gte(this.costs.Metals)
+                    && player.Minerals.mineralPoints.gte(this.costs.Minerals)
+              },
+              pay() {
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+                player.Metals.metalPoints = player.Metals.metalPoints.minus(this.costs.Metals);
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+              },
+            unlocked() {return (hasUpgrade('Research', 39))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Cisterns</span><br>――――――――――――<br><span style='font-size:11px'>Receptacles for storing rainwater. Boosts Food and Population by 1.05x.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#f4bbb5',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        19: {    
+            fullDisplay() {return `<font size="3"><b>[W19] Wells</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals, `
+                +formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food`},        
+            costs: {
+                Wood: 70,
+                Metals: 2,
+                Minerals: 18,
+                Food: 100
+              },
+              canAfford() {
+                return player.Wood.woodPoints.gte(this.costs.Wood)
+                    && player.Metals.metalPoints.gte(this.costs.Metals)
+                    && player.Minerals.mineralPoints.gte(this.costs.Minerals)
+                    && player.Food.foodPoints.gte(this.costs.Food)
+
+              },
+              pay() {
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+                player.Metals.metalPoints = player.Metals.metalPoints.minus(this.costs.Metals);
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+              },
+            unlocked() {return (hasUpgrade('Workshop', 18))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Wells</span><br>――――――――――――<br><span style='font-size:11px'>Holes in the ground for accessing underground water deposits. Halves Brick Houses' Food penalty by /1.25.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“Well well well, what do we have here?”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#f4bbb5',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        20: {    
+            fullDisplay() {return `<font size="3"><b>[W20] Aluminium Tools</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Fuel)+` Fuel`},        
+            costs: {
+                Wood: 140,
+                Metals: 4,
+                Fuel: 2,
+              },
+              canAfford() {
+                return player.Wood.woodPoints.gte(this.costs.Wood)
+                    && player.Metals.metalPoints.gte(this.costs.Metals)
+                    && player.Fuel.fuelPoints.gte(this.costs.Fuel)
+              },
+              pay() {
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+                player.Metals.metalPoints = player.Metals.metalPoints.minus(this.costs.Metals);
+                player.Fuel.fuelPoints = player.Fuel.fuelPoints.minus(this.costs.Fuel);
+              },
+            unlocked() {return (hasUpgrade('Research', 41))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Aluminium Tools</span><br>――――――――――――<br><span style='font-size:11px'>Aluminum axes and pickaxes. Boosts Wood and Mineral gain by 1.10x.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#f4bbb5',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        21: {    
+            fullDisplay() {return `<font size="3"><b>[W21] Soup</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Fuel)+` Fuel`},        
+            costs: {
+                Wood: 100,
+                Food: 90,
+                Fuel: 4,
+              },
+              canAfford() {
+                return player.Wood.woodPoints.gte(this.costs.Wood)
+                    && player.Food.foodPoints.gte(this.costs.Food)
+                    && player.Fuel.fuelPoints.gte(this.costs.Fuel)
+              },
+              pay() {
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+                player.Fuel.fuelPoints = player.Fuel.fuelPoints.minus(this.costs.Fuel);
+              },
+            unlocked() {return (hasUpgrade('Research', 43))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Soup</span><br>――――――――――――<br><span style='font-size:11px'>Invent a simple kind of meal. Boosts Population gain by 1.10x but halves Food by /1.30.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#f4bbb5',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },                                                                                                               
     },
     buyables: {
     },
@@ -965,7 +1190,7 @@ addLayer("Workshop", {
     },
      tabFormat: {
         "Workshop": {
-        style() {return  {'background-color': '#262521'}},
+        style() {return  {'background-color': '#141414'}},
         content: [
                     "blank",
                            ["microtabs", "WorkshopTabs"],
@@ -1023,6 +1248,7 @@ addLayer("Workshop", {
                     ["column", [ ["row", [ ["upgrade", 9], ["upgrade", 10], ["upgrade", 11], ["upgrade", 12],]]]],
                     ["column", [ ["row", [ ["upgrade", 13], ["upgrade", 14], ["upgrade", 15], ["upgrade", 16],]]]],
                     ["column", [ ["row", [ ["upgrade", 17], ["upgrade", 18], ["upgrade", 19], ["upgrade", 20],]]]],
+                    ["column", [ ["row", [ ["upgrade", 21], ["upgrade", 22], ["upgrade", 23], ["upgrade", 24],]]]],
                     "blank",
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},

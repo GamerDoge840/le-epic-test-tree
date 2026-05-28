@@ -19,6 +19,9 @@ addLayer("Population", {
         if (hasUpgrade('Research', 20))  player.Population.populationGain = player.Population.populationGain.mul(1.25)
         if (hasUpgrade('Research', 21))  player.Population.populationGain = player.Population.populationGain.mul(1.05)
         if (hasUpgrade('Workshop', 13))  player.Population.populationGain = player.Population.populationGain.mul(1.10)
+        if (hasUpgrade('Culture', 2))  player.Population.populationGain = player.Population.populationGain.mul(1.025)  
+        if (hasUpgrade('Workshop', 18))  player.Population.populationGain = player.Population.populationGain.mul(1.05)
+        if (hasUpgrade('Workshop', 21))  player.Population.populationGain = player.Population.populationGain.mul(1.10)   
         if (hasUpgrade('Research', 3)) player.Population.populationPoints = player.Population.populationPoints.add(player.Population.populationGain.mul(delta))
         //For currencies generated like this, delta MUST go after upgrade effects
         
