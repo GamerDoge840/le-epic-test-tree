@@ -20,6 +20,7 @@ addLayer("Wood", {
         if (hasUpgrade('Workshop', 14))  player.Wood.woodGain = player.Wood.woodGain.mul(1.10)
         if (hasUpgrade('Culture', 2))  player.Wood.woodGain = player.Wood.woodGain.mul(1.025)
         if (hasUpgrade('Workshop', 20))  player.Wood.woodGain = player.Wood.woodGain.mul(1.10)
+        if (hasUpgrade('Workshop', 24))  player.Wood.woodGain = player.Wood.woodGain.mul(1.10)
         if (hasUpgrade('Research', 6)) player.Wood.woodGain = player.Wood.woodGain.mul(tmp.Homeworld.buyables[1].effect2)
         if (hasUpgrade('Research', 15)) player.Wood.woodGain = player.Wood.woodGain.mul(tmp.Homeworld.buyables[2].effect)
 

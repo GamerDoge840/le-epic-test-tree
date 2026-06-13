@@ -11,6 +11,9 @@ addLayer("Population", {
 
         //Base Population Gain
         player.Population.populationGain = new Decimal(0.02)
+          
+        //Penalties
+        if (hasUpgrade('Research', 47))  player.Population.populationGain = player.Population.populationGain.dividedBy(1.30)
 
         //Population Boosts
         player.Population.populationGain = player.Population.populationGain.mul(buyableEffect("Homeworld", 100))

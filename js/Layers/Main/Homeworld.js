@@ -81,10 +81,12 @@ addLayer("Homeworld", {
                 let eff = getBuyableAmount('Homeworld', 1).mul(0.05).plus(1)
                 if (hasUpgrade("Research", 34)) eff = eff.times(1.10)
                 if (hasUpgrade("Workshop", 15)) eff = eff.times(1.05)
+                if (hasUpgrade("Research", 47)) eff = eff.times(1.15)
                 return eff
             },  
             effect4() {
                 let eff = getBuyableAmount('Homeworld', 1).mul(0.01).plus(1)
+                if (hasUpgrade("Research", 47)) eff = eff.times(1.15)
                 return eff
             },        
             canAfford() { if (player.Population.populationPoints.gte(this.cost())) {return true}},
@@ -109,7 +111,7 @@ addLayer("Homeworld", {
                 if (hasUpgrade('Research', 12) && !hasUpgrade('Research', 41)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food, Wood, and Mineral gain.</span><br>――――――――――――――――――<br>
                     <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Food, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x Wood, ` +format(tmp[this.layer].buyables[this.id].effect3) + `x Minerals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Braves the wilds to gather food and basic resources.”`
                 if (hasUpgrade('Research', 41)) return `<span style='font-size:16px'><span style='color:#ffffff'>Hunter-Gatherers</span><br>――――――――――――<br><span style='font-size:11px'>Each Hunter-Gatherer boosts Food, Wood, Mineral, and Metal gain.</span><br>――――――――――――――――――<br>
-                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Food, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x Wood, ` +format(tmp[this.layer].buyables[this.id].effect3) + `x Minerals, ` +format(tmp[this.layer].buyables[this.id].effect4) + `x to Metals.</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Braves the wilds to gather food and basic resources.”`
+                    <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Food, ` +format(tmp[this.layer].buyables[this.id].effect2) + `x Wood, ` +format(tmp[this.layer].buyables[this.id].effect3) + `x Minerals, ` +format(tmp[this.layer].buyables[this.id].effect4) + `x Metals</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“Braves the wilds to gather food and basic resources.”`
             },          
             style() {
                 if(!this.canAfford()){return {
@@ -481,10 +483,12 @@ addLayer("Homeworld", {
               },
               effect() {
                 let eff = getBuyableAmount('Homeworld', 103).mul(0.10).plus(1)
+                if (hasUpgrade("Research", 46)) eff = eff.times(1.25)
                 return eff
             },
             woodConsumption() {
                 let eff = getBuyableAmount('Homeworld', 103).mul(0.04).plus(1)
+                if (hasUpgrade("Research", 46)) eff = eff.times(1.25)
                 return eff
             },
             canAfford() { if (player.Wood.woodPoints.gte(this.cost())) {return true}},
@@ -604,6 +608,7 @@ addLayer("Homeworld", {
               },
               effect() {
                 let eff = getBuyableAmount('Homeworld', 105).mul(0.02).plus(1)
+                if (hasUpgrade("Workshop", 23)) eff = eff.times(1.05)
                 return eff
             },
             canAfford() { if (player.Metals.metalPoints.gte(this.cost())) {return true}},

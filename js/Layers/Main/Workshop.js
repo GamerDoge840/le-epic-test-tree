@@ -1180,7 +1180,254 @@ addLayer("Workshop", {
                     }
                 }
             },
-        },                                                                                                               
+        },
+        22: {    
+            fullDisplay() {return `<font size="3"><b>[W22] Pottery Jars</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food`},        
+            costs: {
+                Minerals: 30,
+                Food: 225,
+              },
+              canAfford() {
+                return player.Minerals.mineralPoints.gte(this.costs.Minerals)
+                    && player.Food.foodPoints.gte(this.costs.Food)
+              },
+              pay() {
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+              },
+            unlocked() {return (hasUpgrade('Research', 45))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Pottery Jars</span><br>――――――――――――<br><span style='font-size:11px'>Storage containers made out of clay. Boosts Food, Minerals and Metals gain by 1.05x.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#f4bbb5',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        23: {    
+            fullDisplay() {return `<font size="3"><b>[W23] Wooden Bins</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Food)+` Food`},        
+            costs: {
+                Wood: 270,
+                Food: 115,
+              },
+              canAfford() {
+                return player.Wood.woodPoints.gte(this.costs.Wood)
+                    && player.Food.foodPoints.gte(this.costs.Food)
+              },
+              pay() {
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+                player.Food.foodPoints = player.Food.foodPoints.minus(this.costs.Food);
+              },
+            unlocked() {return (hasUpgrade('Workshop', 22))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Wooden Bins</span><br>――――――――――――<br><span style='font-size:11px'>Wooden containers to store materials in. Boosts Barns' effect by 1.05x.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#f4bbb5',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        24: {    
+            fullDisplay() {return `<font size="3"><b>[W24] Wooden Planks</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood`},        
+            costs: {
+                Wood: 30,
+              },
+              canAfford() {
+                return player.Wood.woodPoints.gte(this.costs.Wood)
+              },
+              pay() {
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+              },
+            unlocked() {return (hasUpgrade('Research', 48))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Wooden Planks</span><br>――――――――――――<br><span style='font-size:11px'>Boosts Wood gain by 1.10x.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#f4bbb5',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        25: {    
+            fullDisplay() {return `<font size="3"><b>[W25] Stone Slabs</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals`},        
+            costs: {
+                Minerals: 35,
+              },
+              canAfford() {
+                return player.Minerals.mineralPoints.gte(this.costs.Minerals)
+              },
+              pay() {
+                player.Minerals.mineralPoints = player.Minerals.mineralPoints.minus(this.costs.Minerals);
+              },
+            unlocked() {return (hasUpgrade('Workshop', 24))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Stone Slabs</span><br>――――――――――――<br><span style='font-size:11px'>Boosts Mineral gain by 1.10x.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#f4bbb5',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        26: {    
+            fullDisplay() {return `<font size="3"><b>[W26] Metal Plates</b><font size="2"><br>――――――――――――<br>
+                Costs: `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals,
+                `+formatWhole(tmp[this.layer].upgrades[this.id].costs.Fuel)+` Fuel`},               
+            costs: {
+                Metals: 13,
+                Fuel: 6
+              },
+              canAfford() {
+                return player.Metals.metalPoints.gte(this.costs.Metals)
+                && player.Fuel.fuelPoints.gte(this.costs.Fuel)
+              },
+              pay() {
+                player.Metals.metalPoints = player.Metals.metalPoints.minus(this.costs.Metals);
+                player.Fuel.fuelPoints = player.Fuel.fuelPoints.minus(this.costs.Fuel);
+              },
+            unlocked() {return (hasUpgrade('Workshop', 25))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Metal Plates</span><br>――――――――――――<br><span style='font-size:11px'>Boosts Metal gain by 1.10x.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    "background": "linear-gradient(60deg, #da8977, #f4bbb5)",
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#f4bbb5',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },                                                                                                                                     
     },
     buyables: {
     },
@@ -1249,6 +1496,7 @@ addLayer("Workshop", {
                     ["column", [ ["row", [ ["upgrade", 13], ["upgrade", 14], ["upgrade", 15], ["upgrade", 16],]]]],
                     ["column", [ ["row", [ ["upgrade", 17], ["upgrade", 18], ["upgrade", 19], ["upgrade", 20],]]]],
                     ["column", [ ["row", [ ["upgrade", 21], ["upgrade", 22], ["upgrade", 23], ["upgrade", 24],]]]],
+                    ["column", [ ["row", [ ["upgrade", 25], ["upgrade", 26], ["upgrade", 27], ["upgrade", 28],]]]],
                     "blank",
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
