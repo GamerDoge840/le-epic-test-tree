@@ -53,6 +53,8 @@ function getPointGen() {
 	if (hasUpgrade('Research', 26)) gain = gain.times(2)
 	if (hasUpgrade('Research', 47)) gain = gain.times(1.25)
     if (hasUpgrade('Culture', 2)) gain = gain.times(1.025)
+    if (hasUpgrade('Culture', 5)) gain = gain.times(1.025)
+    if (hasUpgrade('Research', 50)) gain = gain.times(1.5)
 	if (hasUpgrade('Culture', 3)) gain = gain.times(upgradeEffect('Culture', 3))
 	return gain
 }

@@ -15,6 +15,7 @@ addLayer("Culture", {
         //Base Culture Gain
         player.Culture.cultureGain = new Decimal(0.01)
         if (hasUpgrade('Culture', 1))  player.Culture.cultureGain = player.Culture.cultureGain.mul(1.50)
+        if (hasUpgrade('Culture', 4))  player.Culture.cultureGain = player.Culture.cultureGain.mul(1.50)
         if (hasUpgrade('Research', 38)) player.Culture.cultureGain = player.Culture.cultureGain.mul(tmp.Culture.buyables[1].effect)
         if (hasUpgrade('Research', 44)) player.Culture.cultureGain = player.Culture.cultureGain.mul(tmp.Culture.buyables[2].effect)
 
@@ -41,7 +42,7 @@ addLayer("Culture", {
               },
             unlocked() {return (hasUpgrade('Research', 37))},
             tooltip(){
-                return `<span style='font-size:16px'><span style='color:#ffffff'>Culture Boost</span><br>――――――――――――<br><span style='font-size:11px'>Boosts Culture gain by 1.5x.</span><br>――――――――――――――――――<br>
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Culture Boost</span><br>――――――――――――<br><span style='font-size:11px'>Boosts Culture gain by 1.50x.</span><br>――――――――――――――――――<br>
                     </span><span style='font-size:11px'><span style='color:#757575'>“”`
             },
             style() {
@@ -176,7 +177,105 @@ addLayer("Culture", {
                     }
                 }
             },
-        },                                                                                           
+        },
+        4: {    
+            fullDisplay() {return `<font size="3"><b>[C04] Culture Boost II</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Culture)+` Culture 
+                `},                
+            costs: {
+                Culture: 3.5,
+              },
+              canAfford() {
+                return player.Culture.culturePoints.gte(this.costs.Culture)
+              },
+              pay() {
+                player.Culture.culturePoints = player.Culture.culturePoints.minus(this.costs.Culture);
+              },
+            branches: ["Culture", 3],
+            unlocked() {return (hasUpgrade('Research', 49))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'> Culture Boost II</span><br>――――――――――――<br><span style='font-size:11px'>Boost Culture gain by 1.50x, again.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#8C587B',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#cd87b6',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },  
+        5: {    
+            fullDisplay() {return `<font size="3"><b>[C05] Cultured Production II</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Culture)+` Culture 
+                `},                
+            costs: {
+                Culture: 5.7,
+              },
+              canAfford() {
+                return player.Culture.culturePoints.gte(this.costs.Culture)
+              },
+              pay() {
+                player.Culture.culturePoints = player.Culture.culturePoints.minus(this.costs.Culture);
+              },
+            branches: ["Culture", 4],
+            unlocked() {return (hasUpgrade('Culture', 4))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Cultured Production II</span><br>――――――――――――<br><span style='font-size:11px'>Boosts all previous currencies by 1.025x, again. This includes the same resources as the previous upgrade.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#8C587B',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#cd87b6',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },                                                                                             
     },
     buyables: {
         1: {
@@ -248,6 +347,7 @@ addLayer("Culture", {
               },
               effect() {
                 let eff = getBuyableAmount('Culture', 2).mul(0.075).plus(1)
+                if (hasUpgrade("Research", 49)) eff = eff.times(1.25)
                 return eff
             },
             effect2() {
@@ -327,6 +427,8 @@ addLayer("Culture", {
                     ["column", [ ["row", [ ["upgrade", 1],]]]],
                     "blank",
                     ["column", [ ["row", [ ["upgrade", 2], "blank", ["upgrade", 3],]]]],
+                    "blank",
+                    ["column", [ ["row", [ ["upgrade", 4], "blank", ["upgrade", 5],]]]],
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#cd87b6", "font-size": "32px"}],

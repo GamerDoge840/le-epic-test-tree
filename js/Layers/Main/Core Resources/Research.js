@@ -2640,7 +2640,7 @@ addLayer("Research", {
                 Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, `
                 +formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood, `
                 +formatWhole(tmp[this.layer].upgrades[this.id].costs.Minerals)+` Minerals, `
-                +formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals, `},                
+                +formatWhole(tmp[this.layer].upgrades[this.id].costs.Metals)+` Metals `},                
             costs: {
                 Research: 2,
                 Wood: 140,
@@ -2694,7 +2694,116 @@ addLayer("Research", {
                     }
                 }
             },
-        },                                                                                                                                                                                  
+        },  
+        49: {    
+            fullDisplay() {return `<font size="3"><b>[R49] Firewood</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research, `
+                +formatWhole(tmp[this.layer].upgrades[this.id].costs.Wood)+` Wood, `
+                +formatWhole(tmp[this.layer].upgrades[this.id].costs.Culture)+` Culture, `
+                +formatWhole(tmp[this.layer].upgrades[this.id].costs.Fuel)+` Fuel`},                
+            costs: {
+                Research: 4.8,
+                Wood: 115,
+                Culture: 44,
+                Fuel: 2
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+                    && player.Wood.woodPoints.gte(this.costs.Wood)
+                    && player.Culture.culturePoints.gte(this.costs.Culture)
+                    && player.Fuel.fuelPoints.gte(this.costs.Fuel)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+                player.Wood.woodPoints = player.Wood.woodPoints.minus(this.costs.Wood);
+                player.Fuel.fuelPoints = player.Fuel.fuelPoints.minus(this.costs.Fuel);
+                player.Culture.culturePoints = player.Culture.culturePoints.minus(this.costs.Culture);
+              },
+            branches: ['Research', 48],
+            unlocked() {return (hasUpgrade('Research', 48))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Firewood</span><br>――――――――――――<br><span style='font-size:11px'>Better, more flammable wood. Boost Fuel gain and Bonfires' first effect by 1.25x and unlock more Culture upgrades.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
+        50: {    
+            fullDisplay() {return `<font size="3"><b>[R50] Mathematics</b><font size="2"><br>――――――――――――<br>
+                Costs: `+format(tmp[this.layer].upgrades[this.id].costs.Research)+` Research `
+                },                
+            costs: {
+                Research: 4,
+              },
+              canAfford() {
+                return player.points.gte(this.costs.Research)
+              },
+              pay() {
+                player.points = player.points.minus(this.costs.Research);
+              },
+            branches: ['Research', 49],
+            unlocked() {return (hasUpgrade('Research', 49))},
+            tooltip(){
+                return `<span style='font-size:16px'><span style='color:#ffffff'>Mathematics</span><br>――――――――――――<br><span style='font-size:11px'>Beginning of new research methods. Boosts Research gain by 1.50x.</span><br>――――――――――――――――――<br>
+                    </span><span style='font-size:11px'><span style='color:#757575'>“”`
+            },
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#6DB5B2',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#b1b1b1',
+                    "width": "155px",
+            "height": "155px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#8CF9FF',
+                'color': 'black',
+                        "width": "155px",
+            "height": "155px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },                                                                                                                                                                                    
     },
     buyables: {
     },
@@ -2813,6 +2922,8 @@ addLayer("Research", {
                     ["column", [ ["row", [ ["upgrade", 46], "blank", ["upgrade", 47],]]]],
                     "blank",
                     ["column", [ ["row", [ ["upgrade", 48],]]]],
+                    "blank",
+                    ["column", [ ["row", [ ["upgrade", 49], "blank", ["upgrade", 50],]]]],
                     ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#BDF9FF", "font-size": "32px"}],

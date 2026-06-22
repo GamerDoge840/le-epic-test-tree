@@ -441,9 +441,9 @@ addLayer("Homeworld", {
                 if(max.gt(getBuyableAmount('Homeworld', 102))) setBuyableAmount('Homeworld', 102, max.add(1).floor())
             },
             tooltip(){
-                if (hasUpgrade('Research', 23) && !hasUpgrade('Workshop', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Furnaces</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Furnace generates Metals, but slightly lowers Wood and Mineral gain.</span><br>――――――――――――――――――<br>
+                if (hasUpgrade('Research', 23) && !hasUpgrade('Workshop', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Furnaces</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Furnace boosts Metals, but slightly lowers Wood and Mineral gain.</span><br>――――――――――――――――――<br>
                     <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Metals, /` +format(tmp[this.layer].buyables[this.id].mineralConsumption) + ` Minerals, /` +format(tmp[this.layer].buyables[this.id].woodConsumption) + ` Wood</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A simple, wood-fueled furnace made out of clay.”`
-                if (hasUpgrade('Workshop', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Furnaces</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Furnace generates Metals, but slightly lowers Fuel and Mineral gain.</span><br>――――――――――――――――――<br>
+                if (hasUpgrade('Workshop', 11)) return `<span style='font-size:16px'><span style='color:#ffffff'>Brick Furnaces</span><br>――――――――――――<br><span style='font-size:11px'>Each Brick Furnace boosts Metals, but slightly lowers Fuel and Mineral gain.</span><br>――――――――――――――――――<br>
                     <span style='font-size:14px'>Currently: ` +format(tmp[this.layer].buyables[this.id].effect) + `x Metals, /` +format(tmp[this.layer].buyables[this.id].mineralConsumption) + ` Minerals, /` +format(tmp[this.layer].buyables[this.id].fuelConsumption) + ` Fuel</span><br>――――――――――――――――――<br><span style='font-size:11px'><span style='color:#757575'>“A simple, charcoal-fueled furnace made out of clay.”`
             },          
             style() {

@@ -27,6 +27,7 @@ addLayer("Food", {
         if (hasUpgrade('Culture', 2)) player.Food.foodGain = player.Food.foodGain.mul(1.025)
         if (hasUpgrade('Workshop', 18)) player.Food.foodGain = player.Food.foodGain.mul(1.05)
         if (hasUpgrade('Workshop', 22)) player.Food.foodGain = player.Food.foodGain.mul(1.05)
+        if (hasUpgrade('Culture', 5)) player.Food.foodGain = player.Food.foodGain.mul(1.025)
 
         //Penalties
         if (hasUpgrade('Research', 34)) player.Food.foodGain = player.Food.foodGain.dividedBy(1.30)
