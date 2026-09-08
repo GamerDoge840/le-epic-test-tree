@@ -27,6 +27,7 @@ addNode("PAU",{
 addLayer("overworld", {
     tabFormat: [["tree", [
         ['p'],
+        ['h'],
         ],
     ]],
     previousTab: "",

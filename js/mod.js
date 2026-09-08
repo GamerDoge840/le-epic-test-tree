@@ -3,7 +3,7 @@ let modInfo = {
 	id: "swarmingupthosebees",
 	author: "The Big G",
 	pointsName: "Gathering Power",
-	modFiles: ["Layers/Overworld/Pollen.js","Layers/Side/stats.js","math.js", "tree.js"],
+	modFiles: ["Layers/Main/Honey.js","Layers/Main/Pollen.js","Layers/Side/stats.js","Layers/Side/achievements.js","math.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -26,7 +26,7 @@ let winText = `Congratulations! You have reached the end and beaten this game, b
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything"]
+var doNotCallTheseFunctionsEveryTick = ["blowUpEverything", "honeyReset"]
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
@@ -43,8 +43,11 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.01)
-	gain=gain.times(buyableEffect('p', 1))
+	let gain = new Decimal("0.01")
+
+    //Buyables
+	gain = gain.times(buyableEffect('p', 1))
+	
 	return gain
 }
 

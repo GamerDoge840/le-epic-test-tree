@@ -18,12 +18,13 @@ addLayer("p", {
     resource: "Prestige", // Name of prestige currency
     baseResource: "Points", // Name of resource prestige is based on
     autoPrestige: true,
+    canBuyMax: true,
     resetDescription: "Reset Essence, but gain Prestige.<br>―――――――――――<br>",
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
+    exponent: 0.7, // Prestige currency exponent
     tooltip() {
-        let tooltip = "<font size='3'>Pollen<br>――――――――――――――<br> <font size='2'><span style='color:#FFFFFF'> " +formatWhole(player.p.points)+" White Pollen</span>"
+        let tooltip = "<font size='3'>White Pollen<br>――――――――――――――<br> <font size='2'><span style='color:#FFFFFF'> " +formatWhole(player.p.points)+" White Pollen</span>"
         return tooltip
     },
     gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -31,7 +32,8 @@ addLayer("p", {
         return mult 
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
-        return new Decimal(1)
+        exp = new Decimal(1)
+        return exp 
     },
     row: '0', // Row the layer is in on the tree (0 is the first row)
     layerShown(){return true},
@@ -50,7 +52,7 @@ addLayer("p", {
                 return player.points.div(tmp.p.nextAt)
             },
             display() {
-                return "<h5>" + format(player.points) + "/" + format(tmp.p.nextAt) + "<h5> Gathering to next White Pollen</h5>";
+                return "<h5>" + format(player.points) + "/" + format(tmp.p.nextAt) + "<h5> GP to next White Pollen</h5>";
             },
             baseStyle: { 'background-color': 'black' },
             fillStyle: { 'background-color': '#87919C' },
