@@ -47,7 +47,13 @@ function getPointGen() {
 
     //Buyables
 	gain = gain.times(buyableEffect('p', 1))
-	
+	gain = gain.times(buyableEffect('p', 4))
+	gain = gain.times(buyableEffect('h', 1))
+
+	//Layer Effects
+	if (getBuyableAmount("h", 3).gte(1) && player.p.points.gte('1'))
+		gain = gain.times(tmp.p.gpBoost);
+
 	return gain
 }
 
