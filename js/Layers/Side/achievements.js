@@ -16,13 +16,13 @@ addLayer("ach", {
         }
     },
     color: "gold",
-    requires: new Decimal(10), // Can be a function that takes requirement increases into account
+    requires: new Decimal("10"), // Can be a function that takes requirement increases into account
     resource: "Honor", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
-    tooltip() {return format(player.ach.achievements.length,0)+" Achievements completed."},
+    tooltip() {return +format(player.ach.achievements.length,0)+"/"+format(Object.keys(tmp.ach.achievements).length - 2,0)+" Achievements Completed"},
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         return mult
@@ -31,32 +31,68 @@ addLayer("ach", {
         return new Decimal(1)
     },
     row: 'side', // Row the layer is in on the tree (0 is the first row)
-    hotkeys: [
-        {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
-    ],
     layerShown(){return true},
     achievements: {
-		11:{
-			name: "Murderer!",
-            done() {return player.points.gte('1')},
-            tooltip() {return "Kill a monster. This should be simple enough."},
+		1:{
+			name: "[1]<br><span style='color:#ffffff'>The Beginning</span>",
+            done() {return (hasUpgrade("p", 0))},
+            tooltip() {return "Start generating Points.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
         },
-        
+        2:{
+			name: "[2]<br><span style='color:#ffffff'>Tenth of a Point</span>",
+            done() {return player.points.gte('0.1')},
+            tooltip() {return "Get 0.1 points.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
+        },
+        3:{       
+			name: "[3]<br><span style='color:#ffffff'>Buy it more than twice</span>",
+            done() {return getBuyableAmount("p", 1).gte(3)},
+            tooltip() {return "Buy P01-B thrice.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
+        },
+        4:{
+			name: "[4]<br><span style='color:#ffffff'>One Whole Point</span>",
+            done() {return player.points.gte('1')},
+            tooltip() {return "Get 1 point.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
+        },
     },
     
-    
     tabFormat: {
-        "Recollection": {
+        "Main": {
             content: ["blank",
                 ["display-text",
-                    function() {return "You have attained <h2 style='color:  gold; text-shadow: gold 0px 0px 10px;'> "+format(player.ach.achievements.length,0)+"/"+format(Object.keys(tmp.ach.achievements).length - 2,0)+"</h2> achievements, or "+format(new Decimal(player.ach.achievements.length).div(11).mul(100))+"% of the total achievement count."}, //change division to current numer of achievements
+                    function() {return "You have attained <h2 style='color:  gold; text-shadow: gold 0px 0px 10px;'> "+format(player.ach.achievements.length,0)+"/"+format(Object.keys(tmp.ach.achievements).length - 2,0)+"</h2> achievements, or "+format(new Decimal(player.ach.achievements.length).div(19).mul(100))+"% of the total achievement count."}, //change division to current numer of achievements
                 ],
+                "blank",
                 ["display-text",
-                    function() {return "----====Crop Achievements====----"},
-                    {"color": "Gray", "font-size": "27px"}],
+                    function() {return "――――――――――――――――――――――――"},
+                    {"color": "Gray", "font-size": "23px"}],
                     "blank",
-                    "blank",
-                    ["achievements", [1, 2, 3, 4, 5, 10]],
+                    ["column", [ ["row", [ ["achievement", 1], ["achievement", 2], ["achievement", 3], ["achievement", 4], ["achievement", 5], ["achievement", 6], ]]]],
+                    //["column", [ ["row", [ ["achievement", 7], ["achievement", 8], ["achievement", 9], ["achievement", 10], ["achievement", 11], ["achievement", 12], ]]]],
+                    //["column", [ ["row", [ ["achievement", 13], ["achievement", 14], ["achievement", 15], ["achievement", 16], ["achievement", 17], ["achievement", 18], ]]]],
                     "blank",
             ],
         },

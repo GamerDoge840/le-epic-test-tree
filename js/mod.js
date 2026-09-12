@@ -1,20 +1,20 @@
 let modInfo = {
-	name: "The Tree of Knowledge",
-	id: "superultraduperamogussmartspunchisus",
+	name: "Upgrade Tree: Big Mode",
+	id: "upgradeaupgradupradguprad",
 	author: "The Big G",
-	pointsName: "Knowledge",
-	modFiles: ["Layers/Row 0/Scrolls.js","Layers/Row 0/Knowledge.js","math.js", "Layers/Side/achievements.js", "tree.js"],
+	pointsName: "Points",
+	modFiles: ["Layers/U1/Points.js","Layers/Side/stats.js","Layers/Side/achievements.js","math.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (0.0010), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "1.0",
+	name: "Full Release",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -34,20 +34,51 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("Knowledge", 11);
+	return (hasUpgrade("p", 0))
 }
+
 
 // Calculate points/sec!
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.0001)
-	gain=gain.times(buyableEffect('Knowledge', 11))
-	gain=gain.times(buyableEffect('Knowledge', 12))
-	gain=gain.times(buyableEffect('Knowledge', 21))
-	gain=gain.times(buyableEffect('Scrolls', 11))
-	if (hasUpgrade('Knowledge', 12)) gain = gain.times(3)
+	let gain = new Decimal("0.01")
+     
+	//Point Upgrades
+		if(hasUpgrade('p', 1)) gain = gain.add(upgradeEffect("p", 1))
+	    if(hasUpgrade('p', 2)) gain = gain.add(upgradeEffect("p", 2))
+		if(hasUpgrade('p', 3)) gain = gain.add(upgradeEffect("p", 3))
+		if(hasUpgrade('p', 4)) gain = gain.add(upgradeEffect("p", 4))
+		if(hasUpgrade('p', 5)) gain = gain.add(upgradeEffect("p", 5))
+		if(hasUpgrade('p', 6)) gain = gain.add(upgradeEffect("p", 6))
+        if(hasUpgrade('p', 7)) gain = gain.add(upgradeEffect("p", 7))
+	    if(hasUpgrade('p', 8)) gain = gain.add(upgradeEffect("p", 8))
+		if(hasUpgrade('p', 12)) gain = gain.add(upgradeEffect("p", 12))
+		if(hasUpgrade('p', 13)) gain = gain.times(upgradeEffect("p", 13))
+	    if (hasUpgrade('p', 14)) gain = gain.times(tmp.p.upgrades[14].effect1)
+		if (hasUpgrade('p', 14)) gain = gain.add(tmp.p.upgrades[14].effect2)
+		if(hasUpgrade('p', 15)) gain = gain.times(upgradeEffect("p", 15))
+		if(hasUpgrade('p', 16)) gain = gain.times(upgradeEffect("p", 16))
+		if(hasUpgrade('p', 17)) gain = gain.times(upgradeEffect("p", 17))
+		if(hasUpgrade('p', 18)) gain = gain.add(upgradeEffect("p", 18))
+		if(hasUpgrade('p', 19)) gain = gain.times(upgradeEffect("p", 19))
+		if(hasUpgrade('p', 20)) gain = gain.times(upgradeEffect("p", 20))
+		if(hasUpgrade('p', 21)) gain = gain.times(upgradeEffect("p", 21))
+		if(hasUpgrade('p', 22)) gain = gain.times(upgradeEffect("p", 22))
+		if(hasUpgrade('p', 23)) gain = gain.add(upgradeEffect("p", 23))
+		if(hasUpgrade('p', 24)) gain = gain.times(upgradeEffect("p", 24))
+
+
+
+
+	//Point Buyables
+        gain = gain.add(buyableEffect("p", 1))
+        gain = gain.add(buyableEffect("p", 2))
+		gain = gain.times(buyableEffect("p", 3))
+        gain = gain.times(buyableEffect("p", 4))
+
+
 	return gain
 }
 
@@ -83,3 +114,4 @@ function maxTickLength() {
 // you can cap their current resources with this.
 function fixOldSave(oldVersion){
 }
+
