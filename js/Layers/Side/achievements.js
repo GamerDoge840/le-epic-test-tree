@@ -77,6 +77,40 @@ addLayer("ach", {
                 }
             }
         },
+        5:{
+			name: "[5]<br><span style='color:#ffffff'>Ten Upgrades</span>",
+            done() {return (hasUpgrade("p", 9) && hasUpgrade("p", 10))},
+            tooltip() {return "Buy ten Point upgrades.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
+        },
+        6:{
+			name: "[6]<br><span style='color:#ffffff'>Hundred Points</span>",
+            done() {return player.points.gte('100')},
+            tooltip() {return "Get 100 points.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
+        },
+        7:{
+			name: "[7]<br><span style='color:#ffffff'>Twenty Upgrades</span>",
+            done() {return (hasUpgrade("p", 19) && hasUpgrade("p", 20))},
+            unlocked() {return (hasAchievement("ach", 6))},
+            tooltip() {return "Buy twenty Point upgrades.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#ffffff",
+                    "border-width": "3px"
+                }
+            }
+        },
     },
     
     tabFormat: {
@@ -91,8 +125,8 @@ addLayer("ach", {
                     {"color": "Gray", "font-size": "23px"}],
                     "blank",
                     ["column", [ ["row", [ ["achievement", 1], ["achievement", 2], ["achievement", 3], ["achievement", 4], ["achievement", 5], ["achievement", 6], ]]]],
-                    //["column", [ ["row", [ ["achievement", 7], ["achievement", 8], ["achievement", 9], ["achievement", 10], ["achievement", 11], ["achievement", 12], ]]]],
-                    //["column", [ ["row", [ ["achievement", 13], ["achievement", 14], ["achievement", 15], ["achievement", 16], ["achievement", 17], ["achievement", 18], ]]]],
+                    ["column", [ ["row", [ ["achievement", 7], ["achievement", 8], ["achievement", 9], ["achievement", 10], ["achievement", 11], ["achievement", 12], ]]]],
+                    ["column", [ ["row", [ ["achievement", 13], ["achievement", 14], ["achievement", 15], ["achievement", 16], ["achievement", 17], ["achievement", 18], ]]]],
                     "blank",
             ],
         },

@@ -42,7 +42,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "155px",
             "height": "145px",
             'border': '5px solid',
@@ -62,7 +62,7 @@ addLayer("p", {
             },
         },
         1: {    
-            fullDisplay() {return `<font size="2"><b>[P01] The First Upgrade</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to base point gain and unlock a buyable.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>[P01] The First Upgrade</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to point gain and unlock a buyable.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
             cost: new Decimal(0.10),
             currencyInternalName: "points",
@@ -85,7 +85,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -105,7 +105,7 @@ addLayer("p", {
             },
         },
         2: {    
-            fullDisplay() {return `<font size="2"><b>[P02] The Second Upgrade</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to base point gain<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>[P02] The Second Upgrade</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to point gain<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
             cost: new Decimal(0.45),
             currencyInternalName: "points",
@@ -127,7 +127,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -147,7 +147,7 @@ addLayer("p", {
             },
         },
         3: {    
-            fullDisplay() {return `<font size="2"><b>[P03] Buy It Thrice</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to base point gain and P01-B can be bought one more time.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>[P03] Buy It Thrice</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to point gain and P01-B can be bought one more time.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
             cost: new Decimal(0.8),
             currencyInternalName: "points",
@@ -169,7 +169,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -189,9 +189,9 @@ addLayer("p", {
             },
         },
         4: {    
-            fullDisplay() {return `<font size="2"><b>[P04] Buy It Four Times</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to base point gain and P01-B can be bought one more time.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>[P04] Buy It Four Times</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to point gain and P01-B can be bought one more time.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
-            cost: new Decimal(1),
+            cost: new Decimal(0.750),
             currencyInternalName: "points",
             branches: [1, 2],
             unlocked() {return getBuyableAmount("p", 1).gte(3)},
@@ -211,7 +211,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -231,7 +231,7 @@ addLayer("p", {
             },
         },
         5: {    
-            fullDisplay() {return `<font size="2"><b>[P05] Another Addition</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to base point gain.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>[P05] Another Addition</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to point gain.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
             cost: new Decimal(1),
             currencyInternalName: "points",
@@ -253,7 +253,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -273,7 +273,7 @@ addLayer("p", {
             },
         },
         6: {    
-            fullDisplay() {return `<font size="2"><b>[P06] Another Addition...</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to base point gain.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>[P06] Another Addition...</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to point gain.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
             cost: new Decimal(1.75),
             currencyInternalName: "points",
@@ -295,7 +295,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -315,9 +315,9 @@ addLayer("p", {
             },
         },
         7: {    
-            fullDisplay() {return `<font size="2"><b>[P07] Easy but Weak</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to base point gain.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>[P07] Easy but Weak</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to point gain.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
-            cost: new Decimal(0.65),
+            cost: new Decimal(0.5),
             currencyInternalName: "points",
             branches: [6],
             unlocked() {return (hasUpgrade("p", 6))},
@@ -337,7 +337,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -357,7 +357,7 @@ addLayer("p", {
             },
         },
         8: {    
-            fullDisplay() {return `<font size="2"><b>[P08] Hard but Strong</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to base point gain.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>[P08] Hard but Strong</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to point gain.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
             cost: new Decimal(5),
             currencyInternalName: "points",
@@ -379,7 +379,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -421,7 +421,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -443,7 +443,7 @@ addLayer("p", {
         10: {    
             fullDisplay() {return `<font size="2"><b>[P10] Buy It Six Times</b><font size="1"><br>P01-B can be bought two more times and unlock a new buyable.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
-            cost: new Decimal(6.5),
+            cost: new Decimal(4.5),
             currencyInternalName: "points",
             branches: [5],
             unlocked() {return (hasUpgrade("p", 7) && hasUpgrade("p", 8))},
@@ -463,7 +463,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -485,12 +485,12 @@ addLayer("p", {
         11: {    
             fullDisplay() {return `<font size="2"><b>[P11] Buyable Upgrader</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to P01-B's effect.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
-            cost: new Decimal(13),
+            cost: new Decimal(10),
             currencyInternalName: "points",
             branches: [9],
             unlocked() {return getBuyableAmount("p", 2).gte(6) && hasUpgrade("p", 9)},
             effect() {
-              	let eff = new Decimal(0.08)
+              	let eff = new Decimal(0.12)
                 return eff
             },
             tooltip() {return "<span style='color:#ffffff'>Buyable Upgrader</span><br>――――――――――――<br><span style='font-size:11px'>"},
@@ -505,7 +505,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -525,7 +525,7 @@ addLayer("p", {
             },
         },
         12: {    
-            fullDisplay() {return `<font size="2"><b>[P12] Yet Another Boring Addition</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to base point gain.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>[P12] Yet Another Boring Addition</b><font size="1"><br>Add +`+format(upgradeEffect(this.layer, this.id))+` to point gain.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
             cost: new Decimal(13),
             currencyInternalName: "points",
@@ -547,7 +547,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -569,7 +569,7 @@ addLayer("p", {
         13: {    
             fullDisplay() {return `<font size="2"><b>[P13] Multiplier</b><font size="1"><br>Multiply Point gain by `+format(upgradeEffect(this.layer, this.id))+`x.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
-            cost: new Decimal(30),
+            cost: new Decimal(25),
             currencyInternalName: "points",
             branches: [6],
             unlocked() {return hasUpgrade("p", 12)},
@@ -589,7 +589,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -635,7 +635,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -657,7 +657,7 @@ addLayer("p", {
         15: {    
             fullDisplay() {return `<font size="2"><b>[P15] Multiplier 2</b><font size="1"><br>Multiply Point gain by `+format(upgradeEffect(this.layer, this.id))+`x.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
-            cost: new Decimal(25),
+            cost: new Decimal(35),
             currencyInternalName: "points",
             branches: [13],
             unlocked() {return hasUpgrade("p", 13)},
@@ -677,7 +677,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -719,7 +719,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -761,7 +761,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -781,7 +781,7 @@ addLayer("p", {
             },
         },
         18: {    
-            fullDisplay() {return `<font size="2"><b>[P18] Point Buyable Expander</b><font size="1"><br>Unlock 2 new Point buyables and add +`+format(upgradeEffect(this.layer, this.id))+` to base point gain.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>[P18] Point Buyable Expander</b><font size="1"><br>Unlock 2 new Point buyables and add +`+format(upgradeEffect(this.layer, this.id))+` to point gain.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
             cost: new Decimal(200),
             currencyInternalName: "points",
@@ -803,7 +803,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -828,7 +828,7 @@ addLayer("p", {
             cost: new Decimal(500),
             currencyInternalName: "points",
             branches: [18],
-            unlocked() {return hasUpgrade("p", 18)},
+            unlocked() {return hasUpgrade("p", 18) && getBuyableAmount("p", 4).gte(5)},
             effect() {
               	let eff = new Decimal(1.25)
                 return eff
@@ -845,7 +845,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -870,7 +870,7 @@ addLayer("p", {
             cost: new Decimal(500),
             currencyInternalName: "points",
             branches: [18],
-            unlocked() {return hasUpgrade("p", 18)},
+            unlocked() {return hasUpgrade("p", 18) && getBuyableAmount("p", 4).gte(5)},
             effect() {
               	let eff = new Decimal(1.25)
                 return eff
@@ -887,7 +887,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -929,7 +929,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -971,7 +971,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -991,14 +991,14 @@ addLayer("p", {
             },
         },
         23: {    
-            fullDisplay() {return `<font size="2"><b>[P23] To Add</b><font size="1"><br>Adds +`+format(upgradeEffect(this.layer, this.id))+` to base point gain.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>[P23] To Add</b><font size="1"><br>Adds +`+format(upgradeEffect(this.layer, this.id))+` to point gain.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
             cost: new Decimal(1000),
             currencyInternalName: "points",
             branches: [14, 16, 21],
             unlocked() {return hasUpgrade("p", 21) && hasUpgrade("p", 22)},
             effect() {
-              	let eff = new Decimal(10)
+              	let eff = new Decimal(5)
                 return eff
             },
             tooltip() {return "<span style='color:#ffffff'>To Add</span><br>――――――――――――<br><span style='font-size:11px'>"},
@@ -1013,7 +1013,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -1040,7 +1040,7 @@ addLayer("p", {
             branches: [15, 17, 22],
             unlocked() {return hasUpgrade("p", 21) && hasUpgrade("p", 22)},
             effect() {
-              	let eff = new Decimal(1.30)
+              	let eff = new Decimal(1.15)
                 return eff
             },
             tooltip() {return "<span style='color:#ffffff'>Or To Multiply?</span><br>――――――――――――<br><span style='font-size:11px'>"},
@@ -1055,7 +1055,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -1093,7 +1093,7 @@ addLayer("p", {
                 }
                 else if (!canAffordUpgrade(this.layer, this.id)) {
                     return {
-                    'background-color': '#b1b1b1',
+                    'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
@@ -1116,7 +1116,7 @@ addLayer("p", {
     buyables: {
         1: {
             display() {return `<font size="2"><b>[P01-B] Buy It Twice</b><font size="1"><br>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)
-                Adds +` +format(tmp[this.layer].buyables[this.id].effect) + ` to base point gain.<br>――――――――――――――――――
+                Adds +` +format(tmp[this.layer].buyables[this.id].effect) + ` to point gain.<br>――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Points`}, 
             cost(x) {
                 let base = new Decimal(1.50);
@@ -1128,6 +1128,10 @@ addLayer("p", {
 		       if(hasUpgrade('p', 11)) eff = eff.add(upgradeEffect("p", 11))
                 return eff
             },     
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             canAfford() { if (player.points.gte(this.cost())) {return true}},
             buy() {
                 player.points = player.points.sub(this.cost())
@@ -1145,33 +1149,41 @@ addLayer("p", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('p', 1))) setBuyableAmount('p', 1, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Buy It Twice</span><br>――――――――――――<br><span style='font-size:11px'>Each purchase adds +0.005 to base Point gain."},
+            tooltip() {return "<span style='color:#ffffff'>Buy It Twice</span><br>――――――――――――<br><span style='font-size:11px'>Each purchase adds +0.005 to point gain."},
             style() {
-                if(!this.canAfford()){return {
-                'background-color': '#E3E3E3',
+                if (tmp.p.buyables[this.layer, this.id].getAmount.gte(tmp.p.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    'background-color': '#E3E3E3',
+                    "width": "135px",
+            "height": "145px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+            }
+                else if(!this.canAfford()){return {
+                'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',}}
 
-                else return {
-                'background-color': '#E3E3E3',
+               else if(this.canAfford()){return {
+                'background-color': '#ffffff',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
-                'box-shadow':'0px 0px 15px #8eff00'
-                }
+                'box-shadow':'0px 0px 15px #8eff00'}}
             },
             unlocked() {return (hasUpgrade("p", 1))},
     
         },
         2: {
             display() {return `<font size="2"><b>[P02-B] Repetitive Addition</b><font size="1"><br>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)
-                Adds +` +format(tmp[this.layer].buyables[this.id].effect) + ` to base point gain.<br>――――――――――――――――――
+                Adds +` +format(tmp[this.layer].buyables[this.id].effect) + ` to point gain.<br>――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Points`}, 
             cost(x) {
-                let base = new Decimal(1.50);
+                let base = new Decimal(1.48);
                 let cost = base.pow(x).times(1);
                 return cost;
               },
@@ -1179,6 +1191,10 @@ addLayer("p", {
                 let eff = getBuyableAmount("p", 2).div(25)
                 return eff
             },     
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             canAfford() { if (player.points.gte(this.cost())) {return true}},
             buy() {
                 player.points = player.points.sub(this.cost())
@@ -1189,34 +1205,42 @@ addLayer("p", {
                 return cap
             },
             buyMax() {
-                let max = player.points.div(this.cost(0)).add(1).log(1.50) //add is cost, log is base
+                let max = player.points.div(this.cost(0)).add(1).log(1.48) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('p', 2))) setBuyableAmount('p', 2, max.add(1).floor())
             },
             branches: ["1"],
-            tooltip() {return "<span style='color:#ffffff'>Repetitive Addition</span><br>――――――――――――<br><span style='font-size:11px'>Each purchase adds +0.04 to base Point gain."},
+            tooltip() {return "<span style='color:#ffffff'>Repetitive Addition</span><br>――――――――――――<br><span style='font-size:11px'>Each purchase adds +0.04 to point gain."},
             style() {
-                if(!this.canAfford()){return {
-                'background-color': '#E3E3E3',
+                if (tmp.p.buyables[this.layer, this.id].getAmount.gte(tmp.p.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    'background-color': '#E3E3E3',
+                    "width": "135px",
+            "height": "145px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+            }
+                else if(!this.canAfford()){return {
+                'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',}}
 
-                else return {
-                'background-color': '#E3E3E3',
+               else if(this.canAfford()){return {
+                'background-color': '#ffffff',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
-                'box-shadow':'0px 0px 15px #8eff00'
-                }
+                'box-shadow':'0px 0px 15px #8eff00'}}
             },
             unlocked() {return (hasUpgrade("p", 10))},
     
         },
         3: {
-            display() {return `<font size="2"><b>[P03-B] Multiplicator 1</b><font size="1"><br>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)
+            display() {return `<font size="2"><b>[P03-B] Multiplier 1</b><font size="1"><br>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)
                 Multiplies Point gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x.<br>――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Points`}, 
             cost(x) {
@@ -1227,7 +1251,11 @@ addLayer("p", {
               effect() {
                 let eff = getBuyableAmount("p", 3).mul(0.05).plus(1)
                 return eff
-            },       
+            },    
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },   
             canAfford() { if (player.points.gte(this.cost())) {return true}},
             buy() {
                 player.points = player.points.sub(this.cost())
@@ -1243,29 +1271,37 @@ addLayer("p", {
                 if(max.gt(getBuyableAmount('p', 3))) setBuyableAmount('p', 3, max.add(1).floor())
             },
             branches: ["2"],
-            tooltip() {return "<span style='color:#ffffff'>Multiplicator 1</span><br>――――――――――――<br><span style='font-size:11px'>Each purchase multiplies Point gain by 1.05x."},
+            tooltip() {return "<span style='color:#ffffff'>Multiplier 1</span><br>――――――――――――<br><span style='font-size:11px'>Each purchase multiplies Point gain by 1.05x."},
             style() {
-                if(!this.canAfford()){return {
-                'background-color': '#E3E3E3',
+                if (tmp.p.buyables[this.layer, this.id].getAmount.gte(tmp.p.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    'background-color': '#E3E3E3',
+                    "width": "135px",
+            "height": "145px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+            }
+                else if(!this.canAfford()){return {
+                'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',}}
 
-                else return {
-                'background-color': '#E3E3E3',
+               else if(this.canAfford()){return {
+                'background-color': '#ffffff',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
-                'box-shadow':'0px 0px 15px #8eff00'
-                }
+                'box-shadow':'0px 0px 15px #8eff00'}}
             },
             unlocked() {return (hasUpgrade("p", 18))},
     
         },
         4: {
-            display() {return `<font size="2"><b>[P04-B] Multiplicator 2</b><font size="1"><br>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)
+            display() {return `<font size="2"><b>[P04-B] Multiplier 2</b><font size="1"><br>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)
                 Multiplies Point gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x.<br>――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Points`}, 
             cost(x) {
@@ -1276,7 +1312,11 @@ addLayer("p", {
               effect() {
                 let eff = getBuyableAmount("p", 4).mul(0.15).plus(1)
                 return eff
-            },       
+            },     
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },  
             canAfford() { if (player.points.gte(this.cost())) {return true}},
             buy() {
                 player.points = player.points.sub(this.cost())
@@ -1292,23 +1332,31 @@ addLayer("p", {
                 if(max.gt(getBuyableAmount('p', 4))) setBuyableAmount('p', 4, max.add(1).floor())
             },
             branches: ["2"],
-            tooltip() {return "<span style='color:#ffffff'>Multiplicator 2</span><br>――――――――――――<br><span style='font-size:11px'>Each purchase multiplies Point gain by 1.15x."},
+            tooltip() {return "<span style='color:#ffffff'>Multiplier 2</span><br>――――――――――――<br><span style='font-size:11px'>Each purchase multiplies Point gain by 1.15x."},
             style() {
-                if(!this.canAfford()){return {
-                'background-color': '#E3E3E3',
+                if (tmp.p.buyables[this.layer, this.id].getAmount.gte(tmp.p.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    'background-color': '#E3E3E3',
+                    "width": "135px",
+            "height": "145px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                }
+            }
+                else if(!this.canAfford()){return {
+                'background-color': '#bf8f8f',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',}}
 
-                else return {
-                'background-color': '#E3E3E3',
+               else if(this.canAfford()){return {
+                'background-color': '#ffffff',
                     "width": "135px",
             "height": "145px",
             'border': '5px solid',
             'border-color': 'rgba(0, 0, 0, 0.125)',
-                'box-shadow':'0px 0px 15px #8eff00'
-                }
+                'box-shadow':'0px 0px 15px #8eff00'}}
             },
             unlocked() {return (hasUpgrade("p", 18))},
     
@@ -1327,6 +1375,11 @@ addLayer("p", {
                             ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],
+                    ["raw-html", function() {if (!getBuyableAmount("p", 1).gte(2) && (hasUpgrade("p", 1))) return "(Unlock the next Point upgrade at 2 purchases of P01-B)"}, {"color": "#FFFFFF", "font-size": "20px"}],
+                    ["raw-html", function() {if (!getBuyableAmount("p", 1).gte(3) && (hasUpgrade("p", 3))) return "(Unlock the next Point upgrade at 3 purchases of P01-B)"}, {"color": "#FFFFFF", "font-size": "20px"}],
+                    ["raw-html", function() {if (!getBuyableAmount("p", 2).gte(6) && (hasUpgrade("p", 9)) && (hasUpgrade("p", 10))) return "(Unlock the next Point upgrade at 6 purchases of P02-B)"}, {"color": "#FFFFFF", "font-size": "20px"}],
+                    ["raw-html", function() {if (!getBuyableAmount("p", 2).gte(8) && (hasUpgrade("p", 11))) return "(Unlock the next Point upgrade at 8 purchases of P02-B)"}, {"color": "#FFFFFF", "font-size": "20px"}],
+                    ["raw-html", function() {if (!getBuyableAmount("p", 4).gte(5) && (hasUpgrade("p", 18))) return "(Unlock the next Point upgrades at 5 purchases of P04-B)"}, {"color": "#FFFFFF", "font-size": "20px"}],
                     "blank",
                     ["microtabs", "PointTabs"],
 
