@@ -111,6 +111,30 @@ addLayer("ach", {
                 }
             }
         },
+        8:{
+			name: "[8]<br><span style='color:#ffffff'>What's in a Point?</span>",
+            done() {return (player.r.researchResetAmount.gte('1'))},
+            unlocked() {return (hasAchievement("ach", 6))},
+            tooltip() {return "Do a Research reset.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#E5FDFF",
+                    "border-width": "3px"
+                }
+            }
+        },
+        9:{
+			name: "[9]<br><span style='color:#ffffff'>Things that boost points.</span>",
+            done() {return (player.r.researchResetAmount.gte('2'))},
+            unlocked() {return (hasAchievement("ach", 6))},
+            tooltip() {return "Do a second Research reset.<br>――――――――――――<br> <span style='font-size:11px'><span style='color:#E5E4E2'>"},
+            style() {
+                return {
+                    "border-color": "#E5FDFF",
+                    "border-width": "3px"
+                }
+            }
+        },
     },
     
     tabFormat: {

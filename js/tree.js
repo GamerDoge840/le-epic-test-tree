@@ -27,6 +27,7 @@ addNode("PAU",{
 addLayer("U1", {
     tabFormat: [["tree", [
         ['p'],
+        ['r'],
         ],
     ]],
     previousTab: "",

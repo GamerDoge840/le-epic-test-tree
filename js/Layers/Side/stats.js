@@ -91,7 +91,7 @@ addLayer("stats", {
                         function() {return '('+formatSmall(getPointGen())+'/s)'},
                         {"color": "#FFFFFF","font-size": "17px"}],
                         "blank",
-                    //["raw-html", function() {if (player.h.honeyResetAmount.gte('1')) return '('+format(player.h.Honey)+' Honey)'}, {"color": "#C2B261", "font-size": "25px"}],
+                    ["raw-html", function() {if (player.r.researchResetAmount.gte('1')) return '('+format(player.r.research)+' Research)'}, {"color": "#E5FDFF", "font-size": "25px"}],
                         "blank",
                         ["display-text",
                             function() {return "―――――――――――"},

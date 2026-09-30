@@ -9,7 +9,7 @@ addLayer("Essence", {
     color: "#FFFFFF",
     nodeStyle() {
         return {
-            'border': '5px solid #666363',
+            'border': '2px solid #ffffff',
             "width": 65,
         "height": 65,
         'min-height': '65px',

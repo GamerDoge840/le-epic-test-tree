@@ -3,7 +3,7 @@ let modInfo = {
 	id: "upgradeaupgradupradguprad",
 	author: "The Big G",
 	pointsName: "Points",
-	modFiles: ["Layers/U1/Points.js","Layers/Side/stats.js","Layers/Side/achievements.js","math.js", "tree.js"],
+	modFiles: ["Layers/U1/Research.js","Layers/U1/Points.js","Layers/Side/stats.js","Layers/Side/achievements.js","math.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -26,7 +26,7 @@ let winText = `Congratulations! You have reached the end and beaten this game, b
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything"]
+var doNotCallTheseFunctionsEveryTick = ["blowUpEverything", "researchReset"]
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
@@ -68,15 +68,18 @@ function getPointGen() {
 		if(hasUpgrade('p', 22)) gain = gain.times(upgradeEffect("p", 22))
 		if(hasUpgrade('p', 23)) gain = gain.add(upgradeEffect("p", 23))
 		if(hasUpgrade('p', 24)) gain = gain.times(upgradeEffect("p", 24))
-
-
-
+		if(hasUpgrade('p', 26)) gain = gain.times(upgradeEffect("p", 26))
 
 	//Point Buyables
         gain = gain.add(buyableEffect("p", 1))
         gain = gain.add(buyableEffect("p", 2))
 		gain = gain.times(buyableEffect("p", 3))
         gain = gain.times(buyableEffect("p", 4))
+
+	//Research Buyables
+        if(getBuyableAmount("r", 1).gte(1)) gain = gain.times(buyableEffect("r", 1))	
+		if(getBuyableAmount("r", 3).gte(1)) gain = gain.times(buyableEffect("r", 3))	
+
 
 
 	return gain

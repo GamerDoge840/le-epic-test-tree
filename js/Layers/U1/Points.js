@@ -69,8 +69,9 @@ addLayer("p", {
             branches: [0],
             unlocked() {return (hasUpgrade("p", 0))},
             effect() {
-              	let eff = new Decimal(0.010)
+              	let eff = new Decimal(0.015)
                 if(hasUpgrade('p', 9)) eff = eff.add(upgradeEffect("p", 9))
+                eff = eff.times(buyableEffect("r", 2))
                 return eff
             },
             tooltip() {return "<span style='color:#ffffff'>The First Upgrade</span><br>――――――――――――<br><span style='font-size:11px'>"},
@@ -113,6 +114,7 @@ addLayer("p", {
             unlocked() {return getBuyableAmount("p", 1).gte(2)},
             effect() {
               	let eff = new Decimal(0.020)
+                eff = eff.times(buyableEffect("r", 2))
                 return eff
             },
             tooltip() {return "<span style='color:#ffffff'>The Second Upgrade</span><br>――――――――――――<br><span style='font-size:11px'>"},
@@ -155,6 +157,7 @@ addLayer("p", {
             unlocked() {return (hasUpgrade("p", 2))},
             effect() {
               	let eff = new Decimal(0.010)
+                eff = eff.times(buyableEffect("r", 2))
                 return eff
             },
             tooltip() {return "<span style='color:#ffffff'>Buy It Thrice</span><br>――――――――――――<br><span style='font-size:11px'>"},
@@ -1112,11 +1115,53 @@ addLayer("p", {
                 }
             },
         },
+        26: {    
+            fullDisplay() {return `<font size="2"><b>[P26] Just a Little Push for Research</b><font size="1"><br>Multiply Point gain by `+format(upgradeEffect(this.layer, this.id))+`x.<br>――――――――――――――――――<br>
+                Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
+            cost: new Decimal(1250),
+            currencyInternalName: "points",
+            branches: [25],
+            unlocked() {return hasUpgrade("p", 25)},
+            effect() {
+              	let eff = new Decimal(1.2)
+                return eff
+            },
+            tooltip() {return "<span style='color:#ffffff'>Just a Little Push for Research</span><br>――――――――――――<br><span style='font-size:11px'>"},
+            style() {
+                if (hasUpgrade(this.layer, this.id)) return {
+                    'background-color': '#E3E3E3',
+                    "width": "135px",
+            "height": "145px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+
+                }
+                else if (!canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                    'background-color': '#bf8f8f',
+                    "width": "135px",
+            "height": "145px",
+            'border': '5px solid',
+            'border-color': 'rgba(0, 0, 0, 0.125)',
+                    }
+                }
+                else if (canAffordUpgrade(this.layer, this.id)) {
+                    return {
+                        'border-color': '#8eff00',
+                'background-color': '#ffffff',
+                'color': 'black',
+                        "width": "135px",
+            "height": "145px",
+            'box-shadow':'0px 0px 15px #8eff00'
+                    }
+                }
+            },
+        },
     },
     buyables: {
         1: {
             display() {return `<font size="2"><b>[P01-B] Buy It Twice</b><font size="1"><br>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)
-                Adds +` +format(tmp[this.layer].buyables[this.id].effect) + ` to point gain.<br>――――――――――――――――――
+                Add +` +format(tmp[this.layer].buyables[this.id].effect) + ` to point gain.<br>――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Points`}, 
             cost(x) {
                 let base = new Decimal(1.50);
@@ -1125,7 +1170,7 @@ addLayer("p", {
               },
               effect() {
                 let eff = getBuyableAmount("p", 1).div(200)
-		       if(hasUpgrade('p', 11)) eff = eff.add(upgradeEffect("p", 11))
+		        if(hasUpgrade('p', 11)) eff = eff.add(upgradeEffect("p", 11))
                 return eff
             },     
             getAmount(){
@@ -1406,7 +1451,7 @@ addLayer("p", {
                     "blank",
                     ["column", [ ["row", [  "blank", ["upgrade", 19], "blank", ["upgrade", 20], "blank", ]]]],
                     "blank",
-                    ["column", [ ["row", [  "blank", ["upgrade", 25], "blank", ]]]],
+                    ["column", [ ["row", [  ["upgrade", 26], "blank", ["upgrade", 25], "blank", ]]]],
                   ["display-text",
                     function() {return "―――――――――――――――――"},
                     {"color": "#FFFFFF", "font-size": "32px"}],                        
