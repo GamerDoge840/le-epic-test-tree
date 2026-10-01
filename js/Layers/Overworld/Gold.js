@@ -94,9 +94,9 @@ addLayer("Gold", {
     },
     milestones: {
         0: {
-        requirementDescription: "<font size='3'><b>4 Gold Bars</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Keep previous Money automation upgrades on Gold resets after you have obtained this milestone.</span>'},
-        done() {return player.Gold.goldBars.gte(4)},
+        requirementDescription: "<font size='3'><b>[1] 1 Gold Bar</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Only the first Gold reset removes Money automation upgrades.</span>'},
+        done() {return player.Gold.goldBars.gte(1)},
         unlocked() {return true},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
@@ -112,9 +112,9 @@ addLayer("Gold", {
             }
     },
     1: {
-        requirementDescription: "<font size='3'><b>6 Gold Bars</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[2] 3 Gold Bars</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Keep Bean milestones on Money reset.</span>'},
-        done() {return player.Gold.goldBars.gte(6)},
+        done() {return player.Gold.goldBars.gte(3)},
         unlocked() {return hasMilestone("Gold", 0)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
@@ -130,7 +130,7 @@ addLayer("Gold", {
             }
     },
     2: {
-        requirementDescription: "<font size='3'><b>15 Gold Bars</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[3] 15 Gold Bars</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlock new Money upgrades.</span>'},
         done() {return player.Gold.goldBars.gte(15)},
         unlocked() {return hasMilestone("Gold", 1)},
@@ -148,9 +148,9 @@ addLayer("Gold", {
             }
     },
     3: {
-        requirementDescription: "<font size='3'><b>750 Gold Bars</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[4] 500 Gold Bars</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlock a new Gold upgrade that enables Money generation. <br>Interest can be bought 10 more times.</span>'},
-        done() {return player.Gold.goldBars.gte(750)},
+        done() {return player.Gold.goldBars.gte(500)},
         unlocked() {return hasMilestone("Gold", 2)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
@@ -166,9 +166,9 @@ addLayer("Gold", {
             }
     },
     4: {
-        requirementDescription: "<font size='3'><b>3,000 Gold Bars</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Unlocks the next reset layer.</span>'},
-        done() {return player.Gold.goldBars.gte(3000)},
+        requirementDescription: "<font size='3'><b>[5] 2,000 Gold Bars</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlocks the third reset layer.</span>'},
+        done() {return player.Gold.goldBars.gte(1500)},
         unlocked() {return hasMilestone("Gold", 3)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {
@@ -186,13 +186,12 @@ addLayer("Gold", {
     },
     upgrades: {        
         11: {
-            title: "Bean Automation IV",
-            fullDisplay() {return `<font size="2"><b>Bean Automation IV</b><font size="1"><br>Autobuys Valuable Beans without spending any Beans.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>Bean Automator IV</b><font size="1"><br>Autobuys Valuable Beans without spending any Beans.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Gold Bars`},        
             unlocked() { return true },
             currencyLocation() { return player.Gold },
             currencyInternalName: "goldBars",
-            cost: new Decimal(60),
+            cost: new Decimal(10),
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
@@ -224,13 +223,12 @@ addLayer("Gold", {
             },
         },
         12: {
-            title: "Money Automation I",
-            fullDisplay() {return `<font size="2"><b>Money Automation I</b><font size="1"><br>Autobuys Farming Gear without spending any Money.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>Money Automator I</b><font size="1"><br>Autobuys Farming Gear without spending any Money.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Gold Bars`},        
             unlocked() { return hasUpgrade("Gold", 11)},
             currencyLocation() { return player.Gold },
             currencyInternalName: "goldBars",
-            cost: new Decimal(150),
+            cost: new Decimal(50),
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
@@ -262,13 +260,12 @@ addLayer("Gold", {
             },
         },
         13: {
-            title: "Money Automation II",
-            fullDisplay() {return `<font size="2"><b>Money Automation II</b><font size="1"><br>Autobuys Farming Experience and Interest without spending any Money.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>Money Automator II</b><font size="1"><br>Autobuys Farming Experience and Interest without spending any Money.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Gold Bars`},        
             unlocked() { return hasUpgrade("Gold", 12)},
             currencyLocation() { return player.Gold },
             currencyInternalName: "goldBars",
-            cost: new Decimal(1500),
+            cost: new Decimal(175),
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
@@ -300,13 +297,12 @@ addLayer("Gold", {
             },
         },
         14: {
-            title: "Money Automation III",
-            fullDisplay() {return `<font size="2"><b>Money Automation III</b><font size="1"><br>Autobuys Tractors without spending any Money.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>Money Automator III</b><font size="1"><br>Autobuys Tractors without spending any Money.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Gold Bars`},        
             unlocked() { return hasUpgrade("Gold", 13)},
             currencyLocation() { return player.Gold },
             currencyInternalName: "goldBars",
-            cost: new Decimal(2000),
+            cost: new Decimal(1000),
             style() {
                 if (hasUpgrade(this.layer, this.id)) return {
                     "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
@@ -341,11 +337,11 @@ addLayer("Gold", {
     buyables: {
         1: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Golden Beans</b>
-                <font size="2">Which boost Bean gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts Bean gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Gold Bars</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.25);
-                let cost = base.pow(x).times(0.250);
+                let cost = base.pow(x).times(0.100);
                 return cost;
               },
               effect() {
@@ -359,29 +355,24 @@ addLayer("Gold", {
                 player.Gold.goldBars = player.Gold.goldBars.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(500)
                 return cap
             },
             buyMax() {
-                let max = player.Gold.goldBars.div(this.cost(0)).add(0.250).log(1.25) //add is cost, log is base
+                let max = player.Gold.goldBars.div(this.cost(0)).add(0.100).log(1.25) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Gold', 1))) setBuyableAmount('Gold', 1, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Golden Beans</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Bean gain by 75%. Every ten purchases, this effect is boosted by 1.35x."},
+            tooltip() {return "<span style='color:#ffffff'>Golden Beans</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Bean gain by 1.75x. Every ten purchases, this effect is boosted by 1.35x."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Gold.buyables[this.layer, this.id].getAmount.gte(tmp.Gold.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
                 'color':'black', 
@@ -389,19 +380,39 @@ addLayer("Gold", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#FFE77D', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return true},
     
         },
         2: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Golden Dollars</b>
-                <font size="2">Which boost Money gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts Money gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Gold Bars</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.55);
-                let cost = base.pow(x).times(0.250);
+                let cost = base.pow(x).times(0.200);
                 return cost;
               },
               effect() {
@@ -415,29 +426,24 @@ addLayer("Gold", {
                 player.Gold.goldBars = player.Gold.goldBars.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(20)
                 return cap
             },
             buyMax() {
-                let max = player.Gold.goldBars.div(this.cost(0)).add(0.250).log(1.55) //add is cost, log is base
+                let max = player.Gold.goldBars.div(this.cost(0)).add(0.200).log(1.55) //add is cost, log is base
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Gold', 2))) setBuyableAmount('Gold', 2, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Golden Dollars</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Money gain by 25%. Every ten purchases, this effect is boosted by 1.25x."},
+            tooltip() {return "<span style='color:#ffffff'>Golden Dollars</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Money gain by 1.25x. Every ten purchases, this effect is boosted by 1.25x."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Gold.buyables[this.layer, this.id].getAmount.gte(tmp.Gold.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
                 'color':'black', 
@@ -445,15 +451,35 @@ addLayer("Gold", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#FFE77D', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return true},
     
         },
         3: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Golden Levels</b>
-                <font size="2">Which boost Bean Level effect by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts Bean Level effect by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Gold Bars</b><br><b>`},
             cost(x) {
                 let base = new Decimal(100);
@@ -469,6 +495,10 @@ addLayer("Gold", {
                 player.Gold.goldBars = player.Gold.goldBars.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(3)
                 if (hasMilestone("Factory", 9)) cap = cap.times(10)
@@ -479,20 +509,11 @@ addLayer("Gold", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Gold', 3))) setBuyableAmount('Gold', 3, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Golden Levels</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Bean Level effect by 50%."},
+            tooltip() {return "<span style='color:#ffffff'>Golden Levels</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Bean Level effect by 1.50x."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Gold.buyables[this.layer, this.id].getAmount.gte(tmp.Gold.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
                 'color':'black', 
@@ -500,15 +521,35 @@ addLayer("Gold", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#FFE77D', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return true},
     
         },
         4: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Golden Gold</b>
-                <font size="2">Which boost Gold Bar gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts Gold Bar gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Gold Bars</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.20);
@@ -526,6 +567,10 @@ addLayer("Gold", {
                 player.Gold.goldBars = player.Gold.goldBars.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(30)
                 return cap
@@ -535,20 +580,11 @@ addLayer("Gold", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Gold', 4))) setBuyableAmount('Gold', 4, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Golden Gold</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Gold gain by 15%. Every five purchases, this effect is boosted by 1.25x."},
+            tooltip() {return "<span style='color:#ffffff'>Golden Gold</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Gold gain by 1.15x. Every five purchases, this effect is boosted by 1.25x."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Gold.buyables[this.layer, this.id].getAmount.gte(tmp.Gold.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
                 'color':'black', 
@@ -556,15 +592,35 @@ addLayer("Gold", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#FFE77D', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return true},
     
         },
         5: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Money Printers</b>
-                <font size="2">Which generate ` + formatWhole(tmp[this.layer].buyables[this.id].effect.mul(100)) + `% of Money gain per second</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Generates ` + formatWhole(tmp[this.layer].buyables[this.id].effect.mul(100)) + `% of Money gain per second</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Gold Bars</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.30);
@@ -577,6 +633,10 @@ addLayer("Gold", {
                 player.Gold.goldBars = player.Gold.goldBars.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(100)
                 return cap
@@ -586,20 +646,11 @@ addLayer("Gold", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Gold', 5))) setBuyableAmount('Gold', 5, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Money Printer</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Buying this will also disable the ability to perform the Money reset."},
+            tooltip() {return "<span style='color:#ffffff'>Money Printer</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase passively generates 1% of Money gain on reset. Buying this at least once will also disable the ability to perform the Money reset."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Gold.buyables[this.layer, this.id].getAmount.gte(tmp.Gold.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
                 'color':'black', 
@@ -607,15 +658,35 @@ addLayer("Gold", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#FFE77D', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Gold", 3)},
     
         },
         6: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Golden TP</b>
-                <font size="2">Which boost TP gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts TP gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Gold Bars</b><br><b>`},
             cost(x) {
                 let base = new Decimal(10);
@@ -628,6 +699,10 @@ addLayer("Gold", {
                 player.Gold.goldBars = player.Gold.goldBars.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(100)
                 return cap
@@ -637,20 +712,11 @@ addLayer("Gold", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Gold', 6))) setBuyableAmount('Gold', 6, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Golden TP</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Doubles TP gain with every purchase."},
+            tooltip() {return "<span style='color:#ffffff'>Golden TP</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase doubles TP gain."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Gold.buyables[this.layer, this.id].getAmount.gte(tmp.Gold.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
                 'color':'black', 
@@ -658,8 +724,28 @@ addLayer("Gold", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#FFE77D', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 4)},
     
@@ -687,7 +773,7 @@ addLayer("Gold", {
         ["display-text",
             function() {return ''+format(player.Gold.goldBars)+' Gold Bars'},
             {"color": "#EBCB3F", "font-size": "30px"}],
-                        ["raw-html", function() {if (player.Money.dollars.gte(10000) && !getBuyableAmount("Factory", 4).gte(1)) return "(+" + format(player.Gold.goldToGet) + ")"}, {"color": "#FFE77D", "font-size": "20px"}],
+                        ["raw-html", function() {if (player.Money.dollars.gte(10000) && !getBuyableAmount("Factory", 4).gte(1)) return "(+" + format(player.Gold.goldToGet) + " on reset)"}, {"color": "#FFE77D", "font-size": "20px"}],
                         ["raw-html", function() {if (getBuyableAmount("Factory", 4).gte(1) && player.Money.dollars.gte(10000)) return "(+" + format(player.Gold.goldToGet.mul(buyableEffect("Factory", 4))) + "/s)"}, {"color": "#FFE77D", "font-size": "20px"}],
                             ["display-text",
                     function() {return "―――――――――――――――――――――――――――――"},
@@ -722,11 +808,9 @@ addLayer("Gold", {
                     function() {return "―――――――――――――――――"},
                     {"color": "#EBCB3F", "font-size": "32px"}],
                         "blank",
-                        ["column", [ ["row", [ ["buyable", 1], "blank",  ["buyable", 3], ]]]],
+                        ["column", [ ["row", [ ["buyable", 1], "blank", ["buyable", 2], "blank",  ["buyable", 3], ]]]],
                         "blank",
-                        ["column", [ ["row", [ ["buyable", 2], "blank", ["buyable", 4],]]]],
-                        "blank",
-                        ["column", [ ["row", [ ["buyable", 5], "blank", ["buyable", 6]]]]],
+                        ["column", [ ["row", [ ["buyable", 4], "blank", ["buyable", 5], "blank", ["buyable", 6]]]]],
                         "blank",
                   ["display-text",
                     function() {return "―――――――――――――――――"},

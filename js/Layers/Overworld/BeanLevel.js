@@ -8,7 +8,7 @@ addLayer("BeanLevel", {
         bestBeanLevel: new Decimal(1)
     }},
     color: "#ffb441",
-    requires: new Decimal("2"), // Can be a function that takes requirement increases into account
+    requires: new Decimal("1.25"), // Can be a function that takes requirement increases into account
     resource: "amogus", // Name of prestige currency
     resetsNothing() {return true},
     canBuyMax() {return true},

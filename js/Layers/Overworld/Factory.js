@@ -95,8 +95,8 @@ addLayer("Factory", {
     },
     milestones: {
         0: {
-        requirementDescription: "<font size='3'><b>(FL1) Bean Enhancement</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Unlock Bean Tiers (in the Beans layer).</span>'},
+        requirementDescription: "<font size='3'><b>[FL1] Bean Enhancement</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlocks Bean Tiers (in the Beans layer).</span>'},
         done() {return player.Factory.points.gte(1)},
         unlocked() {return true},
         style() {
@@ -117,8 +117,8 @@ addLayer("Factory", {
             }
     },
     1: {
-        requirementDescription: "<font size='3'><b>(FL2) Bean Enhancement II</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Each Factory Level from 2 to 7 boosts TP gain by 20x. Bean Booster I can be bought 50 more times, and Bean gain is doubled while under a trillion.</span>'},
+        requirementDescription: "<font size='3'><b>[FL2] Bean Enhancement II</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Each Factory Level from 2 to 7 boosts TP gain by 20x. Bean Booster I can be bought 50 more times, and Bean gain is doubled while you are under a trillion Beans.</span>'},
         done() {return player.Factory.points.gte(2)},
         unlocked() {return hasMilestone("Factory", 0)},
         style() {
@@ -139,8 +139,8 @@ addLayer("Factory", {
             }
     },
     2: {
-        requirementDescription: "<font size='3'><b>(FL3) Bean Factory</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Boost Bean gain by 50% for each Factory Level.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        requirementDescription: "<font size='3'><b>[FL3] Bean Factory</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Boost Bean gain by 1.50x for each Factory Level.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.points.gte(3)},
         unlocked() {return hasMilestone("Factory", 1)},
         effect() {
@@ -165,8 +165,8 @@ addLayer("Factory", {
             }
     },
     3: {
-        requirementDescription: "<font size='3'><b>(FL4) Money Factory</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Boost Money gain by 25% for each Factory Level.<br>Always keep Bean and Money milestones on Gold reset.<br>Bean Level Booster can be bought 50 more times.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        requirementDescription: "<font size='3'><b>[FL4] Money Factory</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Boost Money gain by 1.25x for each Factory Level.<br>Always keep Bean and Money milestones on Gold reset.<br>Bean Level Booster can be bought 50 more times.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.points.gte(4)},
         unlocked() {return hasMilestone("Factory", 2)},
         effect() {
@@ -191,8 +191,8 @@ addLayer("Factory", {
             }
     },
     4: {
-        requirementDescription: "<font size='3'><b>(FL5) Gold Factory</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Boost Gold gain by 5% for each Factory Level.<br>Always keep Money automation upgrades on Gold reset.<br>Unlock a new Gold upgrade that boosts TP.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        requirementDescription: "<font size='3'><b>[FL5] Gold Factory</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">Boost Gold gain by 1.05x for each Factory Level.<br>Always keep Money automation upgrades on Gold reset.<br>Unlock a new Gold upgrade that boosts TP.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.points.gte(5)},
         unlocked() {return hasMilestone("Factory", 3)},
         effect() {
@@ -217,7 +217,7 @@ addLayer("Factory", {
             }
     },
     5: {
-        requirementDescription: "<font size='3'><b>(FL6) Money Factory II</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL6] Money Factory II</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">The first five Money upgrades are always automated.<br>Bean Level Enhancer can be bought 20 more times.<br>Unlock a new Money upgrade that boosts TP gain.</span>'},
         done() {return player.Factory.points.gte(6)},
         unlocked() {return hasMilestone("Factory", 4)},
@@ -239,7 +239,7 @@ addLayer("Factory", {
             }
     },
     6: {
-        requirementDescription: "<font size='3'><b>(FL7) Iron Factory</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL7] Iron Factory</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlock the Forge Iron reset (In this layer).</span>'},
         done() {return player.Factory.points.gte(7)},
         unlocked() {return hasMilestone("Factory", 5)},
@@ -261,7 +261,7 @@ addLayer("Factory", {
             }
     },
     7: {
-        requirementDescription: "<font size='3'><b>(FL8) Get Rid of Those Annoying Milestone Popups</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL8] Get Rid of Those Annoying Milestone Popups</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Keep all previous milestones on Layer 3 resets after you have obtained this milestone.<br>Keep Bean milestones on Money resets and automate the Tier Booster Money upgrade.</span>'},
         done() {return player.Factory.points.gte(8)},
         unlocked() {return hasMilestone("Factory", 6)},
@@ -283,7 +283,7 @@ addLayer("Factory", {
             }
     },
     8: {
-        requirementDescription: "<font size='3'><b>(FL9) Iron Factory II</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL9] Iron Factory II</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Each Factory Level past 8 boosts Iron Plate gain by 1.25x compounding (Capped at a 10x boost).<br>Unlock new Iron Plate upgrades related to Gold automation.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.points.gte(9)},
         unlocked() {return hasMilestone("Factory", 7)},
@@ -309,7 +309,7 @@ addLayer("Factory", {
             }
     },
     9: {
-        requirementDescription: "<font size='3'><b>(FL10) Bean Enhancement III</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL10] Bean Enhancement III</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">TP Requirement of Bean Tiers scales 20% slower. Golden Levels can be bought 10x as many times.<br>Unlock more Iron Plate upgrades related to Money.</span>'},
         done() {return player.Factory.points.gte(10)},
         unlocked() {return hasMilestone("Factory", 8)},
@@ -331,7 +331,7 @@ addLayer("Factory", {
             }
     },
     10: {
-        requirementDescription: "<font size='3'><b>(FL11) Bean Enhancement IV</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL11] Bean Enhancement IV</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Bean Tier boost to Money is 2x stronger. Bean Tiers gain a third effect that boosts Gold.<br>Unlock new Iron Plate upgrades related to Bean Tiers.</span>'},
         done() {return player.Factory.points.gte(11)},
         unlocked() {return hasMilestone("Factory", 9)},
@@ -353,7 +353,7 @@ addLayer("Factory", {
             }
     },
     11: {
-        requirementDescription: "<font size='3'><b>(FL12) Bean Enhancement V</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL12] Bean Enhancement V</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Bean Level Enhancer can be bought twice as many times. Unlock a new Iron Plate upgrade.</span>'},
         done() {return player.Factory.points.gte(12)},
         unlocked() {return hasMilestone("Factory", 10)},
@@ -375,7 +375,7 @@ addLayer("Factory", {
             }
     },
      12: {
-        requirementDescription: "<font size='3'><b>(FL13) Bean Factory II</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL13] Bean Factory II</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Every Factory Level also boosts Bean gain by 1.10x compounding, unlock another new Iron Plate upgrade.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.points.gte(13)},
         effect() {
@@ -401,7 +401,7 @@ addLayer("Factory", {
             }
     },
     13: {
-        requirementDescription: "<font size='3'><b>(FL14) Power Factory</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL14] Power Factory</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlocks the Power Plant (In this tab) and yet another new Iron Plate upgrade.</span>'},
         done() {return player.Factory.points.gte(14)},
         unlocked() {return hasMilestone("Factory", 12)},
@@ -423,7 +423,7 @@ addLayer("Factory", {
             }
     },
     14: {
-        requirementDescription: "<font size='3'><b>(FL15) Power Factory II</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL15] Power Factory II</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Start Layer 3 resets with 1e9 Money, unlock a new Watt generation upgrade, and each Factory Level past 14 boosts Watt gain by 1.25x compounding.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.points.gte(15)},
         effect() {
@@ -449,7 +449,7 @@ addLayer("Factory", {
             }
     },
     15: {
-        requirementDescription: "<font size='3'><b>(FL16) Power Factory III</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL16] Power Factory III</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlock the third Watt generation upgrade.'},
         done() {return player.Factory.points.gte(16)},
         unlocked() {return hasMilestone("Factory", 14)},
@@ -471,7 +471,7 @@ addLayer("Factory", {
             }
     },
     16: {
-        requirementDescription: "<font size='3'><b>(FL17) Power Factory IV</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL17] Power Factory IV</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlock the fourth Watt generation upgrade.'},
         done() {return player.Factory.points.gte(17)},
         unlocked() {return hasMilestone("Factory", 15)},
@@ -493,7 +493,7 @@ addLayer("Factory", {
             }
     },
     17: {
-        requirementDescription: "<font size='3'><b>(FL18) A Strange Discovery</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[FL18] A Strange Discovery</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Unlock a new subtab in the Assembly Line.'},
         done() {return player.Factory.points.gte(18)},
         unlocked() {return hasMilestone("Factory", 16)},
@@ -515,7 +515,7 @@ addLayer("Factory", {
             }
     },
     1000: {
-        requirementDescription: "<font size='3'><b>(0.25 Best Watts)</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[1] (0.25 Best Watts)</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Watts boost Bean gain, and unlock a new buyable in the Watt Generation tab.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.bestWatts.gte(0.25)},
         effect() {
@@ -541,7 +541,7 @@ addLayer("Factory", {
             }
     },
     1001: {
-        requirementDescription: "<font size='3'><b>(15 Best Watts)</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[2] (15 Best Watts)</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Watts divide the Bean Level requirement.</span><br>――――――――――――――<br> Currently: /'+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'</span>'},
         done() {return player.Factory.bestWatts.gte(15)},
         effect() {
@@ -567,7 +567,7 @@ addLayer("Factory", {
             }
     },
     1002: {
-        requirementDescription: "<font size='3'><b>(750 Best Watts)</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[3] (750 Best Watts)</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Watts extend the purchase cap of Valuable Beans (Capped at 7x).</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.bestWatts.gte(750)},
         effect() {
@@ -593,7 +593,7 @@ addLayer("Factory", {
             }
     },
     1003: {
-        requirementDescription: "<font size='3'><b>(2,000 Best Watts)</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[4] (2,000 Best Watts)</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Watts boost the Bean Level effect.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.bestWatts.gte(2000)},
         effect() {
@@ -619,7 +619,7 @@ addLayer("Factory", {
             }
     },
     1004: {
-        requirementDescription: "<font size='3'><b>(15,000 Best Watts)</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[5] (15,000 Best Watts)</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Watts boost TP gain, and Bean Tiers gain another new effect which boosts Watt gain.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.bestWatts.gte(15000)},
         effect() {
@@ -646,7 +646,7 @@ addLayer("Factory", {
             }
     },
     1005: {
-        requirementDescription: "<font size='3'><b>(50,000 Best Watts)</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[6] (50,000 Best Watts)</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Watts boost Money gain.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.bestWatts.gte(50000)},
         effect() {
@@ -673,7 +673,7 @@ addLayer("Factory", {
             }
     },
     1006: {
-        requirementDescription: "<font size='3'><b>(75,000 Best Watts)</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[7] (75,000 Best Watts)</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Watts boost Gold gain.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.bestWatts.gte(75000)},
         effect() {
@@ -700,7 +700,7 @@ addLayer("Factory", {
             }
     },
     1007: {
-        requirementDescription: "<font size='3'><b>(300,000 Best Watts)</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[8] (300,000 Best Watts)</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Watts divide Bean Tier requirement.</span><br>――――――――――――――<br> Currently: /'+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'</span>'},
         done() {return player.Factory.bestWatts.gte(300000)},
         effect() {
@@ -726,7 +726,7 @@ addLayer("Factory", {
             }
     },
     1008: {
-        requirementDescription: "<font size='3'><b>(1,500,000 Best Watts)</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[9] (1,500,000 Best Watts)</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Watts boost the effects of the fifth, sixth, and seventh previous Watt milestones.</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.bestWatts.gte(1.5e6)},
         effect() {
@@ -752,7 +752,7 @@ addLayer("Factory", {
             }
     },
     1009: {
-        requirementDescription: "<font size='3'><b>(4,000,000 Best Watts)</b><font size='2'>",
+        requirementDescription: "<font size='3'><b>[10] (4,000,000 Best Watts)</b><font size='2'>",
         effectDescription() {return '――――――――――――――<br><font size="2">Watts extend the purchase cap of Hydroponics Basins (Capped at 2x).</span><br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.bestWatts.gte(4e6)},
         effect() {
@@ -833,7 +833,7 @@ addLayer("Factory", {
             },
         },           
         2: {
-            fullDisplay() {return `<font size="3"><b>Beans Portal Piece</b><font size="2"><br>Boost Bean Gain by 100x.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="3"><b>Portal Piece I</b><font size="2"><br>Boost Bean Gain by 100x.<br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Beans`},        
             unlocked() { return hasMilestone("Factory", 17) },
             cost: new Decimal(1e53),
@@ -872,7 +872,7 @@ addLayer("Factory", {
     buyables: {
         1: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Hydroponics Basins</b>
-                <font size="2">Which boost Bean gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――
+                <font size="2">Boosts Bean gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.25);
@@ -890,6 +890,10 @@ addLayer("Factory", {
                 player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(100)
                 if (hasMilestone('Factory', 1009)) cap = cap.times(tmp.Factory.milestones[1009].effect)
@@ -900,20 +904,11 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 1))) setBuyableAmount('Factory', 1, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Hydroponics Basins</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Bean gain by 50%. Every ten purchases, this effect is boosted by 1.25x."},
+            tooltip() {return "<span style='color:#ffffff'>Hydroponics Basins</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Bean gain by 1.50x. Every ten purchases, this effect is boosted by 1.25x."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "200px",
-                "height": "125px",
-                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "200px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -921,15 +916,35 @@ addLayer("Factory", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 6)},
     
         },
         2: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Sprinklers</b>
-                <font size="2">Boosting purchase caps of first two Bean Upgrades by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――
+                <font size="2">Boosts purchase caps of first two Bean Upgrades by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(10);
@@ -945,6 +960,10 @@ addLayer("Factory", {
                 player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(10)
                 return cap
@@ -954,20 +973,11 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 2))) setBuyableAmount('Factory', 2, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Sprinklers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Increases the maximum purchase caps of Bean Booster and Bean Level booster by 20% each level."},
+            tooltip() {return "<span style='color:#ffffff'>Sprinklers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase increases the maximum purchase caps of Bean Booster and Bean Level booster by 1.20x each level."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "200px",
-                "height": "125px",
-                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "200px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -975,15 +985,35 @@ addLayer("Factory", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 6)},
     
         },
         3: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Gold Automators</b>
-                <font size="2">Which autobuy the first ` +formatWhole(getBuyableAmount(this.layer, this.id), 0)+ ` Gold upgrades</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Autobuys the first ` +formatWhole(getBuyableAmount(this.layer, this.id), 0)+ ` Gold upgrades</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(2);
@@ -995,6 +1025,10 @@ addLayer("Factory", {
                 player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(6)
                 return cap
@@ -1004,20 +1038,11 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 3))) setBuyableAmount('Factory', 3, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Gold Automators</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase enables automation of another of the first six Gold upgrades"},
+            tooltip() {return "<span style='color:#ffffff'>Gold Automators</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase enables automation of another of the first six Gold upgrades."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -1025,15 +1050,35 @@ addLayer("Factory", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 8)},
     
         },
          4: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Gold Miners</b>
-                <font size="2">Which generate  ` + formatWhole(tmp[this.layer].buyables[this.id].effect.mul(100)) + `% of Gold gain per second</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Generates  ` + formatWhole(tmp[this.layer].buyables[this.id].effect.mul(100)) + `% of Gold gain per second</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.30);
@@ -1046,6 +1091,10 @@ addLayer("Factory", {
                 player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(100)
                 return cap
@@ -1055,20 +1104,11 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 4))) setBuyableAmount('Factory', 4, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Gold Miners</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>First purchase quadruples Gold gain as a bonus. Buying this will also disable the ability to perform the Gold reset."},
+            tooltip() {return "<span style='color:#ffffff'>Gold Miners</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase passively generates 1% of Gold gain on reset. First purchase also quadruples Gold gain as a bonus! Buying this will also disable the ability to perform the Gold reset."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -1076,15 +1116,35 @@ addLayer("Factory", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 8)},
     
         },
         5: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Suitcases</b>
-                <font size="2">Boosting purchase caps of first three Money Upgrades by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts purchase caps of first three Money Upgrades by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(100);
@@ -1100,6 +1160,10 @@ addLayer("Factory", {
                 player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(4)
                 return cap
@@ -1109,20 +1173,11 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 5))) setBuyableAmount('Factory', 5, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Suitcases</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Increases the maximum purchase caps of Farming Gear, Farming Experience, and Interest by 20%."},
+            tooltip() {return "<span style='color:#ffffff'>Suitcases</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase increases the maximum purchase caps of Farming Gear, Farming Experience, and Interest by 1.20x."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -1130,15 +1185,35 @@ addLayer("Factory", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 9)},
     
         },
         6: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Paper Factories</b>
-                <font size="2">Which boost Money gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts Money gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.30);
@@ -1156,6 +1231,10 @@ addLayer("Factory", {
                 player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(100)
                 return cap
@@ -1165,20 +1244,11 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 6))) setBuyableAmount('Factory', 6, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Paper Factories</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Money gain by 25%. Every ten purchases, this effect is boosted by 1.15x."},
+            tooltip() {return "<span style='color:#ffffff'>Paper Factories</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Money gain by 1.25x. Every ten purchases, this effect is boosted by 1.15x."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -1186,15 +1256,35 @@ addLayer("Factory", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 9)},
     
         },
         7: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Tier Enhancers</b>
-                <font size="2">Which increase Bean Tier exponent by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Increases Bean Tier exponent by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(3);
@@ -1210,6 +1300,10 @@ addLayer("Factory", {
                 player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(10)
                 return cap
@@ -1219,20 +1313,11 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 7))) setBuyableAmount('Factory', 7, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Bean Tier Enhancers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Increases Bean Tier exponent by 2% each purchase, reducing amount of TP needed for next tier."},
+            tooltip() {return "<span style='color:#ffffff'>Bean Tier Enhancers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase increases Bean Tier exponent by 2% each purchase, reducing the amount of TP needed for all Tiers."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -1240,15 +1325,35 @@ addLayer("Factory", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 10)},
     
         },
         8: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Iron TP</b>
-                <font size="2">Which boost TP gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts TP gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.45);
@@ -1261,6 +1366,10 @@ addLayer("Factory", {
                 player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(50)
                 return cap
@@ -1270,20 +1379,11 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 8))) setBuyableAmount('Factory', 8, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Iron TP</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts TP gain by 1.15x compounding."},
+            tooltip() {return "<span style='color:#ffffff'>Iron TP</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts TP gain by 1.15x compounding."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -1291,15 +1391,35 @@ addLayer("Factory", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 10)},
     
         },
         9: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Greenhouses</b>
-                <font size="2">Which boost Bean gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts Bean gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.65);
@@ -1312,6 +1432,10 @@ addLayer("Factory", {
                 player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(50)
                 return cap
@@ -1323,18 +1447,9 @@ addLayer("Factory", {
             },
             tooltip() {return "<span style='color:#ffffff'>Greenhouses</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Beans gain by 1.15x compounding each purchase."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -1342,15 +1457,35 @@ addLayer("Factory", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 11)},
     
         },
         10: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Level Enhancers</b>
-                <font size="2">Which boost Bean Level effect by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts Bean Level effect by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(10);
@@ -1363,6 +1498,10 @@ addLayer("Factory", {
                 player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(5)
                 return cap
@@ -1374,18 +1513,9 @@ addLayer("Factory", {
             },
             tooltip() {return "<span style='color:#ffffff'>Level Enhancers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Bean Level effect by 1.5x compounding each purchase."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -1393,15 +1523,35 @@ addLayer("Factory", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 12)},
     
         },
         11: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Gold Drills</b>
-                <font size="2">Which boost Gold gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts Gold gain by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.5);
@@ -1417,6 +1567,10 @@ addLayer("Factory", {
                 player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(1000)
                 return cap
@@ -1426,20 +1580,11 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 11))) setBuyableAmount('Factory', 11, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Gold Drills</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Gold gain by 10% each purchase."},
+            tooltip() {return "<span style='color:#ffffff'>Gold Drills</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Gold gain by 1.10x each purchase."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
-                "height": "125px",
-                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
-                'color':'black', 
-                "border-top-left-radius": "0px",
-                "border-top-right-radius": "0px",
-                "border-bottom-left-radius": "0px",
-                "border-bottom-right-radius": "0px",}}
-
-                else return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
                 "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
                 'color':'black', 
@@ -1447,15 +1592,35 @@ addLayer("Factory", {
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
                 }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",}}
+
+               else if(this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#BABABA', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 13)},
     
         },
         100: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Bean Boilers</b>
-                <font size="2">Which boost Watt generation by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts Watt generation by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Beans</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.5);
@@ -1473,6 +1638,10 @@ addLayer("Factory", {
                 player.points = player.points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(1000)
                 return cap
@@ -1482,36 +1651,47 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 100))) setBuyableAmount('Factory', 100, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Bean Boilers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Watt gain by 100%. Every ten purchases, this effect is boosted by 1.10x."},
+            tooltip() {return "<span style='color:#ffffff'>Bean Boilers</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Watt gain by 100%. Every ten purchases, this effect is boosted by 1.10x."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
-                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'background-color':'#F59527', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
                 'color':'black', 
                 "border-top-left-radius": "0px",
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",}}
 
-                else return {
-                "width": "250px",
+               else if(this.canAfford()){return {
+                "width": "200px",
                 "height": "125px",
-                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'background-color':'#C19A6B', 
                 'color':'black', 
                 "border-top-left-radius": "0px",
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
-                }
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 1000)},
     
         },
         101: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Money Burners</b>
-                <font size="2">Which boost Watt generation by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts Watt generation by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+`$</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.5);
@@ -1529,6 +1709,10 @@ addLayer("Factory", {
                 player.Money.dollars = player.Money.dollars.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(1000)
                 return cap
@@ -1538,36 +1722,47 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 101))) setBuyableAmount('Factory', 101, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Money Burners</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Watt gain by 50%. Every ten purchases, this effect is boosted by 1.10x."},
+            tooltip() {return "<span style='color:#ffffff'>Money Burners</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Watt gain by 1.50x. Every ten purchases, this effect is boosted by 1.10x."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
-                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'background-color':'#81F72D', 
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
                 'color':'black', 
                 "border-top-left-radius": "0px",
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",}}
 
-                else return {
-                "width": "250px",
+               else if(this.canAfford()){return {
+                "width": "200px",
                 "height": "125px",
-                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'background-color':'#C7FF9E', 
                 'color':'black', 
                 "border-top-left-radius": "0px",
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
-                }
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 14)},
     
         },
         102: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Gold Batteries</b>
-                <font size="2">Which boost Watt generation by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts Watt generation by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Gold Bars</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.5);
@@ -1585,6 +1780,10 @@ addLayer("Factory", {
                 player.Gold.goldBars = player.Gold.goldBars.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(1000)
                 return cap
@@ -1594,36 +1793,47 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 102))) setBuyableAmount('Factory', 102, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Gold Batteries</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Watt gain by 25%. Every ten purchases, this effect is boosted by 1.10x."},
+            tooltip() {return "<span style='color:#ffffff'>Gold Batteries</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Watt gain by 1.25x. Every ten purchases, this effect is boosted by 1.10x."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
-                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                "background": "linear-gradient(70deg, #FFE77D, #EBCB3F)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
                 'color':'black', 
                 "border-top-left-radius": "0px",
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",}}
 
-                else return {
-                "width": "250px",
+               else if(this.canAfford()){return {
+                "width": "200px",
                 "height": "125px",
-                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'background-color':'#FFE77D', 
                 'color':'black', 
                 "border-top-left-radius": "0px",
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
-                }
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 15)},
     
         },
         103: {
             display() {return `<font size="3"><b>(`+formatWhole(getBuyableAmount(this.layer, this.id), 0)+`/`+formatWhole(tmp[this.layer].buyables[this.id].purchaseLimit)+`)<br>Steam Engines</b>
-                <font size="2">Which boost Watt generation by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>―――――――――――――――――――――――――――――
+                <font size="2">Boosts Watt generation by ` +format(tmp[this.layer].buyables[this.id].effect) + `x</b><br>――――――――――――――――――――――――――
                 Cost: `+format(tmp[this.layer].buyables[this.id].cost)+` Iron Plates</b><br><b>`},
             cost(x) {
                 let base = new Decimal(1.5);
@@ -1641,6 +1851,10 @@ addLayer("Factory", {
                 player.Factory.ironPlates = player.Factory.ironPlates.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            getAmount(){
+                let amnt = getBuyableAmount(this.layer, this.id)
+                return amnt
+            },
             purchaseLimit() {
                 cap = new Decimal(1000)
                 return cap
@@ -1650,29 +1864,40 @@ addLayer("Factory", {
                 max = max.min(this.purchaseLimit())
                 if(max.gt(getBuyableAmount('Factory', 103))) setBuyableAmount('Factory', 103, max.add(1).floor())
             },
-            tooltip() {return "<span style='color:#ffffff'>Steam Engines</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Boosts Watt gain by 50%. Every ten purchases, this effect is boosted by 1.10x."},
+            tooltip() {return "<span style='color:#ffffff'>Steam Engines</span><br>――――――――――――<br><span style='font-size:11px'><span style='color:#7d837c'>Each purchase boosts Watt gain by 1.25x. Every ten purchases, this effect is boosted by 1.10x."},
             style() {
-                if(!this.canAfford()){return {
-                "width": "250px",
+                if (tmp.Factory.buyables[this.layer, this.id].getAmount.gte(tmp.Factory.buyables[this.layer, this.id].purchaseLimit)) {  
+                    return{            
+                    "width": "200px",
                 "height": "125px",
-                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                "background": "linear-gradient(30deg, #5E5D5D, #BABABA)",
+                'color':'black', 
+                "border-top-left-radius": "0px",
+                "border-top-right-radius": "0px",
+                "border-bottom-left-radius": "0px",
+                "border-bottom-right-radius": "0px",
+                }
+            }
+                else if(!this.canAfford()){return {
+                "width": "200px",
+                "height": "125px",
+                'background-color':'#bf8f8f', 
                 'color':'black', 
                 "border-top-left-radius": "0px",
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",}}
 
-                else return {
-                "width": "250px",
+               else if(this.canAfford()){return {
+                "width": "200px",
                 "height": "125px",
-                "background": "linear-gradient(30deg, #FFF196, #E8DFB5)",
+                'background-color':'#BABABA', 
                 'color':'black', 
                 "border-top-left-radius": "0px",
                 "border-top-right-radius": "0px",
                 "border-bottom-left-radius": "0px",
                 "border-bottom-right-radius": "0px",
-                'box-shadow':'0px 0px 15px #8eff00'
-                }
+                'box-shadow':'0px 0px 15px #8eff00',}}
             },
             unlocked() {return hasMilestone("Factory", 16)},
     
@@ -1819,7 +2044,7 @@ componentStyles: {
             ["display-text",
             function() {return ''+format(player.Factory.ironPlates)+' Iron Plates'},
             {"color": "#BABABA", "font-size": "30px"}],
-            ["raw-html", function() {if (player.points.gte(1e22)) return "(+" + format(player.Factory.ironPlateGain) + ")"}, {"color": "#8A8888", "font-size": "20px"}],
+            ["raw-html", function() {if (player.points.gte(1e22)) return "(+" + format(player.Factory.ironPlateGain) + " on reset)"}, {"color": "#8A8888", "font-size": "20px"}],
             ["display-text",
                     function() {return "―――――――――――――――――"},
                     {"color": "#5E5D5D", "font-size": "32px"}],
@@ -1916,17 +2141,13 @@ componentStyles: {
                     function() {return "―――――――――――――――――"},
                     {"color": "#5E5D5D", "font-size": "32px"}],
                         "blank",
-                        ["column", [ ["row", [ ["buyable", 1], "blank",  ["buyable", 2], ]]]],
+                        ["column", [ ["row", [ ["buyable", 1], "blank",  ["buyable", 2], "blank",  ["buyable", 3], ]]]],
                         "blank",
-                        ["column", [ ["row", [ ["buyable", 3], "blank", ["buyable", 4],]]]],
+                        ["column", [ ["row", [ ["buyable", 4], "blank", ["buyable", 5], "blank", ["buyable", 6],]]]],
                         "blank",
-                        ["column", [ ["row", [ ["buyable", 5], "blank", ["buyable", 6],]]]],
+                        ["column", [ ["row", [ ["buyable", 7], "blank", ["buyable", 8], "blank", ["buyable", 9],]]]],
                         "blank",
-                        ["column", [ ["row", [ ["buyable", 7], "blank", ["buyable", 8],]]]],
-                        "blank",
-                        ["column", [ ["row", [ ["buyable", 9], "blank", ["buyable", 10],]]]],
-                        "blank",
-                        ["column", [ ["row", [ ["buyable", 11], "blank", ["buyable", 12],]]]],
+                        ["column", [ ["row", [ ["buyable", 10], "blank", ["buyable", 11], "blank", ["buyable", 12],]]]],
                         "blank",
                   ["display-text",
                     function() {return "―――――――――――――――――"},

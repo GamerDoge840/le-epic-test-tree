@@ -68,6 +68,7 @@ function getPointGen() {
 	if (hasMilestone('Factory', 2)) gain = gain.times(tmp.Factory.milestones[2].effect)
 	if (hasMilestone('Factory', 12)) gain = gain.times(tmp.Factory.milestones[12].effect)
     if (hasMilestone('Factory', 1000)) gain = gain.times(tmp.Factory.milestones[1000].effect)
+	
 	return gain
 }
 
