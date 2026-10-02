@@ -65,6 +65,7 @@ function getPointGen() {
 		gain = gain.times(tmp.BeanTier.beanEffect);
 	
     //Milestones
+	if (hasMilestone('Gold', 1)) gain = gain.times(1.05)
 	if (hasMilestone('Factory', 2)) gain = gain.times(tmp.Factory.milestones[2].effect)
 	if (hasMilestone('Factory', 12)) gain = gain.times(tmp.Factory.milestones[12].effect)
     if (hasMilestone('Factory', 1000)) gain = gain.times(tmp.Factory.milestones[1000].effect)

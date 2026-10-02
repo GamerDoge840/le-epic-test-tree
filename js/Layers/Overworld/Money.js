@@ -69,7 +69,7 @@ addLayer("Money", {
      
      player.BeanLevel.points = new Decimal(0)
      
-     if (!hasMilestone("Gold", 1) && !hasMilestone("Factory", 7)) player.Beans.milestones.splice(0, player.Beans.milestones.length)
+     if (!hasMilestone("Money", 0) && !hasMilestone("Factory", 7)) player.Beans.milestones.splice(0, player.Beans.milestones.length)
 
     for (let i in player.Beans.buyables) {
          player.Beans.buyables[i] = new Decimal(0)
@@ -79,7 +79,7 @@ addLayer("Money", {
     milestones: {
         0: {
         requirementDescription: "<font size='3'><b>[1] 15$</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Unlocks a new Bean upgrade that boosts the Bean Level effect.</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Unlocks a new Bean upgrade that boosts the Bean Level effect. <br>Also keep Bean milestones on Money reset.</span>'},
         done() {return player.Money.dollars.gte(15)},
         unlocked() {return true},
         style() {

@@ -79,7 +79,7 @@ addLayer("Gold", {
      
      if (!hasMilestone("Factory", 3)) player.Beans.milestones.splice(0, player.Beans.milestones.length)
 
-     if (!hasMilestone("Factory", 3)) player.Money.milestones.splice(0, player.Money.milestones.length)
+     if (!hasMilestone("Gold", 0) && !hasMilestone("Factory", 3)) player.Money.milestones.splice(0, player.Money.milestones.length)
 
      if (!hasMilestone("Gold", 0) && !hasMilestone("Factory", 4)) player.Money.upgrades.splice(0, player.Money.upgrades.length)
 
@@ -95,7 +95,7 @@ addLayer("Gold", {
     milestones: {
         0: {
         requirementDescription: "<font size='3'><b>[1] 1 Gold Bar</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Only the first Gold reset removes Money automation upgrades.</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Only the first Gold reset removes Money automation upgrades and Money milestones.</span>'},
         done() {return player.Gold.goldBars.gte(1)},
         unlocked() {return true},
         style() {
@@ -112,9 +112,9 @@ addLayer("Gold", {
             }
     },
     1: {
-        requirementDescription: "<font size='3'><b>[2] 3 Gold Bars</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Keep Bean milestones on Money reset.</span>'},
-        done() {return player.Gold.goldBars.gte(3)},
+        requirementDescription: "<font size='3'><b>[2] 4 Gold Bars</b><font size='2'>",
+        effectDescription() {return '――――――――――――――<br><font size="2">1.05x boost to Bean gain.</span>'},
+        done() {return player.Gold.goldBars.gte(4)},
         unlocked() {return hasMilestone("Gold", 0)},
         style() {
             if (hasMilestone(this.layer, this.id)) return {

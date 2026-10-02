@@ -166,7 +166,7 @@ addLayer("Factory", {
     },
     3: {
         requirementDescription: "<font size='3'><b>[FL4] Money Factory</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Boost Money gain by 1.25x for each Factory Level.<br>Always keep Bean and Money milestones on Gold reset.<br>Bean Level Booster can be bought 50 more times.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Boost Money gain by 1.25x for each Factory Level.<br>Always keep Bean and Money milestones on Gold resets.<br>Bean Level Booster can be bought 50 more times.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.points.gte(4)},
         unlocked() {return hasMilestone("Factory", 2)},
         effect() {
@@ -192,7 +192,7 @@ addLayer("Factory", {
     },
     4: {
         requirementDescription: "<font size='3'><b>[FL5] Gold Factory</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Boost Gold gain by 1.05x for each Factory Level.<br>Always keep Money automation upgrades on Gold reset.<br>Unlock a new Gold upgrade that boosts TP.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Boost Gold gain by 1.05x for each Factory Level.<br>Always keep Money automation upgrades on Gold resets.<br>Unlock a new Gold upgrade that boosts TP.<br>――――――――――――――<br> Currently: '+format(+format(tmp.Factory.milestones[this.layer, this.id].effect))+'x</span>'},
         done() {return player.Factory.points.gte(5)},
         unlocked() {return hasMilestone("Factory", 3)},
         effect() {
