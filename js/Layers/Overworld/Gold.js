@@ -77,7 +77,7 @@ addLayer("Gold", {
 
      player.Money.dollars = new Decimal(0)
      
-     if (!hasMilestone("Factory", 3)) player.Beans.milestones.splice(0, player.Beans.milestones.length)
+     if (!hasMilestone("Gold", 0) && !hasMilestone("Factory", 3)) player.Beans.milestones.splice(0, player.Beans.milestones.length)
 
      if (!hasMilestone("Gold", 0) && !hasMilestone("Factory", 3)) player.Money.milestones.splice(0, player.Money.milestones.length)
 
@@ -95,7 +95,7 @@ addLayer("Gold", {
     milestones: {
         0: {
         requirementDescription: "<font size='3'><b>[1] 1 Gold Bar</b><font size='2'>",
-        effectDescription() {return '――――――――――――――<br><font size="2">Only the first Gold reset removes Money automation upgrades and Money milestones.</span>'},
+        effectDescription() {return '――――――――――――――<br><font size="2">Only the first Gold reset removes Money automation upgrades, Money milestones,<br> and Bean milestones.</span>'},
         done() {return player.Gold.goldBars.gte(1)},
         unlocked() {return true},
         style() {
