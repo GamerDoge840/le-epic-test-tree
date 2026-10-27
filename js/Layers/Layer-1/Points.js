@@ -71,7 +71,8 @@ addLayer("Points", {
             },
         },
         12: {    
-            fullDisplay() {return `<font size="2"><b>[P12] First Upgrade</b><font size="1"><br>Multiply Point gain by `+format(upgradeEffect(this.layer, this.id))+`x.<br>――――――――――――――――――<br>
+            fullDisplay() {return `<font size="2"><b>[P12] First Upgrade</b><font size="1"><br>Multiply Point gain.<br>――――――――――――――――――<br>
+                Effect: `+format(upgradeEffect(this.layer, this.id))+`x <br>――――――――――――――――――<br>
                 Cost: `+format(tmp[this.layer].upgrades[this.id].cost)+` Points`},        
             cost: new Decimal(1),
             currencyInternalName: "points",
