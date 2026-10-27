@@ -1,7 +1,7 @@
 /* Global things */
 body {
 	color: var(--color);
-	overflow: hidden;
+	overflow: visible;
 	--background: #0f0f0f;
 	--color: #dfdfdf;
 	--points: #ffffff;

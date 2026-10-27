@@ -1,20 +1,20 @@
 let modInfo = {
-	name: "The Tree of Knowledge",
-	id: "superultraduperamogussmartspunchisus",
-	author: "The Big G",
-	pointsName: "Knowledge",
-	modFiles: ["Layers/Row 0/Scrolls.js","Layers/Row 0/Knowledge.js","math.js", "Layers/Side/achievements.js", "tree.js"],
+	name: "The Test Tree",
+	id: "testtestest",
+	author: "The Big Test",
+	pointsName: "Points",
+	modFiles: ["Layers/Layer-1/Points.js", "math.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (0.0010), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "1.0",
+	name: "Accretive Ascension",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -26,7 +26,7 @@ let winText = `Congratulations! You have reached the end and beaten this game, b
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything"]
+var doNotCallTheseFunctionsEveryTick = []
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
@@ -34,20 +34,20 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("Knowledge", 11);
+	return hasUpgrade("Points", 11)
 }
+
 
 // Calculate points/sec!
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0.0001)
-	gain=gain.times(buyableEffect('Knowledge', 11))
-	gain=gain.times(buyableEffect('Knowledge', 12))
-	gain=gain.times(buyableEffect('Knowledge', 21))
-	gain=gain.times(buyableEffect('Scrolls', 11))
-	if (hasUpgrade('Knowledge', 12)) gain = gain.times(3)
+	let gain = new Decimal(0.1)
+
+	//Upgrades
+		if (hasUpgrade('Points', 12)) gain = gain.times(upgradeEffect('Points', 12))
+		
 	return gain
 }
 
@@ -83,3 +83,4 @@ function maxTickLength() {
 // you can cap their current resources with this.
 function fixOldSave(oldVersion){
 }
+
